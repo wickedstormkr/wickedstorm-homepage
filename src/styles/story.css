@@ -1,6 +1,7 @@
 /* 오프닝 여섯 장면(src/sections/Story.astro).
    기본: 장면을 세로로 이어 붙인다(폰·태블릿·움직임 줄이기·JS 없음).
-   html.story-pin(데스크톱 연출 층): 무대를 화면에 고정하고 스크롤로 장면을 넘긴다. 장면 전환은 GSAP이 opacity·transform만 바꾼다. */
+   html.story-pin(데스크톱 연출 층): 무대를 화면에 고정하고 스크롤로 장면을 넘긴다. 장면 전환은 GSAP이 opacity·transform만 바꾼다.
+   장면 글(.scene-copy)은 장면 3~6에서 같은 높이에 두어, 장면이 바뀔 때 제목이 오르내리지 않게 한다(--copy-top). */
 
 .story{position:relative;background:
   radial-gradient(40% 40% at 80% 18%,rgba(124,77,255,.14),transparent 70%),
@@ -13,14 +14,19 @@
 @media (max-width:1023px){.story-demo{font-size:15px}}
 
 /* ---- 장면(기본: 세로) ---- */
-.scene{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,72px);align-items:center;
+.scene{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,72px);align-items:center;
   width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto;padding:clamp(72px,9vw,120px) 0}
 .scene-moment{min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px)}
 .scene-copy{position:relative;z-index:2}
 .scene-visual{position:relative;z-index:1;min-width:0}
-.beat{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.scene-title{margin-top:14px;font-size:clamp(28px,3.4vw,46px);line-height:1.18}
-.scene-text{margin-top:18px;color:var(--lead);font-size:clamp(15.5px,1.25vw,18px);font-weight:500;line-height:1.7}
+.beat{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.beat span{color:var(--faint)}
+.scene-title{margin-top:12px;font-size:clamp(28px,3.2vw,44px);line-height:1.2}
+.scene-text{margin-top:16px;color:var(--lead);font-size:clamp(15.5px,1.2vw,17.5px);font-weight:500;line-height:1.72}
+/* 장면 글 속 강조: 핵심 낱말은 밝게, 링크(특허 원본 등)는 밑줄(누를 수 있음) */
+.scene-text b{color:var(--ink);font-weight:700;white-space:nowrap}
+.scene-text a{padding:3px 0;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px;text-decoration-thickness:1px;white-space:nowrap}
+.scene-text a:hover{color:#fff;text-decoration-thickness:2px}
 .scene-moment .eyebrow{margin-bottom:26px}
 .scene-moment h1{font-size:clamp(30px,4.2vw,56px);line-height:1.14}
 .scene-moment h1 .line{display:block}
@@ -32,135 +38,32 @@
 .hero-trust a{display:inline-block;padding:11px 0;line-height:22px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px;transition:color .2s}
 .hero-trust a:hover{color:#fff;text-decoration-color:var(--accent)}
 .hero-trust b{color:var(--ink-2)}
+.live-beat{display:none}
 
-/* 장면 1: 퀴즈 카드 */
-/* 장면 2: 퀴즈(답한 뒤) → xAPI 문장 */
-/* 장면 3·4: 그림 칸(16:10). 이름표는 데스크톱에서만(그림 속 글자 11px 이상) */
-.art-box{position:relative;aspect-ratio:1.6;container-type:inline-size}
-.art-base{position:absolute;inset:0;width:100%;height:100%;transition:opacity .6s ease}
-.art-tag{position:absolute;left:0;top:-4px;font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
-.art-count{position:absolute;left:0;bottom:0;font-size:13px;color:var(--muted)}
-.art-count b{display:block;font-family:var(--en);font-size:clamp(22px,2.4vw,30px);color:var(--ink);letter-spacing:-.01em}
-.art-labels{list-style:none}
-.art-labels li{position:absolute;font-size:max(11px,1.05cqw);line-height:1.3;color:var(--ink-3);white-space:nowrap;pointer-events:none}
-.art-labels li.branch{transform:translate(-50%,calc(-100% - 12px));text-align:center;color:var(--muted);font-weight:600}
-/* 뿌리(CFDocument)는 마디 아래 왼쪽 정렬로: 옆 마디 이름과 겹치지 않게 */
-.art-labels li.root{transform:translate(-6px,12px);text-align:left;max-width:28%;white-space:normal;text-wrap:balance}
-.art-labels li.leaf{transform:translate(calc(6cqw + 10px),-50%);max-width:23%;white-space:normal;text-wrap:balance;font-weight:600}
-.art-labels li.leaf small{display:block;font-family:var(--en);font-size:max(11px,.9cqw);font-weight:600;color:var(--faint)}
-.art-labels li.hot{color:#ff9bdc}
-.art-labels li.hot small{color:#ff9bdc}
-.art-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:22px;font-size:14px;color:var(--ink-3)}
-.art-legend li{display:inline-flex;align-items:center;gap:8px}
-.art-legend i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 10px currentColor}
-.art-legend .legend-title{flex-basis:100%;color:var(--muted);font-size:13.5px}
-.case-list{list-style:none;display:none;margin-top:18px;border-top:1px solid var(--line)}
-.case-list li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-3)}
-.case-list li b{font-family:var(--en);color:var(--ink)}
-.case-list li.hot,.case-list li.hot b{color:#ff9bdc}
-.art-weeks{list-style:none}
-.art-weeks li{position:absolute;transform:translateX(-50%);font-size:max(11px,1cqw);font-weight:600;color:var(--muted)}
-.art-weeks li.hot{color:#ff9bdc}
-.art-bars .art-panel{position:absolute;right:0;top:0;bottom:0;width:54%;display:flex;align-items:center}
-.art-bars .art-panel .fx{width:100%}
-.art-bars .fx-anom .fx-grid{grid-template-columns:1fr}
-.art-bars .fx-anom .fx-chart{display:none}
-/* 장면 5 */
-.judge-stack{display:grid;gap:12px;max-width:500px;margin-left:auto}
-.signal-alert{justify-self:start;position:relative;display:inline-block;padding:9px 16px 9px 35px;border-radius:999px;background:rgba(255,255,255,.07);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);font-size:14px;font-weight:600;color:var(--ink)}
-.signal-alert::before{content:"";position:absolute;left:16px;top:calc(9px + .75em - 4.5px);width:9px;height:9px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
-/* 장면 6 */
-
-/* ---- 태블릿·폰(≤1023): 한 열, 그림 속 이름표 대신 목록, 장면 4는 이상 탐지 화면만 크게 ---- */
-@media (max-width:1023px){
-  .scene{grid-template-columns:1fr}
-  .scene-moment{min-height:auto}
-  .art-labels,.art-weeks,.art-count,.art-tag{display:none}
-  .case-list{display:block}
-  .art-bars{aspect-ratio:auto}
-  .art-bars .art-base{display:none}
-  .art-bars .art-panel{position:static;width:auto}
-  .art-bars .fx-anom .fx-chart{display:block}
-  .art-bars .fx-anom .fx-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
-  .judge-stack{margin-left:0}
-}
-@media (max-width:699px){
-  .scene{padding:56px 0}
-  .scene-moment{padding-top:calc(var(--header-h) + 28px)}
-  .hero-cta .btn{flex:1 1 auto}
-  .hero-trust{grid-template-columns:1fr}
-  .art-bars .fx-anom .fx-grid{grid-template-columns:1fr}
-}
-
-/* ---- 폰·태블릿: 장면이 화면에 들어오면 그 안의 짧은 움직임만(한 번). 움직임 멈춤·줄이기면 처음부터 다 보인다 ---- */
-@keyframes st-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes st-row{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
-@keyframes st-bar{from{transform:scaleY(0)}to{transform:none}}
-html.js:not(.story-pin):not(.motion-paused) .scene[data-scene]:not(.play) :is(.fx-stmt dl>div,.signal-alert,.fx-judge,.case-list li,.art-box .art-base,.ledger-box .art-base,.ring-labels li){opacity:0}
-html.js:not(.story-pin) .scene.play .fx-stmt dl>div{animation:st-row .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 140ms + 200ms)}
-html.js:not(.story-pin) .scene.play :is(.signal-alert,.art-box .art-base){animation:st-in .6s ease both}
-html.js:not(.story-pin) .scene.play .fx-judge{animation:st-in .6s .35s ease both}
-html.js:not(.story-pin) .scene.play .ledger-box .art-base{animation:st-in .6s ease both}
-html.js:not(.story-pin) .scene.play .ring-labels li{animation:st-in .5s ease both;animation-delay:calc(var(--i,0) * 90ms + 200ms)}
-html.js:not(.story-pin) .scene.play .case-list li{animation:st-row .4s ease both;animation-delay:calc(var(--i,0) * 80ms)}
-html.js:not(.story-pin) .scene.play .fx-bars li{transform-origin:bottom;animation:st-bar .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms + 150ms)}
-html.motion-paused .scene *{animation:none!important}
-
-/* ---- 데스크톱 연출 층: 무대 고정 ---- */
-html.story-pin .story{height:calc(100vh * 6)}
-html.story-pin .story-stage{position:sticky;top:0;height:100vh;overflow:hidden}
-html.story-pin .story-art{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-html.story-pin .story-deep{z-index:0}
-html.story-pin .scene{position:absolute;inset:0;z-index:2;width:auto;margin:0;min-height:0;
-  padding:calc(var(--header-h) + 24px) max(var(--gutter),calc((100vw - var(--wrap)) / 2)) 96px;opacity:0;pointer-events:none}
-html.story-pin .scene.is-active{pointer-events:auto}
-html.story-pin .scene-visual{max-height:calc(100vh - var(--header-h) - 130px);display:flex;align-items:center;justify-content:flex-end}
-html.story-pin .art-box{width:min(100%,calc((100vh - var(--header-h) - 150px) * 1.6))}
-html.story-pin .judge-stack,html.story-pin .stmt-one{width:100%}
-html.story-pin.art-live .art-base{opacity:0}
-.art-lines{display:none}
-html.story-pin.art-live .art-lines{display:block;position:absolute;inset:0;width:100%;height:100%}
-html.story-pin .story-demo{position:absolute;right:max(var(--gutter),calc((100vw - var(--wrap)) / 2));bottom:28px;width:auto;margin:0;padding:0;z-index:3}
-html.story-pin .story-nav{display:block;position:absolute;z-index:4;left:max(var(--gutter),calc((100vw - var(--wrap)) / 2));bottom:22px}
-.story-nav ol{list-style:none;display:flex;gap:4px}
-.story-nav a{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--faint);transition:color .2s,background .2s}
-.story-nav a .n{font-family:var(--en);font-size:12px}
-.story-nav a .t{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .35s ease}
-.story-nav a:hover,.story-nav a:focus-visible{color:var(--ink)}
-.story-nav a:hover .t,.story-nav a:focus-visible .t,.story-nav a[aria-current] .t{max-width:14em}
-.story-nav a[aria-current]{color:#fff;background:rgba(255,255,255,.08)}
-
-/* 연출 층(GSAP)이 오기 전·못 올 때: 스크롤 위치로 장면을 바꾸고 CSS로 부드럽게 */
-html.story-pin:not(.story-gsap) .scene{transition:opacity .45s ease}
-html.story-pin:not(.story-gsap) .scene.is-active{opacity:1}
-/* 터치 화면: 신호 알림도 문단 크기(15px) */
-@media (max-width:1023px){.signal-alert{font-size:15px}}
-
-/* 장면 1: 실시간 수집(지금 사이트의 xAPI 캡처 뷰) */
-.live{position:relative;z-index:2;width:min(100%,520px);flex:none;margin:0 0 0 auto;padding:20px;border-radius:22px;overflow:hidden;
-  background:linear-gradient(180deg,rgba(20,22,40,.92),rgba(11,12,24,.92));border:1px solid var(--line2);
-  box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12)}
-.live::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;background:radial-gradient(120% 60% at 50% -10%,rgba(124,77,255,.14),transparent 60%)}
-.live-bar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.live-bar b{font-family:var(--en);font-size:13px;font-weight:700;letter-spacing:.02em;color:#cfd3ee}
-.live-state{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--accent)}
+/* ---- 장면 1: 실시간 수집(Lecognizer 창). 너비를 고정해 줄이 바뀌어도 흔들리지 않는다 ---- */
+.live{position:relative;z-index:2;width:min(100%,520px);margin-left:auto}
+.live .fx{box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12),0 0 0 1px rgba(163,177,255,.16)}
+.live-state{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--accent)}
 .live-state::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 1.4s infinite}
 @keyframes blink{50%{opacity:.35}}
-.live-view{position:relative;z-index:2;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%)}
+.live-view{position:relative;margin:14px 14px 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%)}
 .live-rows{list-style:none;display:flex;flex-direction:column;gap:9px;will-change:transform}
-.xrow{display:flex;align-items:center;flex-wrap:nowrap;gap:8px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
-/* 점 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 사라질 때 같은 색의 별이 된다 */
-.xrow .dot{--c:#7c4dff;position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,#fff 0 20%,var(--c) 45%);box-shadow:0 0 12px var(--c)}
-.xrow[data-verb="0"] .dot{--c:#2f7cff}.xrow[data-verb="1"] .dot{--c:#7c4dff}.xrow[data-verb="2"] .dot{--c:#e930b0}.xrow[data-verb="3"] .dot{--c:#a3b1ff}
+.xrow{display:flex;align-items:center;flex-wrap:nowrap;gap:7px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
+/* 점과 '~하다' 칸의 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 목록을 지나가면 같은 색의 별이 된다 */
+.xrow{--c:#7c4dff;--ct:#c3b0ff}
+.xrow[data-verb="0"]{--c:#2f7cff;--ct:#a8c3ff}
+.xrow[data-verb="1"]{--c:#7c4dff;--ct:#c3b0ff}
+.xrow[data-verb="2"]{--c:#e930b0;--ct:#ffa6e2}
+.xrow[data-verb="3"]{--c:#a3b1ff;--ct:#cdd5ff}
+.xrow .dot{position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,#fff 0 20%,var(--c) 45%);box-shadow:0 0 12px var(--c)}
 .xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,var(--c),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
 @keyframes dotpulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
-.chip{flex:none;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap}
-.chip.actor{background:rgba(47,124,255,.16);color:#9dc0ff;border:1px solid rgba(47,124,255,.32)}
-.chip.verb{background:rgba(124,77,255,.16);color:#c3b0ff;border:1px solid rgba(124,77,255,.34)}
-.chip.object{background:rgba(233,48,176,.14);color:#ffa6e2;border:1px solid rgba(233,48,176,.3)}
-.chip.result{margin-left:auto;background:rgba(255,255,255,.06);color:#dfe3f7;border:1px solid rgba(255,255,255,.16)}
-.xrow .arw{flex:none;font-size:13px;color:var(--muted)}
+.chip{flex:none;padding:4px 9px;border-radius:6px;font-size:13px;font-weight:600;white-space:nowrap;background:rgba(255,255,255,.055);color:var(--ink-2)}
+.chip.verb{background:color-mix(in srgb,var(--c) 24%,transparent);color:var(--ct)}
+.chip.object{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.chip.result{margin-left:auto;background:rgba(163,177,255,.12);color:var(--accent)}
+.xrow .arw{flex:none;font-size:12px;color:var(--faint)}
 .xrow.in{animation:xin .45s cubic-bezier(.2,.7,.2,1) both}
 .xrow.in .chip{animation:chipin .45s ease both}
 .xrow.in .chip.verb{animation-delay:60ms}.xrow.in .chip.object{animation-delay:120ms}.xrow.in .chip.result{animation-delay:180ms}
@@ -168,80 +71,199 @@ html.story-pin:not(.story-gsap) .scene.is-active{opacity:1}
 @keyframes chipin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .xrow.leaving{opacity:0;transition:opacity .4s ease}
 html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{animation:none}
-.live-foot{position:relative;z-index:2;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
-.nebula-base{display:none}
+.live-foot{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 14px;margin-top:12px;padding:11px 16px 13px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.live-foot b{color:var(--ink)}
+.live-note{color:var(--faint)}
+/* 목록을 지나간 한 건: 별이 되어 날아가(.live-fly, 창 위) 장면의 하늘(.live-sky, 글 뒤)에 자리 잡는다(story/live.ts) */
+.live-sky,.live-fly{position:absolute;inset:0;pointer-events:none}
+.live-sky{z-index:-1;overflow:hidden}
+.live-fly{z-index:5}
+.spark{position:absolute;left:0;top:0;width:var(--d,8px);height:var(--d,8px);margin:calc(var(--d,8px) / -2) 0 0 calc(var(--d,8px) / -2);border-radius:50%;
+  background:radial-gradient(circle,#fff 0 16%,var(--c) 40%,transparent 72%);box-shadow:0 0 12px 1px var(--c)}
+.live-sky .spark{opacity:.85;animation:twinkle 3.6s ease-in-out infinite;animation-delay:var(--tw,0s)}
+.live-sky .spark::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--c);opacity:0;animation:land .7s ease-out}
+@keyframes twinkle{0%,100%{opacity:.85}50%{opacity:.45}}
+@keyframes land{from{opacity:.7;transform:scale(.4)}to{opacity:0;transform:scale(1.6)}}
 
-/* 장면 2: 기록 행(xAPI · Caliper, 줄마다 부가 정보) */
+/* ---- 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸 이름은 두 표준의 이름을 함께(xAPI ⇄ 1EdTech Caliper) ---- */
 .ledger{position:relative;width:100%}
-.ledger-box{position:relative;aspect-ratio:2.6;container-type:inline-size}
+.ledger-std{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding-left:3%;margin-bottom:12px;font-size:13.5px;color:var(--muted)}
+.ledger-std b{font-family:var(--en);font-size:14px;font-weight:700;color:var(--ink)}
+.ledger-std .swap{color:var(--accent);font-weight:700}
+.ledger-note{margin-left:6px}
+.swap{display:inline-block;margin:0 .35em}
+.ledger-cols{display:grid;align-items:start;margin:0 0 8px}
+.ledger-cols div{display:grid;gap:1px;min-width:0;padding-left:2px}
+.ledger-cols dt{font-size:14px;font-weight:700}
+.ledger-cols dd{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.45;color:var(--muted)}
+.ledger-cols dd .swap{color:var(--faint)}
+.ledger-cols .c0 dt{color:#a8c3ff}.ledger-cols .c1 dt{color:#c3b0ff}.ledger-cols .c2 dt{color:#ffa6e2}
+.ledger-cols .c3 dt{color:var(--accent);font-size:15px}
+.ledger-cols .c3 dd{color:var(--ink-3)}
+.ledger-box{position:relative;aspect-ratio:3.1}
 .ledger-box .art-base{position:absolute;inset:0;width:100%;height:100%}
-.ledger-head{position:absolute;left:0;right:0;height:0;margin:0}
-.ledger-head span{position:absolute;top:0;margin-top:-.75em;line-height:1.5;white-space:nowrap;font-size:13px;color:var(--muted)}
-.ledger-head .std{left:3%;top:-24px;font-family:var(--en);font-size:13px;font-weight:700;letter-spacing:.04em;color:#cfd3ee}
-.ledger-head .col{padding-left:2px}
-.ledger-head b{font-family:var(--mono);font-weight:600;margin-right:3px}
-.ledger-head .c0 b{color:#9dc0ff}.ledger-head .c1 b{color:#c3b0ff}.ledger-head .c2 b{color:#ffa6e2}.ledger-head .c3 b{color:var(--accent)}
-.ledger-head .c3{color:var(--ink-2);font-weight:700}
-.ledger-extra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:14px}
-.ledger-rest{font-size:15px;color:var(--ink-3)}
-.ledger-items{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
-.ledger-items li{padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1);border:1px solid rgba(163,177,255,.28)}
-.stmt-one{margin-top:28px;max-width:560px}
-html.story-pin .scene-statement{grid-template-columns:1fr;align-content:center;gap:clamp(18px,3vh,36px);text-align:center}
-html.story-pin .scene-statement .scene-visual{order:-1;display:block;max-height:none}
-html.story-pin .scene-statement .scene-copy{max-width:760px;margin-inline:auto}
-html.story-pin .scene-statement .stmt-one{display:none}
-html.story-pin.art-live .ledger-box .art-base{opacity:0}
-html.story-pin .ledger{width:min(100%,1120px,calc((100vh - var(--header-h) - 380px) * 2.6));margin-inline:auto}
-@media (max-width:1023px){.live{margin-left:0}}
-@media (max-width:699px){.ledger-head{display:none}}
-@media (max-width:699px){
-  .live{padding:14px}
-  .xrow{padding:10px}
-  .chip{font-size:13px;padding:4px 9px}
-  .chip.result{margin-left:auto}
-  .xrow{flex-wrap:wrap}
-  .xrow{gap:6px}
-  .xrow .arw{display:none}
-}
+.ledger-foot{display:grid;align-items:start;row-gap:10px;margin-top:10px}
+.ledger-rest{grid-column:1/4;padding-left:2px;font-size:15px;color:var(--ink-3)}
+.ledger-items{grid-column:4;list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+/* 부가 정보 항목: 누를 수 없는 이름표(테두리 없는 작은 직사각형) */
+.ledger-items li{padding:2px 7px;border-radius:5px;font-size:12.5px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1)}
 
-/* 장면 6: 선순환 고리 */
+/* ---- 장면 3: CASE 체계(16:10 그림 칸). 이름표는 데스크톱에서만(그림 속 글자 11px 이상) ---- */
+.art-box{position:relative;aspect-ratio:1.6;container-type:inline-size}
+.art-base{position:absolute;inset:0;width:100%;height:100%;transition:opacity .6s ease}
+.art-lines{display:none}
+.art-tag{position:absolute;left:0;top:-4px;font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
+.art-count{position:absolute;left:0;bottom:0;font-size:13px;color:var(--muted)}
+.art-count b{display:block;font-size:clamp(22px,2.4vw,30px);color:var(--ink);letter-spacing:-.01em}
+.art-labels{list-style:none}
+.art-labels li{position:absolute;font-size:max(11px,1.05cqw);line-height:1.3;color:var(--ink-3);white-space:nowrap;pointer-events:none}
+.art-labels li.branch{transform:translate(-50%,calc(-100% - 12px));text-align:center;color:var(--muted);font-weight:600}
+/* 뿌리(CFDocument)는 마디 아래 왼쪽 정렬로: 옆 마디 이름과 겹치지 않게 */
+.art-labels li.root{transform:translate(-6px,12px);text-align:left;max-width:28%;white-space:normal;text-wrap:balance}
+.art-labels li.leaf{transform:translate(calc(6cqw + 10px),-50%);max-width:23%;white-space:normal;text-wrap:balance;font-weight:600}
+.art-labels li.leaf small{display:block;font-family:var(--en);font-size:max(11px,.9cqw);font-weight:600;color:var(--faint)}
+.art-labels li.hot,.art-labels li.hot small{color:var(--hot)}
+.art-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:22px;font-size:14px;color:var(--ink-3)}
+.art-legend li{display:inline-flex;align-items:center;gap:8px}
+.art-legend i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.art-legend .legend-title{flex-basis:100%;color:var(--muted);font-size:13.5px}
+.case-cap{display:none;margin-top:18px;font-size:15px;font-weight:700;color:var(--muted)}
+.case-list{list-style:none;display:none;margin-top:10px;border-top:1px solid var(--line)}
+.case-list li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-3)}
+.case-list li b{font-family:var(--en);color:var(--ink)}
+.case-list li.hot,.case-list li.hot b{color:var(--hot)}
+
+/* ---- 장면 4: Lecognizer AI 이상 탐지 창. 입자가 그래프 칸(data-chart-slot)에 착지한다 ---- */
+.scene-signal .fx-anom{width:min(100%,680px);margin-left:auto}
+
+/* ---- 장면 5: 신호 도착 → 교수자 화면(장면의 한 부분이라 글과 균형 맞게 작게) ---- */
+.judge-stack{display:grid;gap:12px;width:100%;max-width:520px;margin-left:auto}
+.signal-alert{justify-self:start;position:relative;display:inline-block;padding:8px 14px 8px 32px;border-radius:8px;background:rgba(233,48,176,.1);
+  box-shadow:inset 0 0 0 1px rgba(255,124,207,.28);font-size:14px;font-weight:600;color:var(--ink)}
+.signal-alert::before{content:"";position:absolute;left:14px;top:calc(8px + .75em - 4.5px);width:9px;height:9px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
+
+/* ---- 장면 6: 선순환 고리. 이름표는 누를 수 없는 글(제품 이름은 글자 그라디언트, 버튼 모양 금지) ---- */
 .ring-box{overflow:visible}
 .ring-labels{list-style:none}
-.ring-l{position:absolute;display:grid;gap:6px;justify-items:start;width:max-content;max-width:160px}
+.ring-l{position:absolute;display:grid;gap:3px;justify-items:start;width:max-content;max-width:170px}
 .ring-l.r{transform:translate(18px,-50%)}
 .ring-l.l{transform:translate(calc(-100% - 18px),-50%);justify-items:end;text-align:right}
 .ring-l.c.t{transform:translate(-50%,calc(-100% - 16px));justify-items:center;text-align:center}
 .ring-l.c.b{transform:translate(-50%,16px);justify-items:center;text-align:center}
-.ring-l b{font-size:15px;line-height:1.35;color:var(--ink-2)}
+.ring-l b{font-size:16px;line-height:1.3;color:var(--ink)}
 .ring-l::before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;box-shadow:0 0 12px 3px rgba(163,177,255,.8)}
 .ring-l.r::before{left:-22px;top:calc(50% - 4.5px)}
 .ring-l.l::before{right:-22px;top:calc(50% - 4.5px)}
 .ring-l.c.t::before{left:calc(50% - 4.5px);bottom:-20px}
 .ring-l.c.b::before{left:calc(50% - 4.5px);top:-20px}
-.ring-caption{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;margin:0;text-align:center;font-size:15px;line-height:1.6;color:var(--ink-3)}
+.ring-l .pname{font-size:13px}
+.ring-l:not(.role) .pname{font-size:16px}
+.ring-caption{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;margin:0;text-align:center;font-size:16px;font-weight:700;line-height:1.5;color:var(--ink-3)}
+
+/* ---- 태블릿·폰(≤1023): 한 열, 그림 속 이름표 대신 목록 ---- */
 @media (max-width:1023px){
+  .scene{grid-template-columns:1fr}
+  .scene-moment{min-height:auto;gap:0}
+  /* 장면 1: 제목 → 설명 → 버튼 → 실시간 수집 → 증빙 링크 순서 */
+  .scene-moment .scene-copy{display:contents}
+  .scene-moment .scene-visual{order:1;margin-top:40px}
+  .scene-moment .hero-trust{order:2}
+  .live-beat{display:block;margin-bottom:12px}
+  .live{margin-left:0;width:100%}
+  .art-labels,.art-count,.art-tag{display:none}
+  .case-cap,.case-list{display:block}
+  .scene-signal .fx-anom,.judge-stack{width:100%;max-width:none;margin-left:0}
+  .signal-alert{font-size:15px}
   .ring-box{aspect-ratio:auto;display:grid;gap:18px;min-width:0;width:100%}
   .ring-box>*{min-width:0}
   .ring-box .art-base{position:relative;width:100%;height:auto;aspect-ratio:1.6}
-  .ring-labels{display:grid;gap:10px;counter-reset:ring}
-  .ring-l,.ring-l.l,.ring-l.r,.ring-l.c.t,.ring-l.c.b{position:relative;left:auto!important;top:auto!important;transform:none;display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;justify-items:start;text-align:left;max-width:none;padding-left:22px}
+  .ring-labels{display:grid;gap:10px}
+  .ring-l,.ring-l.l,.ring-l.r,.ring-l.c.t,.ring-l.c.b{position:relative;left:auto!important;top:auto!important;transform:none;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;justify-items:start;text-align:left;max-width:none;padding-left:22px}
   .ring-l::before,.ring-l.l::before,.ring-l.r::before,.ring-l.c.t::before,.ring-l.c.b::before{left:0;right:auto;top:calc(50% - 4.5px);bottom:auto}
-  .ring-caption{position:relative;left:auto;top:auto;transform:none;width:auto;text-align:left}
+  .ring-caption{display:none}
 }
 @media (max-width:699px){
+  .scene{padding:56px 0}
+  .scene-moment{padding-top:calc(var(--header-h) + 28px)}
+  .hero-cta .btn{flex:1 1 auto}
+  .hero-trust{grid-template-columns:1fr}
+  .live .fx-bar{gap:8px}
+  .live-view{margin:12px 10px 0}
+  .xrow{gap:5px;padding:9px}
+  .xrow .arw{display:none}
+  .chip{padding:4px 7px}
+  /* 기록 행 머리: 폰은 칸 이름을 목록으로(누가 · actor …), 그림은 그 아래 */
+  .ledger-std{padding-left:0}
+  .ledger-cols{grid-template-columns:1fr!important;column-gap:0!important;padding-inline:0!important;margin-bottom:14px;border-top:1px solid var(--line)}
+  .ledger-cols div{grid-template-columns:5.5em 1fr;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+  .ledger-cols dt,.ledger-cols .c3 dt{font-size:15px}
+  .ledger-cols dd{font-size:13.5px}
+  .ledger-foot{grid-template-columns:1fr!important;column-gap:0!important;padding-inline:0!important}
+  .ledger-rest,.ledger-items{grid-column:1}
 }
 
-/* 장면 5: 교수자 화면은 장면의 한 부분이라 작게(글과 균형) */
-.scene-judge .fx-bar{padding:9px 14px}
-.scene-judge .fx-body{padding:14px 16px 16px}
-.scene-judge .fx-judge .fx-ai{margin-top:10px;padding:11px 13px}
-.scene-judge .fx-judge .fx-ai p{font-size:14.5px}
-.scene-judge .fx-judge .fx-ai small{font-size:13px}
-.scene-judge .fx-judge ol{margin-top:10px}
-.scene-judge .fx-judge li{grid-template-columns:24px 1fr;padding:7px 0}
-.scene-judge .fx-judge li i{width:22px;height:22px;font-size:12px}
-.scene-judge .fx-judge li b{font-size:14px}
-.scene-judge .fx-judge .fx-actions{margin-top:10px}
-.scene-judge .fx-btn{min-height:34px;padding:0 14px;font-size:13.5px}
-.scene-judge .fx-judge .fx-owner{margin-top:6px}
+/* ---- 폰·태블릿: 장면이 화면에 들어오면 그 안의 짧은 움직임만(한 번). 움직임 멈춤·줄이기면 처음부터 다 보인다 ---- */
+@keyframes st-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes st-row{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
+html.js:not(.story-pin):not(.motion-paused) .scene[data-scene]:not(.play) :is(.signal-alert,.judge-stack .fx,.scene-signal .fx,.case-list li,.art-box .art-base,.ledger-box .art-base,.ring-labels li){opacity:0}
+html.js:not(.story-pin) .scene.play :is(.signal-alert,.art-box .art-base,.ledger-box .art-base,.scene-signal .fx){animation:st-in .6s ease both}
+html.js:not(.story-pin) .scene.play .judge-stack .fx{animation:st-in .6s .35s ease both}
+html.js:not(.story-pin) .scene.play .ring-labels li{animation:st-in .5s ease both;animation-delay:calc(var(--i,0) * 90ms + 200ms)}
+html.js:not(.story-pin) .scene.play .case-list li{animation:st-row .4s ease both;animation-delay:calc(var(--i,0) * 80ms)}
+html.motion-paused .scene *{animation:none!important}
+
+/* ---- 데스크톱 연출 층: 무대 고정 ---- */
+html.story-pin .story{height:calc(100vh * 6)}
+html.story-pin .story-stage{position:sticky;top:0;height:100vh;overflow:hidden}
+html.story-pin .story-art{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+html.story-pin .story-deep{z-index:0}
+html.story-pin .scene{--copy-top:clamp(8px,7vh,72px);position:absolute;inset:0;z-index:2;width:auto;margin:0;min-height:0;
+  padding:calc(var(--header-h) + 24px) max(var(--gutter),calc((100vw - var(--wrap)) / 2)) 96px;opacity:0;pointer-events:none}
+html.story-pin .scene.is-active{pointer-events:auto}
+/* 낮은 데스크톱 화면(노트북): 첫 화면 글이 아래 장면 목차에 닿지 않게 제목·간격을 화면 높이에 맞춘다 */
+html.story-pin .scene-moment h1{font-size:clamp(30px,min(4.2vw,6.2vh),56px)}
+/* 베트남어 제목은 한국어보다 길고 줄간격이 넓어(성조 부호) 한 단계 작게 */
+html.story-pin:lang(vi) .scene-moment h1{font-size:clamp(28px,min(3.4vw,5vh),46px)}
+@media (max-height:860px){
+  html.story-pin .scene-moment .eyebrow{margin-bottom:16px}
+  html.story-pin .hero-lead{margin-top:18px}
+  html.story-pin .hero-cta{margin-top:26px}
+  html.story-pin .hero-trust{margin-top:16px}
+}
+html.story-pin .scene-visual{max-height:calc(100vh - var(--header-h) - 130px);display:flex;align-items:center;justify-content:flex-end}
+/* 장면 3~6: 글은 위에서 같은 높이, 그림은 가운데 */
+html.story-pin :is(.scene-store,.scene-signal,.scene-judge,.scene-next) .scene-copy{align-self:start;margin-top:var(--copy-top)}
+html.story-pin .art-box{width:min(100%,calc((100vh - var(--header-h) - 150px) * 1.6))}
+html.story-pin .scene-signal .fx-anom{width:min(100%,680px,calc((100vh - var(--header-h) - 330px) * 2.9))}
+html.story-pin.art-live .art-base{opacity:0}
+html.story-pin.art-live .art-lines{display:block;position:absolute;inset:0;width:100%;height:100%}
+/* 그래프 칸은 비워 둔다: 뒤의 그림 층(캔버스)에서 입자가 이 칸에 착지한다 */
+html.story-pin.art-live .scene-signal .fx-anom{background:transparent}
+html.story-pin.art-live .scene-signal .fx-chart{background-color:rgba(12,14,30,.55)}
+html.story-pin.art-live .scene-signal .fx-finding{background:#0e1020}
+/* 장면 2: 기록 행이 무대 가운데(크게), 글은 그 아래 가운데. 낮은 화면(≤760px)은 다른 장면처럼 글 왼쪽 · 기록 행 오른쪽 */
+html.story-pin .scene-statement{grid-template-columns:1fr;align-content:center;justify-items:center;gap:clamp(18px,3vh,32px);text-align:center}
+html.story-pin .scene-statement .scene-visual{order:-1;display:block;width:100%;max-height:none}
+html.story-pin .scene-statement .scene-copy{max-width:780px}
+html.story-pin .scene-statement .scene-text{text-wrap:balance}
+html.story-pin .scene-statement .ledger{width:min(100%,1180px,calc((100vh - var(--header-h) - 456px) * 3.1));margin-inline:auto;text-align:left}
+@media (max-height:760px){
+  html.story-pin .scene-statement{grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);align-content:normal;justify-items:stretch;gap:clamp(32px,4vw,72px);text-align:left}
+  html.story-pin .scene-statement .scene-visual{order:0;display:flex}
+  html.story-pin .scene-statement .scene-copy{align-self:start;margin-top:var(--copy-top)}
+  html.story-pin .scene-statement .ledger{width:100%}
+}
+html.story-pin .story-demo{position:absolute;right:max(var(--gutter),calc((100vw - var(--wrap)) / 2));bottom:28px;width:auto;margin:0;padding:0;z-index:3}
+html.story-pin .story-nav{display:block;position:absolute;z-index:4;left:max(var(--gutter),calc((100vw - var(--wrap)) / 2));bottom:22px}
+.story-nav ol{list-style:none;display:flex;gap:4px}
+.story-nav a{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:600;color:var(--faint);transition:color .2s,background .2s,box-shadow .2s}
+.story-nav a .n{font-family:var(--en);font-size:12px}
+.story-nav a .t{max-width:0;overflow:hidden;white-space:nowrap;transition:max-width .35s ease}
+.story-nav a:hover,.story-nav a:focus-visible{color:var(--ink);background:rgba(255,255,255,.05)}
+.story-nav a:hover .t,.story-nav a:focus-visible .t,.story-nav a[aria-current] .t{max-width:14em}
+/* 지금 장면: 역할 탭의 선택 모양과 같게 */
+.story-nav a[aria-current]{color:#fff;background:rgba(163,177,255,.14);box-shadow:inset 0 0 0 1px rgba(163,177,255,.35)}
+
+/* 연출 층(GSAP)이 오기 전·못 올 때: 스크롤 위치로 장면을 바꾸고 CSS로 부드럽게 */
+html.story-pin:not(.story-gsap) .scene{transition:opacity .45s ease}
+html.story-pin:not(.story-gsap) .scene.is-active{opacity:1}

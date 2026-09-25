@@ -22,7 +22,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
     <div class="wrap">
       <PageHead lang={lang} eyebrow={p.page.eyebrow} title={p.page.title} lead={p.page.lead} />
       <h2 class="sr-only">{p.page.rolesTitle}</h2>
-      <RoleTabs t={p} story={t.story} id="role" />
+      <RoleTabs lang={lang} t={p} story={t.story} id="role" />
     </div>
   </section>
 
@@ -37,7 +37,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
         {p.loop.notes.map((n) => (
           <li class:list={['loop-card', n.kind === 'solution' ? 'is-sol' : 'is-role']}>
             {n.role && <b set:html={n.role} />}
-            <span class:list={['pill', n.product]}>{n.pill}</span>
+            <span class:list={['pname', n.product]} lang="en">{n.pill}</span>
             <p set:html={n.desc} />
           </li>
         ))}

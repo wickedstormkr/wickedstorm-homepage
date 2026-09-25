@@ -74,6 +74,14 @@ export function initStory() {
     if (sc && !sc.classList.contains('is-active')) go(Number(sc.dataset.scene));
   });
 
+  /* #scene-signal 같은 주소로 들어오면 그 장면으로(고정 모드에서는 장면이 무대 안에 겹쳐 있어 브라우저가 찾아가지 못한다) */
+  const deep = scenes.findIndex((s) => `#${s.id}` === location.hash);
+  if (deep > 0) {
+    const jump = () => requestAnimationFrame(() => { if (pinned()) go(deep); });
+    if (document.readyState === 'complete') jump();
+    else addEventListener('load', jump, { once: true });
+  }
+
   /* 화면 폭·움직임 설정이 바뀌면 고정 여부를 다시 정한다 */
   mq.addEventListener('change', () => {
     root.classList.toggle('story-pin', mq.matches);

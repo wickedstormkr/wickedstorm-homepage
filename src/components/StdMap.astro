@@ -1,26 +1,41 @@
 ---
 /**
- * 표준 지도: 학습데이터가 지나는 길(수집 → 체계 → 증명 → 연동)로 표준을 묶고, 상태(적용·적용 예정·설계 참조)를 표시한다.
- * 표준마다 공식 스펙으로 가는 링크(주장은 확인할 수 있게).
+ * 표준 지도: 1EdTech CASE(교육과정·성취기준·역량 체계)를 기준으로 따로 두고, 수집·증명·연동 표준을 그 아래에 묶는다.
+ * 수집(xAPI·Caliper)과 증명(Open Badges·CLR·Digital Credentials)은 CASE 항목을 가리킨다(연결선).
+ * 상태(적용·적용 예정·설계 참조)를 표시하고, 표준마다 공식 스펙으로 가는 링크(새 창)를 둔다(주장은 확인할 수 있게).
  */
 import type { HomeContent } from '../lib/content';
 interface Props { t: HomeContent['standards'] }
 const { t } = Astro.props;
 const byName = new Map(t.cards.map((c) => [c.name, c]));
 const legend = [...new Map(t.cards.map((c) => [c.status, c.statusLabel])).entries()];
+const chip = (n: string) => byName.get(n)!;
 ---
 <div class="std-map">
+  <div class="std-base">
+    <div class="base-copy">
+      <p class="lane-head"><b>{t.map.base.name}</b></p>
+      <p class="lane-desc">{t.map.base.desc}</p>
+    </div>
+    <ul class="lane-items">
+      {t.map.base.items.map((n) => {
+        const c = chip(n);
+        return <li><a class:list={['std-chip', 'base', c.status]} href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`${c.name}, ${c.statusLabel} · ${c.ariaLabel}`}><b lang="en">{c.name}</b><span>{c.statusLabel}</span></a></li>;
+      })}
+    </ul>
+  </div>
   <ol class="std-lanes">
     {t.map.groups.map((g, gi) => (
-      <li class="std-lane">
+      <li class:list={['std-lane', { ref: g.ref }]}>
+        {g.ref && <p class="lane-ref">{t.map.refLabel}</p>}
         <p class="lane-head"><span class="lane-n" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span><b>{g.name}</b></p>
         <p class="lane-desc">{g.desc}</p>
         <ul class="lane-items">
           {g.items.map((n) => {
-            const c = byName.get(n)!;
+            const c = chip(n);
             return (
               <li>
-                <a class:list={['std-chip', c.status]} href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`${c.statusLabel} · ${c.ariaLabel}`}>
+                <a class:list={['std-chip', c.status]} href={c.href} target="_blank" rel="noopener noreferrer" aria-label={`${c.name}, ${c.statusLabel} · ${c.ariaLabel}`}>
                   <b lang="en">{c.name}</b><span>{c.statusLabel}</span>
                 </a>
               </li>

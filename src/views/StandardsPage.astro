@@ -1,5 +1,5 @@
 ---
-/** 표준 페이지: 표준 지도 → 표준별 설명(공식 스펙 링크) → 1EdTech 활동(소식 원문 링크) */
+/** 표준 페이지: 표준 지도(CASE 기준) → xAPI ⇄ Caliper 대응표 → 표준별 설명(공식 스펙 링크) → 1EdTech 활동(소식 원문 링크) */
 import Page from '../layouts/Page.astro';
 import PageHead from '../components/PageHead.astro';
 import StdMap from '../components/StdMap.astro';
@@ -21,6 +21,19 @@ const t = getHome(lang).standards;
       <h2 class="sub-title">{t.map.title}</h2>
       <p class="sub-lead">{t.map.lead}</p>
       <StdMap t={t} />
+    </div>
+  </section>
+  <section class="band" aria-labelledby="std-mapping-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="std-mapping-title">{t.mapping.title}</h2>
+      <p class="sub-lead">{t.mapping.lead}</p>
+      <table class="map-table">
+        <thead><tr>{t.mapping.cols.map((c, i) => <th scope="col" lang={i ? 'en' : undefined}>{c}</th>)}</tr></thead>
+        <tbody>
+          {t.mapping.rows.map((r) => <tr><th scope="row">{r.k}</th><td data-k="xAPI">{r.x}</td><td data-k="Caliper">{r.c}</td></tr>)}
+        </tbody>
+      </table>
+      <p class="map-note">{t.mapping.note}</p>
     </div>
   </section>
   <section class="band" aria-labelledby="std-cards-title">

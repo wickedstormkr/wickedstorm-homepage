@@ -2,7 +2,7 @@
  * 미리 그린 그림(기본 층): 데이터 아트 모델(story-data.ts)을 빌드 때 SVG로 그린다.
  * 움직임 줄이기·저전력·JS 없음·폰에서 이 그림만으로 이야기가 완결된다. 그림 속 글자는 없다(이름표는 HTML).
  */
-import { buildParticles, CASE_NODES, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, SLOT_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
+import { buildParticles, signalCurves, chartX, CASE_NODES, CHART, SPIKE, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, SLOT_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
 
 const W = 1600;
 const H = 1000;
@@ -58,46 +58,53 @@ export function linesSvg() {
   return head() + lines + nodes + '</svg>';
 }
 
-/** 장면 4: '위험요인 비교' 문장이 주차별 막대로(3주차 솟음) */
-export function barsSvg() {
-  const ps = buildParticles(N, 7).filter((p) => p.leaf === ANOMALY_LEAF);
+/** 장면 4 그래프 칸의 가로세로 비(이상 탐지 화면 안) */
+export const CHART_ASPECT = 2.9;
+/**
+ * 장면 4: '위험요인 비교' 문장을 일어난 시각에 놓은 분포(3주차 13:25–14:40 구간이 솟는다).
+ * 직전 학기 수준은 점선, 이번 학기는 선. 글자는 없다(주차·범례는 HTML).
+ */
+export function signalSvg() {
+  const SW = 1450;
+  const SH = Math.round(SW / CHART_ASPECT);
+  const all = buildParticles();
+  const ps = all.filter((p) => p.leaf === ANOMALY_LEAF);
+  const { now, prev, G } = signalCurves(all);
+  const X = (u: number) => f(u * SW);
+  const Y = (v: number) => f(v * SH);
+  const path = (c: Float32Array) => Array.from(c, (v, g) => `${g ? 'L' : 'M'}${X(chartX(((g + 0.5) / G) * 6))} ${Y(CHART.base - v * (CHART.base - CHART.top))}`).join('');
+  const sx = X(chartX(HOT_WEEK + SPIKE.at));
+  const glow = `<radialGradient id="sg" cx="${sx}" cy="${Y(CHART.base)}" r="${f(SH * 0.9)}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e930b0" stop-opacity=".24"/><stop offset="1" stop-color="#e930b0" stop-opacity="0"/></radialGradient>`;
   const cs = VERBS.map((v, vi) => {
     const c = ps
       .filter((p) => p.verb === vi)
-      .map((p) => `<circle cx="${f(p.B[0] * W)}" cy="${f(p.B[1] * H)}" r="${(4.2 * sizeOf(p, 'B')).toFixed(1)}" opacity="${p.week === HOT_WEEK ? 1 : 0.6}"/>`)
+      .map((p) => `<circle cx="${X(p.B[0])}" cy="${Y(p.B[1])}" r="${(3.6 * sizeOf(p, 'B')).toFixed(1)}" opacity="${alphaOf(p, 'B').toFixed(2)}"/>`)
       .join('');
     return `<g fill="${VERB_COLOR[v]}" filter="url(#glow)">${c}</g>`;
   }).join('');
-  return head(DEFS) + `<line x1="${0.05 * W}" x2="${0.52 * W}" y1="${0.81 * H}" y2="${0.81 * H}" stroke="#ffffff" stroke-opacity=".18" stroke-width="2"/>` + cs + '</svg>';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SW} ${SH}" width="${SW}" height="${SH}"><defs>${glow}<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`
+    + `<rect x="0" y="0" width="${SW}" height="${SH}" fill="url(#sg)"/>`
+    + `<line x1="${X(CHART.x0)}" x2="${X(CHART.x1)}" y1="${Y(CHART.base) + 1}" y2="${Y(CHART.base) + 1}" stroke="#fff" stroke-opacity=".16" stroke-width="2"/>`
+    + cs
+    + `<path d="${path(prev)}" fill="none" stroke="#a3b1ff" stroke-opacity=".65" stroke-width="2.4" stroke-dasharray="7 8"/>`
+    + `<path d="${path(now)}" fill="none" stroke="#eef1fb" stroke-opacity=".35" stroke-width="2"/>`
+    + '</svg>';
 }
 
-/** 장면 1: 흩어진 학습의 순간들(성운). 가까운 별은 크고 밝게, 먼 별은 작고 흐리게 */
-export function nebulaSvg() {
-  const ps = buildParticles();
-  const cs = VERBS.map((v, vi) => {
-    const c = ps
-      .filter((p) => p.verb === vi)
-      .map((p) => {
-        const r = p.z > 0.9 ? 6 + (p.z - 0.9) * 40 : 2 + p.z * 3.5;
-        return `<circle cx="${f(p.G[0] * W)}" cy="${f(p.G[1] * H)}" r="${r.toFixed(1)}" opacity="${(0.25 + p.z * 0.6).toFixed(2)}"/>`;
-      })
-      .join('');
-    return `<g fill="${VERB_COLOR[v]}" filter="url(#glow)">${c}</g>`;
-  }).join('');
-  return head(DEFS) + cs + '</svg>';
-}
-
-/** 장면 2: 다 채워진 기록 행(actor · verb · object). 가로 3.2 : 1 */
+/** 장면 2: 다 채워진 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸은 모든 줄이 같고 채워진 길이만 다르다 */
 export function ledgerSvg() {
   const LW = 1600;
   const LH = Math.round(LW / LEDGER_ASPECT);
-  const ph = LEDGER.pillH * LH;
+  const ph = Math.min(LEDGER.pillH * LH, 24);
   const ps = buildParticles().filter((p) => p.ink >= 0);
   const rows = LEDGER.rows.map((row) => {
     const y = row.y * LH;
     const pills = row.pills.map((pl) => {
       const c = SLOT_COLOR[pl.slot];
-      return `<rect x="${f(pl.x * LW)}" y="${f(y - ph / 2)}" width="${f(pl.w * LW)}" height="${f(ph)}" rx="${f(ph / 2)}" fill="${c}" fill-opacity=".28" stroke="${c}" stroke-opacity=".85"/>`;
+      const x = f(pl.x * LW);
+      const top = f(y - ph / 2);
+      return `<rect x="${x}" y="${top}" width="${f(pl.w * LW)}" height="${f(ph)}" rx="${f(ph / 2)}" fill="none" stroke="${c}" stroke-opacity=".3"/>`
+        + `<rect x="${x}" y="${top}" width="${f(Math.max(ph, pl.w * pl.fill * LW))}" height="${f(ph)}" rx="${f(ph / 2)}" fill="${c}" fill-opacity="${pl.slot === 3 ? '.32' : '.26'}" stroke="${c}" stroke-opacity=".85"/>`;
     }).join('');
     const hx = LEDGER.headX * LW;
     const cx = LEDGER.checkX * LW;

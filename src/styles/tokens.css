@@ -37,6 +37,9 @@
   --grad-tag:linear-gradient(92deg,#cf2b9d,#7c4dff 52%,#2a70e6);
   --grad-lec:linear-gradient(92deg,#e930b0,#9a4bf0);
   --grad-lhb:linear-gradient(92deg,#6d56ff,#2f7cff);
+  /* 이상 신호(Lecognizer 쪽 마젠타에서 밝힌 색): 배경 #06070e 위 8.6:1 */
+  --hot:#ff7ccf;
+  --hot-bg:rgba(233,48,176,.16);
 
   /* 글꼴 */
   /* 대체 글꼴: 글꼴이 오기 전·글꼴에 없는 글자(일본어)용. 한글 시스템 글꼴 이름을 명시해야 브라우저가 글자마다 글꼴을 찾지 않는다 */
@@ -63,3 +66,6 @@
   /* 반응형 기준(미디어 쿼리에는 변수를 못 쓰므로 값만 기록):
      폰 ≤699px · 태블릿 700~1023px · 데스크톱 ≥1024px */
 }
+/* 노트북 폭부터는 좌우 여백을 넓히고, 큰 화면에서는 본문 폭을 넓혀 그림이 작아 보이지 않게 */
+@media (min-width:1200px){:root{--gutter:48px}}
+@media (min-width:1600px){:root{--wrap:1400px}}

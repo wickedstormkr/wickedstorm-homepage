@@ -1,28 +1,28 @@
 {
   "eyebrow": "Feed · Update",
   "title": "Tin&nbsp;tức mới nhất",
-  "more": "Xem tất cả →",
+  "more": "Xem tất cả",
   "cards": [
     {
       "id": "2026-09-edtech-korea-fair",
       "tag": "NEWS",
       "title": "Wicked&nbsp;Storm giới&nbsp;thiệu ‘Learning&nbsp;Loop’ tại EdTech&nbsp;Korea&nbsp;Fair",
       "alt": "Khách tham quan tập trung trước màn hình trình diễn tại gian hàng Wicked Storm, EdTech Korea Fair 2026",
-      "more": "Xem bài viết →"
+      "more": "Xem bài viết"
     },
     {
       "id": "2025-11-patent-anomaly",
       "tag": "NEWS",
       "title": "Wicked&nbsp;Storm được&nbsp;cấp bằng&nbsp;sáng&nbsp;chế hệ&nbsp;thống phát&nbsp;hiện dấu&nbsp;hiệu bất&nbsp;thường trong học&nbsp;tập dựa trên xAPI",
       "alt": "Bằng sáng chế số 10-2883249: Hệ thống phát hiện dấu hiệu bất thường trong học tập dựa trên dữ liệu hành vi học tập xAPI",
-      "more": "Xem bài viết →"
+      "more": "Xem bài viết"
     },
     {
       "id": "2025-02-patent-profiling",
       "tag": "NEWS",
       "title": "Wicked&nbsp;Storm được&nbsp;cấp bằng&nbsp;sáng&nbsp;chế phương&nbsp;pháp lập&nbsp;hồ&nbsp;sơ người&nbsp;học",
       "alt": "Bằng sáng chế số 10-2767110: Phương pháp lập hồ sơ người học bằng LLM để phân tích đặc điểm người học",
-      "more": "Xem bài viết →"
+      "more": "Xem bài viết"
     }
   ],
   "channels": {

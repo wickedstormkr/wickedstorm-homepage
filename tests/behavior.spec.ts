@@ -36,8 +36,8 @@ test.describe('움직임 멈춤', () => {
     await page.goto('');
     await expect(page.locator('html')).not.toHaveClass(/story-pin/);
     await page.locator('#scene-judge').scrollIntoViewIfNeeded();
-    await expect(page.locator('#scene-judge .fx-judge')).toBeVisible();
-    await expect(page.locator('#scene-judge .fx-judge')).toHaveCSS('opacity', '1');
+    await expect(page.locator('#scene-judge .fx-design')).toBeVisible();
+    await expect(page.locator('#scene-judge .fx-design')).toHaveCSS('opacity', '1');
     await ctx.close();
   });
 });

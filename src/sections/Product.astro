@@ -1,19 +1,21 @@
 ---
-/** 제품(홈): 역할별 제품 화면 탭 + 두 솔루션(Lecognizer 계열 · LearnHubble AI). 자세한 내용은 제품 페이지와 각 솔루션 사이트로 */
+/** 제품(홈): 역할별 제품 화면 탭 + 두 솔루션(Lecognizer 계열 · LearnHubble AI). 카드의 자세히 보기는 각 솔루션 사이트(새 창)로, 아래 버튼은 제품 페이지로 */
 import SecHead from '../components/SecHead.astro';
 import RoleTabs from '../components/RoleTabs.astro';
 import type { HomeContent } from '../lib/content';
 import { pagePath, type Lang } from '../lib/i18n';
 import { url } from '../lib/url';
+import { getUi } from '../lib/content';
 
 interface Props { lang: Lang; t: HomeContent['product']; story: HomeContent['story'] }
 const { lang, t, story } = Astro.props;
 const page = url(pagePath(lang, 'product'));
+const ui = getUi(lang);
 ---
 <section class="band" id="product" aria-labelledby="product-title">
   <div class="wrap">
     <SecHead lang={lang} id="product-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
-    <RoleTabs t={t} story={story} id="home-role" />
+    <RoleTabs lang={lang} t={t} story={story} id="home-role" />
     <!-- 두 솔루션: Lecognizer 계열(Lecognizer · Lecognizer AI)과 LearnHubble AI. 각 솔루션 사이트로 이어진다 -->
     <ul class="prod-cards">
       {t.solutions.map((c) => (
@@ -23,8 +25,7 @@ const page = url(pagePath(lang, 'product'));
           <p set:html={c.text} />
           <ul class="prod-badges">{c.badges.map((b) => <li>{b}</li>)}</ul>
           <div class="prod-links">
-            <a class="btn s" href={`${page}#${c.id}`}>{t.solutionsMore}</a>
-            <a class="prod-site" href={c.site} target="_blank" rel="noopener" aria-label={c.siteAria}>{c.siteLabel}<span aria-hidden="true"> ↗</span></a>
+            <a class="btn s" href={c.site} target="_blank" rel="noopener">{c.more}<small lang="en">{c.siteLabel}</small><span class="sr-only"> {ui.newWindow}</span></a>
           </div>
         </li>
       ))}

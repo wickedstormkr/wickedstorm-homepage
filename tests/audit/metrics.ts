@@ -169,6 +169,9 @@ export function audit(opts: { touch: boolean }): AuditResult {
     if (lastLine[0].br) continue; // <br>로 직접 끊은 줄
     // 일본어는 글자 수(세 글자 이하), 한국어·영어·베트남어는 단어 수(한 단어)
     const bja = langOf(b) === 'ja';
+    // 번역 전 국문 대체 글(일본어 페이지에 남은 한글 문장)은 일본어 줄바꿈 규칙으로 글자마다 끊겨 판단할 수 없다.
+    // 번역 단계(마지막)에서 사라지며, 남은 대체 글은 콘텐츠 점검(test:content)이 '모양 다름'으로 알린다
+    if (bja && /[가-힣]/.test(text) && !/[぀-ヿ一-鿿]/.test(text)) continue;
     // 두 단어뿐인 글(제품·표준 이름)이 한 단어씩 두 줄이 되는 것은 고른 나눔이라 보지 않는다
     const orphan = bja ? lastLine.reduce((a, w) => a + w.text.length, 0) <= 3 : lastLine.length === 1 && words.length >= 3;
     if (orphan) {

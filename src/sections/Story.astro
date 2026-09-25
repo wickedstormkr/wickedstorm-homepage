@@ -1,22 +1,23 @@
 ---
 /**
- * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 지금 사이트의 히어로·파이프라인을 대신한다.
+ * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 01 실시간 수집 · 02 국제 표준 · 03 프로파일링 · 04 이상 신호 · 05 사람의 판단 · 06 다음 학기.
  *
  * 기본 층(이 마크업만으로 완결): 장면을 세로로 이어 붙이고, 장면마다 글 설명·HTML 제품 화면·미리 그린 그림(SVG)을 둔다.
  *   폰·태블릿·움직임 줄이기·JS 없음은 이 층으로 본다. 폰에서는 장면이 화면에 들어올 때 그 안의 짧은 움직임만 재생(.play).
  * 연출 층(src/scripts/story/*): 데스크톱에서 화면을 고정하고 스크롤로 장면을 넘긴다(GSAP ScrollTrigger).
- *   데이터 아트는 성능에 따라 WebGL(OGL) → 캔버스 → 미리 그린 그림 순으로 고른다.
- * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰은 그림 아래 목록으로.
+ *   입자(학습데이터 한 건)가 성운 → 기록 행 → CASE 체계 → 이상 탐지 그래프 → 근거 줄기 → 선순환 고리로 옮겨 간다.
+ * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰·태블릿은 그림 아래 목록으로.
+ * 제품 화면 창(.fx) 안은 누를 수 없는 그림이다. 누를 링크(특허 원본)는 장면 글에 둔다.
  */
-import StatementCard from '../components/fragments/StatementCard.astro';
+import Window from '../components/fragments/Window.astro';
 import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
-import InterventionPanel from '../components/fragments/InterventionPanel.astro';
+import InstructorDesign from '../components/fragments/InstructorDesign.astro';
 import type { HomeContent } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 import { pagePath, type Page } from '../lib/i18n';
-import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY, LEDGER, TODAY_TOTAL } from '../lib/story-data';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, RING_NODES, RING_R, ringXY, LEDGER, TODAY_TOTAL } from '../lib/story-data';
 /** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
 const RING_ORDER = [0, 1, 2, 3, 4];
 
@@ -27,7 +28,13 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 const nodeName = (id: string) => (t.store.nodes as Record<string, string>)[id];
 const label = (product: string) => `${product} ${t.screen}`;
 const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
-const week = (n: number) => t.signal.week.replace('{n}', String(n));
+const locale = lang === 'vi' ? 'vi-VN' : 'en-US';
+/** 장면 글 안의 링크(특허 원본 등): {trust}를 신뢰 페이지 주소로 */
+const trust = url(pagePath(lang, 'trust' as Page));
+const body = (html: string) => html.replaceAll('{trust}', trust);
+/** 기록 행 머리·바닥: 칸 너비를 그림(LEDGER)과 같은 비율로. 퍼센트는 격자 안쪽 너비(px1 - px0) 기준 */
+const inner = LEDGER.px1 - LEDGER.px0;
+const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inner)).join(' ')};column-gap:${pct(LEDGER.gap / inner)};padding-inline:${pct(LEDGER.px0)} ${pct(1 - LEDGER.px1)}`;
 ---
 <section class="story" id="story" aria-label={t.label} data-story>
   <a class="story-skip" href="#after-story">{t.skip}</a>
@@ -41,7 +48,7 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
       </ol>
     </nav>
 
-    <!-- 장면 1 · 순간 -->
+    <!-- 장면 1 · 실시간 수집 -->
     <article class="scene scene-moment is-active" id={`scene-${sc[0].id}`} data-scene="0" aria-labelledby="hero-title">
       <div class="scene-copy">
         <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={hero.eyebrow} /></p>
@@ -56,65 +63,62 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         </ul>
       </div>
       <div class="scene-visual">
+        <p class="beat live-beat"><span aria-hidden="true">{num(0)} · </span>{sc[0].beat}</p>
         <!-- 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(움직임 멈춤이면 멈춘다, story/live.ts) -->
-        <figure class="live" aria-label={t.live.label} data-live={JSON.stringify(t.live.rows)}>
-          <div class="live-bar"><b>{t.live.title}</b><span class="live-state">{t.live.state}</span></div>
-          <div class="live-view">
-            <ol class="live-rows" data-live-rows>
-              {t.live.rows.slice(0, 5).map((r) => (
-                <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
-              ))}
-            </ol>
-          </div>
-          <figcaption class="live-foot" set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US')}</b>`)} />
-        </figure>
-        <img class="art-base nebula-base" src={url('/art/nebula.svg')} alt="" width="1600" height="1000" decoding="async" fetchpriority="low" />
+        <div class="live" data-live={JSON.stringify(t.live.rows)}>
+          <Window class="live-win" label={t.live.label} title={t.live.title}>
+            <span slot="bar" class="live-state">{t.live.state}</span>
+            <div class="live-view">
+              <ol class="live-rows" data-live-rows>
+                {t.live.rows.slice(0, 5).map((r) => (
+                  <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
+                ))}
+              </ol>
+            </div>
+            <p class="live-foot"><span set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(locale)}</b>`)} /><span class="live-note">{t.live.note}</span></p>
+          </Window>
+        </div>
       </div>
     </article>
 
-    <!-- 장면 2 · 표준 문장 -->
+    <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉는다 -->
     <article class="scene scene-statement" id={`scene-${sc[1].id}`} data-scene="1" aria-labelledby="scene-t-2">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
         <h2 class="scene-title" id="scene-t-2" set:html={phrase(sc[1].title!, lang)} />
-        <p class="scene-text">{sc[1].text}</p>
+        <p class="scene-text" set:html={body(sc[1].text)} />
       </div>
       <div class="scene-visual">
-        <!-- 기록 행: 흩어진 순간들이 actor · verb · object 칸에 앉아 표준 문장이 된다(칸·입자는 그림 층, 이름표는 HTML) -->
         <div class="ledger">
+          <p class="ledger-std"><b lang="en">{t.ledger.std.xapi}</b><span class="swap" aria-hidden="true">⇄</span><span class="sr-only">, </span><b lang="en">{t.ledger.std.caliper}</b><span class="ledger-note">{t.ledger.std.note}</span></p>
+          <dl class="ledger-cols" style={ledgerGrid}>
+            {t.ledger.cols.map((c, i) => (
+              <div class={`c${i}`}>
+                <dt>{c.ko}</dt>
+                <dd lang="en">{c.xapi === c.caliper ? c.xapi : <Fragment>{c.xapi}<span class="swap" aria-hidden="true">⇄</span><span class="sr-only"> / </span>{c.caliper}</Fragment>}</dd>
+              </div>
+            ))}
+          </dl>
           <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
-            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="615" loading="lazy" decoding="async" />
-            {LEDGER.groups.map((g) => {
-              const row = LEDGER.rows[g.rows[0]];
-              const keys = [['actor', t.ledger.cols.actor], [g.std === 'xapi' ? 'verb' : 'action', g.std === 'xapi' ? t.ledger.cols.verb : t.ledger.cols.action], ['object', t.ledger.cols.object], [t.ledger.extraKey[g.std], t.ledger.cols.extra]];
-              return (
-                <p class:list={['ledger-head', g.std]} style={`top:${pct(g.headY)}`} aria-hidden="true">
-                  <span class="std" lang="en">{g.std === 'xapi' ? t.ledger.xapi : t.ledger.caliper}</span>
-                  {row.pills.map((pl, i) => <span class={`col c${i}`} style={`left:${pct(pl.x)}`}><b lang="en">{keys[i][0]}</b> {keys[i][1]}</span>)}
-                </p>
-              );
-            })}
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="516" loading="lazy" decoding="async" />
           </div>
-          <div class="ledger-extra">
+          <div class="ledger-foot" style={ledgerGrid}>
             <p class="ledger-rest">{t.ledger.rest}</p>
-            <ul class="ledger-items" aria-label={t.ledger.cols.extra}>{t.ledger.extraItems.map((x) => <li>{x}</li>)}</ul>
+            <ul class="ledger-items" aria-label={t.ledger.cols[3].ko}>{t.ledger.extraItems.map((x) => <li>{x}</li>)}</ul>
           </div>
-        </div>
-        <div class="stmt-one">
-          <StatementCard t={t.statement} label={t.statement.caption} />
         </div>
       </div>
     </article>
 
-    <!-- 장면 3 · 쌓임 -->
+    <!-- 장면 3 · 프로파일링: 입자가 CASE 성취 항목(지표)마다 모인다 -->
     <article class="scene scene-store" id={`scene-${sc[2].id}`} data-scene="2" aria-labelledby="scene-t-3">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(2)} · </span>{sc[2].beat}</p>
         <h2 class="scene-title" id="scene-t-3" set:html={phrase(sc[2].title!, lang)} />
-        <p class="scene-text">{sc[2].text}</p>
+        <p class="scene-text" set:html={body(sc[2].text)} />
         <ul class="art-legend">
           <li class="legend-title">{t.store.legend}</li>
-          {VERBS.map((v) => <li><i style={`background:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
+          {VERBS.map((v) => <li><i style={`--c:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
         </ul>
       </div>
       <div class="scene-visual">
@@ -122,80 +126,74 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
           <img class="art-base" src={url('/art/case-tree.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <img class="art-lines" src={url('/art/case-lines.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
-          <p class="art-count"><span>{t.store.countLabel}</span><b>{t.store.count}</b></p>
+          <p class="art-count" aria-hidden="true"><span>{t.store.countLabel}</span><b class="tnum" data-live-count>{TODAY_TOTAL.toLocaleString(locale)}</b></p>
           <ul class="art-labels" aria-hidden="true">
             {CASE_NODES.map((n) => (
               <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}{n.count && <small>{n.count.toLocaleString('en-US')}</small>}</li>
             ))}
           </ul>
         </div>
-        <ol class="case-list" aria-label={t.store.listLabel}>
-          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span><b>{n.count!.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US')}{t.store.unit}</b></li>)}
+        <p class="case-cap" id="case-cap">{t.store.listLabel}</p>
+        <ol class="case-list" aria-labelledby="case-cap">
+          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span><b>{n.count!.toLocaleString(locale)}{t.store.unit}</b></li>)}
         </ol>
       </div>
     </article>
 
-    <!-- 장면 4 · 신호 -->
+    <!-- 장면 4 · 이상 신호: 이상 항목의 입자가 이상 탐지 화면의 그래프 칸에 시간순 분포로 착지한다 -->
     <article class="scene scene-signal" id={`scene-${sc[3].id}`} data-scene="3" aria-labelledby="scene-t-4">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(3)} · </span>{sc[3].beat}</p>
         <h2 class="scene-title" id="scene-t-4" set:html={phrase(sc[3].title!, lang)} />
-        <p class="scene-text">{sc[3].text}</p>
+        <p class="scene-text" set:html={body(sc[3].text)} />
       </div>
       <div class="scene-visual">
-        <div class="art-box art-bars">
-          <img class="art-base" src={url('/art/weekly-bars.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
-          <p class="art-tag" aria-hidden="true">{t.signal.title.split(' · ')[0]}</p>
-          <ul class="art-weeks" aria-hidden="true">
-            {WEEK_WEIGHTS.map((_, i) => <li class:list={{ hot: i === HOT_WEEK }} style={`left:${pct(BARS.x0 + i * BARS.step + BARS.width / 2)};top:${pct(BARS.base + 0.035)}`}>{week(i + 1)}</li>)}
-          </ul>
-          <div class="art-panel"><AnomalyPanel t={t.signal} label={label(t.signal.title)} /></div>
-        </div>
+        <AnomalyPanel t={t.signal} label={label(t.signal.title)} />
       </div>
     </article>
 
-    <!-- 장면 5 · 사람의 판단 -->
+    <!-- 장면 5 · 사람의 판단: 신호가 근거와 함께 교수자 화면에 도착하고, AI 추천을 교수자가 정한다 -->
     <article class="scene scene-judge" id={`scene-${sc[4].id}`} data-scene="4" aria-labelledby="scene-t-5">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(4)} · </span>{sc[4].beat}</p>
         <h2 class="scene-title" id="scene-t-5" set:html={phrase(sc[4].title!, lang)} />
-        <p class="scene-text">{sc[4].text}</p>
+        <p class="scene-text" set:html={body(sc[4].text)} />
       </div>
       <div class="scene-visual">
         <div class="judge-stack">
           <p class="signal-alert">{t.judge.alert}</p>
-          <InterventionPanel t={t.judge} label={label(t.judge.product)} />
+          <InstructorDesign t={t.judge} label={label(t.judge.product)} />
         </div>
       </div>
     </article>
 
-    <!-- 장면 6 · 다음 학기 -->
+    <!-- 장면 6 · 다음 학기: 모든 학습데이터가 고리가 되어 돈다. 고리 둘레에 두 솔루션과 세 역할 -->
     <article class="scene scene-next" id={`scene-${sc[5].id}`} data-scene="5" aria-labelledby="scene-t-6">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(5)} · </span>{sc[5].beat}</p>
         <h2 class="scene-title" id="scene-t-6" set:html={phrase(sc[5].title!, lang)} />
-        <p class="scene-text">{sc[5].text}</p>
+        <p class="scene-text" set:html={body(sc[5].text)} />
         <div class="hero-cta">
           <a class="btn p" href="#contact">{t.next.contact}</a>
           <a class="btn s" href="#contact" data-topic={demoTopic}>{t.next.demo}</a>
         </div>
       </div>
       <div class="scene-visual">
-        <!-- 모든 문장이 고리가 되어 돈다. 고리 둘레에 세 솔루션과 세 역할 -->
         <div class="art-box ring-box">
           <img class="art-base" src={url('/art/loop-ring.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <ol class="ring-labels" aria-label={t.ring.label}>
             {RING_ORDER.map((k, i) => {
               const n = loop.notes[k];
+              const role = t.ring.roles[k];
               const [x, y] = ringXY(-Math.PI / 2 + (i * Math.PI * 2) / RING_NODES, RING_R);
               return (
-                <li class:list={['ring-l', x > 0.55 ? 'r' : x < 0.45 ? 'l' : 'c', y < 0.5 ? 't' : 'b']} style={`left:${pct(x)};top:${pct(y)}`}>
-                  <span class:list={['pill', n.product]}>{n.pill}</span>{n.role && <b set:html={n.role} />}
+                <li class:list={['ring-l', x > 0.55 ? 'r' : x < 0.45 ? 'l' : 'c', y < 0.5 ? 't' : 'b', { role }]} style={`left:${pct(x)};top:${pct(y)};--i:${i}`}>
+                  {role && <b>{role}</b>}<span class:list={['pname', n.product]} lang="en">{n.pill}</span>
                 </li>
               );
             })}
           </ol>
-          <p class="ring-caption" set:html={loop.caption} />
+          <p class="ring-caption" aria-hidden="true">{t.ring.label}</p>
         </div>
       </div>
     </article>

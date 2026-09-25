@@ -85,6 +85,23 @@ const ogIsDefault = /\/img\/og-(home|image)/.test(ogImage);
 {story && <script is:inline>
   // 데스크톱(1024px 이상, 움직임 줄이기 아님)은 첫 그리기 전에 여섯 장면 무대를 고정한다(레이아웃이 뒤늦게 바뀌지 않게)
   if (window.matchMedia && matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches) document.documentElement.classList.add('story-pin');
+  // 새로고침은 언제나 이야기의 처음(1장면)에서 시작한다. 주소에 남은 #contact 같은 앵커로 튀거나 이전 스크롤 위치로 돌아가지 않게.
+  // 다른 페이지에서 링크로 들어온 #contact는 그대로 그 자리로 간다(새로고침일 때만 지운다).
+  try {
+    var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if (nav && nav.type === 'reload') {
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      var hadHash = !!location.hash;
+      if (hadHash) history.replaceState(null, '', location.pathname + location.search);
+      window.scrollTo(0, 0);
+      // 브라우저는 새로고침 전 주소의 앵커(#contact)로 문서를 다 읽은 뒤에 한 번 더 옮긴다. 그 뒤에 다시 처음으로
+      if (hadHash) {
+        var top0 = function () { window.scrollTo(0, 0); };
+        document.addEventListener('DOMContentLoaded', top0, { once: true });
+        window.addEventListener('load', function () { requestAnimationFrame(top0); }, { once: true });
+      }
+    }
+  } catch (e) {}
 </script>}
 <title>{title}</title>
 <meta name="description" content={description} />

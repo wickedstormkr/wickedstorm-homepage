@@ -1,33 +1,36 @@
 ---
-/** Lecognizer AI 이상 탐지 화면: 주차별 막대(3주차 급증), 원인 후보, 근거. 특허 표시는 원본(특허 기사)으로 링크 */
+/**
+ * Lecognizer AI 이상 탐지 화면: 위는 그래프 제목·범례와 그래프 칸(시간에 따른 멈춤·되감기·오답 분포, 직전 학기 점선과 비교),
+ * 아래는 찾은 것(구간·원인 후보·근거). 데스크톱 연출에서는 입자가 이 그래프 칸에 착지한다(data-chart-slot).
+ * 폰·태블릿·움직임 줄이기에서는 미리 그린 분포 그림(/art/signal.svg)이 같은 자리를 채운다.
+ */
+import Window from './Window.astro';
 import type { HomeContent } from '../../lib/content';
-import { WEEK_WEIGHTS, HOT_WEEK } from '../../lib/story-data';
+import { WEEKS, HOT_WEEK, SPIKE, CHART, chartX } from '../../lib/story-data';
 import { url } from '../../lib/url';
 interface Props { t: HomeContent['story']['signal']; label: string }
 const { t, label } = Astro.props;
-const max = Math.max(...WEEK_WEIGHTS);
+const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
 const week = (n: number) => t.week.replace('{n}', String(n));
 ---
-<figure class="fx fx-anom" aria-label={label}>
-  <div class="fx-bar"><span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span><b>{t.title}</b><span>{t.item}</span></div>
-  <div class="fx-body">
-    <div class="fx-grid">
-      <div class="fx-chart">
-        <ol class="fx-bars" aria-hidden="true">
-          {WEEK_WEIGHTS.map((v, i) => (
-            <li class:list={{ hot: i === HOT_WEEK }} style={`--h:${Math.round((v / max) * 100)}%;--i:${i}`}>{i === HOT_WEEK && <span class="fx-chip hot">{t.tag}</span>}</li>
-          ))}
-        </ol>
-        <div class="fx-weeks" aria-hidden="true">{WEEK_WEIGHTS.map((_, i) => <span class:list={{ hot: i === HOT_WEEK }}>{week(i + 1)}</span>)}</div>
-        <p class="fx-cap">{t.chart}</p>
-      </div>
-      <div>
-        <p><a class="fx-chip blue fx-patent" href={url('/news/2025-11-patent-anomaly.html')}>{t.patent}</a></p>
-        <p class="fx-headline" style="margin-top:10px">{t.headline}</p>
-        <p class="fx-text" set:html={t.body} />
-        <span class="fx-ev">{t.evidence}</span>
-        <div class="fx-actions" aria-hidden="true"><span class="fx-btn lec">{t.send}</span><span class="fx-btn">{t.save}</span></div>
-      </div>
+<Window class="fx-anom" label={label} title={t.title} crumb={t.item}>
+  <div class="fx-chart-head">
+    <p class="fx-chart-cap">{t.chart}</p>
+    <ul class="fx-legend" aria-hidden="true"><li class="now">{t.now}</li><li class="prev">{t.prev}</li></ul>
+  </div>
+  <div class="fx-chart" data-chart-slot>
+    <img class="art-base" src={url('/art/signal.svg')} alt="" width="1450" height="500" loading="lazy" decoding="async" />
+    <p class="fx-flag" style={`left:${pct(chartX(HOT_WEEK + SPIKE.at))}`}><b>{t.tag}</b> <span>{t.flag}</span></p>
+    <ol class="fx-weeks" aria-hidden="true" style={`top:${pct(CHART.base)}`}>
+      {Array.from({ length: WEEKS }, (_, i) => <li class:list={{ hot: i === HOT_WEEK }} style={`left:${pct(chartX(i + 0.5))}`}>{week(i + 1)}</li>)}
+    </ol>
+  </div>
+  <div class="fx-body fx-finding">
+    <p class="fx-headline">{t.headline}</p>
+    <p class="fx-text" set:html={t.body} />
+    <div class="fx-foot">
+      <span class="fx-note">{t.evidence}</span>
+      <span class="fx-actions" aria-hidden="true"><span class="fx-btn">{t.save}</span><span class="fx-btn p">{t.send}</span></span>
     </div>
   </div>
-</figure>
+</Window>

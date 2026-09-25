@@ -30,7 +30,7 @@ const thumb = post.thumb && hasImg(post.thumb) ? post.thumb.replace(/^\.\/img\//
   {thumb ? (
     <div class="nimg"><Img name={thumb} alt={alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" /></div>
   ) : (
-    <div class="nimg ncover" data-cover={post.category} aria-hidden="true"><span class="cover-rail"></span><span class="cover-cat">{CATEGORY_TAG[post.category].toLowerCase()}</span></div>
+    <div class="nimg ncover" data-cover={post.category} aria-hidden="true"><span class="cover-cat">{CATEGORY_TAG[post.category].toLowerCase()}</span></div>
   )}
   <div class="nbody">
     <div class="nmeta"><span class="ntag">{tag}</span> <time datetime={post.date.replace(/\./g, '-')}>{post.date}</time></div>

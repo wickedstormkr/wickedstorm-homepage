@@ -1,0 +1,40 @@
+---
+/**
+ * LearnHubble AI 교수자 · 수업 설계: 확인이 필요한 구간(근거와 함께) → AI 추천(보충 설명·확인 퀴즈) → 교수자가 고쳐서 적용.
+ * compact(이야기 장면 5): 신호가 온 구간 하나와 추천만. full(제품 역할 탭): 구간 셋과 확인 퀴즈 초안까지.
+ */
+import Window from './Window.astro';
+import type { HomeContent } from '../../lib/content';
+interface Props { t: HomeContent['story']['judge']; label: string; full?: boolean }
+const { t, label, full = false } = Astro.props;
+const segs = full ? t.segments : t.segments.filter((s) => s.hot);
+---
+<Window class:list={['fx-design', { compact: !full }]} label={label} title={t.product} crumb={t.crumb}>
+  <div class="fx-body">
+    <p class="fx-h">{t.segLabel}</p>
+    <ul class="fx-segs">
+      {segs.map((s) => (
+        <li class:list={{ hot: s.hot }}>
+          <span class="fx-time tnum">{s.time}</span>
+          <b>{s.title}</b>
+          <small>{s.note}</small>
+        </li>
+      ))}
+    </ul>
+    <div class="fx-ai">
+      <span class="fx-tag">{t.ai}</span>
+      <p>{t.proposal}</p>
+      <small>{t.detail}</small>
+    </div>
+    {full && (
+      <div class="fx-draft">
+        <p class="fx-h">{t.quizLabel}</p>
+        <ol>{t.quiz.map((q, i) => <li><i aria-hidden="true">Q{i + 1}</i><span>{q}</span></li>)}</ol>
+      </div>
+    )}
+    <div class="fx-foot">
+      <span class="fx-note">{t.owner}</span>
+      <span class="fx-actions" aria-hidden="true"><span class="fx-btn">{t.edit}</span><span class="fx-btn p">{t.apply}</span></span>
+    </div>
+  </div>
+</Window>
