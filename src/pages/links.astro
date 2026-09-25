@@ -13,7 +13,7 @@ const latest = (await allPosts()).find((p) => !p.externalUrl);
 const items = [
   latest && { href: url(`/news/${latest.id}.html`) + UTM, title: latest.title, sub: '최신 소식', icon: '→', primary: true },
   { href: url('/files/WICKEDSTORM_Catalog_2026_KO.pdf'), title: '카탈로그 2026 (PDF)', sub: 'Lecognizer · LearnHubble AI · 학습의 선순환', icon: '↓', blank: true },
-  { href: url('/') + UTM + '#learnhubble', title: 'LearnHubble AI 살펴보기', sub: '학습자 화면과 AI 학습 패널', icon: '→' },
+  { href: url('/product.html') + UTM + '#learnhubble', title: 'LearnHubble AI 살펴보기', sub: '학습자 화면과 AI 학습 패널', icon: '→' },
   { href: url('/') + UTM + '#contact', title: '도입·시연 문의', sub: '02-2205-1470 · manager@wickedstorm.kr', icon: '→' },
   { href: url('/news.html') + UTM, title: '모든 소식 보기', sub: '특허, 제품, 표준·기술 노트', icon: '→' },
 ].filter(Boolean) as Array<{ href: string; title: string; sub: string; icon: string; primary?: boolean; blank?: boolean }>;

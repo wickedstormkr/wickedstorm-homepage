@@ -1,0 +1,154 @@
+/* 제품 화면 조각: 실제 제품(Lecognizer · LearnHubble AI) 화면을 HTML로 다시 그린 것.
+   맥 브라우저 창처럼 빨강·노랑·초록 신호등을 달아 '제품 화면 그림'으로 읽히게 한다. 창 안은 누를 수 없다.
+   누를 수 없는 것이 누를 수 있게 보이지 않도록(affordance):
+   - 창 안 버튼(.fx-btn)은 사이트 CTA(그라디언트 알약)와 다른 앱 모양: 작은 직사각형, 평평한 색
+   - 창 안에 밑줄 링크를 그리지 않는다. 실제 링크(특허 원본 등)는 창 밖 글에 둔다
+   - 상태 표시(.fx-tag)는 테두리 없는 작은 라벨(알약·외곽선 금지: 버튼처럼 보인다)
+   글자는 모두 HTML(네 언어로 바뀌고 화면 낭독기가 읽는다). 화면 속 인물·교과·수치는 시연용. */
+.fx{--fx-ink:#eef1fb;--fx-ink2:#c7cbe6;--fx-muted:#9ba1c2;--fx-line:rgba(255,255,255,.09);
+  --fx-hot:var(--hot);--fx-hot-bg:var(--hot-bg);--fx-blue:#a8c3ff;
+  position:relative;margin:0;border-radius:14px;overflow:hidden;cursor:default;text-align:left;letter-spacing:-.01em;
+  background:linear-gradient(180deg,#12142a,#0e1020 40%);color:var(--fx-ink);font-family:var(--font);
+  box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(163,177,255,.16)}
+.fx *{min-width:0}
+.fx p{text-wrap:pretty}
+/* 창 머리: 신호등 · 제품 · 위치 */
+.fx-bar{display:flex;align-items:center;gap:10px;min-height:40px;padding:8px 14px;border-bottom:1px solid var(--fx-line);background:#141628;font-size:12.5px;color:var(--fx-muted)}
+.fx-bar b{flex:none;white-space:nowrap;color:var(--ink-2);font-weight:700}
+.fx-crumb{flex:1 1 auto;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.fx-dots{flex:none;display:inline-flex;gap:6px;margin-right:4px}
+.fx-dots i{width:11px;height:11px;border-radius:50%;background:#ff5f57;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25)}
+.fx-dots i:nth-child(2){background:#febc2e}
+.fx-dots i:nth-child(3){background:#28c840}
+.fx-body{padding:16px 18px 18px}
+.fx-h{margin:0 0 8px;font-size:12.5px;font-weight:700;color:var(--fx-muted)}
+/* 상태 라벨(누를 수 없음): 작은 직사각형, 테두리 없음 */
+.fx-tag{display:inline-block;padding:3px 7px;border-radius:5px;font-size:12px;font-weight:700;line-height:1.35;background:rgba(163,177,255,.14);color:#cdd5ff}
+/* 앱 버튼 그림(누를 수 없음): 사이트 버튼과 다르게 작고 평평하게 */
+.fx-actions{display:inline-flex;flex-wrap:wrap;gap:6px;pointer-events:none}
+.fx-btn{display:inline-flex;align-items:center;height:30px;padding:0 11px;border-radius:7px;font-size:12.5px;font-weight:600;white-space:nowrap;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--fx-ink2)}
+.fx-btn.p{background:#3a3572;border-color:#4a448c;color:#fff}
+.fx-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-top:14px}
+.fx-note{font-size:12.5px;color:var(--fx-muted)}
+/* AI 추천 상자 */
+.fx-ai{padding:12px 14px;border-radius:10px;background:rgba(124,77,255,.1);border:1px solid rgba(124,77,255,.32)}
+/* AI 추천 라벨은 추천 문장과 같은 줄에(상자 높이를 늘리지 않게) */
+.fx-ai p{font-size:14.5px;font-weight:700;line-height:1.55;color:var(--fx-ink)}
+.fx-ai p .fx-tag{margin-right:8px;vertical-align:1px}
+.fx-ai small{display:block;margin-top:4px;font-size:13px;line-height:1.5;color:var(--fx-ink2)}
+
+/* 1. Lecognizer AI 이상 탐지: 위 그래프 칸 · 아래 찾은 것 */
+.fx-chart-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;padding:11px 2.5% 0 3.5%}
+.fx-chart{position:relative;aspect-ratio:2.9;border-bottom:1px solid var(--fx-line);
+  background:repeating-linear-gradient(90deg,transparent 0 calc(100%/6 - 1px),rgba(255,255,255,.035) calc(100%/6 - 1px) calc(100%/6))}
+.fx-chart .art-base{position:absolute;inset:0;width:100%;height:100%}
+.fx-chart-cap{font-size:12.5px;font-weight:700;color:var(--fx-muted)}
+.fx-legend{display:flex;gap:12px;list-style:none;font-size:12px;color:var(--fx-muted)}
+.fx-legend li{display:inline-flex;align-items:center;gap:6px}
+.fx-legend li::before{content:"";width:16px;height:0;border-top:1.5px solid rgba(238,241,251,.55)}
+.fx-legend li.prev::before{border-top:1.5px dashed var(--accent)}
+.fx-flag{position:absolute;top:calc(12% + 2px);transform:translateX(14px);display:flex;flex-wrap:wrap;align-items:center;gap:0 6px;max-width:calc(58% - 28px);
+  padding:3px 8px;border-radius:5px;font-size:12px;color:var(--fx-hot);background:rgba(6,7,14,.72);box-shadow:inset 0 0 0 1px rgba(255,124,207,.35)}
+.fx-flag b,.fx-flag span{font-weight:800;white-space:nowrap}
+.fx-flag span{font-weight:600}
+.fx-weeks{position:absolute;left:0;right:0;height:0;list-style:none}
+.fx-weeks li{position:absolute;top:7px;transform:translateX(-50%);font-size:11.5px;font-weight:600;color:var(--fx-muted);white-space:nowrap}
+.fx-weeks li.hot{color:var(--fx-hot);font-weight:800}
+.fx-finding{padding-top:14px}
+.fx-headline{font-size:15px;font-weight:800;line-height:1.4;color:var(--fx-hot)}
+.fx-text{margin-top:6px;font-size:14.5px;line-height:1.6;color:var(--fx-ink2)}
+.fx-text mark{padding:0 3px;border-radius:3px;background:var(--fx-hot-bg);color:#fff;font-weight:700}
+
+/* 2. LearnHubble AI 교수자 · 수업 설계 */
+/* 확인이 필요한 구간: 세 칸, 칸마다 두 줄(시각 · 구간 / 근거). 학습자 화면도 같은 상자(.mini: 근거 없음) */
+.fx-segs{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
+/* 칸이 넓으면 시각·구간 한 줄 + 근거 한 줄, 좁으면 구간 이름이 통째로 다음 줄로 */
+.fx-segs li{display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:3px 8px;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.03);border:1px solid var(--fx-line)}
+.fx-segs li.hot{background:var(--fx-hot-bg);border-color:rgba(255,124,207,.4)}
+.fx-time{padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;white-space:nowrap;color:#ffd58a;background:rgba(255,213,138,.1)}
+.fx-segs li.hot .fx-time{color:var(--fx-hot);background:rgba(233,48,176,.14)}
+.fx-segs b{font-size:14px;line-height:1.4;text-wrap:balance;color:var(--fx-ink)}
+.fx-segs small{flex-basis:100%;font-size:12.5px;line-height:1.4;color:var(--fx-muted)}
+/* 이야기 장면 5: 신호가 온 구간 하나만, 한 줄로 */
+.fx-design.compact .fx-segs{grid-template-columns:1fr}
+.fx-design.compact .fx-segs small{flex-basis:auto;margin-left:auto}
+@media (min-width:700px){.fx-design.compact .fx-segs li{flex-wrap:nowrap}.fx-design.compact .fx-segs small{white-space:nowrap}}
+/* 학습자 강의실: 좁은 세 칸이라 시각 위, 구간 이름 아래 */
+.fx-segs.mini{margin:0;gap:5px}
+.fx-segs.mini li{flex-direction:column;align-items:flex-start;padding:6px 7px}
+.fx-segs.mini b{font-size:13px}
+.fx-segs li.hot small{color:#ffc3e8}
+/* 추천과 확인 퀴즈 초안은 나란히(역할 탭의 세 화면 높이를 맞춘다) */
+.fx-plan{display:grid;gap:12px;align-items:start}
+.fx-design:not(.compact) .fx-plan{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.fx-draft .fx-h{margin-bottom:6px}
+.fx-draft ol{list-style:none;display:grid;gap:6px}
+.fx-draft li{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;padding:7px 11px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid var(--fx-line);font-size:13.5px;line-height:1.5;color:var(--fx-ink2)}
+.fx-draft li i{font-style:normal;font-family:var(--en);font-size:12px;font-weight:800;color:var(--accent)}
+
+/* 3. LearnHubble AI 운영자 · 교육과정 개정(CASE) */
+.fx-signal{position:relative;margin-bottom:12px;padding:9px 12px 9px 28px;border-radius:9px;font-size:13px;line-height:1.5;color:var(--fx-ink2);background:rgba(255,255,255,.03);border:1px solid var(--fx-line)}
+.fx-signal::before{content:"";position:absolute;left:12px;top:calc(9px + .75em - 4px);width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta)}
+/* 문제 수준: 한 줄 선택(교육과정 선택됨) */
+.fx-levels{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:14px}
+.fx-levels .fx-h{margin:0}
+.fx-levels ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.fx-levels li{padding:4px 10px;border-radius:6px;font-size:13px;color:var(--fx-muted);background:rgba(255,255,255,.04)}
+.fx-levels li.on{color:var(--fx-ink);background:rgba(163,177,255,.14)}
+.fx-levels li.on::before{content:"✓ ";color:var(--accent);font-weight:800}
+.fx-case-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:12px;align-items:start}
+.fx-tree ul{list-style:none;display:grid;gap:4px}
+.fx-tree li{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:8px;padding:7px 10px;border-radius:7px;font-size:13.5px}
+.fx-tree li.lv2{margin-left:16px;background:rgba(255,255,255,.03)}
+.fx-tree li small{font-size:11.5px;color:var(--fx-muted)}
+.fx-tree li b{font-weight:700;color:var(--fx-ink)}
+.fx-tree li em{font-style:normal;font-size:12px;font-weight:700;color:var(--fx-muted)}
+.fx-tree li.hot{box-shadow:inset 0 0 0 1px rgba(255,124,207,.4);background:var(--fx-hot-bg)}
+.fx-tree li.hot em{color:var(--fx-hot)}
+.fx-tree li.new{box-shadow:inset 0 0 0 1px rgba(163,177,255,.45);background:rgba(163,177,255,.08)}
+.fx-tree li.new em{color:var(--accent)}
+.fx-assoc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;font-size:13px;font-weight:700;color:var(--fx-ink)}
+.fx-assoc span{padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.06)}
+.fx-assoc code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent)}
+.fx-assoc code::after{content:" →"}
+
+/* 4. LearnHubble AI 학습자 · 강의실 + AI 어시스턴트 */
+.fx-learn-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+.fx-lecture{padding:16px 16px 18px;border-right:1px solid var(--fx-line)}
+.fx-video{position:relative;display:grid;align-content:end;aspect-ratio:2.2;padding:12px;border-radius:9px;overflow:hidden;
+  background:radial-gradient(120% 90% at 20% 10%,rgba(124,77,255,.35),transparent 60%),radial-gradient(90% 80% at 90% 90%,rgba(47,124,255,.3),transparent 60%),#0a0c1a}
+.fx-video p{position:relative;font-size:13.5px;font-weight:700;line-height:1.4;color:#fff}
+.fx-play{position:absolute;left:50%;top:44%;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:rgba(255,255,255,.16)}
+.fx-play::after{content:"";position:absolute;left:15px;top:12px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.fx-track{position:relative;height:4px;margin-top:12px;border-radius:2px;background:rgba(255,255,255,.12)}
+.fx-track i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--accent)}
+.fx-track b{position:absolute;top:-3px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#ffd58a}
+.fx-track b.hot{background:var(--fx-hot);box-shadow:0 0 8px var(--fx-hot)}
+.fx-clock{margin:6px 0 12px;font-size:12px;color:var(--fx-muted)}
+.fx-assist{display:grid;align-content:start;gap:10px;padding:16px 16px 18px}
+.fx-msg{padding:10px 12px;border-radius:12px;font-size:13.5px;line-height:1.55}
+.fx-msg.me{justify-self:end;max-width:88%;border-bottom-right-radius:4px;background:rgba(47,124,255,.2);color:var(--fx-ink)}
+.fx-msg.ai{border-bottom-left-radius:4px;background:rgba(255,255,255,.05);border:1px solid var(--fx-line)}
+.fx-msg.ai p{color:var(--fx-ink)}
+.fx-msg.ai small{display:block;margin-top:6px;font-size:12px;color:var(--fx-muted)}
+.fx-assist .fx-tag{justify-self:start}
+.fx-input{margin-top:2px;padding:8px 12px;border-radius:9px;border:1px solid var(--fx-line);font-size:13px;color:var(--fx-muted)}
+
+@media (max-width:699px){
+  /* 창 머리: 위치(crumb)는 잘라 숨기지 않고 제품 이름 아래 줄로 */
+  .fx-bar{flex-wrap:wrap;row-gap:2px}
+  .fx-crumb{flex-basis:100%;order:3;padding-left:59px;white-space:normal;overflow:visible}
+  .fx-body{padding:14px}
+  .fx-case-grid,.fx-learn-grid,.fx-design:not(.compact) .fx-plan{grid-template-columns:1fr}
+  .fx-segs:not(.mini){grid-template-columns:1fr}
+  .fx-segs:not(.mini) small{flex-basis:auto;margin-left:auto}
+  .fx-lecture{border-right:0;border-bottom:1px solid var(--fx-line)}
+  .fx-chart{aspect-ratio:1.9}
+  .fx-legend{display:none}
+}
+/* 터치 화면: 40자 이상 문단은 15px 이상 */
+@media (max-width:1023px){
+  .fx-text,.fx-ai p,.fx-msg,.fx-draft li,.fx-signal,.fx-chart-cap{font-size:15px}
+  .fx-ai small{font-size:14px}
+}

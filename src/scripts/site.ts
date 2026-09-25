@@ -3,7 +3,8 @@
  * 헤더 숨김/배경, 모바일 메뉴, 움직임 멈춤, 언어 안내 띠, 채널 링크, 연혁 펼치기, 파이프라인 루프 정지.
  * 상시 rAF 루프 없음. 연출(GSAP·Lenis·WebGL)은 2단계에서 따로 불러온다.
  */
-import { initMotion, onMotionChange, motionAllowed } from './motion';
+import { initMotion } from './motion';
+import { initStory } from './story/boot';
 import { SOCIAL } from '../config/client';
 
 const doc = document;
@@ -127,19 +128,34 @@ initMotion(doc.getElementById('motionBtn'));
   });
 })();
 
-/* ---------- 파이프라인 루프: 화면 밖이면 멈추고, 움직임 멈춤을 따른다(SVG SMIL 포함) ---------- */
-(() => {
-  const el = doc.getElementById('pipeLoop');
-  if (!el) return;
-  const svg = el.querySelector('svg');
-  let inView = false;
-  const run = () => {
-    const on = inView && !doc.hidden && motionAllowed();
-    el.classList.toggle('paused', !on);
-    if (svg) { if (on) svg.unpauseAnimations(); else svg.pauseAnimations(); }
+/* ---------- 오프닝 여섯 장면: 폰·태블릿 장면 재생, 데스크톱 연출 층 불러오기 ---------- */
+initStory();
+
+/* 탭(역할별 제품 화면): JS가 없으면 모두 보이고, 있으면 탭으로. 방향키·Home·End로 이동(WAI-ARIA 탭 패턴) */
+document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
+  const list = box.querySelector<HTMLElement>('[role=tablist]');
+  const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute('aria-controls') ?? ''));
+  if (!list || !tabs.length) return;
+  list.hidden = false;
+  box.classList.add('is-tabs');
+  const select = (i: number, focus = false) => {
+    tabs.forEach((t, k) => {
+      t.setAttribute('aria-selected', String(k === i));
+      t.tabIndex = k === i ? 0 : -1;
+      if (panels[k]) panels[k]!.hidden = k !== i;
+    });
+    if (focus) tabs[i].focus();
   };
-  new IntersectionObserver((ents) => { ents.forEach((en) => { inView = en.isIntersecting; }); run(); }, { threshold: 0.1 }).observe(el);
-  doc.addEventListener('visibilitychange', run);
-  onMotionChange(run);
-  run();
-})();
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(i));
+    t.addEventListener('keydown', (e) => {
+      const n = tabs.length;
+      const to = e.key === 'ArrowRight' ? (i + 1) % n : e.key === 'ArrowLeft' ? (i - 1 + n) % n : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : -1;
+      if (to < 0) return;
+      e.preventDefault();
+      select(to, true);
+    });
+  });
+  select(0);
+});

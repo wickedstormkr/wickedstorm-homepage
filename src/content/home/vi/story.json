@@ -1,0 +1,161 @@
+{
+  "label": "Learning Loop qua sáu cảnh",
+  "skip": "Bỏ qua câu chuyện",
+  "nav": "Chuyển cảnh",
+  "demo": "Nhân vật, môn học và số liệu trên màn hình là dữ liệu minh họa.",
+  "scenes": [
+    {
+      "id": "moment",
+      "beat": "Khoảnh khắc"
+    },
+    {
+      "id": "statement",
+      "beat": "Câu chuẩn",
+      "title": "Một câu trả lời trở thành một câu theo chuẩn quốc tế",
+      "text": "Ngay khi người học chọn đáp án, câu trả lời đó trở thành một câu xAPI (Statement): ai đã làm gì, với đối tượng nào, kết quả ra sao và trong bối cảnh chương trình nào (1EdTech CASE), tất cả trong một câu."
+    },
+    {
+      "id": "store",
+      "beat": "Tích lũy",
+      "title": "Mọi khoảnh khắc được tích lũy về một nơi",
+      "text": "Vô số câu chảy vào Lecognizer và nằm đúng vị trí của từng mục đạt được trong khung năng lực (1EdTech CASE). Mỗi chấm là một Statement, màu sắc cho biết loại hoạt động."
+    },
+    {
+      "id": "signal",
+      "beat": "Dấu hiệu",
+      "title": "AI tìm ra trước",
+      "text": "Khi gom các câu của mục “So sánh yếu tố rủi ro” theo tuần, tuần 3 nổi bật lên. Lecognizer AI xác định nguyên nhân khả dĩ là lỗ hổng ở khái niệm nền “kiến thức cơ bản về lãi suất” và gửi cảnh báo kèm cơ sở."
+    },
+    {
+      "id": "judge",
+      "beat": "Con người quyết định",
+      "title": "Con người đưa ra quyết định",
+      "text": "Dấu hiệu đến màn hình giảng viên của LearnHubble AI cùng 42 căn cứ. AI đề xuất phần bổ sung, giảng viên xem xét căn cứ rồi quyết định có áp dụng hay không."
+    },
+    {
+      "id": "next",
+      "beat": "Học kỳ tới",
+      "title": "Dữ liệu học tập của học kỳ này thiết kế việc dạy học của học kỳ tới",
+      "text": "Người học vượt qua chỗ khó nhờ phần bổ sung và gợi ý từ AI, và quá trình đó lại được tích lũy thành dữ liệu học tập. Learning Loop cứ thế tiếp diễn."
+    }
+  ],
+  "quiz": {
+    "product": "LearnHubble AI · Lớp học",
+    "course": "Kinh tế đời sống và tài chính · Tuần 3 Lãi suất và chi tiêu hộ gia đình",
+    "title": "Cùng làm bài trắc nghiệm nhé",
+    "step": "3/3",
+    "tag": "Trắc nghiệm theo phần · So sánh yếu tố rủi ro",
+    "question": "Khi so sánh hai rủi ro của việc tăng lãi suất, cần thống nhất điều gì trước tiên?",
+    "options": [
+      "Hộ có nhiều khoản vay chịu gánh nặng lãi lớn nhất",
+      "Đặt hai rủi ro trên cùng một chuẩn (mức độ và thời điểm)",
+      "Khi lãi suất tăng, chi tiêu của mọi hộ đều giảm như nhau",
+      "Chép nguyên các con số trong bài báo"
+    ],
+    "prev": "Quay lại",
+    "submit": "Chấm điểm",
+    "wrong": "Chưa đúng · Làm lại"
+  },
+  "statement": {
+    "caption": "xAPI Statement",
+    "rows": [
+      {
+        "k": "actor",
+        "v": "Park Seo-yeon"
+      },
+      {
+        "k": "verb",
+        "v": "answered"
+      },
+      {
+        "k": "object",
+        "v": "Trắc nghiệm theo phần, câu 3"
+      },
+      {
+        "k": "result",
+        "v": "Chưa đúng · lần 2"
+      },
+      {
+        "k": "context",
+        "v": "1EdTech CASE · So sánh yếu tố rủi ro"
+      }
+    ],
+    "stored": "Đã lưu vào Lecognizer · vừa xong"
+  },
+  "store": {
+    "tag": "Lecognizer",
+    "countLabel": "Thu thập hôm nay · minh họa",
+    "count": "1.374",
+    "unit": "",
+    "verbs": {
+      "watched": "Xem",
+      "answered": "Trả lời",
+      "submitted": "Nộp bài",
+      "asked": "Đặt câu hỏi"
+    },
+    "nodes": {
+      "root": "Khung năng lực học thuật của trường",
+      "major": "Khoa Kinh tế · Quyết định tài chính có trách nhiệm",
+      "c1": "Phán đoán phân tích",
+      "o1": "Nhận diện yếu tố rủi ro",
+      "o2": "So sánh yếu tố rủi ro",
+      "c2": "Diễn giải thông tin tài chính",
+      "o3": "Lãi suất và chi tiêu",
+      "o4": "Đọc thông tin sản phẩm",
+      "c3": "Khái niệm nền tảng",
+      "o5": "Cơ bản về lãi suất",
+      "o6": "Lãi kép và chiết khấu"
+    },
+    "listLabel": "Thu thập hôm nay theo mục đạt được (minh họa)"
+  },
+  "signal": {
+    "title": "Lecognizer AI · Phát hiện bất thường",
+    "patent": "Bằng sáng chế số 10-2883249",
+    "tag": "Dấu hiệu bất thường",
+    "week": "T{n}",
+    "item": "Mục đạt được · So sánh yếu tố rủi ro",
+    "chart": "Số lần dừng và tua lại theo tuần · so với học kỳ trước",
+    "headline": "Tuần 3, 13:25–14:40: tập trung dừng, tua lại và trả lời sai",
+    "body": "Nguyên nhân khả dĩ là <mark>lỗ hổng ở “kiến thức cơ bản về lãi suất”</mark>, một khái niệm nền. Dấu hiệu này không có ở học kỳ trước và xuất hiện cùng các câu trả lời sai ở bài trắc nghiệm của cùng phần.",
+    "evidence": "42 sự kiện làm căn cứ · Xem Statement gốc",
+    "send": "Gửi quản trị viên kèm căn cứ",
+    "save": "Lưu thành báo cáo"
+  },
+  "judge": {
+    "alert": "Dấu hiệu từ Lecognizer AI · kèm 42 căn cứ",
+    "product": "LearnHubble AI · Giảng viên",
+    "crumb": "Kinh tế đời sống và tài chính · Hỗ trợ học tập",
+    "ai": "Đề xuất của AI",
+    "proposal": "Thêm phần bổ sung “cơ bản về lãi suất” trước đoạn 13:25 của tuần 3",
+    "detail": "1 video bổ sung 5 phút và 2 câu hỏi kiểm tra · Căn cứ: 31 lần dừng và tua lại, 11 câu trả lời sai",
+    "learners": "3 người học cần hỗ trợ",
+    "people": [
+      {
+        "name": "Park Seo-yeon",
+        "note": "Câu 3 sai 2 lần · tua lại đoạn 13:25 bốn lần"
+      },
+      {
+        "name": "Kim Min-jun",
+        "note": "Chưa xem video cơ bản về lãi suất · sai câu trắc nghiệm"
+      },
+      {
+        "name": "Lee Jun-ho",
+        "note": "Dừng 6 lần trong đoạn 13:25–14:40"
+      }
+    ],
+    "edit": "Chỉnh sửa",
+    "apply": "Xem xét và áp dụng",
+    "owner": "Giảng viên quyết định có áp dụng hay không"
+  },
+  "next": {
+    "product": "LearnHubble AI · Người học",
+    "chip": "Phần bổ sung · Cơ bản về lãi suất, 5 phút",
+    "panel": "Gợi ý từ AI",
+    "hint": "Trước khi chọn, hãy viết hai rủi ro cạnh nhau theo cùng một chuẩn: gánh nặng lãi lớn đến đâu và xảy ra khi nào.",
+    "source": "Căn cứ bài giảng · Tuần 3, 13:40",
+    "done": "Hoàn thành phần bổ sung lại được tích lũy thành dữ liệu học tập",
+    "contact": "Liên hệ",
+    "demo": "Yêu cầu demo"
+  },
+  "screen": "ví dụ màn hình"
+}

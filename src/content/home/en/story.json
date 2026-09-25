@@ -1,0 +1,161 @@
+{
+  "label": "The Learning Loop in six scenes",
+  "skip": "Skip the story",
+  "nav": "Go to scene",
+  "demo": "People, subjects, and figures on screen are demo data.",
+  "scenes": [
+    {
+      "id": "moment",
+      "beat": "Moment"
+    },
+    {
+      "id": "statement",
+      "beat": "Statement",
+      "title": "One answer becomes a global-standard statement",
+      "text": "The moment a learner picks a quiz answer, it unfolds into an xAPI Statement: who did what, to which object, with what result, and in which curriculum context (1EdTech CASE), all in one sentence."
+    },
+    {
+      "id": "store",
+      "beat": "Storage",
+      "title": "Every moment is stored in one place",
+      "text": "Countless statements flow into Lecognizer and settle on each achievement item of the competency framework (1EdTech CASE). Each dot is one Statement, and its color shows the type of activity."
+    },
+    {
+      "id": "signal",
+      "beat": "Signal",
+      "title": "AI finds it first",
+      "text": "Grouping the statements for the item “Comparing risk factors” by week makes week 3 stand out. Lecognizer AI identifies a gap in the prerequisite concept “interest rate basics” as the likely cause and sends an alert with the evidence."
+    },
+    {
+      "id": "judge",
+      "beat": "Human judgment",
+      "title": "People make the call",
+      "text": "The signal reaches the instructor screen in LearnHubble AI with 42 pieces of evidence. AI proposes a review section, and the instructor checks the evidence and decides whether to apply it."
+    },
+    {
+      "id": "next",
+      "beat": "Next semester",
+      "title": "This semester’s learning data designs next semester’s education",
+      "text": "Learners get past the hard part with the review section and AI hints, and that process is stored again as learning data. This is how the Learning Loop continues."
+    }
+  ],
+  "quiz": {
+    "product": "LearnHubble AI · Classroom",
+    "course": "Personal Finance · Week 3 Interest Rates and Household Spending",
+    "title": "Ready for a quiz?",
+    "step": "3/3",
+    "tag": "Section quiz · Comparing risk factors",
+    "question": "When comparing two risks of a rate hike, what should you align first?",
+    "options": [
+      "Households with more loans bear the largest interest burden",
+      "Put both risks on the same basis (size and timing)",
+      "When rates rise, all household spending falls by the same amount",
+      "Copy the numbers from the news article as they are"
+    ],
+    "prev": "Back",
+    "submit": "Check answer",
+    "wrong": "Incorrect · Try again"
+  },
+  "statement": {
+    "caption": "xAPI Statement",
+    "rows": [
+      {
+        "k": "actor",
+        "v": "Seoyeon Park"
+      },
+      {
+        "k": "verb",
+        "v": "answered"
+      },
+      {
+        "k": "object",
+        "v": "Section quiz 3"
+      },
+      {
+        "k": "result",
+        "v": "Incorrect · 2nd try"
+      },
+      {
+        "k": "context",
+        "v": "1EdTech CASE · Comparing risk factors"
+      }
+    ],
+    "stored": "Stored in Lecognizer · just now"
+  },
+  "store": {
+    "tag": "Lecognizer",
+    "countLabel": "Collected today · demo",
+    "count": "1,374",
+    "unit": "",
+    "verbs": {
+      "watched": "Watched",
+      "answered": "Answered",
+      "submitted": "Submitted",
+      "asked": "Asked"
+    },
+    "nodes": {
+      "root": "University competency framework",
+      "major": "Economics · Responsible financial decisions",
+      "c1": "Analytical judgment",
+      "o1": "Identifying risk factors",
+      "o2": "Comparing risk factors",
+      "c2": "Interpreting financial information",
+      "o3": "Interest rates and spending",
+      "o4": "Reading product information",
+      "c3": "Foundational concepts",
+      "o5": "Interest rate basics",
+      "o6": "Compounding and discounting"
+    },
+    "listLabel": "Collected today by achievement item (demo)"
+  },
+  "signal": {
+    "title": "Lecognizer AI · Anomaly detection",
+    "patent": "Patent No. 10-2883249",
+    "tag": "Signal",
+    "week": "W{n}",
+    "item": "Achievement item · Comparing risk factors",
+    "chart": "Pauses and rewinds per week · vs. last semester",
+    "headline": "Week 3, 13:25–14:40: pauses, rewinds, and wrong answers cluster",
+    "body": "The likely cause is <mark>a gap in “interest rate basics,”</mark> a prerequisite concept. This signal did not appear last semester, and it comes with wrong answers on the section quiz for the same part.",
+    "evidence": "42 evidence events · View raw Statements",
+    "send": "Send to administrators with evidence",
+    "save": "Save as report"
+  },
+  "judge": {
+    "alert": "Lecognizer AI signal · arrived with 42 pieces of evidence",
+    "product": "LearnHubble AI · Instructor",
+    "crumb": "Personal Finance · Learning support",
+    "ai": "AI proposal",
+    "proposal": "Add an “interest rate basics” review before the 13:25 section in week 3",
+    "detail": "One 5-minute review video and 2 check questions · Evidence: 31 pauses and rewinds, 11 wrong answers",
+    "learners": "3 learners to support",
+    "people": [
+      {
+        "name": "Seoyeon Park",
+        "note": "Quiz 3 wrong twice · rewound the 13:25 section 4 times"
+      },
+      {
+        "name": "Minjun Kim",
+        "note": "Skipped the rate basics video · wrong on the section quiz"
+      },
+      {
+        "name": "Junho Lee",
+        "note": "Paused 6 times between 13:25 and 14:40"
+      }
+    ],
+    "edit": "Edit",
+    "apply": "Review and apply",
+    "owner": "The instructor decides whether to apply it"
+  },
+  "next": {
+    "product": "LearnHubble AI · Learner",
+    "chip": "Review · Interest rate basics, 5 min",
+    "panel": "AI hint",
+    "hint": "Before choosing, write the two risks side by side on the same basis: how large the interest burden is and when it hits.",
+    "source": "From the lecture · Week 3, 13:40",
+    "done": "Finishing the review is stored again as learning data",
+    "contact": "Contact us",
+    "demo": "Request a demo"
+  },
+  "screen": "screen example"
+}

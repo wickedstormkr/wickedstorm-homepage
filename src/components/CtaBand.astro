@@ -1,0 +1,24 @@
+---
+/** 페이지 끝 문의 띠: 도입 문의·자료 받기 */
+import { getHome } from '../lib/content';
+import { pagePath, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getHome(lang).common.ctaBand;
+const contact = url(pagePath(lang, 'contact'));
+---
+<section class="band cta-band" aria-labelledby="cta-band-title">
+  <div class="wrap">
+    <div class="cta-box">
+      <div>
+        <h2 id="cta-band-title">{c.title}</h2>
+        <p>{c.text}</p>
+      </div>
+      <div class="hero-cta">
+        <a class="btn p" href={contact}>{c.primary}</a>
+        <a class="btn s" href={`${contact}#resources`}>{c.secondary}</a>
+      </div>
+    </div>
+  </div>
+</section>

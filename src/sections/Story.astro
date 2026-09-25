@@ -1,0 +1,200 @@
+---
+/**
+ * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 01 실시간 수집 · 02 국제 표준 · 03 프로파일링 · 04 이상 신호 · 05 사람의 판단 · 06 다음 학기.
+ *
+ * 기본 층(이 마크업만으로 완결): 장면을 세로로 이어 붙이고, 장면마다 글 설명·HTML 제품 화면·미리 그린 그림(SVG)을 둔다.
+ *   폰·태블릿·움직임 줄이기·JS 없음은 이 층으로 본다. 폰에서는 장면이 화면에 들어올 때 그 안의 짧은 움직임만 재생(.play).
+ * 연출 층(src/scripts/story/*): 데스크톱에서 화면을 고정하고 스크롤로 장면을 넘긴다(GSAP ScrollTrigger).
+ *   입자(학습데이터 한 건)가 성운 → 기록 행 → CASE 체계 → 이상 탐지 그래프 → 근거 줄기 → 선순환 고리로 옮겨 간다.
+ * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰·태블릿은 그림 아래 목록으로.
+ * 제품 화면 창(.fx) 안은 누를 수 없는 그림이다. 누를 링크(특허 원본)는 장면 글에 둔다.
+ */
+import Window from '../components/fragments/Window.astro';
+import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
+import InstructorDesign from '../components/fragments/InstructorDesign.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url } from '../lib/url';
+import { pagePath, type Page } from '../lib/i18n';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, RING_NODES, RING_R, ringXY, LEDGER, TODAY_TOTAL } from '../lib/story-data';
+/** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
+const RING_ORDER = [0, 1, 2, 3, 4];
+
+interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop']; demoTopic: string }
+const { lang, t, hero, loop, demoTopic } = Astro.props;
+const sc = t.scenes;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+const nodeName = (id: string) => (t.store.nodes as Record<string, string>)[id];
+const label = (product: string) => `${product} ${t.screen}`;
+const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
+const locale = lang === 'vi' ? 'vi-VN' : 'en-US';
+/** 장면 글 안의 링크(특허 원본 등): {trust}를 신뢰 페이지 주소로 */
+const trust = url(pagePath(lang, 'trust' as Page));
+const body = (html: string) => html.replaceAll('{trust}', trust);
+/** 기록 행 머리·바닥: 칸 이름을 첫 줄 알약 위에 같은 너비로(줄마다 너비가 조금씩 달라, 색으로 이어 읽는다). 퍼센트는 격자 안쪽 너비(px1 - px0) 기준 */
+const inner = LEDGER.px1 - LEDGER.px0;
+const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(c.w / inner)).join(' ')};column-gap:${pct(LEDGER.gap / inner)};padding-inline:${pct(LEDGER.px0)} ${pct(1 - LEDGER.px1)}`;
+---
+<section class="story" id="story" aria-label={t.label} data-story>
+  <a class="story-skip" href="#after-story">{t.skip}</a>
+  <div class="story-stage">
+    <canvas class="story-art" aria-hidden="true"></canvas>
+    <nav class="story-nav" aria-label={t.nav}>
+      <ol>
+        {sc.map((s, i) => (
+          <li><a href={`#scene-${s.id}`} data-go={i} aria-current={i === 0 ? 'step' : undefined}><span class="n" aria-hidden="true">{num(i)}</span><span class="t">{s.beat}</span></a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- 장면 1 · 실시간 수집 -->
+    <article class="scene scene-moment is-active" id={`scene-${sc[0].id}`} data-scene="0" aria-labelledby="hero-title">
+      <div class="scene-copy">
+        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={hero.eyebrow} /></p>
+        <h1 id="hero-title">{hero.lines.map((l) => <span class="line" set:html={phrase(l, lang)} />)}</h1>
+        <p class="hero-lead" set:html={hero.lead} />
+        <div class="hero-cta">
+          <a class="btn p" href="#contact">{hero.ctaPrimary}</a>
+          <a class="btn s" href="#product">{hero.ctaSecondary}</a>
+        </div>
+        <ul class="hero-trust" aria-label={hero.trustLabel}>
+          {hero.trust.map((i) => <li><a href={url(pagePath(lang, i.page as Page)) + i.hash} set:html={i.html} /></li>)}
+        </ul>
+      </div>
+      <div class="scene-visual">
+        <p class="beat live-beat"><span aria-hidden="true">{num(0)} · </span>{sc[0].beat}</p>
+        <!-- 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(움직임 멈춤이면 멈춘다, story/live.ts) -->
+        <div class="live" data-live={JSON.stringify(t.live.rows)}>
+          <Window class="live-win" label={t.live.label} title={t.live.title}>
+            <span slot="bar" class="live-state">{t.live.state}</span>
+            <div class="live-view">
+              <ol class="live-rows" data-live-rows>
+                {t.live.rows.slice(0, 5).map((r) => (
+                  <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
+                ))}
+              </ol>
+            </div>
+            <p class="live-foot" set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(locale)}</b>`)} />
+          </Window>
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉아 줄마다 알약이 끝까지 찬다 -->
+    <article class="scene scene-statement" id={`scene-${sc[1].id}`} data-scene="1" aria-labelledby="scene-t-2">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
+        <h2 class="scene-title" id="scene-t-2" set:html={phrase(sc[1].title!, lang)} />
+        <p class="ledger-std"><b lang="en">{t.ledger.std.xapi}</b><span class="swap" aria-hidden="true">⇄</span><span class="sr-only">, </span><b lang="en">{t.ledger.std.caliper}</b><span class="ledger-note">{t.ledger.std.note}</span></p>
+        {sc[1].text && <p class="scene-text" set:html={body(sc[1].text)} />}
+      </div>
+      <div class="scene-visual">
+        <div class="ledger">
+          <dl class="ledger-cols" style={ledgerGrid}>
+            {t.ledger.cols.map((c, i) => (
+              <div class={`c${i}`}>
+                <dt>{c.ko}</dt>
+                <dd lang="en">{c.xapi === c.caliper ? c.xapi : <Fragment>{c.xapi}<span class="swap" aria-hidden="true">⇄</span><span class="sr-only"> / </span>{c.caliper}</Fragment>}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="516" loading="lazy" decoding="async" />
+          </div>
+          <div class="ledger-foot">
+            <p class="ledger-rest">{t.ledger.rest}</p>
+            <ul class="ledger-items" aria-label={t.ledger.cols[3].ko}>{t.ledger.extraItems.map((x) => <li>{x}</li>)}</ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 3 · 프로파일링: 입자가 CASE 성취 항목(지표)마다 모인다 -->
+    <article class="scene scene-store" id={`scene-${sc[2].id}`} data-scene="2" aria-labelledby="scene-t-3">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(2)} · </span>{sc[2].beat}</p>
+        <h2 class="scene-title" id="scene-t-3" set:html={phrase(sc[2].title!, lang)} />
+        {sc[2].text && <p class="scene-text" set:html={body(sc[2].text)} />}
+        <ul class="art-legend">
+          {VERBS.map((v) => <li><i style={`--c:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
+        </ul>
+      </div>
+      <div class="scene-visual">
+        <div class="art-box" data-art-box>
+          <img class="art-base" src={url('/art/case-tree.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <img class="art-lines" src={url('/art/case-lines.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
+          <ul class="art-labels" aria-hidden="true">
+            {CASE_NODES.map((n) => (
+              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}</li>
+            ))}
+          </ul>
+        </div>
+        <p class="case-cap" id="case-cap">{t.store.listLabel}</p>
+        <ol class="case-list" aria-labelledby="case-cap">
+          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span>{n.anomaly && <b>{t.signal.tag}</b>}</li>)}
+        </ol>
+      </div>
+    </article>
+
+    <!-- 장면 4 · 이상 신호: 이상 항목의 입자가 이상 탐지 화면의 그래프 칸에 시간순 분포로 착지한다 -->
+    <article class="scene scene-signal" id={`scene-${sc[3].id}`} data-scene="3" aria-labelledby="scene-t-4">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(3)} · </span>{sc[3].beat}</p>
+        <h2 class="scene-title" id="scene-t-4" set:html={phrase(sc[3].title!, lang)} />
+        {sc[3].text && <p class="scene-text" set:html={body(sc[3].text)} />}
+      </div>
+      <div class="scene-visual">
+        <AnomalyPanel t={t.signal} label={label(t.signal.title)} />
+      </div>
+    </article>
+
+    <!-- 장면 5 · 사람의 판단: 신호가 근거와 함께 교수자 화면에 도착하고, AI 추천을 교수자가 정한다 -->
+    <article class="scene scene-judge" id={`scene-${sc[4].id}`} data-scene="4" aria-labelledby="scene-t-5">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(4)} · </span>{sc[4].beat}</p>
+        <h2 class="scene-title" id="scene-t-5" set:html={phrase(sc[4].title!, lang)} />
+        {sc[4].text && <p class="scene-text" set:html={body(sc[4].text)} />}
+      </div>
+      <div class="scene-visual">
+        <div class="judge-stack">
+          <p class="signal-alert">{t.judge.alert}</p>
+          <InstructorDesign t={t.judge} label={label(t.judge.product)} />
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 6 · 다음 학기: 모든 학습데이터가 고리가 되어 돈다. 고리 둘레에 두 솔루션과 세 역할 -->
+    <article class="scene scene-next" id={`scene-${sc[5].id}`} data-scene="5" aria-labelledby="scene-t-6">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(5)} · </span>{sc[5].beat}</p>
+        <h2 class="scene-title" id="scene-t-6" set:html={phrase(sc[5].title!, lang)} />
+        {sc[5].text && <p class="scene-text" set:html={body(sc[5].text)} />}
+        <div class="hero-cta">
+          <a class="btn p" href="#contact">{t.next.contact}</a>
+          <a class="btn s" href="#contact" data-topic={demoTopic}>{t.next.demo}</a>
+        </div>
+      </div>
+      <div class="scene-visual">
+        <div class="art-box ring-box">
+          <img class="art-base" src={url('/art/loop-ring.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <ol class="ring-labels" aria-label={t.ring.label}>
+            {RING_ORDER.map((k, i) => {
+              const n = loop.notes[k];
+              const role = t.ring.roles[k];
+              const [x, y] = ringXY(-Math.PI / 2 + (i * Math.PI * 2) / RING_NODES, RING_R);
+              return (
+                <li class:list={['ring-l', x > 0.55 ? 'r' : x < 0.45 ? 'l' : 'c', y < 0.5 ? 't' : 'b', { role }]} style={`left:${pct(x)};top:${pct(y)};--i:${i}`}>
+                  {role && <b>{role}</b>}<span class:list={['pname', n.product]} lang="en">{n.pill}</span>
+                </li>
+              );
+            })}
+          </ol>
+          <p class="ring-caption" aria-hidden="true">{t.ring.label}</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+<span id="after-story" tabindex="-1"></span>

@@ -21,47 +21,5 @@
       "html": "AI特許2件取得",
       "href": "/news/2025-11-patent-anomaly.html"
     }
-  ],
-  "capture": {
-    "badge": "Lecognizer · 国際標準で収集",
-    "live": "リアルタイム収集",
-    "rows": [
-      {
-        "actor": "学習者",
-        "verb": "視聴",
-        "object": "概念講義 04",
-        "result": "2回リピート"
-      },
-      {
-        "actor": "学習者",
-        "verb": "回答",
-        "object": "確認クイズ",
-        "result": "正解"
-      },
-      {
-        "actor": "教員",
-        "verb": "設計",
-        "object": "補充区間",
-        "result": "適用"
-      },
-      {
-        "actor": "学習者",
-        "verb": "提出",
-        "object": "記述式課題",
-        "result": "期限内"
-      },
-      {
-        "actor": "学習者",
-        "verb": "質問",
-        "object": "講義Q&A",
-        "result": "回答 3"
-      }
-    ],
-    "signalLabel": "AI<br>Signal",
-    "signal": "兆候 · 繰り返し再生の区間"
-  },
-  "overlay": {
-    "main": "学びのすべての瞬間が、<span class=\"g\">国際標準のデータ</span>として蓄積されます",
-    "sub": "Lecognizerが収集し、AIが兆候を見つけ出します。"
-  }
+  ]
 }

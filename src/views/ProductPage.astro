@@ -1,0 +1,65 @@
+---
+/** 제품 페이지: 역할별 화면 → 세 솔루션과 세 역할 → Lecognizer · Lecognizer AI → LearnHubble AI */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import RoleTabs from '../components/RoleTabs.astro';
+import Img from '../components/Img.astro';
+import CtaBand from '../components/CtaBand.astro';
+import LearnHubble from '../sections/LearnHubble.astro';
+import { getHome, getUi } from '../lib/content';
+import { pagePath, type Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getHome(lang);
+const p = t.product;
+const ids = ['lecognizer', 'lecognizer-ai'];
+---
+<Page lang={lang} page="product">
+  <section class="band page-top" aria-labelledby="page-title">
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={p.page.eyebrow} title={p.page.title} lead={p.page.lead} />
+      <h2 class="sr-only">{p.page.rolesTitle}</h2>
+      <RoleTabs lang={lang} t={p} story={t.story} id="role" />
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="loop-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={p.eyebrow} /></p>
+        <h2 class="h-lg" id="loop-title" set:html={phrase(p.title, lang)} />
+        <p class="sec-lead" set:html={p.lead} />
+      </div>
+      <ul class="loop-cards">
+        {p.loop.notes.map((n) => (
+          <li class:list={['loop-card', n.kind === 'solution' ? 'is-sol' : 'is-role']}>
+            {n.role && <b set:html={n.role} />}
+            <span class:list={['pname', n.product]} lang="en">{n.pill}</span>
+            <p set:html={n.desc} />
+          </li>
+        ))}
+      </ul>
+      <p class="note" set:html={p.loop.caption} />
+      {p.features.map((f, i) => (
+        <div class:list={['feature', { reverse: f.reverse }]} id={ids[i]}>
+          <div class="feat-copy">
+            <p class="kick">{f.kicker}</p>
+            <h3>{f.name}</h3>
+            <p set:html={f.text} />
+            <ul>{f.bullets.map((b) => <li set:html={b} />)}</ul>
+            <a class="feat-badge" href={url(pagePath(lang, 'trust')) + (i === 0 ? '#gs' : '#patents')} set:html={f.badge} />
+            {i === 1 && <p><a class="prod-site" href={p.solutions[0].site} target="_blank" rel="noopener" aria-label={p.solutions[0].siteAria}>{p.solutions[0].siteLabel}<span aria-hidden="true"> ↗</span></a></p>}
+          </div>
+          <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>
+        </div>
+      ))}
+      <p class="note" set:html={p.note} />
+    </div>
+  </section>
+
+  <LearnHubble lang={lang} t={t.learnhubble} ui={getUi(lang)} contactHref={url(pagePath(lang, 'contact'))} site={p.solutions[1]} />
+  <CtaBand lang={lang} />
+</Page>

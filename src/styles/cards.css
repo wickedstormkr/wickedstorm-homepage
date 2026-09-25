@@ -9,7 +9,6 @@
 .ncard .ncover::before{content:"";position:absolute;inset:0;background:radial-gradient(115% 88% at 16% 12%,rgba(124,77,255,.34),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(47,124,255,.16),transparent 60%)}
 .ncard .ncover[data-cover="insight"]::before{background:radial-gradient(115% 88% at 16% 12%,rgba(47,124,255,.32),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(124,77,255,.18),transparent 60%)}
 .ncard .ncover[data-cover="story"]::before{background:radial-gradient(115% 88% at 16% 12%,rgba(233,48,176,.28),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(124,77,255,.18),transparent 60%)}
-.ncard .cover-rail{position:absolute;left:22px;right:22px;top:22px;height:2px;border-radius:2px;background:var(--grad);opacity:.55}
 .ncard .cover-cat{position:absolute;left:22px;bottom:20px;font-family:var(--en);font-weight:700;font-size:clamp(28px,3.4vw,36px);letter-spacing:-.02em;line-height:1;
   text-transform:lowercase;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ncard .nbody{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
@@ -34,5 +33,6 @@ a.ncard:hover .nmore i{transform:translateX(3px)}
 .ch-link{display:flex;flex-direction:column;gap:2px;min-width:180px;padding:14px 20px;border-radius:14px;border:1px solid var(--line2)}
 .ch-link:hover{border-color:#fff}
 .ch-k{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.ch-k::after{content:" ↗";letter-spacing:0}
 .ch-v{font-weight:700;color:#fff}
 

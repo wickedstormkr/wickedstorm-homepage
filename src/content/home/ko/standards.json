@@ -94,5 +94,154 @@
       "href": "https://www.1edtech.org/standards/qti",
       "ariaLabel": "QTI 공식 스펙 (새 창)"
     }
-  ]
+  ],
+  "map": {
+    "title": "표준 지도",
+    "lead": "교육과정·성취기준·역량 체계(1EdTech CASE)를 기준으로 따로 두고, 그 위에서 학습데이터를 수집하고 성취를 증명하고 다른 시스템과 연동합니다.",
+    "legendLabel": "상태",
+    "base": {
+      "name": "기준",
+      "desc": "교육과정·성취기준·역량을 하나의 체계로 관리하는 저장소입니다. 수집한 학습데이터와 발행하는 증명이 이 체계의 항목을 가리킵니다.",
+      "items": [
+        "CASE"
+      ]
+    },
+    "refLabel": "CASE 항목을 가리킴",
+    "groups": [
+      {
+        "id": "collect",
+        "name": "수집",
+        "desc": "학습 활동을 표준 문장으로 수집하고, 문장마다 성취 항목을 연결합니다",
+        "items": [
+          "xAPI",
+          "Caliper"
+        ],
+        "ref": true
+      },
+      {
+        "id": "credential",
+        "name": "증명",
+        "desc": "쌓은 성취를 검증할 수 있는 증명으로 발행합니다",
+        "items": [
+          "Open Badges 3.0",
+          "CLR 2.0",
+          "Digital Credentials"
+        ],
+        "ref": true
+      },
+      {
+        "id": "connect",
+        "name": "연동",
+        "desc": "명단·학습 도구·평가 시스템과 연결합니다",
+        "items": [
+          "EduAPI",
+          "OneRoster",
+          "LTI",
+          "QTI"
+        ],
+        "ref": false
+      }
+    ]
+  },
+  "more": "표준 자세히 보기",
+  "specLabel": "공식 스펙",
+  "activity": {
+    "title": "1EdTech 활동",
+    "items": [
+      {
+        "date": "2026.07",
+        "text": "기술 노트: CASE 표준 기반 지식공간 구축",
+        "href": "/news/2026-07-note-case-knowledge-space.html"
+      },
+      {
+        "date": "2026.07",
+        "text": "기술 노트: AI 디지털교과서 교육과정 표준체계 배포 모델",
+        "href": "/news/2026-07-note-aidt-standards.html"
+      },
+      {
+        "date": "2026.06",
+        "text": "(사)1EdTech Korea 국내 출범, 설립 이사회로 참여",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.04",
+        "text": "1EdTech Contributing Member 가입",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.03",
+        "text": "KERIS 국제 표준 기반 학습데이터 표준화 체계·활용 모델 구축",
+        "href": "/news/2026-07-1edtech-korea.html"
+      }
+    ]
+  },
+  "cardsTitle": "표준별 설명",
+  "cardsLead": "표준마다 쓰임, 상태, 적용 제품을 적고 공식 스펙으로 연결했습니다.",
+  "mapping": {
+    "title": "xAPI ⇄ Caliper: 같은 학습데이터, 두 가지 표현",
+    "lead": "Lecognizer는 xAPI와 1EdTech Caliper를 모두 받고, 서로 변환합니다. 아래는 학습데이터 한 건의 칸이 두 표준에서 어디에 담기는지 보여 주는 대응 예입니다.",
+    "cols": [
+      "뜻",
+      "xAPI 1.0.3",
+      "1EdTech Caliper 1.1"
+    ],
+    "rows": [
+      {
+        "k": "누가",
+        "x": "actor",
+        "c": "actor"
+      },
+      {
+        "k": "~하다",
+        "x": "verb",
+        "c": "action (이벤트 type과 함께)"
+      },
+      {
+        "k": "무엇을",
+        "x": "object",
+        "c": "object"
+      },
+      {
+        "k": "언제",
+        "x": "timestamp",
+        "c": "eventTime"
+      },
+      {
+        "k": "결과",
+        "x": "result (score · success · completion · response · duration)",
+        "c": "generated (Score · Attempt 등)"
+      },
+      {
+        "k": "앱·환경",
+        "x": "context.platform",
+        "c": "edApp"
+      },
+      {
+        "k": "수업·반",
+        "x": "context.contextActivities.grouping · context.team",
+        "c": "group · membership"
+      },
+      {
+        "k": "세션",
+        "x": "context.extensions (예: cmi5 sessionid)",
+        "c": "session"
+      },
+      {
+        "k": "재생 위치",
+        "x": "result.extensions (예: Video Profile time)",
+        "c": "target (MediaLocation.currentTime)"
+      },
+      {
+        "k": "교육과정 맥락",
+        "x": "context.contextActivities.category · other",
+        "c": "object.learningObjectives"
+      },
+      {
+        "k": "표준에 없는 속성",
+        "x": "extensions",
+        "c": "extensions"
+      }
+    ],
+    "note": "대응 예입니다. 실제 대응은 쓰는 프로파일(xAPI Profile, Caliper 메트릭 프로파일)과 도입 환경에 따라 달라집니다."
+  }
 }

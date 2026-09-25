@@ -1,0 +1,70 @@
+---
+/** 표준 페이지: 표준 지도(CASE 기준) → xAPI ⇄ Caliper 대응표 → 표준별 설명(공식 스펙 링크) → 1EdTech 활동(소식 원문 링크) */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import StdMap from '../components/StdMap.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getHome } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getHome(lang).standards;
+---
+<Page lang={lang} page="standards">
+  <section class="band page-top std" aria-labelledby="page-title">
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+        <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={t.badge} /></span></p>
+      </PageHead>
+      <h2 class="sub-title">{t.map.title}</h2>
+      <p class="sub-lead">{t.map.lead}</p>
+      <StdMap t={t} />
+    </div>
+  </section>
+  <section class="band" aria-labelledby="std-mapping-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="std-mapping-title">{t.mapping.title}</h2>
+      <p class="sub-lead">{t.mapping.lead}</p>
+      <table class="map-table">
+        <thead><tr>{t.mapping.cols.map((c, i) => <th scope="col" lang={i ? 'en' : undefined}>{c}</th>)}</tr></thead>
+        <tbody>
+          {t.mapping.rows.map((r) => <tr><th scope="row">{r.k}</th><td data-k="xAPI">{r.x}</td><td data-k="Caliper">{r.c}</td></tr>)}
+        </tbody>
+      </table>
+      <p class="map-note">{t.mapping.note}</p>
+    </div>
+  </section>
+  <section class="band" aria-labelledby="std-cards-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="std-cards-title">{t.cardsTitle}</h2>
+      <p class="sub-lead">{t.cardsLead}</p>
+      <ul class="std-grid">
+        {t.cards.map((c) => (
+          <li>
+            <a class="std-card" href={c.href} target="_blank" rel="noopener noreferrer" aria-label={c.ariaLabel}>
+              <span class:list={['k', c.status]}>{c.name}</span>
+              <p set:html={c.text} />
+              <span class="std-meta">
+                <span class:list={['st', c.status]}>{c.statusLabel}</span>
+                <span class="pd" set:html={c.products} />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="band" aria-labelledby="std-act-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="std-act-title">{t.activity.title}</h2>
+      <ol class="act-list">
+        {t.activity.items.map((a) => (
+          <li><span class="act-date tnum">{a.date}</span><a href={url(a.href)}>{a.text}</a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Page>

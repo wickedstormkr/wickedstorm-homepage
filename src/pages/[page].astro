@@ -1,0 +1,17 @@
+---
+/** 국문 페이지: /product.html, /standards.html, /cases.html, /trust.html, /company.html, /contact.html */
+import ProductPage from '../views/ProductPage.astro';
+import StandardsPage from '../views/StandardsPage.astro';
+import CasesPage from '../views/CasesPage.astro';
+import TrustPage from '../views/TrustPage.astro';
+import CompanyPage from '../views/CompanyPage.astro';
+import ContactPage from '../views/ContactPage.astro';
+import { PAGES, type Page } from '../lib/i18n';
+
+export function getStaticPaths() {
+  return PAGES.map((page) => ({ params: { page } }));
+}
+const page = Astro.params.page as Page;
+const V = { product: ProductPage, standards: StandardsPage, cases: CasesPage, trust: TrustPage, company: CompanyPage, contact: ContactPage }[page];
+---
+<V lang="ko" />

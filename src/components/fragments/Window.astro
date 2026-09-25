@@ -1,0 +1,17 @@
+---
+/**
+ * 제품 화면 창(맥 브라우저 창처럼 빨강·노랑·초록 신호등). 창 안은 제품 화면을 그린 그림이라 누를 수 없다.
+ * 창 안의 버튼·링크 모양은 사이트의 버튼(CTA)과 다르게 앱 모양으로만 그린다(fragments.css .fx-btn).
+ * 실제로 누를 링크(특허 원본 등)는 창 밖 글에 둔다.
+ * 창 머리 오른쪽에 상태(수집 중 등)를 둘 때는 slot="bar".
+ */
+interface Props { label: string; title: string; crumb?: string; class?: string }
+const { label, title, crumb, class: cls } = Astro.props;
+---
+<figure class:list={['fx', cls]} aria-label={label}>
+  <div class="fx-bar">
+    <span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <b>{title}</b>{crumb && <span class="fx-crumb">{crumb}</span>}<slot name="bar" />
+  </div>
+  <slot />
+</figure>

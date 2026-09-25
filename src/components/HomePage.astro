@@ -1,14 +1,15 @@
 ---
-/** 홈(네 언어 공용). 섹션 순서는 지금 사이트 그대로. */
+/** 홈(네 언어 공용). 순서: 여섯 장면(증빙 한 줄 포함) → 제품(역할별) → 표준 지도 → 사례 → 소식 → 회사 → 문의 → 자료 */
 import Base from '../layouts/Base.astro';
 // 페이지 스타일은 공통 스타일(Base: 토큰·기본) 뒤에 온다
 import '../styles/cards.css';
 import '../styles/home.css';
-import Hero from '../sections/Hero.astro';
-import Pipeline from '../sections/Pipeline.astro';
+import '../styles/fragments.css';
+import '../styles/story.css';
+import '../styles/pages.css';
+import Story from '../sections/Story.astro';
 import Product from '../sections/Product.astro';
-import LearnHubble from '../sections/LearnHubble.astro';
-import References from '../sections/References.astro';
+import Cases from '../sections/Cases.astro';
 import Standards from '../sections/Standards.astro';
 import News from '../sections/News.astro';
 import Resources from '../sections/Resources.astro';
@@ -55,17 +56,16 @@ const org = {
   path={homePath(lang)}
   alternates={alternates}
   jsonLd={lang === 'ko' ? org : undefined}
+  story
 >
   <main id="main" tabindex="-1">
-    <Hero lang={lang} t={t.hero} />
-    <Pipeline lang={lang} t={t.pipeline} />
-    <Product lang={lang} t={t.product} />
-    <LearnHubble lang={lang} t={t.learnhubble} ui={ui} />
-    <References lang={lang} t={t.references} />
+    <Story lang={lang} t={t.story} hero={t.hero} loop={t.product.loop} demoTopic={t.learnhubble.cta.topic} />
+    <Product lang={lang} t={t.product} story={t.story} />
     <Standards lang={lang} t={t.standards} />
+    <Cases lang={lang} t={t.cases} />
     <News lang={lang} t={t.news} ui={ui} />
-    <Resources lang={lang} t={t.resources} />
     <Company lang={lang} t={t.company} ui={ui} />
     <Contact lang={lang} t={t.contact} ui={ui} />
+    <Resources lang={lang} t={t.resources} />
   </main>
 </Base>

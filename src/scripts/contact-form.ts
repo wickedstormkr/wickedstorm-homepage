@@ -93,11 +93,18 @@ function init(f: HTMLFormElement) {
   })();
 
   // 시연 요청 등 data-topic 버튼
-  document.querySelectorAll<HTMLAnchorElement>('a[data-topic]').forEach((a) => {
+  // 목적별 시작(도입 상담·시연 요청·파트너십·해외)은 다른 목적을 누르면 첫 줄을 바꾼다. 적어 둔 내용은 그대로 둔다
+  const topicLinks = [...document.querySelectorAll<HTMLAnchorElement>('a[data-topic]')];
+  const topics = new Set(topicLinks.map((a) => a.dataset.topic ?? ''));
+  topicLinks.forEach((a) => {
     a.addEventListener('click', () => {
       const memo = field('userMemo');
       const t = a.dataset.topic ?? '';
-      if (memo && !memo.value.trim()) memo.value = t + '\n';
+      if (!memo) return;
+      const [first, ...rest] = memo.value.split('\n');
+      if (!memo.value.trim()) memo.value = t + '\n';
+      else if (topics.has(first)) memo.value = [t, ...rest].join('\n');
+      document.querySelectorAll('.purpose').forEach((p) => p.classList.toggle('is-on', p === a));
     });
   });
 

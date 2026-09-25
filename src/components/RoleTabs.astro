@@ -1,0 +1,42 @@
+---
+/**
+ * 역할별 제품 화면(모두 LearnHubble AI): 운영자(교육과정 개정 · 1EdTech CASE) · 교수자(보충 구간·확인 퀴즈 설계) · 학습자(강의실 AI 패널).
+ * 셋 다 Lecognizer AI가 찾은 같은 이상 신호(‘위험요인 비교’, 3주차 13:25–14:40)에서 이어진다.
+ * 제품 화면은 HTML로 다시 그린 조각이라 언어가 바뀌고 화면 낭독기가 읽는다. 창 안은 누를 수 없는 그림이다.
+ * JS가 없으면 세 역할이 차례로 모두 보이고, JS가 있으면 탭(방향키로 이동)으로 바뀐다(src/scripts/site.ts).
+ */
+import OperatorCase from './fragments/OperatorCase.astro';
+import InstructorDesign from './fragments/InstructorDesign.astro';
+import LearnerAssist from './fragments/LearnerAssist.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+
+interface Props { lang: Lang; t: HomeContent['product']; story: HomeContent['story']; id: string }
+const { lang, t, story, id } = Astro.props;
+const r = t.roles;
+const label = (product: string) => `${product} ${story.screen}`;
+const tone = (p: string) => (p.startsWith('LearnHubble') ? 'lhb' : 'lec');
+---
+<div class="roles" data-tabs>
+  <div class="role-tabs" role="tablist" aria-label={r.label} hidden>
+    {r.items.map((it, i) => (
+      <button type="button" role="tab" id={`${id}-tab-${it.id}`} aria-controls={`${id}-${it.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{it.name}</button>
+    ))}
+  </div>
+  {r.items.map((it, i) => (
+    <section class="role-panel" id={`${id}-${it.id}`} role="tabpanel" aria-labelledby={`${id}-tab-${it.id}`} data-panel={i}>
+      <div class="role-copy">
+        <p class="role-name"><b>{it.name}</b><span class:list={['pname', tone(it.product)]} lang="en">{it.product}</span></p>
+        <h3 set:html={phrase(it.title, lang)} />
+        <p class="role-text">{it.text}</p>
+        <ul class="role-points">{it.points.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <div class="role-visual">
+        {it.id === 'operator' && <OperatorCase t={t.operator} label={label(t.operator.product)} />}
+        {it.id === 'instructor' && <InstructorDesign t={story.judge} label={label(story.judge.product)} full />}
+        {it.id === 'learner' && <LearnerAssist t={story.next} label={label(story.next.product)} />}
+      </div>
+    </section>
+  ))}
+</div>

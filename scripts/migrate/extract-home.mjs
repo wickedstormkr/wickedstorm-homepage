@@ -122,58 +122,10 @@ function extract(doc, lang) {
     ctaPrimary: text(q(hero, '.hero-cta .btn.p')),
     ctaSecondary: text(q(hero, '.hero-cta .btn.s')),
     trust: trust.map((t, i) => ({ html: t, href: trustHref[i] })),
-    capture: {
-      badge: html(q(hero, '.cap-badge')),
-      live: text(q(hero, '.cap-live')),
-      rows: qa(hero, '.xrow').map((r) => ({
-        actor: text(q(r, '.chip.actor')),
-        verb: text(q(r, '.chip.verb')),
-        object: text(q(r, '.chip.object')),
-        result: text(q(r, '.chip.result')),
-      })),
-      signalLabel: html(q(hero, '.ins-label')),
-      signal: text(q(hero, '.ins-chip')),
-    },
-    overlay: { main: html(q(hero, '.ho-main')), sub: html(q(hero, '.ho-sub')) },
+    // 수집 스트림 패널·스크럽 캡션은 여섯 장면으로 대체되어 옮기지 않는다
   };
 
-  /* ---------- ② 파이프라인 ---------- */
-  const pipeSec = q(doc, 'section[aria-labelledby="pipeline-title"]');
-  const loop = q(pipeSec, '#pipeLoop');
-  out.pipeline = {
-    ...head(pipeSec),
-    steps: qa(pipeSec, '.pipe .step').map((s) => {
-      const ps = qa(s, ':scope > p');
-      return {
-        index: text(q(s, '.n em')),
-        tag: text(q(s, '.n')).replace(/^\S+\s*·\s*/, ''),
-        title: html(q(s, 'h3')),
-        text: html(ps[0]),
-        detail: html(q(s, '.step-detail span')),
-      };
-    }),
-    loop: {
-      index: text(q(loop, '.pl-idx')),
-      title: html(q(loop, '.pl-title')),
-      sub: html(q(loop, '.pl-sub')),
-      steps: qa(loop, '.pl-step').map((s) => {
-        const lab = q(s, '.pl-lab').clone();
-        const num = text(q(lab, 'i'));
-        lab.querySelector('i').remove();
-        const img = q(s, 'img');
-        return {
-          num,
-          label: html(lab),
-          note: html(q(s, '.pl-note')),
-          url: text(q(s, '.pl-bar em')),
-          img: imgName(attr(img, 'src')),
-          alt: attr(img, 'alt'),
-        };
-      }),
-      arcText: html(q(loop, '.pl-arc-text')),
-      caption: html(q(loop, 'figcaption')),
-    },
-  };
+  // ② 파이프라인은 오프닝 여섯 장면(src/content/home/<lang>/story.json)으로 합쳐져 옮기지 않는다
 
   /* ---------- ③ 제품 ---------- */
   const prod = q(doc, '#product');

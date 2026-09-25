@@ -1,28 +1,28 @@
 {
   "eyebrow": "Feed · Update",
   "title": "Latest news",
-  "more": "View all →",
+  "more": "View all",
   "cards": [
     {
       "id": "2026-09-edtech-korea-fair",
       "tag": "NEWS",
       "title": "Wicked Storm presents the ‘Learning Loop’ at EdTech Korea Fair",
       "alt": "Visitors gathered in front of the demo screens at the Wicked Storm booth, EdTech Korea Fair 2026",
-      "more": "Read article →"
+      "more": "Read article"
     },
     {
       "id": "2025-11-patent-anomaly",
       "tag": "NEWS",
       "title": "Wicked Storm granted a patent for its xAPI learning anomaly detection system",
       "alt": "Patent certificate No. 10-2883249: learning anomaly detection system based on xAPI learning behavior data",
-      "more": "Read article →"
+      "more": "Read article"
     },
     {
       "id": "2025-02-patent-profiling",
       "tag": "NEWS",
       "title": "Wicked Storm granted a patent for its learner profiling method",
       "alt": "Patent certificate No. 10-2767110: LLM-based learner profiling method to analyze learner tendencies",
-      "more": "Read article →"
+      "more": "Read article"
     }
   ],
   "channels": {

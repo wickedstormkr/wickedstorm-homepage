@@ -1,12 +1,12 @@
 ---
 import { getHome } from '../lib/content';
-import type { Lang } from '../lib/i18n';
+import { pagePath, type Lang, type Page } from '../lib/i18n';
 import { url, withBase } from '../lib/url';
 
 interface Props { lang: Lang; homeHref?: string }
-const { lang, homeHref } = Astro.props;
+const { lang } = Astro.props;
 const c = getHome(lang).common;
-const a = (hash: string) => `${homeHref ?? ''}${hash}`;
+const pg = (p: Page) => url(pagePath(lang, p));
 ---
 <footer class="site-footer">
   <div class="wrap">
@@ -18,11 +18,13 @@ const a = (hash: string) => `${homeHref ?? ''}${hash}`;
         <p set:html={c.footer.contact} />
       </div>
       <nav class="foot-nav" aria-label={c.footer.navLabel}>
-        <a href={a('#product')}>{c.nav.product}</a>
-        <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
-        <a href={a('#standards')}>{c.nav.standards}</a>
+        <a href={pg('product')}>{c.nav.product}</a>
+        <a href={pg('standards')}>{c.nav.standards}</a>
+        <a href={pg('cases')}>{c.nav.cases}</a>
         <a href={url('/news.html')}>{c.nav.news}</a>
-        <a href={a('#resources')}>{c.nav.resources}</a>
+        <a href={pg('company')}>{c.nav.company}</a>
+        <a href={pg('trust')}>{c.nav.trust}</a>
+        <a href={`${pg('contact')}#resources`}>{c.nav.resources}</a>
         <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
         <a href={url('/privacy.html')}>{c.footer.privacy}</a>
         <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" hidden>Instagram</a>

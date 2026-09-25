@@ -21,47 +21,5 @@
       "html": "2 granted AI patents",
       "href": "/news/2025-11-patent-anomaly.html"
     }
-  ],
-  "capture": {
-    "badge": "Lecognizer · Global-standard collection",
-    "live": "Real-time collection",
-    "rows": [
-      {
-        "actor": "Learner",
-        "verb": "watched",
-        "object": "Concept lecture 04",
-        "result": "Replayed 2×"
-      },
-      {
-        "actor": "Learner",
-        "verb": "answered",
-        "object": "Check quiz",
-        "result": "Correct"
-      },
-      {
-        "actor": "Instructor",
-        "verb": "designed",
-        "object": "Review section",
-        "result": "Applied"
-      },
-      {
-        "actor": "Learner",
-        "verb": "submitted",
-        "object": "Essay task",
-        "result": "On time"
-      },
-      {
-        "actor": "Learner",
-        "verb": "asked",
-        "object": "Lecture Q&A",
-        "result": "3 replies"
-      }
-    ],
-    "signalLabel": "AI<br>Signal",
-    "signal": "Signal · Replayed section"
-  },
-  "overlay": {
-    "main": "Every learning moment is recorded as <span class=\"g\">data built on global standards</span>",
-    "sub": "Lecognizer collects the data, and AI finds the signals."
-  }
+  ]
 }
