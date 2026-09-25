@@ -13,7 +13,7 @@ mkdir -p src/assets/img/news src/assets/media public/img public/files public/med
 # 화면 이미지(홈·소식에서 쓰는 것만)
 for f in dash-main-public feed-img01 feed-img02 learning-loop lecognizer-ai-detect \
          lh-assignment lh-casemap lh-lecture-qa lh-portfolio patent-anomaly patent-profiling \
-         pipe-analyze pipe-collect pipe-store ref-logos thumb-catalog thumb-profile; do
+         ref-logos thumb-catalog thumb-profile; do
   cp "$SRC/img/$f.webp" src/assets/img/
 done
 cp "$SRC"/img/news/*.webp src/assets/img/news/

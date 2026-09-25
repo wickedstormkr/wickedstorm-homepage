@@ -1,0 +1,33 @@
+---
+/** Lecognizer AI 이상 탐지 화면: 주차별 막대(3주차 급증), 원인 후보, 근거. 특허 표시는 원본(특허 기사)으로 링크 */
+import type { HomeContent } from '../../lib/content';
+import { WEEK_WEIGHTS, HOT_WEEK } from '../../lib/story-data';
+import { url } from '../../lib/url';
+interface Props { t: HomeContent['story']['signal']; label: string }
+const { t, label } = Astro.props;
+const max = Math.max(...WEEK_WEIGHTS);
+const week = (n: number) => t.week.replace('{n}', String(n));
+---
+<figure class="fx fx-anom" aria-label={label}>
+  <div class="fx-bar"><span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span><b>{t.title}</b><span>{t.item}</span></div>
+  <div class="fx-body">
+    <div class="fx-grid">
+      <div class="fx-chart">
+        <ol class="fx-bars" aria-hidden="true">
+          {WEEK_WEIGHTS.map((v, i) => (
+            <li class:list={{ hot: i === HOT_WEEK }} style={`--h:${Math.round((v / max) * 100)}%;--i:${i}`}>{i === HOT_WEEK && <span class="fx-chip hot">{t.tag}</span>}</li>
+          ))}
+        </ol>
+        <div class="fx-weeks" aria-hidden="true">{WEEK_WEIGHTS.map((_, i) => <span class:list={{ hot: i === HOT_WEEK }}>{week(i + 1)}</span>)}</div>
+        <p class="fx-cap">{t.chart}</p>
+      </div>
+      <div>
+        <p><a class="fx-chip blue fx-patent" href={url('/news/2025-11-patent-anomaly.html')}>{t.patent}</a></p>
+        <p class="fx-headline" style="margin-top:10px">{t.headline}</p>
+        <p class="fx-text" set:html={t.body} />
+        <span class="fx-ev">{t.evidence}</span>
+        <div class="fx-actions" aria-hidden="true"><span class="fx-btn lec">{t.send}</span><span class="fx-btn">{t.save}</span></div>
+      </div>
+    </div>
+  </div>
+</figure>

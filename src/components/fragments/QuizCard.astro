@@ -1,0 +1,22 @@
+---
+/** LearnHubble AI 강의실 구간 퀴즈(학습자 화면). answered면 고른 답(오답)을 표시 */
+import type { HomeContent } from '../../lib/content';
+interface Props { t: HomeContent['story']['quiz']; answered?: boolean; compact?: boolean; label: string }
+const { t, answered = false, compact = false, label } = Astro.props;
+---
+<figure class:list={['fx fx-quiz', { answered, compact }]} aria-label={label}>
+  <div class="fx-bar"><span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span><b>{t.product}</b><span>{t.course}</span></div>
+  <div class="fx-body">
+    <div class="fx-row"><span class="fx-h">{t.title}</span><span class="fx-sub">{t.step}</span></div>
+    <span class="fx-tag">{t.tag}</span>
+    <p class="fx-q">{t.question}</p>
+    {!compact && (
+      <ol>
+        {t.options.map((o, i) => <li class:list={{ pick: answered && i === 0, wrong: answered && i === 0 }}>{o}</li>)}
+      </ol>
+    )}
+    {compact && <ol><li class="pick wrong">{t.options[0]}</li></ol>}
+    <p class="fx-verdict"><span class="fx-chip hot">{t.wrong}</span></p>
+    {!compact && <div class="fx-actions" aria-hidden="true"><span class="fx-btn">{t.prev}</span><span class="fx-btn p">{t.submit}</span></div>}
+  </div>
+</figure>

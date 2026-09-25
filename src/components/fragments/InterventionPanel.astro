@@ -1,0 +1,19 @@
+---
+/** LearnHubble AI 교수자 학습 개입: AI 제안(보충 구간)과 근거, 대상 학습자. 적용은 교수자가 정한다 */
+import type { HomeContent } from '../../lib/content';
+interface Props { t: HomeContent['story']['judge']; label: string }
+const { t, label } = Astro.props;
+---
+<figure class="fx fx-judge" aria-label={label}>
+  <div class="fx-bar"><span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span><b>{t.product}</b><span>{t.crumb}</span></div>
+  <div class="fx-body">
+    <span class="fx-chip">{t.ai}</span>
+    <div class="fx-ai"><p>{t.proposal}</p><small>{t.detail}</small></div>
+    <p class="fx-sub" style="margin-top:14px;font-weight:700;color:var(--fx-ink2)">{t.learners}</p>
+    <ol>
+      {t.people.map((p, i) => <li><i aria-hidden="true">{i + 1}</i><div><b>{p.name}</b><span>{p.note}</span></div></li>)}
+    </ol>
+    <div class="fx-actions" aria-hidden="true"><span class="fx-btn">{t.edit}</span><span class="fx-btn p">{t.apply}</span></div>
+    <p class="fx-owner">{t.owner}</p>
+  </div>
+</figure>

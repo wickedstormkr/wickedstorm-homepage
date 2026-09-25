@@ -75,7 +75,7 @@ npm run report               # 결과를 한 장의 표로(test-results/report.m
 ```
 site.config.mjs            사이트 주소(site·base), GA 측정 ID
 src/config/client.ts       브라우저 설정: 문의 서버 주소(CONTACT_API), 인스타그램·블로그(SOCIAL)
-src/content/home/<lang>/   홈 문구(섹션별 JSON: common, hero, pipeline, product, learnhubble,
+src/content/home/<lang>/   홈 문구(섹션별 JSON: common, hero, story, product, learnhubble,
                            references, standards, news, resources, company, contact)
 src/content/ui/<lang>.json 화면 부품 문구(메뉴 닫기, 움직임 멈춤, 언어 안내 띠, 문의 폼 메시지, 404)
 src/content/posts/posts.json  소식(지금 사이트 data/posts.json과 같은 형식, 콘텐츠 컬렉션)
@@ -85,13 +85,19 @@ fonts-src/                 글꼴 원본(Pretendard Variable 1.3.9, OFL). 빌드
 src/styles/tokens.css      디자인 토큰(색·그라디언트·글꼴·크기·레이아웃) 한 파일
 src/styles/                base(초기화·글자·언어별 줄바꿈), chrome(헤더·푸터), home, cards, article
 src/layouts/Base.astro     head(메타·OG·hreflang·canonical), 헤더, 푸터, 공통 스크립트
-src/sections/              홈 섹션 10개(지금 사이트 순서)
+src/sections/              홈 섹션. 첫 섹션은 오프닝 여섯 장면(Story.astro)
+src/components/fragments/  제품 화면 조각(HTML로 다시 그린 퀴즈·xAPI 문장·이상 탐지·교수자 개입·학습자 힌트)
 src/components/            헤더, 푸터, 언어 선택, 움직임 멈춤, 언어 안내 띠, 이미지, 소식 카드
 src/pages/                 /, [lang]/, news, news/[id], privacy, links, 404, sitemap.xml, robots.txt
 src/lib/                   i18n, url(base), content(문구 불러오기), posts, article(본문 정리), images,
-                           phrase(일본어 BudouX), typeset(마지막 줄 한 단어 방지)
+                           phrase(일본어 BudouX), typeset(마지막 줄 한 단어 방지),
+                           story-data(데이터 아트 모델: 입자=xAPI 문장, 자리=CASE 성취 항목, 색=활동 종류),
+                           story-svg(기본 층 그림)
+src/pages/art/             기본 층 그림(SVG, 빌드 때 story-data로 그림)
 src/middleware.ts          모든 HTML에 조판(typeset) 적용
-src/scripts/               site(헤더·메뉴·움직임·안내 띠·연혁·루프 정지), motion, contact-form
+src/scripts/               site(헤더·메뉴·움직임·안내 띠·연혁), motion, contact-form
+src/scripts/story/         boot(첫 로드: 장면 전환·키보드), enhance(데스크톱: GSAP·Lenis),
+                           webgl-art(OGL) · canvas-art(2D) 데이터 아트
 scripts/migrate/           지금 사이트에서 문구·자산을 옮긴 스크립트(이전용)
 scripts/fonts/subset.mjs   빌드 뒤 글꼴 서브셋
 scripts/checks/            콘텐츠 규칙, 깨진 링크, 결과표
@@ -136,7 +142,7 @@ bash scripts/migrate/copy-assets.sh ../homepage_renewal   # 이미지·PDF·영�
 ```
 
 ## 움직임과 접근성
-- 오른쪽 위 '움직임 멈춤' 버튼이 반복 애니메이션을 모두 멈춥니다(KWCAG 6.2.2). 선택은 브라우저에 기억되고, '동작 줄이기' 설정이면 멈춘 상태로 시작합니다. 2단계 연출은 `src/scripts/motion.ts`의 `motionAllowed()`·`onMotionChange()`를 따릅니다.
+- 오른쪽 위 '움직임 멈춤' 버튼이 반복 애니메이션을 모두 멈춥니다(KWCAG 6.2.2). 선택은 브라우저에 기억되고, '동작 줄이기' 설정이면 멈춘 상태로 시작합니다. 오프닝 연출(데이터 아트의 떠다님)도 `src/scripts/motion.ts`의 `motionAllowed()`·`onMotionChange()`를 따릅니다.
 - 언어는 자동으로 옮기지 않습니다. 브라우저 첫 언어가 페이지와 다르면 그 언어로 안내 띠만 띄웁니다.
 
 ## 글꼴

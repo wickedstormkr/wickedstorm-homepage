@@ -6,7 +6,6 @@
 import type { Lang } from './i18n';
 import type common from '../content/home/ko/common.json';
 import type hero from '../content/home/ko/hero.json';
-import type pipeline from '../content/home/ko/pipeline.json';
 import type product from '../content/home/ko/product.json';
 import type learnhubble from '../content/home/ko/learnhubble.json';
 import type references from '../content/home/ko/references.json';
@@ -15,12 +14,12 @@ import type news from '../content/home/ko/news.json';
 import type resources from '../content/home/ko/resources.json';
 import type company from '../content/home/ko/company.json';
 import type contact from '../content/home/ko/contact.json';
+import type story from '../content/home/ko/story.json';
 import type ui from '../content/ui/ko.json';
 
 export interface HomeContent {
   common: typeof common;
   hero: typeof hero;
-  pipeline: typeof pipeline;
   product: typeof product;
   learnhubble: typeof learnhubble;
   references: typeof references;
@@ -29,6 +28,7 @@ export interface HomeContent {
   resources: typeof resources;
   company: typeof company;
   contact: typeof contact;
+  story: typeof story;
 }
 export type UiText = typeof ui;
 

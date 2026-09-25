@@ -1,0 +1,16 @@
+---
+/** 응답 하나가 xAPI Statement로 펼쳐진 모습. verb 주소는 실제 ADL 동사 주소 */
+import type { HomeContent } from '../../lib/content';
+interface Props { t: HomeContent['story']['statement']; label: string }
+const { t, label } = Astro.props;
+---
+<figure class="fx fx-stmt" aria-label={label}>
+  <div class="fx-bar"><span class="fx-dots" aria-hidden="true"><i></i><i></i><i></i></span><b>{t.caption}</b><span lang="en">xAPI 1.0.3</span></div>
+  <dl>
+    {t.rows.map((r, i) => (
+      <div class:list={['fx-line', { on: r.k === 'verb' }]} style={`--i:${i}`}><dt lang="en">{r.k}</dt><dd lang={r.k === 'verb' ? 'en' : undefined}>{r.v}</dd></div>
+    ))}
+  </dl>
+  <p class="fx-iri" lang="en">http://adlnet.gov/expapi/verbs/answered</p>
+  <p class="fx-stored">{t.stored}</p>
+</figure>

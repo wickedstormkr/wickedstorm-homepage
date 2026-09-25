@@ -1,0 +1,100 @@
+/* 제품 화면 조각: 실제 제품(Lecognizer·LearnHubble AI)의 밝은 화면을 HTML로 다시 그린 것.
+   글자는 모두 HTML이라 네 언어로 바뀌고, 화면 낭독기가 읽는다. 버튼 모양은 장식(누를 수 없음, span).
+   화면 속 인물·교과·수치는 시연용. 색: 이상 신호는 Lecognizer 제품 색(마젠타 쪽), LearnHubble AI는 파랑 쪽 */
+.fx{--fx-bg:#fff;--fx-soft:#f5f6fb;--fx-ink:#1b1f2d;--fx-ink2:#3a4056;--fx-muted:#646b82;--fx-line:#e4e7f0;
+  --fx-lhb:linear-gradient(92deg,#5a48f0,#2f6fe8);--fx-lec:#2f6fe8;--fx-hot:#b8248a;--fx-hot-bg:#fdebf6;
+  position:relative;margin:0;border-radius:16px;background:var(--fx-bg);color:var(--fx-ink);font-family:var(--font);
+  box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);overflow:hidden;letter-spacing:-.01em;text-align:left}
+.fx *{min-width:0}
+.fx-bar{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;padding:10px 16px;border-bottom:1px solid var(--fx-line);background:var(--fx-soft);font-size:12.5px;color:var(--fx-muted)}
+.fx-bar b{flex:none;max-width:100%;white-space:nowrap;color:var(--fx-ink2);font-weight:700}
+.fx-bar>span:not(.fx-dots){flex:1 1 12em;text-wrap:balance}
+.fx-bar .fx-dots{display:inline-flex;gap:5px}
+.fx-bar .fx-dots i{width:8px;height:8px;border-radius:50%;background:#d7dae6}
+.fx-body{padding:18px 20px 20px}
+.fx-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fx-h{font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--fx-ink)}
+.fx-sub{font-size:13px;color:var(--fx-muted)}
+.fx-tag{display:inline-block;font-size:12.5px;font-weight:700;color:#4b3fd6}
+.fx-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700;background:#eef0fe;color:#3b33b8}
+.fx-chip.hot{background:var(--fx-hot-bg);color:var(--fx-hot)}
+.fx-chip.blue{background:#e8f0fe;color:#1f58c7}
+.fx-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:700;border:1px solid var(--fx-line);color:var(--fx-ink2);background:#fff}
+.fx-btn.p{border:0;background:var(--fx-lhb);color:#fff}
+.fx-btn.lec{border:0;background:var(--fx-lec);color:#fff}
+.fx p{text-wrap:pretty}
+
+/* 1. 강의실 구간 퀴즈 */
+.fx-quiz .fx-q{margin:8px 0 14px;font-size:16.5px;font-weight:700;line-height:1.45}
+.fx-quiz ol{list-style:none;display:grid;gap:8px}
+.fx-quiz li{padding:11px 14px;border-radius:10px;border:1px solid var(--fx-line);font-size:14.5px;line-height:1.45;color:var(--fx-ink2)}
+.fx-quiz li.pick{border-color:#8f84f5;background:#f1efff;color:var(--fx-ink);font-weight:600}
+.fx-quiz li.pick.wrong{border-color:#e7a6cf;background:var(--fx-hot-bg)}
+.fx-quiz .fx-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.fx-quiz .fx-verdict{display:none;margin-top:10px}
+.fx-quiz.answered .fx-verdict{display:block}
+
+/* 2. xAPI 문장 */
+.fx-stmt{background:#0f1224;color:#e8eaf6;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(163,177,255,.25)}
+.fx-stmt .fx-bar{background:#151936;border-color:rgba(255,255,255,.08);color:#a8aecb}
+.fx-stmt .fx-bar b{color:#dfe3f7}
+.fx-stmt dl{display:grid;gap:8px;padding:18px 20px 12px;font-family:var(--mono)}
+.fx-stmt dl>div{display:grid;grid-template-columns:5.2em 1fr;gap:12px;align-items:baseline;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.fx-stmt dt{font-size:13px;color:#a3b1ff}
+.fx-stmt dd{font-family:var(--font);font-size:15px;font-weight:600;color:#fff;overflow-wrap:anywhere}
+.fx-stmt dl>div.on{box-shadow:inset 0 0 0 1px rgba(233,48,176,.75);background:rgba(233,48,176,.12)}
+.fx-stmt .fx-iri{padding:0 20px;font-family:var(--mono);font-size:12.5px;color:#a8aecb;overflow-wrap:anywhere}
+.fx-stmt .fx-stored{display:flex;align-items:center;gap:8px;padding:12px 20px 16px;font-size:13px;color:#dfe3f7}
+.fx-stmt .fx-stored::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent)}
+
+/* 3. Lecognizer AI 이상 탐지 */
+.fx-anom .fx-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px;align-items:start}
+.fx-chart{position:relative;padding-top:26px}
+.fx-bars{list-style:none;display:grid;grid-template-columns:repeat(6,1fr);align-items:end;gap:10px;height:140px;border-bottom:1px solid var(--fx-line)}
+.fx-bars li{position:relative;height:var(--h);border-radius:5px 5px 0 0;background:#5d7be8}
+.fx-bars li.hot{background:var(--fx-hot)}
+.fx-bars li.hot .fx-chip{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap}
+.fx-weeks{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:6px;text-align:center;font-size:12.5px;color:var(--fx-muted)}
+.fx-weeks .hot{color:var(--fx-hot);font-weight:800}
+.fx-anom .fx-cap{margin-top:8px;font-size:12.5px;color:var(--fx-muted)}
+.fx-anom .fx-headline{font-size:15.5px;font-weight:800;color:var(--fx-hot);line-height:1.4}
+.fx-anom .fx-text{margin-top:8px;font-size:15px;line-height:1.65;color:var(--fx-ink2)}
+.fx-anom mark{background:#fff3b0;color:var(--fx-ink);font-weight:700;padding:0 2px}
+.fx-anom .fx-ev{display:inline-block;margin-top:8px;font-size:14px;color:#1f58c7;text-decoration:underline;text-underline-offset:3px}
+.fx-anom .fx-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.fx-anom .fx-patent{text-decoration:none}
+.fx-anom a.fx-patent:hover{text-decoration:underline}
+
+/* 4. 교수자 학습 개입 */
+.fx-judge .fx-ai{margin-top:14px;padding:14px 16px;border-radius:12px;background:#f3f1ff;border:1px solid #dcd6ff}
+.fx-judge .fx-ai p{font-size:15px;font-weight:700;line-height:1.5;color:var(--fx-ink)}
+.fx-judge .fx-ai small{display:block;margin-top:6px;font-size:13.5px;line-height:1.5;color:var(--fx-ink2)}
+.fx-judge ol{list-style:none;display:grid;gap:0;margin-top:14px;border-top:1px solid var(--fx-line)}
+.fx-judge li{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:10px 0;border-bottom:1px solid var(--fx-line);align-items:center}
+.fx-judge li i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#fdeaf4;color:var(--fx-hot);font-style:normal;font-weight:800;font-size:13px}
+.fx-judge li b{font-size:14.5px}
+.fx-judge li span{display:block;font-size:13px;color:var(--fx-muted);line-height:1.45;text-wrap:balance}
+.fx-judge .fx-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-top:14px}
+.fx-judge .fx-owner{margin-top:10px;font-size:13px;color:var(--fx-muted);text-align:right}
+
+/* 5. 학습자 AI 힌트 */
+.fx-hint .fx-panel{margin-top:14px;padding:14px 16px;border-radius:12px;background:#f1f5ff;border:1px solid #d6e2ff}
+.fx-hint .fx-panel b{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#1f58c7}
+.fx-hint .fx-panel b::before{content:"";width:14px;height:14px;border-radius:4px;background:var(--fx-lhb)}
+.fx-hint .fx-panel p{margin-top:6px;font-size:15px;line-height:1.6;color:var(--fx-ink)}
+.fx-hint .fx-panel small{display:block;margin-top:6px;font-size:12.5px;color:var(--fx-muted)}
+.fx-hint .fx-done{position:relative;margin-top:12px;padding-left:24px;font-size:13.5px;color:var(--fx-ink2)}
+.fx-hint .fx-done::before{content:"";position:absolute;left:0;top:calc(.75em - 8px);width:16px;height:16px;border-radius:50%;background:#dfe6ff;box-shadow:inset 0 0 0 4px #5a74f0}
+
+@media (max-width:699px){
+  .fx-body{padding:16px}
+  .fx-anom .fx-grid{grid-template-columns:1fr}
+  .fx-bars{height:120px;gap:8px}
+  .fx-quiz li,.fx-judge li b{font-size:15px}
+  .fx-judge li span,.fx-judge .fx-ai small,.fx-hint .fx-panel small{font-size:13.5px}
+}
+/* 터치 화면: 문단(40자 이상)은 15px 이상, 누르는 곳(특허 링크)은 44px 이상 */
+@media (max-width:1023px){
+  .fx-quiz li,.fx-anom .fx-cap,.fx-judge .fx-owner,.fx-hint .fx-done{font-size:15px}
+  a.fx-chip{min-height:44px;padding:0 14px}
+}

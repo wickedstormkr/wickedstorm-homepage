@@ -12,21 +12,16 @@ const { lang, t } = Astro.props;
   <div class="wrap">
     <SecHead lang={lang} id="product-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
 
-    <figure class="loop-figure">
-      <div class="loop-stage">
-        <Img name={t.loop.img} alt={t.loop.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" />
-        <ol class="loop-notes">
-          {t.loop.notes.map((n) => (
-            <li class:list={[n.kind === 'solution' ? 'ln-sol' : 'ln-role', { 'align-right': n.style.includes('--align:right') }]} style={n.style}>
-              {n.role && <b set:html={n.role} />}
-              <span class:list={['pill', n.product]}>{n.pill}</span>
-              <span class="ln-desc" set:html={n.desc} />
-            </li>
-          ))}
-        </ol>
-      </div>
-      <figcaption class="note" set:html={t.loop.caption} />
-    </figure>
+    <!-- 학습의 선순환 그림은 오프닝 여섯째 장면으로 옮겼다. 여기서는 세 솔루션과 세 역할을 카드로 -->
+    <ul class="loop-cards">
+      {t.loop.notes.map((n) => (
+        <li class:list={['loop-card', n.kind === 'solution' ? 'is-sol' : 'is-role']}>
+          {n.role && <b set:html={n.role} />}
+          <span class:list={['pill', n.product]}>{n.pill}</span>
+          <p set:html={n.desc} />
+        </li>
+      ))}
+    </ul>
 
     {t.features.map((f) => (
       <div class:list={['feature', { reverse: f.reverse }]}>

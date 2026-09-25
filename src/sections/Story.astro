@@ -1,0 +1,166 @@
+---
+/**
+ * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 지금 사이트의 히어로·파이프라인을 대신한다.
+ *
+ * 기본 층(이 마크업만으로 완결): 장면을 세로로 이어 붙이고, 장면마다 글 설명·HTML 제품 화면·미리 그린 그림(SVG)을 둔다.
+ *   폰·태블릿·움직임 줄이기·JS 없음은 이 층으로 본다. 폰에서는 장면이 화면에 들어올 때 그 안의 짧은 움직임만 재생(.play).
+ * 연출 층(src/scripts/story/*): 데스크톱에서 화면을 고정하고 스크롤로 장면을 넘긴다(GSAP ScrollTrigger).
+ *   데이터 아트는 성능에 따라 WebGL(OGL) → 캔버스 → 미리 그린 그림 순으로 고른다.
+ * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰은 그림 아래 목록으로.
+ */
+import QuizCard from '../components/fragments/QuizCard.astro';
+import StatementCard from '../components/fragments/StatementCard.astro';
+import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
+import InterventionPanel from '../components/fragments/InterventionPanel.astro';
+import LearnerHint from '../components/fragments/LearnerHint.astro';
+import Img from '../components/Img.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url, withBase } from '../lib/url';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK } from '../lib/story-data';
+
+interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop']; demoTopic: string }
+const { lang, t, hero, loop, demoTopic } = Astro.props;
+const sc = t.scenes;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+const nodeName = (id: string) => (t.store.nodes as Record<string, string>)[id];
+const label = (product: string) => `${product} ${t.screen}`;
+const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
+const week = (n: number) => t.signal.week.replace('{n}', String(n));
+---
+<section class="story" id="story" aria-label={t.label} data-story>
+  <a class="story-skip" href="#after-story">{t.skip}</a>
+  <div class="story-stage">
+    <canvas class="story-art" aria-hidden="true"></canvas>
+    <nav class="story-nav" aria-label={t.nav}>
+      <ol>
+        {sc.map((s, i) => (
+          <li><a href={`#scene-${s.id}`} data-go={i} aria-current={i === 0 ? 'step' : undefined}><span class="n" aria-hidden="true">{num(i)}</span><span class="t">{s.beat}</span></a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <!-- 장면 1 · 순간 -->
+    <article class="scene scene-moment is-active" id={`scene-${sc[0].id}`} data-scene="0" aria-labelledby="hero-title">
+      <div class="scene-copy">
+        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={hero.eyebrow} /></p>
+        <h1 id="hero-title">{hero.lines.map((l) => <span class="line" set:html={phrase(l, lang)} />)}</h1>
+        <p class="hero-lead" set:html={hero.lead} />
+        <div class="hero-cta">
+          <a class="btn p" href="#contact">{hero.ctaPrimary}</a>
+          <a class="btn s" href="#product">{hero.ctaSecondary}</a>
+        </div>
+        <ul class="hero-trust">
+          {hero.trust.map((i) => <li><a href={url(i.href)} set:html={withBase(i.html)} /></li>)}
+        </ul>
+      </div>
+      <div class="scene-visual">
+        <QuizCard t={t.quiz} label={label(t.quiz.product)} />
+      </div>
+    </article>
+
+    <!-- 장면 2 · 표준 문장 -->
+    <article class="scene scene-statement" id={`scene-${sc[1].id}`} data-scene="1" aria-labelledby="scene-t-2">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
+        <h2 class="scene-title" id="scene-t-2" set:html={phrase(sc[1].title!, lang)} />
+        <p class="scene-text">{sc[1].text}</p>
+      </div>
+      <div class="scene-visual">
+        <div class="stmt-pair">
+          <QuizCard t={t.quiz} answered compact label={label(t.quiz.product)} />
+          <span class="stmt-link" aria-hidden="true"></span>
+          <StatementCard t={t.statement} label={t.statement.caption} />
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 3 · 쌓임 -->
+    <article class="scene scene-store" id={`scene-${sc[2].id}`} data-scene="2" aria-labelledby="scene-t-3">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(2)} · </span>{sc[2].beat}</p>
+        <h2 class="scene-title" id="scene-t-3" set:html={phrase(sc[2].title!, lang)} />
+        <p class="scene-text">{sc[2].text}</p>
+        <ul class="art-legend">
+          <li class="legend-title">{t.store.legend}</li>
+          {VERBS.map((v) => <li><i style={`background:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
+        </ul>
+      </div>
+      <div class="scene-visual">
+        <div class="art-box" data-art-box>
+          <img class="art-base" src={url('/art/case-tree.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <img class="art-lines" src={url('/art/case-lines.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
+          <p class="art-count"><span>{t.store.countLabel}</span><b>{t.store.count}</b></p>
+          <ul class="art-labels" aria-hidden="true">
+            {CASE_NODES.map((n) => (
+              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}{n.count && <small>{n.count.toLocaleString('en-US')}</small>}</li>
+            ))}
+          </ul>
+        </div>
+        <ol class="case-list" aria-label={t.store.listLabel}>
+          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span><b>{n.count!.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US')}{t.store.unit}</b></li>)}
+        </ol>
+      </div>
+    </article>
+
+    <!-- 장면 4 · 신호 -->
+    <article class="scene scene-signal" id={`scene-${sc[3].id}`} data-scene="3" aria-labelledby="scene-t-4">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(3)} · </span>{sc[3].beat}</p>
+        <h2 class="scene-title" id="scene-t-4" set:html={phrase(sc[3].title!, lang)} />
+        <p class="scene-text">{sc[3].text}</p>
+      </div>
+      <div class="scene-visual">
+        <div class="art-box art-bars">
+          <img class="art-base" src={url('/art/weekly-bars.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <p class="art-tag" aria-hidden="true">{t.signal.title.split(' · ')[0]}</p>
+          <ul class="art-weeks" aria-hidden="true">
+            {WEEK_WEIGHTS.map((_, i) => <li class:list={{ hot: i === HOT_WEEK }} style={`left:${pct(BARS.x0 + i * BARS.step + BARS.width / 2)};top:${pct(BARS.base + 0.035)}`}>{week(i + 1)}</li>)}
+          </ul>
+          <div class="art-panel"><AnomalyPanel t={t.signal} label={label(t.signal.title)} /></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 5 · 사람의 판단 -->
+    <article class="scene scene-judge" id={`scene-${sc[4].id}`} data-scene="4" aria-labelledby="scene-t-5">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(4)} · </span>{sc[4].beat}</p>
+        <h2 class="scene-title" id="scene-t-5" set:html={phrase(sc[4].title!, lang)} />
+        <p class="scene-text">{sc[4].text}</p>
+      </div>
+      <div class="scene-visual">
+        <div class="judge-stack">
+          <p class="signal-alert">{t.judge.alert}</p>
+          <InterventionPanel t={t.judge} label={label(t.judge.product)} />
+        </div>
+      </div>
+    </article>
+
+    <!-- 장면 6 · 다음 학기 -->
+    <article class="scene scene-next" id={`scene-${sc[5].id}`} data-scene="5" aria-labelledby="scene-t-6">
+      <div class="scene-copy">
+        <p class="beat"><span aria-hidden="true">{num(5)} · </span>{sc[5].beat}</p>
+        <h2 class="scene-title" id="scene-t-6" set:html={phrase(sc[5].title!, lang)} />
+        <p class="scene-text">{sc[5].text}</p>
+        <div class="hero-cta">
+          <a class="btn p" href="#contact">{t.next.contact}</a>
+          <a class="btn s" href="#contact" data-topic={demoTopic}>{t.next.demo}</a>
+        </div>
+      </div>
+      <div class="scene-visual">
+        <div class="next-stack">
+          <LearnerHint t={t.next} label={label(t.next.product)} />
+          <figure class="loop-art">
+            <Img name={loop.img} alt={loop.alt} sizes="(min-width: 1024px) 56vw, calc(100vw - 48px)" />
+            <figcaption class="note" set:html={loop.caption} />
+          </figure>
+        </div>
+      </div>
+    </article>
+    <p class="story-demo">{t.demo}</p>
+  </div>
+</section>
+<span id="after-story" tabindex="-1"></span>

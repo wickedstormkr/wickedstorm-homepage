@@ -38,6 +38,8 @@ interface Props {
   /** 헤더·푸터 없이(링크 페이지) */
   bare?: boolean;
   jsonLd?: Record<string, unknown>;
+  /** 오프닝 여섯 장면이 있는 홈: 데스크톱이면 첫 그리기 전에 무대 고정 모드로 */
+  story?: boolean;
 }
 
 const {
@@ -58,6 +60,7 @@ const {
   mainId = 'main',
   bare = false,
   jsonLd,
+  story = false,
 } = Astro.props;
 
 const common = getHome(lang).common;
@@ -79,6 +82,10 @@ const ogIsDefault = /\/img\/og-(home|image)/.test(ogImage);
     if (p === 'paused' || (p === null && reduce)) r.classList.add('motion-paused');
   })(document);
 </script>
+{story && <script is:inline>
+  // 데스크톱(1024px 이상, 움직임 줄이기 아님)은 첫 그리기 전에 여섯 장면 무대를 고정한다(레이아웃이 뒤늦게 바뀌지 않게)
+  if (window.matchMedia && matchMedia('(min-width: 1024px) and (prefers-reduced-motion: no-preference)').matches) document.documentElement.classList.add('story-pin');
+</script>}
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
