@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Lecognizer LRS — CASE 적재 · AI 기반 이상 탐지 (구성 스케치)</title>
+<style>
+  /* 다원 전달용 구성 스케치.
+     실제 Lecognizer LRS 관리 화면(192.168.0.100 데모)의 상단바·사이드바·카드·테이블 틀을 그대로 따랐고,
+     그 위에 CASE 적재 구조와 AI 기반 이상 탐지 내용을 얹었다. 실제 디자인은 다원 시안으로. */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1600px; height:1000px; overflow:hidden; }
+  body {
+    font-family: Pretendard, "Apple SD Gothic Neo", -apple-system, sans-serif;
+    background:#F7F8FA; color:#17191C;
+  }
+  svg.i { width:20px; height:20px; stroke:currentColor; stroke-width:1.7; fill:none;
+    stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+  /* ── 상단바 (실물: #2E85FF, 60px) ── */
+  .topbar { position:fixed; top:0; left:0; right:0; height:60px; background:#2E85FF;
+    display:flex; align-items:center; color:#fff; z-index:10; }
+  .burger { width:53px; height:60px; background:#2273EB; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:5px; }
+  .burger i { display:block; width:20px; height:2px; background:#fff; border-radius:2px; }
+  .logo { display:flex; align-items:baseline; margin-left:20px; font-size:19px; font-weight:800;
+    letter-spacing:.01em; }
+  .logo .star { font-size:9px; align-self:flex-start; margin:6px 2px 0 0; opacity:.9; }
+  .logo .orb { display:inline-block; width:12px; height:12px; border:2.6px solid #fff;
+    border-radius:50%; margin:0 1px; position:relative; top:0.5px; }
+  .topmenu { margin-left:auto; display:flex; align-items:center; gap:30px; margin-right:26px;
+    font-size:14px; }
+  .topmenu .m { display:flex; align-items:center; gap:7px; }
+  .topmenu svg.i { width:18px; height:18px; }
+  /* ── 사이드바 (실물: 흰 배경 230px, 60px 행) ── */
+  .side { position:fixed; top:60px; left:0; bottom:0; width:230px; background:#fff;
+    border-right:1px solid #E5E7ED; }
+  .side .item { height:61px; display:flex; align-items:center; gap:14px; padding:0 0 0 24px;
+    font-size:15px; color:#3A3F47; border-bottom:1px solid #EBEDF3; position:relative; }
+  .side .item svg.i { color:#565D68; }
+  .side .item.on { color:#2E85FF; background:#F3F8FF; font-weight:700; }
+  .side .item.on svg.i { color:#2E85FF; }
+  .side .item.on::before { content:''; position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:#2E85FF; }
+  /* ── 콘텐츠 ── */
+  .main { position:absolute; top:60px; left:230px; width:1370px; height:940px;
+    padding:22px 28px 0; }
+  .phead { display:flex; align-items:center; gap:10px; }
+  .phead h1 { font-size:20px; font-weight:700; display:flex; align-items:center; gap:10px; }
+  .phead .filters { margin-left:auto; display:flex; gap:8px; }
+  .sel { height:36px; background:#fff; border:1px solid #D8DCE5; border-radius:6px;
+    display:flex; align-items:center; gap:14px; padding:0 12px 0 14px; font-size:13.5px; color:#2A2E35; }
+  .sel .car { color:#98A0AC; font-size:10px; }
+  .hr { height:1px; background:#E5E7ED; margin:14px 0 0; }
+  .secrow { display:flex; align-items:center; gap:10px; margin-top:15px; }
+  .secrow h2 { font-size:16.5px; font-weight:700; }
+  .live { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800;
+    color:#14804A; background:#EBF9F0; border:1px solid #B7E8C8; border-radius:99px; padding:3px 10px; }
+  .live .dot { width:7px; height:7px; border-radius:50%; background:#22B96A; }
+  .secrow .hint { margin-left:auto; font-size:12.5px; color:#8A90A0; }
+  /* 통계 카드 (실물 대시보드/AI 리포트 카드 틀) */
+  .stats { display:flex; gap:16px; margin-top:12px; }
+  .card { background:#fff; border:1px solid #E4E7EE; border-radius:10px; }
+  .stat { flex:1; padding:14px 20px 16px; }
+  .ctitle { font-size:13.5px; color:#4A4F58; display:flex; align-items:center; gap:6px; font-weight:600; }
+  .info { width:14px; height:14px; border:1px solid #B9BFC9; border-radius:50%; color:#A6ACB8;
+    font-size:9.5px; display:inline-flex; align-items:center; justify-content:center; font-style:normal; }
+  .stat .val { margin-top:10px; display:flex; align-items:baseline; gap:12px; }
+  .big { font-size:42px; font-weight:800; letter-spacing:-0.01em; }
+  .big.red { color:#D64545; }
+  .plus { font-size:12px; font-weight:700; color:#14804A; background:#EBF9F0;
+    border:1px solid #B7E8C8; border-radius:99px; padding:3px 10px; }
+  .stat .sub { margin-top:6px; font-size:12.5px; color:#6B7280; }
+  /* 2단 레이아웃 */
+  .cols { display:flex; gap:16px; margin-top:16px; height:568px; }
+  /* ── CASE 트리 카드 ── */
+  .casecard { width:600px; padding:16px 20px; display:flex; flex-direction:column; }
+  .cardhead { display:flex; align-items:center; gap:8px; }
+  .cardhead h3 { font-size:15px; font-weight:700; }
+  .casecard .sub { font-size:12.5px; color:#6B7280; margin-top:4px; }
+  .cfdoc { margin-top:12px; background:#F4F6FA; border:1px solid #E4E7EE; border-radius:8px;
+    padding:10px 14px; display:flex; align-items:center; gap:10px; }
+  .cfdoc .t { font-size:13.5px; font-weight:700; }
+  .cfdoc .k { font-size:11px; color:#7A8194; background:#fff; border:1px solid #DDE1EA;
+    border-radius:4px; padding:2px 7px; font-weight:600; }
+  .cfdoc .r { margin-left:auto; font-size:11.5px; color:#8A90A0; }
+  .tree { margin-top:6px; flex:1; }
+  .kids { margin-left:15px; padding-left:24px; }
+  .kid { position:relative; margin-top:10px; }
+  .kid::before { content:''; position:absolute; left:-24px; top:-12px; width:20px;
+    height:calc(50% + 12px); border-left:2px solid #D9DEE8; border-bottom:2px solid #D9DEE8;
+    border-bottom-left-radius:7px; }
+  .kid:not(:last-child)::after { content:''; position:absolute; left:-24px; top:50%; bottom:-12px;
+    border-left:2px solid #D9DEE8; }
+  .node { background:#fff; border:1px solid #E4E7EE; border-radius:8px; padding:9px 13px;
+    display:flex; align-items:center; gap:10px; position:relative; }
+  .rel { position:absolute; left:-16px; top:-9px; font-size:10.5px; font-weight:700;
+    color:#4353B8; background:#EEF2FF; border:1px solid #C7D2FE; border-radius:99px;
+    padding:1px 8px; z-index:2; }
+  .ntype { font-size:11px; color:#7A8194; background:#F4F6FA; border-radius:4px; padding:2px 7px;
+    font-weight:600; white-space:nowrap; }
+  .nname { font-size:13.5px; font-weight:600; line-height:1.4; flex:1; min-width:0; }
+  .ncnt { font-size:12.5px; color:#566070; font-weight:700; white-space:nowrap; }
+  .node.hot { background:#F0F7FF; border-color:#BFD9FF; }
+  .node.hot .badge-new { font-size:11.5px; font-weight:800; color:#14804A; background:#EBF9F0;
+    border:1px solid #B7E8C8; border-radius:99px; padding:2px 8px; white-space:nowrap; }
+  .sigdot { display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700;
+    color:#D64545; white-space:nowrap; }
+  .sigdot::before { content:''; width:7px; height:7px; border-radius:50%; background:#E5484D; }
+  .treelegend { border-top:1px dashed #E4E7EE; margin-top:12px; padding-top:9px;
+    font-size:11.5px; color:#8A90A0; line-height:1.7; }
+  .treelegend b { color:#4353B8; font-weight:700; }
+  /* ── Statement 목록 카드 (실물 테이블 틀) ── */
+  .rightcol { flex:1; display:flex; flex-direction:column; gap:16px; min-width:0; }
+  .stmt { padding:14px 18px 8px; }
+  .stmt .cardhead .btn { height:30px; display:inline-flex; align-items:center; gap:6px;
+    border-radius:6px; font-size:12.5px; font-weight:600; padding:0 13px; }
+  .btn.gray { background:#EEF0F4; border:1px solid #DCDFE7; color:#3A3F47; }
+  .btn.blue { background:#2E85FF; border:1px solid #2E85FF; color:#fff; }
+  .stmt table { width:100%; border-collapse:collapse; margin-top:10px; table-layout:fixed; }
+  .stmt th { font-size:12.5px; color:#566070; text-align:left; padding:7px 8px;
+    border-bottom:2px solid #2A2E35; font-weight:700; }
+  .stmt td { font-size:13px; padding:0 8px; height:41px; border-bottom:1px solid #EEF0F5;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .stmt tr.new td { background:#F0F7FF; }
+  .newchip { font-size:10.5px; font-weight:800; color:#2E85FF; border:1px solid #A9CDFF;
+    background:#fff; border-radius:4px; padding:1px 6px; margin-right:6px; }
+  .verb { color:#2A2E35; }
+  .casechip { display:inline-block; max-width:100%; font-size:11.5px; color:#3F51B5;
+    background:#EEF2FF; border-radius:4px; padding:2px 8px; overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap; vertical-align:middle; }
+  .stored { color:#8A90A0; font-size:12.5px; }
+  /* ── Lecognizer AI 카드 ── */
+  .ai { flex:1; padding:14px 18px; display:flex; flex-direction:column; min-height:0; }
+  .patent { margin-left:auto; font-size:11px; font-weight:700; color:#2E5FBF; background:#F0F6FF;
+    border:1px solid #C9D8F5; border-radius:99px; padding:3px 10px; white-space:nowrap; }
+  .aibody { display:flex; gap:22px; margin-top:10px; flex:1; min-height:0; }
+  .chart { width:300px; display:flex; flex-direction:column; }
+  .chart .bars { flex:1; display:flex; align-items:flex-end; gap:16px; padding:16px 4px 0;
+    border-bottom:1px solid #E5E7ED; position:relative; }
+  .wk { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%;
+    justify-content:flex-end; }
+  .bar { width:20px; border-radius:3px 3px 0 0; background:#5470C6; }
+  .wk.alert .bar { background:#EE6666; }
+  .wk .flag { font-size:10px; font-weight:800; color:#D64545; background:#FEF2F2;
+    border:1px solid #F5C6C6; border-radius:99px; padding:1px 7px; white-space:nowrap; }
+  .chart .xlabels { display:flex; gap:16px; padding:5px 4px 0; }
+  .chart .xlabels span { flex:1; text-align:center; font-size:11px; color:#8A90A0; }
+  .chart .xlabels span.alert { color:#D64545; font-weight:800; }
+  .chart .cap { font-size:11.5px; color:#8A90A0; margin-top:7px; }
+  .diag { flex:1; min-width:0; display:flex; flex-direction:column; }
+  .diag .headline { font-size:13.5px; font-weight:800; color:#C03A3A; }
+  .diag p { font-size:13px; color:#2A2E35; line-height:1.6; margin-top:7px; }
+  .diag p b { background:#FFF6C9; padding:0 2px; }
+  .diag .lnk { font-size:12.5px; color:#2E85FF; text-decoration:underline;
+    text-underline-offset:2px; margin-top:7px; }
+  .diag .acts { margin-top:auto; display:flex; gap:8px; padding-top:14px; }
+  .diag .btn { height:34px; padding:0 15px; font-size:13px; }
+  /* 푸터 (실물 그대로) */
+  .foot { margin-top:13px; font-size:12px; color:#A6ACB8; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="burger"><i></i><i></i><i></i></div>
+    <div class="logo"><span class="star">✦</span>Lec<span class="orb"></span>gnizer</div>
+    <div class="topmenu">
+      <span class="m"><svg class="i" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M12 10v6m-3-3 3 3 3-3"/></svg>매뉴얼 다운로드</span>
+      <span class="m"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3"/></svg>권한 변경</span>
+      <span class="m"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5c1-2.5 3-4 5.5-4s4.5 1.5 5.5 4"/></svg>솔루션 관리자(solution-admin)</span>
+    </div>
+  </div>
+  <div class="side">
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="1.5"/><path d="M9 21h6m-3-4v4"/></svg>대시보드</div>
+    <div class="item on"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10m5.3 10V4m5.4 16v-8m5.3 8V7"/></svg>데이터 조회</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12l6 6"/></svg>시각화 차트</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="4" width="7.5" height="7.5" rx="1"/><rect x="13" y="4" width="7.5" height="7.5" rx="1"/><rect x="3.5" y="13.5" width="7.5" height="7.5" rx="1"/><rect x="13" y="13.5" width="7.5" height="7.5" rx="1"/></svg>활용 현황</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M7.4 11 16 6.8M7.4 13 16 17.2"/></svg>프로파일 조회</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M7.5 7h.01M7.5 17h.01"/></svg>저장소 관리</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><path d="M12 3.5 19 6v5c0 4.5-2.8 7.9-7 9.5-4.2-1.6-7-5-7-9.5V6z"/></svg>권한 관리</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5"/></svg>계정 관리</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><path d="M4 20V10m5.3 10V4m5.4 16v-8m5.3 8V7"/><circle cx="19" cy="17" r="0.1"/></svg>데이터 조회 이력</div>
+    <div class="item"><svg class="i" viewBox="0 0 24 24"><path d="M4 19 9.5 12l4 4L20 8"/><path d="M15.5 8H20v4.5"/></svg>AI 리포트</div>
+  </div>
+  <div class="main">
+    <div class="phead">
+      <h1><svg class="i" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M4 20V10m5.3 10V4m5.4 16v-8m5.3 8V7"/></svg>데이터 조회</h1>
+      <div class="filters">
+        <span class="sel">2026년 8월<span class="car">▼</span></span>
+        <span class="sel">생활경제와 금융<span class="car">▼</span></span>
+        <span class="sel">3주차<span class="car">▼</span></span>
+      </div>
+    </div>
+    <div class="hr"></div>
+    <div class="secrow">
+      <h2>「생활경제와 금융」 학습데이터 수집 현황</h2>
+      <span class="live"><span class="dot"></span>LIVE</span>
+      <span class="hint">모든 학습 활동이 표준 문장으로 적재되고, CASE 성취 항목에 연결됩니다</span>
+    </div>
+    <div class="stats">
+      <div class="card stat">
+        <div class="ctitle">당일 수집 Statement 개수 <span class="info">i</span></div>
+        <div class="val"><span class="big">1,374</span><span class="plus">+3 · 방금 적재</span></div>
+        <div class="sub">xAPI 1.0.3 · IMS Caliper 표준 문장</div>
+      </div>
+      <div class="card stat">
+        <div class="ctitle">CASE 성취 항목 연결 <span class="info">i</span></div>
+        <div class="val"><span class="big">24개 항목</span></div>
+        <div class="sub">1EdTech CASE · 대학 교과역량 체계 › 전공 성취 · 경제학과</div>
+      </div>
+      <div class="card stat">
+        <div class="ctitle">이상 신호 <span class="info">i</span></div>
+        <div class="val"><span class="big red">3주차</span></div>
+        <div class="sub" style="color:#8A4444">구간 13:25–14:40 · 멈춤·되감기 집중</div>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card casecard">
+        <div class="cardhead"><h3>1EdTech CASE 교과역량 체계</h3><span class="info">i</span></div>
+        <div class="sub">적재된 Statement가 성취 항목에 연결되어, 항목별로 쌓입니다</div>
+        <div class="cfdoc">
+          <svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px;color:#566070"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/></svg>
+          <span class="t">대학 교과역량 체계</span><span class="k">CFDocument</span>
+          <span class="r">발행 주체 · 대학</span>
+        </div>
+        <div class="tree">
+          <div class="kids" style="margin-top:4px">
+            <div class="kid">
+              <div class="node"><span class="rel">isPartOf</span>
+                <span class="ntype">전공 성취</span>
+                <span class="nname">경제학과 — 책임 있는 금융 의사결정을 내린다</span>
+                <span class="ncnt">1,374건</span>
+              </div>
+              <div class="kids">
+                <div class="kid">
+                  <div class="node"><span class="rel">isChildOf</span>
+                    <span class="ntype">교과역량</span>
+                    <span class="nname">분석적 판단</span>
+                    <span class="ncnt">512건</span>
+                  </div>
+                  <div class="kids">
+                    <div class="kid">
+                      <div class="node">
+                        <span class="ntype">학습성과</span>
+                        <span class="nname">금융 선택에서 위험요인을 식별한다</span>
+                        <span class="ncnt">218건</span>
+                      </div>
+                    </div>
+                    <div class="kid">
+                      <div class="node hot">
+                        <span class="ntype">학습성과</span>
+                        <span class="nname">여러 위험요인을 같은 기준으로 비교하고 판단 근거를 설명한다</span>
+                        <span class="ncnt" style="display:flex;align-items:center;gap:8px">294건
+                          <span class="badge-new">+42</span><span class="sigdot">이상 신호</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="kid">
+                  <div class="node"><span class="rel">isChildOf</span>
+                    <span class="ntype">교과역량</span>
+                    <span class="nname">금융 정보 해석</span>
+                    <span class="ncnt">340건</span>
+                  </div>
+                  <div class="kids">
+                    <div class="kid">
+                      <div class="node">
+                        <span class="ntype">학습성과</span>
+                        <span class="nname">금리 변화가 소비로 이어지는 흐름을 설명한다</span>
+                        <span class="ncnt">306건</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="treelegend">
+          <b>isPartOf</b> 학과 차이는 항목이 아니라 연결에 둡니다 ·
+          <b>isChildOf</b> 상위 교과역량으로 이어집니다 — 기록은 성취 항목 단위로 쌓입니다
+        </div>
+      </div>
+      <div class="rightcol">
+        <div class="card stmt">
+          <div class="cardhead"><h3>Statement 목록</h3><span class="live"><span class="dot"></span>LIVE</span>
+            <span style="margin-left:auto"></span>
+            <span class="btn gray">새로고침</span><span class="btn blue">일괄 다운로드</span>
+          </div>
+          <table>
+            <colgroup><col style="width:180px"><col style="width:56px"><col style="width:136px"><col><col style="width:56px"></colgroup>
+            <tr><th>Profile</th><th>Actor</th><th>Verb</th><th>CASE 성취 항목</th><th>Stored</th></tr>
+            <tr class="new"><td><span class="newchip">NEW</span>평가(Assessment)</td><td>박서연</td><td class="verb">평가_응답하다</td><td><span class="casechip">위험요인 비교 · 판단 근거 설명</span></td><td class="stored">방금</td></tr>
+            <tr><td>미디어(Media)</td><td>이준호</td><td class="verb">미디어_일시정지하다</td><td><span class="casechip">위험요인 식별</span></td><td class="stored">1분 전</td></tr>
+            <tr><td>미디어(Media)</td><td>이준호</td><td class="verb">미디어_되감다</td><td><span class="casechip">위험요인 식별</span></td><td class="stored">3분 전</td></tr>
+            <tr><td>과제(Assignment)</td><td>김민지</td><td class="verb">과제_제출하다</td><td><span class="casechip">책임 있는 금융 의사결정</span></td><td class="stored">6분 전</td></tr>
+            <tr><td>질의(Query)</td><td>김민지</td><td class="verb">질의_질문하다</td><td><span class="casechip">위험요인 비교 · 판단 근거 설명</span></td><td class="stored">9분 전</td></tr>
+          </table>
+        </div>
+        <div class="card ai">
+          <div class="cardhead"><h3>Lecognizer AI — AI 기반 이상 탐지</h3><span class="info">i</span>
+            <span class="patent">등록 특허 제10-2883249호</span></div>
+          <div class="aibody">
+            <div class="chart">
+              <div class="bars">
+                <div class="wk"><div class="bar" style="height:26px"></div></div>
+                <div class="wk"><div class="bar" style="height:34px"></div></div>
+                <div class="wk alert"><span class="flag">이상 신호</span><div class="bar" style="height:86px"></div></div>
+                <div class="wk"><div class="bar" style="height:30px"></div></div>
+                <div class="wk"><div class="bar" style="height:24px"></div></div>
+                <div class="wk"><div class="bar" style="height:20px"></div></div>
+              </div>
+              <div class="xlabels"><span>1주</span><span>2주</span><span class="alert">3주</span><span>4주</span><span>5주</span><span>6주</span></div>
+              <div class="cap">주차별 멈춤·되감기 빈도 · 직전 학기와 비교</div>
+            </div>
+            <div class="diag">
+              <div class="headline">3주차 · 구간 13:25–14:40 — 멈춤·되감기·오답 집중</div>
+              <p>원인 후보는 선수 개념 <b>「금리 기초」의 결손</b>입니다. 지난 학기에는 없던 신호가
+                한 구간에 몰려 있고, 같은 구간의 구간 퀴즈 오답과 함께 나타납니다.</p>
+              <div class="lnk">근거 이벤트 42건 · 원문 Statement 보기</div>
+              <div class="acts"><span class="btn blue">운영자에게 근거와 함께 전달</span><span class="btn gray">리포트로 저장</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot">Copyright 2026 Wicked Storm Inc. All rights reserved.</div>
+  </div>
+</body>
+</html>
