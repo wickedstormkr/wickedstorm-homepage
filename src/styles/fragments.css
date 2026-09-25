@@ -61,16 +61,22 @@
 .fx-text mark{padding:0 3px;border-radius:3px;background:var(--fx-hot-bg);color:#fff;font-weight:700}
 
 /* 2. LearnHubble AI 교수자 · 수업 설계 */
-/* 확인이 필요한 구간: 한 줄 상자(시각 · 구간 · 근거). 학습자 화면도 같은 상자(.mini: 근거 없음) */
-.fx-segs{list-style:none;display:grid;gap:6px;margin-bottom:12px}
-.fx-segs li{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:7px 12px;border-radius:9px;background:rgba(255,255,255,.03);border:1px solid var(--fx-line)}
+/* 확인이 필요한 구간: 세 칸, 칸마다 두 줄(시각 · 구간 / 근거). 학습자 화면도 같은 상자(.mini: 근거 없음) */
+.fx-segs{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
+/* 칸이 넓으면 시각·구간 한 줄 + 근거 한 줄, 좁으면 구간 이름이 통째로 다음 줄로 */
+.fx-segs li{display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:3px 8px;padding:7px 10px;border-radius:9px;background:rgba(255,255,255,.03);border:1px solid var(--fx-line)}
 .fx-segs li.hot{background:var(--fx-hot-bg);border-color:rgba(255,124,207,.4)}
-.fx-time{justify-self:start;padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;white-space:nowrap;color:#ffd58a;background:rgba(255,213,138,.1)}
+.fx-time{padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:12px;white-space:nowrap;color:#ffd58a;background:rgba(255,213,138,.1)}
 .fx-segs li.hot .fx-time{color:var(--fx-hot);background:rgba(233,48,176,.14)}
-.fx-segs b{font-size:14px;line-height:1.4;color:var(--fx-ink)}
-.fx-segs small{margin-left:auto;font-size:12.5px;white-space:nowrap;color:var(--fx-muted)}
-.fx-segs.mini{margin:0}
-.fx-segs.mini li{padding:6px 10px}
+.fx-segs b{font-size:14px;line-height:1.4;text-wrap:balance;color:var(--fx-ink)}
+.fx-segs small{flex-basis:100%;font-size:12.5px;line-height:1.4;color:var(--fx-muted)}
+/* 이야기 장면 5: 신호가 온 구간 하나만, 한 줄로 */
+.fx-design.compact .fx-segs{grid-template-columns:1fr}
+.fx-design.compact .fx-segs small{flex-basis:auto;margin-left:auto}
+@media (min-width:700px){.fx-design.compact .fx-segs li{flex-wrap:nowrap}.fx-design.compact .fx-segs small{white-space:nowrap}}
+/* 학습자 강의실: 좁은 세 칸이라 시각 위, 구간 이름 아래 */
+.fx-segs.mini{margin:0;gap:5px}
+.fx-segs.mini li{flex-direction:column;align-items:flex-start;padding:6px 7px}
 .fx-segs.mini b{font-size:13px}
 .fx-segs li.hot small{color:#ffc3e8}
 /* 추천과 확인 퀴즈 초안은 나란히(역할 탭의 세 화면 높이를 맞춘다) */
@@ -108,7 +114,7 @@
 .fx-assoc code::after{content:" →"}
 
 /* 4. LearnHubble AI 학습자 · 강의실 + AI 어시스턴트 */
-.fx-learn-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+.fx-learn-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
 .fx-lecture{padding:16px 16px 18px;border-right:1px solid var(--fx-line)}
 .fx-video{position:relative;display:grid;align-content:end;aspect-ratio:2.2;padding:12px;border-radius:9px;overflow:hidden;
   background:radial-gradient(120% 90% at 20% 10%,rgba(124,77,255,.35),transparent 60%),radial-gradient(90% 80% at 90% 90%,rgba(47,124,255,.3),transparent 60%),#0a0c1a}
@@ -135,6 +141,8 @@
   .fx-crumb{flex-basis:100%;order:3;padding-left:59px;white-space:normal;overflow:visible}
   .fx-body{padding:14px}
   .fx-case-grid,.fx-learn-grid,.fx-design:not(.compact) .fx-plan{grid-template-columns:1fr}
+  .fx-segs:not(.mini){grid-template-columns:1fr}
+  .fx-segs:not(.mini) small{flex-basis:auto;margin-left:auto}
   .fx-lecture{border-right:0;border-bottom:1px solid var(--fx-line)}
   .fx-chart{aspect-ratio:1.9}
   .fx-legend{display:none}

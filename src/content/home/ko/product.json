@@ -1,6 +1,6 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "세 솔루션과 세 역할이<br><span class=\"g\">학습의 선순환</span>을 완성합니다",
+  "title": "수집에서 분석, 수업 적용까지<br><span class=\"g\">학습의 선순환</span>으로 잇습니다",
   "lead": "Lecognizer가 학습데이터를 쌓고 이상 신호를 찾으면, <span class=\"nw\">LearnHubble AI</span>가 그 신호를 운영자·교수자·학습자의 판단과 행동으로 잇습니다.",
   "loop": {
     "img": "learning-loop.webp",
@@ -124,7 +124,7 @@
     "eyebrow": "Products",
     "title": "학습데이터를 쌓고, 신호를 찾고, <span class=\"g\">사람의 판단</span>으로 잇습니다",
     "lead": "Lecognizer와 Lecognizer AI가 학습데이터를 쌓고 분석하면, LearnHubble AI가 그 결과를 운영자·교수자·학습자의 화면으로 전합니다.",
-    "loopTitle": "세 솔루션과 세 역할",
+    "loopTitle": "학습의 선순환",
     "rolesTitle": "역할별 화면"
   },
   "solutions": [
