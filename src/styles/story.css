@@ -102,9 +102,11 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 .ledger-cols .c3 dd{color:var(--ink-3)}
 .ledger-box{position:relative;aspect-ratio:3.1}
 .ledger-box .art-base{position:absolute;inset:0;width:100%;height:100%}
-.ledger-foot{display:grid;align-items:start;row-gap:10px;margin-top:14px}
-.ledger-rest{grid-column:1/4;padding-left:2px;font-size:15px;color:var(--ink-3)}
-.ledger-items{grid-column:4;list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+/* 바닥: 설명 왼쪽, 부가 정보 항목은 오른쪽에 한 줄로 */
+.ledger-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:14px;padding-inline:3% 4.5%}
+.ledger-rest{padding-left:2px;font-size:15px;color:var(--ink-3)}
+.ledger-items{list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+@media (min-width:1024px){.ledger-items{flex-wrap:nowrap}.ledger-items li{white-space:nowrap}}
 /* 부가 정보 항목: 누를 수 없는 이름표(테두리 없이 옅은 바탕) */
 .ledger-items li{padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1)}
 
@@ -195,8 +197,7 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   .ledger-cols div{grid-template-columns:5.5em 1fr;align-items:baseline;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
   .ledger-cols dt,.ledger-cols .c3 dt{font-size:15px}
   .ledger-cols dd{font-size:13.5px}
-  .ledger-foot{grid-template-columns:1fr!important;column-gap:0!important;padding-inline:0!important}
-  .ledger-rest,.ledger-items{grid-column:1}
+  .ledger-foot{padding-inline:0}
 }
 
 /* ---- 폰·태블릿: 장면이 화면에 들어오면 그 안의 짧은 움직임만(한 번). 움직임 멈춤·줄이기면 처음부터 다 보인다 ---- */

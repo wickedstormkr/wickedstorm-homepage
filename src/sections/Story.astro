@@ -102,7 +102,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
             <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="516" loading="lazy" decoding="async" />
           </div>
-          <div class="ledger-foot" style={ledgerGrid}>
+          <div class="ledger-foot">
             <p class="ledger-rest">{t.ledger.rest}</p>
             <ul class="ledger-items" aria-label={t.ledger.cols[3].ko}>{t.ledger.extraItems.map((x) => <li>{x}</li>)}</ul>
           </div>
