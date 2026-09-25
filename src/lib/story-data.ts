@@ -81,46 +81,38 @@ export function rng(seed: number) {
 }
 
 /**
- * 장면 2 기록 행: 한 줄이 학습데이터 한 건. 같은 칸을 xAPI와 1EdTech Caliper가 각자의 이름으로 부른다.
- * 누가(actor) · ~하다(xAPI verb ⇄ Caliper action) · 무엇을(object) · 부가 정보(xAPI context·result ⇄ Caliper edApp·group·session 등).
- * 모양은 위키드스톰 심볼(public/img/symbol.png): 칸마다 네 줄 막대가 심볼과 같은 길이·들여쓰기로 쌓이고, 빈 틀 없이 다 채워진다.
- * 줄 색은 심볼처럼 위에서 아래로 브랜드 그라디언트의 네 단계(마젠타 → 보라 → 파랑). 좌표는 기록 칸(ledger box) 기준 0~1.
+ * 장면 2 기록 행(지금 사이트의 기록 레저를 따른다): 한 줄이 학습데이터 한 건.
+ * 줄마다 네 칸 알약이 줄 전체를 빈틈없이 채운다: 누가(actor) 파랑 · ~하다(xAPI verb ⇄ Caliper action) 보라 ·
+ * 무엇을(object) 마젠타 · 부가 정보(xAPI context·result ⇄ Caliper edApp·group·session 등) 강조색.
+ * 칸 너비는 줄마다 조금씩 다르고(값의 길이가 다르다), 부가 정보 칸이 가장 넓다. 다 쓰면 알약이 끝까지 차고 확인 점이 찍힌다.
+ * 좌표는 기록 칸(ledger box) 기준 0~1.
  */
 export const SLOTS = ['actor', 'verb', 'object', 'extra'] as const;
-/** 심볼의 네 막대(칸 너비 비율로 시작·길이): 140px 심볼에서 잰 값(4~115, 24~135, 4~94, 4~41 / 폭 131) */
-export const SYMBOL_BARS = [
-  { x: 0, w: 0.847 },
-  { x: 0.153, w: 0.847 },
-  { x: 0, w: 0.687 },
-  { x: 0, w: 0.282 },
-];
-/** 줄 색: 브랜드 그라디언트(#e930b0 → #7c4dff 52% → #2f7cff)를 네 단계로 */
-export const ROW_COLOR = ['#e930b0', '#a343e3', '#645bff', '#2f7cff'];
-export interface LedgerBar { x: number; w: number; slot: number; row: number; cap: number }
-export interface LedgerRow { y: number; bars: LedgerBar[] }
-export const LEDGER_ASPECT = 5.6;
+/** 칸 색 = 활동 종류 색과 같은 넷(파랑 · 보라 · 마젠타 · 강조색) */
+export const SLOT_COLOR = ['#2f7cff', '#7c4dff', '#e930b0', '#a3b1ff'];
+export interface LedgerPill { x: number; w: number; slot: number; cap: number }
+export interface LedgerRow { y: number; pills: LedgerPill[] }
+export const LEDGER_ASPECT = 3.1;
 export const LEDGER = (() => {
-  const px0 = 0;
-  const px1 = 1;
-  const gap = 0.014;
-  const frac = [0.15, 0.19, 0.25, 0.41];
-  const avail = px1 - px0 - (frac.length - 1) * gap;
-  let x = px0;
-  const cols = frac.map((f) => {
-    const c = { x, w: f * avail };
-    x += f * avail + gap;
-    return c;
+  const r = rng(11);
+  const px0 = 0.03;
+  const px1 = 0.955;
+  const gap = 0.008;
+  const N = 6;
+  const avail = px1 - px0 - (SLOTS.length - 1) * gap;
+  const rows: LedgerRow[] = Array.from({ length: N }, (_, i) => {
+    const f = [0.14 + r() * 0.06, 0.18 + r() * 0.08, 0.2 + r() * 0.1];
+    f.push(1 - f[0] - f[1] - f[2]);
+    let x = px0;
+    const pills = f.map((fr, slot) => {
+      const w = fr * avail;
+      const pl = { x, w, slot, cap: Math.max(4, Math.min(16, Math.round(w * 60))) };
+      x += w + gap;
+      return pl;
+    });
+    return { y: (i + 0.5) / N, pills };
   });
-  const N = SYMBOL_BARS.length;
-  const rows: LedgerRow[] = SYMBOL_BARS.map((sb, i) => ({
-    y: (i + 0.5) / N,
-    bars: cols.map((c, slot) => {
-      const w = c.w * sb.w;
-      return { x: c.x + c.w * sb.x, w, slot, row: i, cap: Math.max(3, Math.round(w * 110)) };
-    }),
-  }));
-  // 막대 두께 = 줄 간격의 절반(심볼과 같은 비)
-  return { cols, rows, px0, px1, gap, barH: 0.5 / N };
+  return { rows, px0, px1, gap, headX: 0.012, checkX: 0.978, pillH: 0.07 };
 })();
 
 export interface Particle {
@@ -133,7 +125,7 @@ export interface Particle {
   curve: number; // 장면 사이를 옮겨 갈 때 휘는 정도(-0.25~0.25)
   z: number; // 깊이(0 먼~1 가까운): 크기·밝기·빛 번짐
   G: [number, number]; // 장면 1 성운(무대 기준)
-  ink: number; // 장면 2에서 기록 행에 앉는 문장이면 막대 번호(줄*4+칸), 아니면 -1
+  ink: number; // 장면 2에서 기록 행에 앉는 문장이면 칸 번호(줄*4+칸), 아니면 -1
   tt: number; // 이상 항목 문장만: 일어난 시각(0~6주), 아니면 -1
   spike: boolean; // 3주차 13:25–14:40 구간에 몰린 문장
   R: [number, number]; // 장면 2 기록 칸 자리(기록 칸 기준)
@@ -225,15 +217,15 @@ export function buildParticles(n: number = TODAY_TOTAL, seed = 7): Particle[] {
     const z = Math.pow(r(), 1.35);
     out.push({ verb, leaf, week, evidence, delay: r(), phase: r() * Math.PI * 2, curve: (r() - 0.5) * 0.5, z, G, ink: -1, tt, spike, R: [0, 0], T, B: [0, 0], D: [0, 0], L: [0, 0], La: [0, 0] });
   }
-  // 기록 행: 막대마다 정해진 수(cap)만큼 가까운(밝은) 문장이 막대 길이를 고르게 채운다. 줄 순서대로 채워지도록 delay를 줄 번호에 맞춘다
+  // 기록 행: 칸마다 정해진 수(cap)만큼 가까운(밝은) 문장이 칸 안의 좌석에 고르게 앉는다. 줄 순서대로 채워지도록 delay를 줄 번호에 맞춘다
   const byNear = out.map((_, i) => i).sort((i, j) => out[j].z - out[i].z);
   let k = 0;
   LEDGER.rows.forEach((row, ri) => {
-    row.bars.forEach((bar, si) => {
-      for (let t = 0; t < bar.cap; t++) {
+    row.pills.forEach((pill, si) => {
+      for (let t = 0; t < pill.cap; t++) {
         const p = out[byNear[k++]];
         p.ink = ri * 4 + si;
-        p.R = [bar.x + bar.w * (0.05 + 0.9 * ((t + 0.5) / bar.cap)) + (r() - 0.5) * 0.002, row.y + (r() - 0.5) * LEDGER.barH * 0.45];
+        p.R = [pill.x + pill.w * (0.05 + 0.9 * ((t + 0.5) / pill.cap)) + (r() - 0.5) * 0.002, row.y + (r() - 0.5) * LEDGER.pillH * 0.4];
         p.delay = Math.min(1, ri / LEDGER.rows.length + si * 0.04 + r() * 0.08);
         p.z = Math.max(p.z, 0.45 + r() * 0.55);
       }
@@ -319,14 +311,14 @@ const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const smooth01 = (v: number) => { const t = clamp01(v); return t * t * (3 - 2 * t); };
 /**
  * 장면 i→i+1 사이 입자별 진행(0~1). 한 전환(소수부 f) 안의 순서:
- * f .30–.45 앞 장면 글이 빠짐 → f .45–.90 입자가 옮겨 감(입자마다 조금씩 늦게) → f .72–.90 다음 장면 글이 들어옴.
+ * f .30–.45 앞 장면 글이 빠짐 → f .42–.94 입자가 옮겨 감(입자마다 조금씩 늦게, 그림 층이 부드럽게 따라간다) → f .72–.90 다음 장면 글이 들어옴.
  * 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 일찍, 더 길게 옮겨 간다.
  */
 export const progress = (p: Particle, s: number) => {
   const i = Math.floor(s);
   const f = s - i;
   if (i === 0) return ease(clamp01((f - 0.3 - p.delay * 0.35) / 0.35));
-  return ease(clamp01((f - 0.45 - p.delay * 0.15) / 0.3));
+  return ease(clamp01((f - 0.42 - p.delay * 0.2) / 0.32));
 };
 
 /**

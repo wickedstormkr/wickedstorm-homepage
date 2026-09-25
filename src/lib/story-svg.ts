@@ -2,7 +2,7 @@
  * 미리 그린 그림(기본 층): 데이터 아트 모델(story-data.ts)을 빌드 때 SVG로 그린다.
  * 움직임 줄이기·저전력·JS 없음·폰에서 이 그림만으로 이야기가 완결된다. 그림 속 글자는 없다(이름표는 HTML).
  */
-import { buildParticles, signalCurves, chartX, CASE_NODES, CHART, SPIKE, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, ROW_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
+import { buildParticles, signalCurves, chartX, CASE_NODES, CHART, SPIKE, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, SLOT_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
 
 const W = 1600;
 const H = 1000;
@@ -91,20 +91,41 @@ export function signalSvg() {
     + '</svg>';
 }
 
-/** 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸마다 심볼과 같은 네 줄 막대, 줄 색은 브랜드 그라디언트 네 단계 */
+/**
+ * 장면 2: 다 쓴 기록 행(지금 사이트의 기록 레저와 같은 모양). 줄마다 네 칸 알약이 줄을 끝까지 채우고,
+ * 칸 안에는 데이터 눈금과 앉은 학습데이터(점), 줄 머리 점(브랜드 그라디언트)과 줄 끝 확인 점.
+ */
 export function ledgerSvg() {
   const LW = 1600;
   const LH = Math.round(LW / LEDGER_ASPECT);
-  const bh = LEDGER.barH * LH;
+  const ph = Math.min(LEDGER.pillH * LH, 24);
   const ps = buildParticles().filter((p) => p.ink >= 0);
-  const bars = LEDGER.rows.map((row) => {
+  const rows = LEDGER.rows.map((row) => {
     const y = row.y * LH;
-    const c = ROW_COLOR[row.bars[0].row];
-    return row.bars.map((b) => `<rect x="${f(b.x * LW)}" y="${f(y - bh / 2)}" width="${f(b.w * LW)}" height="${f(bh)}" rx="${f(bh / 2)}" fill="${c}" fill-opacity=".5" stroke="${c}" stroke-opacity=".9" stroke-width="1.5"/>`).join('');
+    const top = y - ph / 2;
+    const x0 = row.pills[0].x * LW;
+    const last = row.pills[row.pills.length - 1];
+    const x1 = (last.x + last.w) * LW;
+    const band = `<rect x="${f(x0 - 8)}" y="${f(top - 6)}" width="${f(x1 - x0 + 16)}" height="${f(ph + 12)}" rx="${f((ph + 12) / 2)}" fill="#7c78ff" fill-opacity=".06"/>`;
+    const pills = row.pills.map((pl) => {
+      const c = SLOT_COLOR[pl.slot];
+      const x = pl.x * LW;
+      const w = pl.w * LW;
+      let ticks = '';
+      for (let tx = x + 9; tx < x + w - 5; tx += 18) ticks += `<rect x="${f(tx)}" y="${f(top + 3.5)}" width="1.3" height="${f(ph - 7)}" fill="#fff" fill-opacity=".1"/>`;
+      return `<rect x="${f(x)}" y="${f(top)}" width="${f(w)}" height="${f(ph)}" rx="${f(ph / 2)}" fill="${c}" fill-opacity=".3" stroke="${c}" stroke-opacity=".85" stroke-width="1.4"/>${ticks}`;
+    }).join('');
+    const hx = LEDGER.headX * LW;
+    const cx = LEDGER.checkX * LW;
+    return band + pills
+      + `<circle cx="${f(hx)}" cy="${f(y)}" r="16" fill="url(#hglow)"/><circle cx="${f(hx)}" cy="${f(y)}" r="6" fill="url(#hg)"/>`
+      + `<circle cx="${f(cx)}" cy="${f(y)}" r="4.6" fill="#a3b1ff"/><circle cx="${f(cx)}" cy="${f(y)}" r="8" fill="none" stroke="#a3b1ff" stroke-opacity=".5" stroke-width="1.6"/>`;
   }).join('');
-  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2 + p.z * 1.4).toFixed(1)}" fill="#fff" fill-opacity="${(0.55 + p.z * 0.35).toFixed(2)}"/>`).join('');
-  const defs = `<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}">${defs}${bars}<g filter="url(#glow)">${dots}</g></svg>`;
+  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2.2 + p.z * 1.5).toFixed(1)}" fill="${SLOT_COLOR[p.ink % 4]}"/>`).join('');
+  const defs = '<defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#e930b0"/><stop offset=".52" stop-color="#7c4dff"/><stop offset="1" stop-color="#2f7cff"/></linearGradient>'
+    + '<radialGradient id="hglow"><stop offset=".3" stop-color="#e930b0" stop-opacity=".45"/><stop offset="1" stop-color="#e930b0" stop-opacity="0"/></radialGradient>'
+    + '<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}">${defs}${rows}<g filter="url(#glow)">${dots}</g></svg>`;
 }
 
 /** 장면 6: 모든 문장이 모인 선순환 고리 */

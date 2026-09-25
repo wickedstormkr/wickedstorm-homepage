@@ -1,6 +1,6 @@
 ---
 /**
- * LearnHubble AI 학습자 · 강의실: 강의(확인이 필요한 구간 표시)와 오른쪽 AI 어시스턴트 대화.
+ * LearnHubble AI 학습자 · 강의실: 강의(확인이 필요한 구간은 교수자 화면과 같은 한 줄 상자)와 오른쪽 AI 어시스턴트 대화.
  * 학습자가 막힌 구간을 묻고, AI는 정답 대신 비교 기준과 강의 근거를 건넨 뒤 구간 퀴즈로 이어 준다.
  * 강의 영상은 그리지 않는다(원본 영상 속 일본어 슬라이드를 보이지 않게, CLAUDE.md).
  */
@@ -23,7 +23,7 @@ const pct = (v: number) => `${(v * 100).toFixed(1)}%`;
       </div>
       <p class="fx-clock tnum" aria-hidden="true">{t.time}</p>
       <p class="fx-h">{t.marksLabel}</p>
-      <ul class="fx-marks">{t.marks.map((m) => <li class:list={['tnum', { hot: m.hot }]}>{m.label}</li>)}</ul>
+      <ul class="fx-segs mini">{t.marks.map((m) => <li class:list={{ hot: m.hot }}><span class="fx-time tnum">{m.label}</span><b>{m.title}</b></li>)}</ul>
     </div>
     <div class="fx-assist">
       <p class="fx-h">{t.panel}</p>

@@ -27,8 +27,7 @@ const { t, label } = Astro.props;
         </ul>
       </div>
       <div class="fx-ai">
-        <span class="fx-tag">{t.ai}</span>
-        <p>{t.proposal}</p>
+        <p><span class="fx-tag">{t.ai}</span>{t.proposal}</p>
         <p class="fx-assoc"><span>{t.assoc.from}</span><code lang="en">{t.assoc.type}</code><span>{t.assoc.to}</span></p>
         <small>{t.note}</small>
       </div>

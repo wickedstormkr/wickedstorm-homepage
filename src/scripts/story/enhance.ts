@@ -87,7 +87,7 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     root.classList.add('story-gsap');
 
     /* 부드러운 스크롤 */
-    const lenis = new Lenis({ lerp: 0.12, wheelMultiplier: 0.9 });
+    const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 0.9 });
     lenis.on('scroll', ScrollTrigger.update);
     const raf = (t: number) => lenis.raf(t * 1000);
     gsap.ticker.add(raf);
@@ -128,7 +128,7 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
       trigger: story,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.6,
+      scrub: 0.8,
       animation: tl,
       onRefresh: resize,
     });
@@ -239,26 +239,29 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
   reveal('.scene-judge .judge-stack > .fx', 3.64, 0, 0.2, 20);
   reveal('.scene-next .ring-labels li', 4.72, 0.04, 0.12, 6);
   reveal('.scene-next .ring-caption', 4.8, 0, 0.12, 0);
-  const prev = new Map<HTMLElement, string>();
   scenes.forEach((sc) => { sc.style.opacity = '1'; });
   return {
     apply(s: number) {
+      // 먼 장면(지금 s에서 보일 일이 없는 장면)은 data-far: CSS가 그 장면의 글·그림을 잘라 아예 그리지 않는다(story.css).
+      // 투명도 값이 어떤 이유로 남아도 겹쳐 보일 수 없게 하는 안전장치. 글은 화면 낭독기와 키보드로 그대로 닿는다.
+      scenes.forEach((sc, i) => {
+        const near = s > i - 0.62 && s < i + 0.55;
+        if (sc.hasAttribute('data-far') === near) sc.toggleAttribute('data-far', !near);
+      });
       for (const p of parts) {
         const pin = p.inAt === undefined ? 1 : easeOut(clamp01((s - p.inAt) / (p.inDur ?? 0.2)));
         const pout = p.outAt === undefined ? 0 : easeOut(clamp01((s - p.outAt) / (p.outDur ?? 0.15)));
-        const o = pin * (1 - pout);
+        const o = (pin * (1 - pout)).toFixed(3);
         const y = (1 - pin) * p.dyIn + pout * p.dyOut;
-        const key = `${o.toFixed(3)}|${y.toFixed(1)}`;
-        if (prev.get(p.el) === key) continue;
-        prev.set(p.el, key);
-        p.el.style.opacity = o.toFixed(3);
-        p.el.style.translate = Math.abs(y) < 0.05 ? '' : `0 ${y.toFixed(1)}px`;
+        const tr = Math.abs(y) < 0.05 ? '' : `0 ${y.toFixed(1)}px`;
+        // 지금 붙은 값과 비교한다(다른 곳에서 바뀌었어도 다시 맞춘다)
+        if (p.el.style.opacity !== o) p.el.style.opacity = o;
+        if (p.el.style.translate !== tr) p.el.style.translate = tr;
       }
     },
     clear() {
       for (const p of parts) { p.el.style.opacity = ''; p.el.style.translate = ''; }
-      scenes.forEach((sc) => { sc.style.opacity = ''; });
-      prev.clear();
+      scenes.forEach((sc) => { sc.style.opacity = ''; sc.removeAttribute('data-far'); });
     },
   };
 }

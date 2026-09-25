@@ -32,9 +32,9 @@ const locale = lang === 'vi' ? 'vi-VN' : 'en-US';
 /** 장면 글 안의 링크(특허 원본 등): {trust}를 신뢰 페이지 주소로 */
 const trust = url(pagePath(lang, 'trust' as Page));
 const body = (html: string) => html.replaceAll('{trust}', trust);
-/** 기록 행 머리·바닥: 칸 너비를 그림(LEDGER)과 같은 비율로. 퍼센트는 격자 안쪽 너비(px1 - px0) 기준 */
+/** 기록 행 머리·바닥: 칸 이름을 첫 줄 알약 위에 같은 너비로(줄마다 너비가 조금씩 달라, 색으로 이어 읽는다). 퍼센트는 격자 안쪽 너비(px1 - px0) 기준 */
 const inner = LEDGER.px1 - LEDGER.px0;
-const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inner)).join(' ')};column-gap:${pct(LEDGER.gap / inner)};padding-inline:${pct(LEDGER.px0)} ${pct(1 - LEDGER.px1)}`;
+const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(c.w / inner)).join(' ')};column-gap:${pct(LEDGER.gap / inner)};padding-inline:${pct(LEDGER.px0)} ${pct(1 - LEDGER.px1)}`;
 ---
 <section class="story" id="story" aria-label={t.label} data-story>
   <a class="story-skip" href="#after-story">{t.skip}</a>
@@ -81,7 +81,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       </div>
     </article>
 
-    <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉는다 -->
+    <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉아 줄마다 알약이 끝까지 찬다 -->
     <article class="scene scene-statement" id={`scene-${sc[1].id}`} data-scene="1" aria-labelledby="scene-t-2">
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
@@ -100,7 +100,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
             ))}
           </dl>
           <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
-            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="286" loading="lazy" decoding="async" />
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="516" loading="lazy" decoding="async" />
           </div>
           <div class="ledger-foot" style={ledgerGrid}>
             <p class="ledger-rest">{t.ledger.rest}</p>

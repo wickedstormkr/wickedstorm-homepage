@@ -49,7 +49,8 @@ export function initStory() {
   let ticking = false;
   const onScroll = () => {
     ticking = false;
-    if (!pinned()) return;
+    // 연출 층(enhance)이 있으면 그쪽이 장면 값으로 현재 장면을 정한다(두 곳이 번갈아 바꾸지 않게)
+    if (!pinned() || root.classList.contains('story-gsap')) return;
     const p = Math.min(1, Math.max(0, -story.getBoundingClientRect().top / range()));
     setActive(Math.round(p * last));
   };

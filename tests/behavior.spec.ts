@@ -80,6 +80,11 @@ test.describe('오프닝 이야기', () => {
       expect(await op(`#scene-${id} .scene-copy`), id).toBe(0);
       expect(await op(`#scene-${id} .scene-visual`), id).toBe(0);
     }
+    // 안전장치: 먼 장면은 잘라서 그리지 않는다(투명도 값이 남아도 겹쳐 보일 수 없다)
+    for (const id of ['store', 'signal', 'judge', 'next']) {
+      await expect(page.locator(`#scene-${id}`)).toHaveAttribute('data-far', '');
+      await expect(page.locator(`#scene-${id} .scene-copy`)).toHaveCSS('clip-path', 'inset(50%)');
+    }
   });
 
   test('폰: 장면을 세로로 잇고, 화면에 들어오면 그 장면의 움직임을 재생한다', async ({ browser }) => {
