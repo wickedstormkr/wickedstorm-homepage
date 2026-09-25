@@ -35,4 +35,5 @@ cp "$SRC/data/posts.json" src/content/posts/posts.json
 
 # 용어표와 번역 노트
 cp "$SRC"/i18n/*_terms.md "$SRC"/i18n/*_notes.md docs/i18n/
+node scripts/migrate/mono-logos.mjs src/assets/img/ref-logos.webp
 echo "자산 이전 완료"

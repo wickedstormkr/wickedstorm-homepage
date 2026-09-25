@@ -239,7 +239,8 @@
 .ref-card p{color:var(--muted);font-size:15px;line-height:1.65}
 .rtags{list-style:none;display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
 .rtags li{font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#c3c8e3}
-.ref-logos{margin:28px 0 0;border-radius:var(--radius-m);overflow:hidden;border:1px solid var(--line)}
+/* 로고 띠: 흰 로고(투명 배경) 이미지를 사이트 패널 색 위에. 그라디언트는 쓰지 않는다 */
+.ref-logos{margin:28px 0 0;padding:clamp(4px,1vw,12px) clamp(8px,2vw,24px);border-radius:var(--radius-m);overflow:hidden;border:1px solid var(--line);background:var(--panel)}
 .ref-logos img{width:100%;height:auto}
 @media (max-width:1023px){.ref-card{padding:28px 26px}}
 @media (max-width:699px){.ref-grid{grid-template-columns:1fr}.ref-card{padding:24px 20px}.ref-card h3{font-size:19px}}
