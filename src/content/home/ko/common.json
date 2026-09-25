@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "WICKED STORM · 위키드스톰 | 학습의 모든 순간을 성장의 데이터로",
+    "description": "위키드스톰은 학습 활동을 국제 표준 학습데이터로 수집·저장하고 AI로 분석해 교육의 다음 행동으로 잇습니다. Lecognizer · LearnHubble AI · 1EdTech Korea 설립 이사회.",
+    "ogTitle": "WICKED STORM · 학습의 모든 순간을 성장의 데이터로 설계합니다",
+    "ogDescription": "국제 표준 학습데이터 저장소 Lecognizer와 AI 학습 경험 플랫폼 LearnHubble AI. 학습데이터와 AI로 학습의 새로운 시대를 엽니다.",
+    "twitterTitle": "WICKED STORM · 위키드스톰",
+    "twitterDescription": "Every Learning Moment, Designed for Growth. 학습데이터와 AI로 학습의 새로운 시대를 엽니다."
+  },
+  "skipLink": "본문 바로가기",
+  "homeLabel": "WICKED STORM 홈",
+  "mainNavLabel": "주요 메뉴",
+  "drawerLabel": "모바일 메뉴",
+  "menuOpen": "메뉴 열기",
+  "langLabel": "언어 선택",
+  "nav": {
+    "product": "Product",
+    "learnhubble": "LearnHubble AI",
+    "standards": "Standards",
+    "news": "News",
+    "resources": "Resources",
+    "company": "Company",
+    "recruit": "Recruit",
+    "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
+    "recruitLabel": "채용 정보 (새 창)"
+  },
+  "cta": "도입 문의",
+  "ctaDrawer": "도입 문의 →",
+  "footer": {
+    "company": "주식회사 위키드스톰&nbsp;· 대표 이정준&nbsp;· 사업자등록번호 <span style=\"white-space:nowrap\">135-88-02020</span>",
+    "address": "서울시 강서구 마곡중앙로 161-8, A동 901~905호",
+    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "navLabel": "푸터 메뉴",
+    "privacy": "개인정보처리방침",
+    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  }
+}

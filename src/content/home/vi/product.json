@@ -1,0 +1,81 @@
+{
+  "eyebrow": "Product · Learning Loop",
+  "title": "Ba giải&nbsp;pháp và ba vai&nbsp;trò<br>hoàn&nbsp;thiện <span class=\"g\">Learning&nbsp;Loop</span>",
+  "lead": "Khi Lecognizer tích lũy dữ liệu học tập và tìm ra dấu hiệu, <span class=\"nw\">LearnHubble AI</span> kết nối các dấu hiệu đó với quyết định và hành động của quản trị viên, giảng viên và người học.",
+  "loop": {
+    "img": "learning-loop.webp",
+    "alt": "Learning Loop: hoạt động của người học được tích lũy trong Lecognizer; khi Lecognizer AI tìm ra dấu hiệu, quản trị viên chương trình đào tạo và giảng viên ra quyết định và áp dụng trên LearnHubble AI, rồi kết quả lại quay về với người học, tạo thành một vòng tuần hoàn",
+    "notes": [
+      {
+        "kind": "solution",
+        "style": "--x:26.5%;--y:4%;--w:18%;--align:right",
+        "pill": "Lecognizer",
+        "product": "lec",
+        "desc": "Lecognizer thu thập và lưu trữ dữ liệu học tập theo chuẩn quốc tế. Dữ liệu được liên kết với các khung năng lực dựa trên 1EdTech CASE."
+      },
+      {
+        "kind": "solution",
+        "style": "--x:85.5%;--y:26.5%;--w:13.5%",
+        "pill": "Lecognizer AI",
+        "product": "lec",
+        "desc": "Tìm những phần nhiều người học gặp khó khăn, làm cơ sở cho học kỳ tới."
+      },
+      {
+        "kind": "role",
+        "style": "--x:79%;--y:74%;--w:19.5%",
+        "role": "Quản trị viên chương trình đào tạo",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Quản trị viên xem xét cảnh báo AI và dữ liệu gốc. Họ cải tiến các khung <span class=\"nw\">năng lực học thuật và nghề nghiệp</span> dựa trên 1EdTech CASE."
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:66%;--w:15.5%;--align:right",
+        "role": "Giảng viên",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Giảng viên dựa vào cảnh báo AI để lên kế hoạch bài giảng bổ sung hoặc hỗ trợ người học cần giúp đỡ."
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:28%;--w:15.5%;--align:right",
+        "role": "Người học",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Người học tương tác với AI kịp thời khi cần để tiếp tục học hiệu quả."
+      }
+    ],
+    "caption": "Dữ liệu học tập của học kỳ này là cơ sở để thiết kế dạy học cho học kỳ tới."
+  },
+  "features": [
+    {
+      "kicker": "Learning Data Repository",
+      "name": "Lecognizer",
+      "text": "Lecognizer là kho dữ liệu học tập theo chuẩn quốc tế, phát hiện dấu hiệu bất thường bằng AI. Giải pháp thu thập và lưu trữ theo thời gian thực dữ liệu từ mọi hoạt động giảng dạy, học tập và vận hành, tích lũy cùng ngữ cảnh chương trình giáo dục dựa trên 1EdTech CASE.",
+      "bullets": [
+        "Thu thập và lưu trữ theo thời gian thực, theo chuẩn quốc tế; dữ liệu học tập vẫn được kế thừa khi thay đổi hệ thống",
+        "Bảng điều khiển tổng hợp và biểu đồ tùy chỉnh, tra cứu theo bộ lọc và tải xuống JSON/CSV",
+        "Triển khai tại trung tâm dữ liệu học tập cấp quốc gia và nền tảng học tập AI của sở giáo dục, doanh nghiệp"
+      ],
+      "badge": "Chứng&nbsp;nhận GS hạng 1",
+      "img": "dash-main-public.webp",
+      "alt": "Ví dụ màn hình bảng điều khiển tổng hợp của Lecognizer",
+      "reverse": false
+    },
+    {
+      "kicker": "AI Anomaly Detection",
+      "name": "Lecognizer AI",
+      "text": "Đây là giải pháp AI phân tích dữ liệu học tập tích lũy trong Lecognizer. AI phát hiện và cảnh báo dấu hiệu bất thường cùng những phần nhiều người học gặp khó khăn, đồng thời hiển thị cả dữ liệu gốc làm cơ sở cho cảnh báo.",
+      "bullets": [
+        "Sắp xếp ưu tiên và cảnh báo các dấu hiệu cần chú ý",
+        "Xem liền mạch từ điều kiện tạo cảnh báo đến dữ liệu học tập gốc",
+        "AI tìm ra và phân tích, còn quản trị viên và giảng viên ra quyết định"
+      ],
+      "badge": "2 bằng&nbsp;sáng&nbsp;chế AI được&nbsp;cấp · Phát&nbsp;hiện dấu&nbsp;hiệu bất&nbsp;thường trong học&nbsp;tập · Lập&nbsp;hồ&nbsp;sơ người&nbsp;học",
+      "img": "lecognizer-ai-detect.webp",
+      "alt": "Ví dụ màn hình phát hiện dấu hiệu bất thường của Lecognizer AI: danh sách Statement được tích lũy theo thời gian thực, và dấu hiệu bất thường ở tuần 3 khi thao tác tạm dừng, tua lại và trả lời sai dồn vào một đoạn, cùng nguyên nhân khả dĩ",
+      "reverse": true
+    }
+  ],
+  "note": "※ Môn học, nhân vật và số liệu trong màn hình là dữ liệu minh họa phục vụ giới thiệu sản phẩm."
+}

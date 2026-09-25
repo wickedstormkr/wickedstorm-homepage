@@ -1,0 +1,16 @@
+---
+/**
+ * '움직임 멈춤' 버튼(KWCAG 6.2.2 정지 기능 제공, WCAG 2.2.2).
+ * 누르면 html.motion-paused가 붙어 반복 애니메이션(수집 표시, 파이프라인 루프 등)이 모두 멈추고,
+ * 선택은 이 브라우저에 기억된다. prefers-reduced-motion이면 멈춘 상태로 시작한다.
+ * aria-pressed="true" = 멈춘 상태. 2단계의 입자·스크롤 연출도 이 상태를 따른다(src/scripts/motion.ts).
+ */
+import { getUi } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+interface Props { lang: Lang }
+const ui = getUi(Astro.props.lang);
+---
+<button class="motion-btn" type="button" id="motionBtn" aria-pressed="false" title={ui.motion.label}>
+  <span class="motion-ico" aria-hidden="true"></span>
+  <span class="motion-txt"><span class="motion-pause">{ui.motion.pause}</span><span class="motion-play">{ui.motion.play}</span></span>
+</button>

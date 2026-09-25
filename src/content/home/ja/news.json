@@ -1,0 +1,34 @@
+{
+  "eyebrow": "Feed · Update",
+  "title": "最新ニュース",
+  "more": "すべて見る →",
+  "cards": [
+    {
+      "id": "2026-09-edtech-korea-fair",
+      "tag": "NEWS",
+      "title": "Wicked Storm、EdTech Korea Fairで「Learning Loop」を披露",
+      "alt": "EdTech Korea Fair 2026のWicked Stormブースで、デモ画面の前に集まった来場者",
+      "more": "記事を見る →"
+    },
+    {
+      "id": "2025-11-patent-anomaly",
+      "tag": "NEWS",
+      "title": "Wicked Storm、xAPI学習異常検知システムの特許を取得",
+      "alt": "特許証 第10-2883249号 xAPI学習行動データを用いた学習異常検知システム",
+      "more": "記事を見る →"
+    },
+    {
+      "id": "2025-02-patent-profiling",
+      "tag": "NEWS",
+      "title": "Wicked Storm、学習者プロファイリング手法の特許を取得",
+      "alt": "特許証 第10-2767110号 学習者の傾向を分析するLLM活用の学習者プロファイリング手法",
+      "more": "記事を見る →"
+    }
+  ],
+  "channels": {
+    "title": "現場の様子は、各チャンネルでいち早くお届けします",
+    "sub": "イベントの様子や製品画面、標準・技術ノートをInstagramとブログで発信しています。詳しい記事は、このホームページのニュースに掲載します。",
+    "instagram": "@wickedstorm",
+    "blog": "Wicked Stormのブログ"
+  }
+}

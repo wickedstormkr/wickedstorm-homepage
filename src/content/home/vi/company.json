@@ -1,0 +1,163 @@
+{
+  "eyebrow": "Company · Vision",
+  "title": "Với dữ&nbsp;liệu học&nbsp;tập và&nbsp;AI<br><span class=\"gc\">Công&nbsp;ty EdTech toàn&nbsp;cầu</span><br>mở ra kỷ&nbsp;nguyên học&nbsp;tập&nbsp;mới",
+  "lead": "Kết nối mọi trải nghiệm học tập thông qua chuẩn dữ liệu quốc tế, tạo cơ sở cho giáo dục và phát triển tốt hơn.",
+  "slogan": {
+    "label": "Slogan",
+    "text": "Biến mỗi khoảnh khắc học tập thành dữ liệu cho sự phát triển."
+  },
+  "stats": [
+    {
+      "value": "2021",
+      "unit": "",
+      "label": "Năm thành lập"
+    },
+    {
+      "value": "2",
+      "unit": "",
+      "label": "Bằng&nbsp;sáng&nbsp;chế AI được&nbsp;cấp"
+    },
+    {
+      "value": "1",
+      "unit": "",
+      "label": "Hạng chứng&nbsp;nhận GS (Lecognizer)"
+    },
+    {
+      "value": "3",
+      "unit": "",
+      "label": "Chuẩn quốc&nbsp;tế được áp&nbsp;dụng · xAPI·Caliper·CASE"
+    }
+  ],
+  "film": {
+    "label": "Video giới thiệu công ty Wicked Storm",
+    "caption": "Video giới thiệu công ty Wicked Storm · 89 giây"
+  },
+  "history": {
+    "eyebrow": "History",
+    "title": "<span class=\"yr gc\">2021~2026</span>, chặng&nbsp;đường phát&nbsp;triển dựa trên chuẩn",
+    "listLabel": "Lịch sử phát triển Wicked Storm 2021~2026",
+    "years": [
+      {
+        "year": "2021",
+        "highlights": [
+          {
+            "html": "<span>Thành lập Wicked Storm Inc.</span>"
+          },
+          {
+            "html": "Bộ Quản lý Nhân sự Hàn Quốc, xây dựng LRS cho Nền tảng mở thông minh phát triển nhân lực quốc gia (giai đoạn 2)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KIRD, tư vấn phân tích học tập cho hệ thống giáo dục tích hợp thế hệ mới",
+          "Visang Education, tư vấn và xây dựng nền tảng thông minh"
+        ]
+      },
+      {
+        "year": "2022",
+        "highlights": [
+          {
+            "html": "KERIS, ISMP Nền tảng tích hợp K-Edu: thiết lập chỉ số và chuẩn phân tích học tập",
+            "href": "#references"
+          },
+          {
+            "html": "Chính quyền Thành phố Seoul, xây dựng LRS cho Nền tảng giáo dục Seoul",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "Tự phát triển giải pháp thu thập và quản lý dữ liệu học tập (LRS)",
+          "Bộ Quản lý Nhân sự Hàn Quốc, giai đoạn 3: thu thập xAPI từ video trực tuyến theo thời gian thực",
+          "Chứng nhận doanh nghiệp venture",
+          "Hiệp hội Thương mại Quốc tế Hàn Quốc (KITA), dự án thúc đẩy Nền tảng tích hợp FTA"
+        ]
+      },
+      {
+        "year": "2023",
+        "highlights": [
+          {
+            "html": "Ra mắt Lecognizer, giải pháp phân tích học tập thông minh",
+            "href": "#product"
+          },
+          {
+            "html": "Phát triển công nghệ AI cho đánh giá theo quá trình, xây dựng không gian tri thức theo chuẩn CASE (Bộ Thương mại, Công nghiệp và Năng lượng Hàn Quốc)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "Đạt chứng nhận xAPI LRS từ ADL (Hoa Kỳ)",
+          "KERIS, đồng biên soạn hướng dẫn phát triển Sách giáo khoa số AI",
+          "KERIS, nâng cấp hệ thống hỗ trợ lớp học toán tiểu học",
+          "Được chọn vào chương trình phát triển công nghệ “Bước đệm” của Bộ Doanh nghiệp vừa và nhỏ và Khởi nghiệp Hàn Quốc (MSS)",
+          "Thiết kế mô hình phân phối khung chuẩn chương trình giáo dục cho Sách giáo khoa số AI (AIDT)",
+          "Nhà xuất bản Dong-A, xây dựng nền tảng AIDT"
+        ]
+      },
+      {
+        "year": "2024",
+        "highlights": [
+          {
+            "html": "Lecognizer đạt chứng nhận GS hạng 1",
+            "href": "#product"
+          },
+          {
+            "html": "Bộ Giáo dục Hàn Quốc, xây dựng trung tâm dữ liệu học tập cho Sách giáo khoa số AI",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KERIS, vận hành hệ thống hỗ trợ lớp học toán tiểu học",
+          "Niêm yết sản phẩm trên sàn dịch vụ số của Cơ quan Mua sắm Công Hàn Quốc (PPS)",
+          "Đạt chứng nhận mô hình AI cho mô hình chẩn đoán và đề xuất học tập (KOLAS)",
+          "Nộp đơn đăng ký 2 sáng chế AI (phát hiện dấu hiệu bất thường trong học tập, lập hồ sơ người học bằng LLM)",
+          "KERIS, nghiên cứu phát triển từ điển dữ liệu học tập"
+        ]
+      },
+      {
+        "year": "2025",
+        "highlights": [
+          {
+            "html": "Được cấp bằng sáng chế về lập hồ sơ người học bằng LLM (số 10-2767110)",
+            "href": "/news/2025-02-patent-profiling.html"
+          },
+          {
+            "html": "Được cấp bằng sáng chế về hệ thống phát hiện dấu hiệu bất thường trong học tập dựa trên xAPI (số 10-2883249)",
+            "href": "/news/2025-11-patent-anomaly.html"
+          }
+        ],
+        "more": [
+          "KERIS, vận hành hệ thống hỗ trợ lớp học toán tiểu học",
+          "Được chọn vào chương trình R&amp;D phát triển đổi mới công nghệ cho doanh nghiệp vừa và nhỏ của MSS (loại hình đáp ứng thị trường)",
+          "Chứng nhận INNOBIZ (AA)",
+          "Xây dựng nền tảng AI Gangwon i-ro",
+          "KERIS, hệ thống liên kết thu thập dữ liệu học tập với sở giáo dục các tỉnh, thành phố",
+          "NICE D&amp;R, xây dựng hệ thống thế hệ mới"
+        ]
+      },
+      {
+        "year": "2026",
+        "highlights": [
+          {
+            "html": "Tham gia hội đồng sáng lập 1EdTech Korea với tư cách hội viên đồng sáng lập",
+            "href": "#standards"
+          },
+          {
+            "html": "KERIS, xây dựng hệ thống chuẩn hóa và mô hình khai thác dữ liệu học tập theo chuẩn quốc tế",
+            "href": "#references"
+          },
+          {
+            "html": "Tham gia EdTech Korea Fair 2026, trình diễn Learning Loop",
+            "href": "/news/2026-09-edtech-korea-fair.html"
+          }
+        ],
+        "more": [
+          "Sở Giáo dục tỉnh Gyeonggi, vận hành nền tảng AI Hi-Learning",
+          "Sở Giáo dục tỉnh Gangwon, vận hành nền tảng AI",
+          "Xây dựng LRS cho hệ thống hỗ trợ tích hợp năng lực giáo viên ứng dụng AI tỉnh Gyeonggi",
+          "Bảo trì LRS cho trung tâm dữ liệu học tập AIDT"
+        ]
+      }
+    ],
+    "more": "Xem toàn bộ lịch sử chi tiết"
+  }
+}

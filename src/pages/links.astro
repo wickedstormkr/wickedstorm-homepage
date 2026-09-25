@@ -1,0 +1,59 @@
+---
+/**
+ * 링크 모음(/links.html): 인스타그램 프로필 링크용 한 화면 페이지. 지금 사이트 links.html을 옮겼다.
+ * 가장 최근 소식은 빌드할 때 소식 컬렉션에서 고른다(지금 사이트는 브라우저에서 posts.json을 받아 바꿨다).
+ * 모든 링크에 인스타그램 유입 표시(utm)를 붙여, 문의 폼의 유입 경로가 '인스타그램'으로 미리 골라진다.
+ */
+import Base from '../layouts/Base.astro';
+import { allPosts } from '../lib/posts';
+import { url } from '../lib/url';
+
+const UTM = '?utm_source=instagram&utm_medium=social&utm_campaign=bio';
+const latest = (await allPosts()).find((p) => !p.externalUrl);
+const items = [
+  latest && { href: url(`/news/${latest.id}.html`) + UTM, title: latest.title, sub: '최신 소식', icon: '→', primary: true },
+  { href: url('/files/WICKEDSTORM_Catalog_2026_KO.pdf'), title: '카탈로그 2026 (PDF)', sub: 'Lecognizer · LearnHubble AI · 학습의 선순환', icon: '↓', blank: true },
+  { href: url('/') + UTM + '#learnhubble', title: 'LearnHubble AI 살펴보기', sub: '학습자 화면과 AI 학습 패널', icon: '→' },
+  { href: url('/') + UTM + '#contact', title: '도입·시연 문의', sub: '02-2205-1470 · manager@wickedstorm.kr', icon: '→' },
+  { href: url('/news.html') + UTM, title: '모든 소식 보기', sub: '특허, 제품, 표준·기술 노트', icon: '→' },
+].filter(Boolean) as Array<{ href: string; title: string; sub: string; icon: string; primary?: boolean; blank?: boolean }>;
+---
+<Base lang="ko" title="WICKED STORM | 링크 모음" description="위키드스톰 최신 소식, 카탈로그, LearnHubble AI 시연 요청과 도입 문의를 한곳에 모았습니다."
+  ogDescription="Every Learning Moment, Designed for Growth." path="/links.html" noindex bare>
+  <main class="links" id="main">
+    <div class="wrap">
+      <a class="links-home" href={url('/') + UTM}><img src={url('/img/logo-white.svg')} alt="WICKED STORM 홈" width="208" height="26" /></a>
+      <h1 class="links-slogan">학습의 모든 순간을<br /><span class="g">성장의 데이터</span>로 설계합니다</h1>
+      <p class="links-sub">국제 표준 학습데이터 저장소 Lecognizer · AI 학습 경험 플랫폼 LearnHubble AI</p>
+      <ul class="links-list">
+        {items.map((i) => (
+          <li>
+            <a class:list={{ primary: i.primary }} href={i.href} target={i.blank ? '_blank' : undefined} rel={i.blank ? 'noopener' : undefined}>
+              <span><b>{i.title}</b><small>{i.sub}</small></span><i aria-hidden="true">{i.icon}</i>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="links-foot">© 2026 Wicked Storm Inc. · <a href={url('/privacy.html')}>개인정보처리방침</a></p>
+    </div>
+  </main>
+</Base>
+<style>
+  .links{min-height:100svh;display:flex;align-items:center;padding:56px 0}
+  .links .wrap{max-width:460px}
+  .links-home{display:inline-flex;align-items:center;min-height:var(--tap)}
+  .links-home img{height:22px;width:auto}
+  .links-slogan{margin-top:26px;font-size:clamp(24px,6vw,30px);letter-spacing:-.03em;line-height:1.3}
+  .links-sub{margin-top:10px;color:var(--muted);font-size:15px}
+  .links-list{list-style:none;margin-top:32px;display:grid;gap:12px}
+  .links-list a{display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:var(--tap);padding:18px 20px;border-radius:14px;
+    background:var(--panel);border:1px solid var(--line);transition:border-color .2s}
+  .links-list a:hover{border-color:#fff}
+  .links-list b{display:block;font-weight:700;color:#fff}
+  .links-list small{display:block;margin-top:3px;color:var(--muted);font-size:13.5px}
+  .links-list i{font-style:normal;color:var(--muted)}
+  .links-list .primary{background:var(--grad);border-color:transparent}
+  .links-list .primary small,.links-list .primary i{color:#fff}
+  .links-foot{margin-top:30px;font-size:13.5px;color:var(--faint)}
+  .links-foot a{display:inline-flex;align-items:center;min-height:var(--tap);text-decoration:underline}
+</style>

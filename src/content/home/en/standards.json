@@ -1,0 +1,98 @@
+{
+  "eyebrow": "Standards Leadership",
+  "title": "Beyond using standards,<br><span class=\"gc\">we help build them</span>",
+  "lead": "Wicked Storm is a founding board member of <b class=\"nw\" style=\"color:#dfe3f7\">1EdTech Korea</b>, the Korean organization of the global EdTech standards consortium 1EdTech, and is active as a <span class=\"nw\">1EdTech Contributing Member</span>. We have applied xAPI, Caliper, and 1EdTech CASE to our products and projects.",
+  "badge": "1EdTech Korea founding board member · <b>Contributing&nbsp;Member</b>",
+  "cards": [
+    {
+      "name": "xAPI",
+      "text": "Standard for collecting learning activity data",
+      "status": "apply",
+      "statusLabel": "Applied",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://github.com/adlnet/xAPI-Spec",
+      "ariaLabel": "xAPI official specification (opens in a new window)"
+    },
+    {
+      "name": "CASE",
+      "text": "Standard for curriculum, achievement standard, and competency frameworks",
+      "status": "apply",
+      "statusLabel": "Applied",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/case",
+      "ariaLabel": "CASE official specification (opens in a new window)"
+    },
+    {
+      "name": "Caliper",
+      "text": "Standard for learning event data",
+      "status": "apply",
+      "statusLabel": "Applied",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/caliper",
+      "ariaLabel": "Caliper official specification (opens in a new window)"
+    },
+    {
+      "name": "Open Badges 3.0",
+      "text": "Standard for issuing digital evidence of achievement (badges)",
+      "status": "soon",
+      "statusLabel": "Planned",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/open-badges",
+      "ariaLabel": "Open Badges 3.0 official specification (opens in a new window)"
+    },
+    {
+      "name": "CLR 2.0",
+      "text": "Standard for a learner’s comprehensive learning record",
+      "status": "soon",
+      "statusLabel": "Planned",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/clr",
+      "ariaLabel": "CLR 2.0 official specification (opens in a new window)"
+    },
+    {
+      "name": "EduAPI",
+      "text": "Next-generation API for education data integration",
+      "status": "soon",
+      "statusLabel": "Planned",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/edu-api",
+      "ariaLabel": "EduAPI official specification (opens in a new window)"
+    },
+    {
+      "name": "Digital Credentials",
+      "text": "Ecosystem for verifiable digital credentials",
+      "status": "soon",
+      "statusLabel": "Planned",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/workstream/credentials",
+      "ariaLabel": "Digital Credentials official specification (opens in a new window)"
+    },
+    {
+      "name": "OneRoster",
+      "text": "Standard for roster and grade exchange",
+      "status": "ref",
+      "statusLabel": "Design reference",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/oneroster",
+      "ariaLabel": "OneRoster official specification (opens in a new window)"
+    },
+    {
+      "name": "LTI",
+      "text": "Standard for learning tool interoperability",
+      "status": "ref",
+      "statusLabel": "Design reference",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/lti",
+      "ariaLabel": "LTI official specification (opens in a new window)"
+    },
+    {
+      "name": "QTI",
+      "text": "Standard for assessment item interoperability",
+      "status": "ref",
+      "statusLabel": "Design reference",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/qti",
+      "ariaLabel": "QTI official specification (opens in a new window)"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "eyebrow": "Contact",
+  "title": "Cùng <span class=\"g\">xem&nbsp;xét</span> việc triển&nbsp;khai<br>dữ&nbsp;liệu học&nbsp;tập, chuẩn&nbsp;và&nbsp;AI",
+  "lead": "Từ triển khai Lecognizer, trình diễn LearnHubble AI, tư vấn thiết kế dữ liệu học tập đến trao đổi về hợp tác, chúng tôi tư vấn phù hợp với môi trường của từng tổ chức.",
+  "info": {
+    "telLabel": "Tel",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "Phòng 901 đến 905, Tòa A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Hàn Quốc",
+    "note": "Sau khi xem xét nội dung yêu cầu, chúng tôi sẽ phản hồi qua email bạn đã nhập."
+  },
+  "form": {
+    "noscript": "Biểu mẫu liên hệ cần JavaScript. Vui lòng bật JavaScript trên trình duyệt hoặc gửi email đến <a href=\"mailto:manager@wickedstorm.kr\">manager@wickedstorm.kr</a>.",
+    "name": {
+      "label": "Họ và tên *",
+      "placeholder": "Họ và tên"
+    },
+    "company": {
+      "label": "Tổ chức *",
+      "placeholder": "Tên công ty, cơ quan"
+    },
+    "email": {
+      "label": "Email *",
+      "placeholder": "abc@example.com"
+    },
+    "traffic": {
+      "label": "Bạn biết đến chúng tôi qua đâu? *",
+      "options": [
+        {
+          "value": "",
+          "label": "Vui lòng chọn một mục"
+        },
+        {
+          "value": "direct",
+          "label": "Khác (tự nhập)"
+        },
+        {
+          "value": "portal",
+          "label": "Công cụ tìm kiếm"
+        },
+        {
+          "value": "etc",
+          "auto": "인스타그램",
+          "label": "Instagram"
+        },
+        {
+          "value": "etc",
+          "auto": "블로그",
+          "label": "Blog"
+        },
+        {
+          "value": "etc",
+          "auto": "박람회·행사",
+          "label": "Hội chợ, sự kiện"
+        },
+        {
+          "value": "job_posting",
+          "label": "Tin tuyển dụng"
+        },
+        {
+          "value": "news",
+          "label": "Bài báo, tin tức"
+        },
+        {
+          "value": "referral",
+          "label": "Người quen giới thiệu"
+        },
+        {
+          "value": "etc",
+          "label": "Khác"
+        }
+      ]
+    },
+    "trafficEtc": {
+      "label": "Kênh biết đến chúng tôi *",
+      "placeholder": "Vui lòng nhập"
+    },
+    "memo": {
+      "label": "Nội dung yêu cầu *",
+      "placeholder": "Mục đích triển khai, hệ thống cần liên kết, lịch trình, v.v."
+    },
+    "privacy": "Tôi đồng ý với việc <a href=\"/privacy.html\">thu thập và sử dụng thông tin cá nhân</a> để xử lý yêu cầu liên hệ.",
+    "submit": "Gửi yêu cầu"
+  }
+}

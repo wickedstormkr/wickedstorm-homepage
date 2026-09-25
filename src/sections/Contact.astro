@@ -1,0 +1,46 @@
+---
+/** ⑩ 문의: 지금 운영 중인 문의 서버, 같은 필드·유입 경로 규칙(src/scripts/contact-form.ts) */
+import SecHead from '../components/SecHead.astro';
+import type { HomeContent, UiText } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { withBase } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['contact']; ui: UiText }
+const { lang, t, ui } = Astro.props;
+const f = t.form;
+---
+<section class="band contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <SecHead lang={lang} id="contact-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+    <div class="contact-grid">
+      <div class="ci-info">
+        <span class="lab">{t.info.telLabel}</span><a href="tel:0222051470">02-2205-1470</a>
+        <span class="lab">{t.info.emailLabel}</span><a href="mailto:manager@wickedstorm.kr">manager@wickedstorm.kr</a>
+        <span class="lab">{t.info.addressLabel}</span><p set:html={t.info.address} />
+        <p class="ci-note" set:html={t.info.note} />
+      </div>
+      <form class="cform" id="cform" novalidate data-msg={JSON.stringify(ui.form)}>
+        <noscript><p set:html={f.noscript} /></noscript>
+        <div class="row2">
+          <label><span set:html={f.name.label} /><input type="text" name="userName" required autocomplete="name" placeholder={f.name.placeholder} /></label>
+          <label><span set:html={f.company.label} /><input type="text" name="userCompany" required autocomplete="organization" placeholder={f.company.placeholder} /></label>
+        </div>
+        <label><span set:html={f.email.label} /><input type="email" name="userEmail" required autocomplete="email" placeholder={f.email.placeholder} /></label>
+        <label><span set:html={f.traffic.label} />
+          <select name="userTraffic" required>
+            {f.traffic.options.map((o) => <option value={o.value} data-auto={o.auto}>{o.label}</option>)}
+          </select>
+        </label>
+        <label data-etc hidden><span data-etc-label set:html={f.trafficEtc.label} /><input type="text" name="userTrafficEtc" placeholder={f.trafficEtc.placeholder} /></label>
+        <label><span set:html={f.memo.label} /><textarea name="userMemo" rows="5" required placeholder={f.memo.placeholder}></textarea></label>
+        <label class="hp" aria-hidden="true">website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <label class="check"><input type="checkbox" name="checkPrivacy" required /> <span set:html={withBase(f.privacy)} /></label>
+        <button class="btn p" type="submit" data-submit>{f.submit}</button>
+        <p class="status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+  import '../scripts/contact-form';
+</script>

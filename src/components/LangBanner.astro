@@ -1,0 +1,25 @@
+---
+/**
+ * 언어 안내 띠. 자동으로 다른 언어 페이지로 보내지 않고(구글도 권하지 않는다), 브라우저 언어가
+ * 이 페이지와 다르고 그 언어판이 있으면 그 언어로 "이 페이지는 ○○로도 볼 수 있습니다"를 띄운다.
+ * 네 언어 문구를 모두 싣고, 스크립트(src/scripts/site.ts)가 하나를 골라 보인다. 닫으면 기억한다.
+ */
+import { getUi } from '../lib/content';
+import { LANGS, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+interface Props { lang: Lang; alternates: Partial<Record<Lang, string>> }
+const { lang, alternates } = Astro.props;
+const others = LANGS.filter((l) => l !== lang && alternates[l]);
+---
+<div class="lang-banner" id="langBanner" role="region" hidden>
+  {others.map((l) => {
+    const t = getUi(l).langBanner;
+    return (
+      <template data-lang={l}>
+        <p lang={l}>{t.text}</p>
+        <a href={url(alternates[l]!)} hreflang={l} lang={l}>{t.go}</a>
+        <button type="button" data-close aria-label={t.close} lang={l}>×</button>
+      </template>
+    );
+  })}
+</div>

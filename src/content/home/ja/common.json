@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "WICKED STORM · ウィキッドストーム | 学びのすべての瞬間を、成長のデータとして設計します",
+    "description": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、AIが分析して教育の次の行動へとつなげます。Lecognizer · LearnHubble AI · 1EdTech Korea設立理事会。",
+    "ogTitle": "WICKED STORM · 学びのすべての瞬間を、成長のデータとして設計します",
+    "ogDescription": "国際標準の学習データリポジトリLecognizerと、AI学習体験プラットフォームLearnHubble AI。学習データとAIで学びの新時代を切り拓きます。",
+    "twitterTitle": "WICKED STORM · ウィキッドストーム",
+    "twitterDescription": "Every Learning Moment, Designed for Growth. 学習データとAIで学びの新時代を切り拓きます。"
+  },
+  "skipLink": "本文へスキップ",
+  "homeLabel": "WICKED STORM ホーム",
+  "mainNavLabel": "メインメニュー",
+  "drawerLabel": "モバイルメニュー",
+  "menuOpen": "メニューを開く",
+  "langLabel": "言語選択",
+  "nav": {
+    "product": "Product",
+    "learnhubble": "LearnHubble AI",
+    "standards": "Standards",
+    "news": "News",
+    "resources": "Resources",
+    "company": "Company",
+    "recruit": "Recruit",
+    "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
+    "recruitLabel": "採用情報（新しいウィンドウ）"
+  },
+  "cta": "導入のご相談",
+  "ctaDrawer": "導入のご相談 →",
+  "footer": {
+    "company": "株式会社Wicked Storm&nbsp;· 代表取締役 イ・ジョンジュン&nbsp;· 事業者登録番号 <span style=\"white-space:nowrap\">135-88-02020</span>",
+    "address": "韓国ソウル特別市江西区麻谷中央路161-8 A棟901〜905号",
+    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "navLabel": "フッターメニュー",
+    "privacy": "プライバシーポリシー",
+    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  }
+}

@@ -1,0 +1,56 @@
+---
+import { getHome, getUi } from '../lib/content';
+import { homePath, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+import LangSwitch from './LangSwitch.astro';
+import MotionToggle from './MotionToggle.astro';
+
+interface Props {
+  lang: Lang;
+  /** 홈 안이면 undefined(앵커만), 다른 페이지면 홈 주소 */
+  homeHref?: string;
+  alternates?: Partial<Record<Lang, string>>;
+  current?: 'news';
+}
+const { lang, homeHref, alternates, current } = Astro.props;
+const c = getHome(lang).common;
+const ui = getUi(lang);
+const home = homeHref ?? '';
+const a = (hash: string) => `${home}${hash}`;
+const news = url('/news.html');
+const brandHref = homeHref ?? '#main';
+---
+<header class="site-header" id="hdr">
+  <div class="hwrap">
+    <a class="brand" href={homeHref ? url(homePath(lang)) : brandHref} aria-label={c.homeLabel}>
+      <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" />
+    </a>
+    <div class="hside">
+      <nav class="main" aria-label={c.mainNavLabel}>
+        <a href={a('#product')}>{c.nav.product}</a>
+        <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
+        <a href={a('#standards')}>{c.nav.standards}</a>
+        <a href={news} aria-current={current === 'news' ? 'page' : undefined}>{c.nav.news}</a>
+        <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
+      </nav>
+      <LangSwitch lang={lang} alternates={alternates} variant="menu" />
+      <MotionToggle lang={lang} />
+      <a class="hcta" href={a('#contact')}>{c.cta}</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label={c.menuOpen} aria-expanded="false" aria-controls="drawer"
+        data-open={ui.menuOpen} data-close={ui.menuClose}>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="drawer" id="drawer" aria-label={c.drawerLabel} hidden>
+  <a href={a('#product')}>{c.nav.product}</a>
+  <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
+  <a href={a('#standards')}>{c.nav.standards}</a>
+  <a href={news} aria-current={current === 'news' ? 'page' : undefined}>{c.nav.news}</a>
+  <a href={a('#resources')}>{c.nav.resources}</a>
+  <a href={a('#company')}>{c.nav.company}</a>
+  <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
+  <LangSwitch lang={lang} alternates={alternates} variant="row" />
+  <a class="cta" href={a('#contact')}>{c.ctaDrawer}</a>
+</nav>

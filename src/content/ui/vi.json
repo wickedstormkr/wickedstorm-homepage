@@ -1,0 +1,41 @@
+{
+  "menuOpen": "Mở menu",
+  "menuClose": "Đóng menu",
+  "histLess": "Thu gọn lịch sử",
+  "motion": {
+    "pause": "Dừng chuyển động",
+    "play": "Phát chuyển động",
+    "label": "Dừng hoặc phát chuyển động trên trang này"
+  },
+  "langBanner": {
+    "text": "Trang này cũng có bản tiếng Việt.",
+    "go": "Xem bằng tiếng Việt",
+    "close": "Đóng"
+  },
+  "newWindow": "(mở cửa sổ mới)",
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "text": "Địa chỉ có thể đã thay đổi hoặc trang không còn tồn tại. Vui lòng chọn nơi bạn muốn đến bên dưới.",
+    "home": "Trang chủ"
+  },
+  "form": {
+    "field": {
+      "userName": "Vui lòng nhập họ tên.",
+      "userCompany": "Vui lòng nhập tổ chức.",
+      "userEmail": "Vui lòng nhập email.",
+      "userTraffic": "Vui lòng chọn kênh biết đến chúng tôi.",
+      "userTrafficEtc": "Vui lòng nhập kênh biết đến chúng tôi.",
+      "userMemo": "Vui lòng nhập nội dung yêu cầu.",
+      "checkPrivacy": "Vui lòng đồng ý thu thập và sử dụng thông tin cá nhân."
+    },
+    "emailFmt": "Vui lòng kiểm tra định dạng email.",
+    "required": "Trường này là bắt buộc.",
+    "etcDirect": "Kênh biết đến chúng tôi *",
+    "etcOther": "Nội dung khác *",
+    "sending": "Đang gửi…",
+    "sent": "Yêu cầu của bạn đã được tiếp nhận. Chúng tôi sẽ sớm phản hồi.",
+    "failed": "Gửi không thành công. Vui lòng gửi email tới manager@wickedstorm.kr."
+  },
+  "open": "Mở",
+  "lhubScreens": "Ví dụ màn hình LearnHubble AI"
+}

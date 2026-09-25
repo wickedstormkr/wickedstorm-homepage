@@ -1,0 +1,73 @@
+{
+  "eyebrow": "Resources",
+  "title": "자료 받기",
+  "lead": "박람회에서 나눠 드린 카탈로그와 회사소개서를 PDF로 받아 보실 수 있습니다.",
+  "cards": [
+    {
+      "thumb": "thumb-catalog.webp",
+      "thumbAlt": "위키드스톰 카탈로그 2026 표지",
+      "wide": false,
+      "title": "위키드스톰 카탈로그 2026",
+      "text": "Lecognizer와 LearnHubble AI, 학습의 선순환을 8쪽에 담았습니다.",
+      "links": [
+        {
+          "label": "한국어 PDF",
+          "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
+          "lang": "ko",
+          "id": "catalog_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Catalog_2026_EN.pdf",
+          "lang": "en",
+          "id": "catalog_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Catalog_2026_JA.pdf",
+          "lang": "ja",
+          "id": "catalog_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Catalog_2026_VI.pdf",
+          "lang": "vi",
+          "id": "catalog_vi"
+        }
+      ]
+    },
+    {
+      "thumb": "thumb-profile.webp",
+      "thumbAlt": "위키드스톰 회사소개서 2026 표지",
+      "wide": true,
+      "title": "위키드스톰 회사소개서 2026",
+      "text": "연혁, 사업 영역, 주요 레퍼런스, 인증과 특허를 담았습니다.",
+      "links": [
+        {
+          "label": "한국어 PDF",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
+          "lang": "ko",
+          "id": "profile_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_EN.pdf",
+          "lang": "en",
+          "id": "profile_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_JA.pdf",
+          "lang": "ja",
+          "id": "profile_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_VI.pdf",
+          "lang": "vi",
+          "id": "profile_vi"
+        }
+      ]
+    }
+  ]
+}

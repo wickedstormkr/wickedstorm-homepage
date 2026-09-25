@@ -1,0 +1,85 @@
+{
+  "eyebrow": "Contact",
+  "title": "学習データ・標準・AIの導入を<br>ともに<span class=\"g\">検討</span>します",
+  "lead": "Lecognizerの導入、LearnHubble AIのデモ、学習データ設計のコンサルティング、協業のご相談まで、機関のご環境に合わせてご案内いたします。",
+  "info": {
+    "telLabel": "Tel",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "韓国ソウル特別市江西区麻谷中央路161-8 A棟901〜905号",
+    "note": "お問い合わせ内容を確認のうえ、ご入力いただいたメールアドレスへご返信いたします。"
+  },
+  "form": {
+    "noscript": "お問い合わせフォームのご利用にはJavaScriptが必要です。ブラウザでJavaScriptを有効にするか、<a href=\"mailto:manager@wickedstorm.kr\">manager@wickedstorm.kr</a>までお問い合わせください。",
+    "name": {
+      "label": "お名前 *",
+      "placeholder": "お名前"
+    },
+    "company": {
+      "label": "ご所属 *",
+      "placeholder": "所属・機関名"
+    },
+    "email": {
+      "label": "メールアドレス *",
+      "placeholder": "abc@example.com"
+    },
+    "traffic": {
+      "label": "お知りになったきっかけ *",
+      "options": [
+        {
+          "value": "",
+          "label": "きっかけを選択してください"
+        },
+        {
+          "value": "direct",
+          "label": "その他（直接入力）"
+        },
+        {
+          "value": "portal",
+          "label": "検索エンジン"
+        },
+        {
+          "value": "etc",
+          "auto": "인스타그램",
+          "label": "Instagram"
+        },
+        {
+          "value": "etc",
+          "auto": "블로그",
+          "label": "ブログ"
+        },
+        {
+          "value": "etc",
+          "auto": "박람회·행사",
+          "label": "展示会・イベント"
+        },
+        {
+          "value": "job_posting",
+          "label": "求人情報"
+        },
+        {
+          "value": "news",
+          "label": "記事・ニュース"
+        },
+        {
+          "value": "referral",
+          "label": "知人の紹介"
+        },
+        {
+          "value": "etc",
+          "label": "その他"
+        }
+      ]
+    },
+    "trafficEtc": {
+      "label": "きっかけを入力 *",
+      "placeholder": "直接ご入力ください"
+    },
+    "memo": {
+      "label": "お問い合わせ内容 *",
+      "placeholder": "導入目的、連携対象、スケジュールなど"
+    },
+    "privacy": "お問い合わせ内容の確認のための <a href=\"/privacy.html\">個人情報の収集・利用</a>に同意します。",
+    "submit": "送信する"
+  }
+}

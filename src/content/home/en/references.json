@@ -1,0 +1,51 @@
+{
+  "eyebrow": "References",
+  "title": "<span class=\"g\">Data expertise</span> proven in public and education",
+  "lead": "With experience collecting and analyzing learning data at the national level, we have worked with public agencies and educational institutions on data-driven innovation.",
+  "cards": [
+    {
+      "org": "Ministry of Education · National level",
+      "title": "AI Digital Textbook<br>learning data hub",
+      "text": "We built a hub that collects AI Digital Textbook learning data using global standards, supporting national-level learning analytics indicators, curriculum standards, and learning maps.",
+      "tags": [
+        "AI Digital Textbook",
+        "Learning data hub",
+        "National level"
+      ]
+    },
+    {
+      "org": "KERIS · Toc Toc! Math Expedition",
+      "title": "AI-based elementary math<br>class support system",
+      "text": "We collected learning behavior data in a gamified class support system and applied level diagnosis and item recommendation models. It is a nationwide public service with 2.4 million cumulative users.",
+      "tags": [
+        "Learning diagnosis",
+        "Item recommendation",
+        "2.4M cumulative users"
+      ]
+    },
+    {
+      "org": "Ministry of Personnel Management · HRD",
+      "title": "HRD platform<br>social learning as data",
+      "text": "We captured social learning experiences from the HRD platform’s social communities and large-scale live webinars as structured learning data.",
+      "tags": [
+        "Social learning",
+        "Community",
+        "Webinar"
+      ]
+    },
+    {
+      "org": "Seoul Metropolitan Government · Education platform",
+      "title": "Seoul Education Platform<br>video mentoring analysis",
+      "text": "From video mentoring on the Seoul Education Platform, we collect interactions between mentors and mentees, along with emotional states and utterances, as learning data to support in-depth learning analytics.",
+      "tags": [
+        "Video mentoring",
+        "Interaction",
+        "LRS build"
+      ]
+    }
+  ],
+  "logos": {
+    "img": "ref-logos.webp",
+    "alt": "Key reference institutions: Ministry of Education, Korea Education and Research Information Service (KERIS), Ministry of Personnel Management, Seoul Metropolitan Government, Gyeonggi Provincial Office of Education, Gangwon Office of Education"
+  }
+}

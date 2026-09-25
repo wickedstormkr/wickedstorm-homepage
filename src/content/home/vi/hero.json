@@ -1,0 +1,67 @@
+{
+  "eyebrow": "<span>Every Learning Moment, <span class=\"nw\">Designed for Growth.</span></span>",
+  "lines": [
+    "Biến mỗi khoảnh khắc",
+    "học tập thành <span class=\"g\">dữ liệu</span>",
+    "<span class=\"g\">cho sự phát triển</span>"
+  ],
+  "lead": "Wicked&nbsp;Storm thu&nbsp;thập và lưu&nbsp;trữ dữ&nbsp;liệu học&nbsp;tập theo chuẩn quốc&nbsp;tế, <br class=\"br-d\">dùng AI phân&nbsp;tích và kết&nbsp;nối với bước tiếp theo của quản&nbsp;trị&nbsp;viên, giảng&nbsp;viên và người&nbsp;học.",
+  "ctaPrimary": "Liên hệ",
+  "ctaSecondary": "Xem sản phẩm",
+  "trust": [
+    {
+      "html": "<b>1EdTech Korea</b>&nbsp;(thành viên hội&nbsp;đồng&nbsp;sáng&nbsp;lập)",
+      "href": "/news/2026-07-1edtech-korea.html"
+    },
+    {
+      "html": "Chứng&nbsp;nhận GS hạng 1",
+      "href": "/news/2024-07-lecognizer-procurement.html"
+    },
+    {
+      "html": "2 bằng&nbsp;sáng&nbsp;chế AI được&nbsp;cấp",
+      "href": "/news/2025-11-patent-anomaly.html"
+    }
+  ],
+  "capture": {
+    "badge": "Lecognizer · Thu&nbsp;thập chuẩn quốc&nbsp;tế",
+    "live": "Thời gian thực",
+    "rows": [
+      {
+        "actor": "Người học",
+        "verb": "đã xem",
+        "object": "Bài giảng khái niệm 04",
+        "result": "Xem lại 2 lần"
+      },
+      {
+        "actor": "Người học",
+        "verb": "đã trả lời",
+        "object": "Câu hỏi kiểm tra",
+        "result": "Đúng"
+      },
+      {
+        "actor": "Giảng viên",
+        "verb": "đã thiết kế",
+        "object": "Phần bổ sung",
+        "result": "Đã áp dụng"
+      },
+      {
+        "actor": "Người học",
+        "verb": "đã nộp",
+        "object": "Bài tập tự luận",
+        "result": "Đúng hạn"
+      },
+      {
+        "actor": "Người học",
+        "verb": "đã hỏi",
+        "object": "Mục Q&A",
+        "result": "3 câu trả lời"
+      }
+    ],
+    "signalLabel": "AI<br>Signal",
+    "signal": "Dấu hiệu · Phần được xem lại nhiều lần"
+  },
+  "overlay": {
+    "main": "Mỗi khoảnh&nbsp;khắc học&nbsp;tập đều được tích&nbsp;lũy thành <span class=\"g\">dữ&nbsp;liệu theo chuẩn quốc&nbsp;tế</span>",
+    "sub": "Lecognizer thu thập, AI tìm ra các dấu hiệu."
+  }
+}

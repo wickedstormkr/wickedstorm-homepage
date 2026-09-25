@@ -1,0 +1,34 @@
+---
+import { getHome } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { url, withBase } from '../lib/url';
+
+interface Props { lang: Lang; homeHref?: string }
+const { lang, homeHref } = Astro.props;
+const c = getHome(lang).common;
+const a = (hash: string) => `${homeHref ?? ''}${hash}`;
+---
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" loading="lazy" />
+        <p set:html={c.footer.company} />
+        <p set:html={c.footer.address} />
+        <p set:html={c.footer.contact} />
+      </div>
+      <nav class="foot-nav" aria-label={c.footer.navLabel}>
+        <a href={a('#product')}>{c.nav.product}</a>
+        <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
+        <a href={a('#standards')}>{c.nav.standards}</a>
+        <a href={url('/news.html')}>{c.nav.news}</a>
+        <a href={a('#resources')}>{c.nav.resources}</a>
+        <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
+        <a href={url('/privacy.html')}>{c.footer.privacy}</a>
+        <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" hidden>Instagram</a>
+        <a data-social="blog" href="#" target="_blank" rel="noopener noreferrer" hidden>Blog</a>
+      </nav>
+    </div>
+    <p class="legal" set:html={withBase(c.footer.legal)} />
+  </div>
+</footer>

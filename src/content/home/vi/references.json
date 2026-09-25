@@ -1,0 +1,51 @@
+{
+  "eyebrow": "References",
+  "title": "<span class=\"g\">Năng&nbsp;lực dữ&nbsp;liệu</span> đã được kiểm&nbsp;chứng tại khu&nbsp;vực công và giáo&nbsp;dục",
+  "lead": "Với kinh nghiệm thu thập và phân tích dữ liệu học tập ở cấp quốc gia, chúng tôi đã cùng các cơ quan nhà nước và cơ sở giáo dục tạo nên đổi mới dựa trên dữ liệu.",
+  "cards": [
+    {
+      "org": "Bộ Giáo&nbsp;dục Hàn&nbsp;Quốc · Cấp&nbsp;quốc&nbsp;gia",
+      "title": "Xây&nbsp;dựng trung&nbsp;tâm dữ&nbsp;liệu học&nbsp;tập<br>cho Sách&nbsp;giáo&nbsp;khoa số AI",
+      "text": "Xây dựng trung tâm thu thập dữ liệu học tập của Sách giáo khoa số AI theo chuẩn quốc tế, hỗ trợ chỉ số phân tích học tập cấp quốc gia, khung chuẩn chương trình giáo dục và bản đồ học tập.",
+      "tags": [
+        "Sách giáo khoa số AI",
+        "Trung tâm dữ liệu học tập",
+        "Cấp quốc gia"
+      ]
+    },
+    {
+      "org": "KERIS · Toc Toc! Math Expedition",
+      "title": "Hệ&nbsp;thống hỗ&nbsp;trợ lớp&nbsp;học<br>toán tiểu&nbsp;học ứng&nbsp;dụng AI",
+      "text": "Thu thập dữ liệu hành vi học tập trên hệ thống hỗ trợ lớp học ứng dụng gamification và áp dụng mô hình chẩn đoán trình độ, đề xuất câu hỏi. Đây là dịch vụ công phục vụ người dân cả nước, với 2,4 triệu người dùng tích lũy.",
+      "tags": [
+        "Chẩn đoán học tập",
+        "Đề xuất câu hỏi",
+        "2,4 triệu người dùng tích lũy"
+      ]
+    },
+    {
+      "org": "Bộ Quản&nbsp;lý Nhân&nbsp;sự Hàn&nbsp;Quốc · Phát&nbsp;triển nhân&nbsp;lực",
+      "title": "Dữ&nbsp;liệu hóa học&nbsp;tập xã&nbsp;hội<br>trên nền&nbsp;tảng phát&nbsp;triển nhân&nbsp;lực",
+      "text": "Những trải nghiệm học tập xã hội diễn ra trong cộng đồng trực tuyến và các webinar trực tiếp quy mô lớn của nền tảng phát triển nhân lực đã được cụ thể hóa và thu thập thành dữ liệu học tập.",
+      "tags": [
+        "Học tập xã hội",
+        "Cộng đồng",
+        "Webinar"
+      ]
+    },
+    {
+      "org": "Chính&nbsp;quyền Thành&nbsp;phố Seoul · Nền&nbsp;tảng giáo&nbsp;dục",
+      "title": "Phân&nbsp;tích mentoring qua video<br>trên Nền&nbsp;tảng giáo&nbsp;dục Seoul",
+      "text": "Thu thập tương tác giữa mentor và mentee, trạng thái cảm xúc và phát ngôn trong các buổi mentoring qua video trên Nền tảng giáo dục Seoul thành dữ liệu học tập, hỗ trợ phân tích học tập chuyên sâu.",
+      "tags": [
+        "Mentoring qua video",
+        "Tương tác",
+        "Xây dựng LRS"
+      ]
+    }
+  ],
+  "logos": {
+    "img": "ref-logos.webp",
+    "alt": "Khách hàng tiêu biểu: Bộ Giáo dục Hàn Quốc, Cơ quan Thông tin Giáo dục và Nghiên cứu Hàn Quốc (KERIS), Bộ Quản lý Nhân sự Hàn Quốc, Chính quyền Thành phố Seoul, Sở Giáo dục tỉnh Gyeonggi, Sở Giáo dục tỉnh Gangwon"
+  }
+}

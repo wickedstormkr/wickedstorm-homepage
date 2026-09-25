@@ -1,0 +1,41 @@
+{
+  "menuOpen": "メニューを開く",
+  "menuClose": "メニューを閉じる",
+  "histLess": "詳しい沿革を閉じる",
+  "motion": {
+    "pause": "動きを停止",
+    "play": "動きを再生",
+    "label": "このページの動きの停止と再生"
+  },
+  "langBanner": {
+    "text": "このページは日本語でもご覧いただけます。",
+    "go": "日本語で見る",
+    "close": "閉じる"
+  },
+  "newWindow": "（新しいウィンドウ）",
+  "notFound": {
+    "title": "ページが見つかりません",
+    "text": "アドレスが変わったか、ページが削除された可能性があります。下のリンクから移動してください。",
+    "home": "ホームへ"
+  },
+  "form": {
+    "field": {
+      "userName": "お名前を入力してください。",
+      "userCompany": "ご所属を入力してください。",
+      "userEmail": "メールアドレスを入力してください。",
+      "userTraffic": "お知りになったきっかけを選択してください。",
+      "userTrafficEtc": "お知りになったきっかけを入力してください。",
+      "userMemo": "お問い合わせ内容を入力してください。",
+      "checkPrivacy": "個人情報の収集・利用に同意してください。"
+    },
+    "emailFmt": "メールアドレスの形式をご確認ください。",
+    "required": "必須項目です。",
+    "etcDirect": "きっかけを入力 *",
+    "etcOther": "その他の内容 *",
+    "sending": "送信中です…",
+    "sent": "お問い合わせを受け付けました。追ってご連絡いたします。",
+    "failed": "送信に失敗しました。manager@wickedstorm.kr までお送りください。"
+  },
+  "open": "開く",
+  "lhubScreens": "LearnHubble AI 画面例"
+}

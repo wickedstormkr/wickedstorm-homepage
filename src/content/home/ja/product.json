@@ -1,0 +1,81 @@
+{
+  "eyebrow": "Product · Learning Loop",
+  "title": "3つのソリューションと3つの役割が<br><span class=\"g\">Learning Loop</span>を完成させます",
+  "lead": "Lecognizerが学習データを蓄積して兆候を見つけ出すと、<span class=\"nw\">LearnHubble AI</span>がその兆候を管理者・教員・学習者の判断と行動へとつなげます。",
+  "loop": {
+    "img": "learning-loop.webp",
+    "alt": "Learning Loop（学びの好循環）：学習者の活動がLecognizerに蓄積され、Lecognizer AIが兆候を見つけると、カリキュラム管理者と教員がLearnHubble AIで判断して適用し、その結果が再び学習者へとつながる循環構造",
+    "notes": [
+      {
+        "kind": "solution",
+        "style": "--x:26.5%;--y:4%;--w:18%;--align:right",
+        "pill": "Lecognizer",
+        "product": "lec",
+        "desc": "Lecognizerは学習データを国際標準で収集・保存し、1EdTech CASEに基づくコンピテンシー体系と連携します。"
+      },
+      {
+        "kind": "solution",
+        "style": "--x:85.5%;--y:26.5%;--w:13.5%",
+        "pill": "Lecognizer AI",
+        "product": "lec",
+        "desc": "学習データから多くの学習者がつまずいた箇所を特定し、次学期の設計に活かします。"
+      },
+      {
+        "kind": "role",
+        "style": "--x:79%;--y:74%;--w:19.5%",
+        "role": "カリキュラム管理者",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "管理者はAIアラートと元データを確認し、CASEに基づく<span class=\"nw\">科目・職務コンピテンシー</span>体系を改善します。"
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:66%;--w:15.5%;--align:right",
+        "role": "教員",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "教員はAIアラートをもとに追加授業を計画し、支援が必要な学習者をサポートします。"
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:28%;--w:15.5%;--align:right",
+        "role": "学習者",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "学習者は適切なタイミングでAIと対話し、効果的に学び続けます。"
+      }
+    ],
+    "caption": "今学期の学習データが、次学期の学習設計に活かされます。"
+  },
+  "features": [
+    {
+      "kicker": "Learning Data Repository",
+      "name": "Lecognizer",
+      "text": "AIによる異常検知を備えた国際標準の学習データリポジトリです。教育・学習・運営のあらゆる活動から生まれる学習データをリアルタイムに収集・保存し、1EdTech CASEに基づく教育課程の文脈とともに蓄積します。",
+      "bullets": [
+        "国際標準に基づくリアルタイムの収集・保存、システムが変わっても途切れない学習データ",
+        "統合ダッシュボードとカスタマイズ可能な可視化、条件別の照会とJSON・CSVのダウンロード",
+        "国家レベルの学習データハブや、教育庁・企業のAIプラットフォームに導入"
+      ],
+      "badge": "GS 1等級認証",
+      "img": "dash-main-public.webp",
+      "alt": "Lecognizer 統合ダッシュボードの画面例",
+      "reverse": false
+    },
+    {
+      "kicker": "AI Anomaly Detection",
+      "name": "Lecognizer AI",
+      "text": "Lecognizerに蓄積された学習データを分析するAIソリューションです。通常と異なる兆候や多くの学習者がつまずいた箇所を見つけて知らせ、その根拠となった元データまでつなげて示します。",
+      "bullets": [
+        "確認すべき兆候に優先順位を付けて知らせます",
+        "アラートを生成した条件から元データまで、ひとつの流れで確認",
+        "AIが見つけて分析し、判断するのは管理者と教員です"
+      ],
+      "badge": "AI特許2件取得 · 学習異常検知 · 学習者プロファイリング",
+      "img": "lecognizer-ai-detect.webp",
+      "alt": "Lecognizer AIの異常検知画面の例：リアルタイムに蓄積されるStatement一覧と、3週目の一区間に一時停止・巻き戻し・誤答が集中した異常の兆候、およびその原因の候補",
+      "reverse": true
+    }
+  ],
+  "note": "※ 画面は韓国語UIです。画面内の教科・人物・数値は、製品説明のためのデモ用データです。"
+}

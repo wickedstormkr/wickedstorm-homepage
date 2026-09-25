@@ -1,0 +1,81 @@
+{
+  "eyebrow": "Product · Learning Loop",
+  "title": "Three solutions and three roles<br>complete the <span class=\"g\">Learning&nbsp;Loop</span>",
+  "lead": "When Lecognizer builds up learning data and finds signals, <span class=\"nw\">LearnHubble AI</span> carries those signals into the decisions and actions of administrators, instructors, and learners.",
+  "loop": {
+    "img": "learning-loop.webp",
+    "alt": "Learning Loop: learner activity is recorded in Lecognizer, Lecognizer AI finds signals, the Curriculum Administrator and the Instructor decide and apply changes in LearnHubble AI, and the results return to learners in a continuous cycle",
+    "notes": [
+      {
+        "kind": "solution",
+        "style": "--x:26.5%;--y:4%;--w:18%;--align:right",
+        "pill": "Lecognizer",
+        "product": "lec",
+        "desc": "Collects and stores learning data using global standards. It links the data to competency frameworks based on 1EdTech CASE."
+      },
+      {
+        "kind": "solution",
+        "style": "--x:85.5%;--y:26.5%;--w:13.5%",
+        "pill": "Lecognizer AI",
+        "product": "lec",
+        "desc": "Identifies where many learners struggled to inform next semester’s learning design."
+      },
+      {
+        "kind": "role",
+        "style": "--x:79%;--y:74%;--w:19.5%",
+        "role": "Curriculum Administrator",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Administrators review AI alerts and raw data. They refine CASE-based <span class=\"nw\">academic and job-related</span> competency frameworks."
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:66%;--w:15.5%;--align:right",
+        "role": "Instructor",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Instructors use AI alerts to plan additional lessons or support learners who need help."
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:28%;--w:15.5%;--align:right",
+        "role": "Learner",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "Learners interact with AI when they need it, to keep learning effectively."
+      }
+    ],
+    "caption": "This semester’s learning data informs next semester’s learning design."
+  },
+  "features": [
+    {
+      "kicker": "Learning Data Repository",
+      "name": "Lecognizer",
+      "text": "A learning data repository built on global standards, with AI anomaly detection. Lecognizer collects and stores learning data from all teaching, learning, and operational activities in real time, together with its 1EdTech CASE curriculum context.",
+      "bullets": [
+        "Real-time collection and storage using global standards, with learning data that carries over when systems change",
+        "Integrated dashboard and customizable charts, filtered queries and JSON/CSV downloads",
+        "Used in a national-level learning data hub and in AI platforms for offices of education and enterprises"
+      ],
+      "badge": "GS Grade 1 Certification",
+      "img": "dash-main-public.webp",
+      "alt": "Example of the Lecognizer integrated dashboard screen",
+      "reverse": false
+    },
+    {
+      "kicker": "AI Anomaly Detection",
+      "name": "Lecognizer AI",
+      "text": "An AI solution that analyzes learning data stored in Lecognizer. It finds unusual patterns and where many learners struggled, flags them, and then shows the raw data behind each alert.",
+      "bullets": [
+        "Prioritizes signals that need attention and issues alerts",
+        "Review the conditions behind each alert and the raw learning data in one flow",
+        "AI finds and analyzes, while administrators and instructors make the decisions"
+      ],
+      "badge": "2 granted AI patents · Learning anomaly detection · Learner profiling",
+      "img": "lecognizer-ai-detect.webp",
+      "alt": "Example of the Lecognizer AI anomaly detection screen: Statements stored in real time, and an anomaly in week 3 where pauses, rewinds, and wrong answers cluster in one segment, with a likely cause",
+      "reverse": true
+    }
+  ],
+  "note": "※ Subjects, people, and figures on screen are demo data for product illustration."
+}

@@ -1,0 +1,67 @@
+{
+  "eyebrow": "<span>Wicked Storm · Learning Data &amp; AI</span>",
+  "lines": [
+    "Every Learning Moment,",
+    "Designed for",
+    "<span class=\"g\">Growth.</span>"
+  ],
+  "lead": "Wicked Storm collects and stores learning data using global standards, <br class=\"br-d\">and AI analysis informs what administrators, instructors, and learners do next.",
+  "ctaPrimary": "Contact us",
+  "ctaSecondary": "View products",
+  "trust": [
+    {
+      "html": "<b>1EdTech Korea</b>&nbsp;founding board member",
+      "href": "/news/2026-07-1edtech-korea.html"
+    },
+    {
+      "html": "GS Grade 1 Certification",
+      "href": "/news/2024-07-lecognizer-procurement.html"
+    },
+    {
+      "html": "2 granted AI patents",
+      "href": "/news/2025-11-patent-anomaly.html"
+    }
+  ],
+  "capture": {
+    "badge": "Lecognizer · Global-standard collection",
+    "live": "Real-time collection",
+    "rows": [
+      {
+        "actor": "Learner",
+        "verb": "watched",
+        "object": "Concept lecture 04",
+        "result": "Replayed 2×"
+      },
+      {
+        "actor": "Learner",
+        "verb": "answered",
+        "object": "Check quiz",
+        "result": "Correct"
+      },
+      {
+        "actor": "Instructor",
+        "verb": "designed",
+        "object": "Review section",
+        "result": "Applied"
+      },
+      {
+        "actor": "Learner",
+        "verb": "submitted",
+        "object": "Essay task",
+        "result": "On time"
+      },
+      {
+        "actor": "Learner",
+        "verb": "asked",
+        "object": "Lecture Q&A",
+        "result": "3 replies"
+      }
+    ],
+    "signalLabel": "AI<br>Signal",
+    "signal": "Signal · Replayed section"
+  },
+  "overlay": {
+    "main": "Every learning moment is recorded as <span class=\"g\">data built on global standards</span>",
+    "sub": "Lecognizer collects the data, and AI finds the signals."
+  }
+}

@@ -1,0 +1,51 @@
+---
+/**
+ * ⑦ 최근 소식: 소식 컬렉션의 고정(pinned) 글 세 장. 소식 본문은 국문만 있으므로,
+ * 다른 언어 페이지는 콘텐츠 파일(news.json cards)의 번역 제목을 쓰고 없으면 국문 제목에 lang="ko"를 붙인다.
+ */
+import NewsCard from '../components/NewsCard.astro';
+import type { HomeContent, UiText } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { homePosts } from '../lib/posts';
+import { phrase } from '../lib/phrase';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['news']; ui: UiText }
+const { lang, t, ui } = Astro.props;
+const posts = await homePosts(3);
+const tr = new Map(t.cards.map((c) => [c.id, c]));
+const moreLabel = t.cards[0]?.more ?? '';
+---
+<section class="band" id="news" aria-labelledby="news-title">
+  <div class="wrap">
+    <div class="sec-head rowlink">
+      <div>
+        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.eyebrow} /></p>
+        <h2 class="h-lg" id="news-title" set:html={phrase(t.title, lang)} />
+      </div>
+      <a class="sec-more" href={url('/news.html')}>{t.more} <span aria-hidden="true">→</span></a>
+    </div>
+    <ul class="news-grid">
+      {posts.map((p) => {
+        const c = lang === 'ko' ? undefined : tr.get(p.id);
+        return (
+          <li>
+            <NewsCard post={p} title={c?.title ?? p.title} alt={c?.alt ?? p.title} tag={c?.tag}
+              titleLang={lang !== 'ko' && !c ? 'ko' : undefined}
+              more={moreLabel} go={ui.open} newWindow={ui.newWindow} />
+          </li>
+        );
+      })}
+    </ul>
+    <div class="channels" data-social-group hidden>
+      <div class="ch-copy">
+        <p class="ch-title" set:html={t.channels.title} />
+        <p class="ch-sub" set:html={t.channels.sub} />
+      </div>
+      <div class="ch-links">
+        <a class="ch-link" data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" hidden><span class="ch-k">Instagram</span><span class="ch-v" data-social-handle>{t.channels.instagram}</span></a>
+        <a class="ch-link" data-social="blog" href="#" target="_blank" rel="noopener noreferrer" hidden><span class="ch-k">Blog</span><span class="ch-v" data-social-handle>{t.channels.blog}</span></a>
+      </div>
+    </div>
+  </div>
+</section>
