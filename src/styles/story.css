@@ -126,7 +126,6 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 .art-legend{list-style:none;display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:22px;font-size:14px;color:var(--ink-3)}
 .art-legend li{display:inline-flex;align-items:center;gap:8px}
 .art-legend i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
-.art-legend .legend-title{flex-basis:100%;color:var(--muted);font-size:13.5px}
 .case-cap{display:none;margin-top:18px;font-size:15px;font-weight:700;color:var(--muted)}
 .case-list{list-style:none;display:none;margin-top:10px;border-top:1px solid var(--line)}
 .case-list li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-3)}

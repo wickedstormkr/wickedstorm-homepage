@@ -87,7 +87,6 @@
     "countLabel": "本日の収集 · デモ",
     "count": "1,374",
     "unit": "件",
-    "legend": "点一つがStatement一つ",
     "verbs": {
       "watched": "視聴",
       "answered": "回答",

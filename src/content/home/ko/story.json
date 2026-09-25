@@ -19,30 +19,29 @@
       "id": "store",
       "beat": "프로파일링",
       "title": "<span class=\"g\">지표와 프로파일링</span>으로 학습데이터를 설계합니다",
-      "text": "성취 항목(1EdTech CASE)마다 <b>지표</b>를 설정하고, LLM으로 학습자를 <b>프로파일링</b>합니다(<a href=\"{trust}#patent-2767110\">특허 제10-2767110호</a>)."
+      "text": "성취 항목(1EdTech CASE)마다 <b>지표</b>를 설정하고, <br class=\"br-d\">LLM으로 학습자를 <b>프로파일링</b>합니다. <br class=\"br-d\">(<a href=\"{trust}#patent-2767110\">특허 제10-2767110호</a>)"
     },
     {
       "id": "signal",
       "beat": "이상 신호",
       "title": "AI가 <span class=\"g\">이상 신호</span>를 먼저 찾습니다",
-      "text": "‘위험요인 비교’에서 <b>3주차 13:25–14:40</b>에 <span class=\"nw\">멈춤·되감기·오답</span>이 몰렸습니다. Lecognizer AI가 원인 후보 <b>‘금리 기초’의 결손</b>을 근거와 함께 알립니다(<a href=\"{trust}#patent-2883249\">특허 제10-2883249호</a>)."
+      "text": "Lecognizer AI가 <span class=\"nw\">멈춤·되감기·오답</span>이 몰리는 구간을 찾고, <br class=\"br-d\">원인이 될 만한 <b>선수 개념의 결손</b>을 근거와 함께 알립니다. <br class=\"br-d\">(<a href=\"{trust}#patent-2883249\">특허 제10-2883249호</a>)"
     },
     {
       "id": "judge",
       "beat": "사람의 판단",
       "title": "판단과 적용은 <span class=\"g\">사람</span>이 합니다",
-      "text": "이상 신호가 근거와 함께 LearnHubble AI 교수자 화면에 도착합니다. AI가 <b>보충 설명</b>을 추천하고, 적용은 교수자가 정합니다."
+      "text": "LearnHubble AI가 근거를 바탕으로 <b>보충이 필요한 부분</b>을 제안하고, <br class=\"br-d\">적용 여부와 방법은 교수자가 직접 정합니다."
     },
     {
       "id": "next",
       "beat": "다음 학기",
       "title": "이번 학기의 학습데이터가 <span class=\"g\">다음 학기 교육</span>을 설계합니다",
-      "text": "학습자는 보충 설명과 AI 힌트로 막힌 곳을 넘고, 그 과정이 다시 학습데이터가 됩니다. 운영자는 이를 근거로 <b>다음 학기 교과역량 체계</b>를 보완합니다."
+      "text": "학습자는 보충 설명과 AI 힌트로 막힌 곳을 넘고, <br class=\"br-d\">그 과정은 다시 학습데이터로 쌓입니다. <br class=\"br-d\">운영자는 이를 근거로 <b>다음 학기 교과역량 체계</b>를 보완합니다."
     }
   ],
   "store": {
     "tag": "1EdTech CASE · 성취 항목과 지표",
-    "legend": "점은 학습데이터 한 건, 색은 활동 종류",
     "verbs": {
       "watched": "시청",
       "answered": "응답",

@@ -87,7 +87,6 @@
     "countLabel": "Collected today · demo",
     "count": "1,374",
     "unit": "",
-    "legend": "Each dot is one Statement",
     "verbs": {
       "watched": "Watched",
       "answered": "Answered",

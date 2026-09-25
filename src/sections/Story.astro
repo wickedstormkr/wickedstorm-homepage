@@ -117,7 +117,6 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
         <h2 class="scene-title" id="scene-t-3" set:html={phrase(sc[2].title!, lang)} />
         {sc[2].text && <p class="scene-text" set:html={body(sc[2].text)} />}
         <ul class="art-legend">
-          <li class="legend-title">{t.store.legend}</li>
           {VERBS.map((v) => <li><i style={`--c:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
         </ul>
       </div>
