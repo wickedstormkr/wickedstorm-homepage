@@ -33,7 +33,9 @@ jobs:
       - run: npm ci
       - run: npm run build
       # 미리보기는 검색에 걸리지 않게
-      - run: printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
+      - name: 검색 제외(robots.txt)
+        run: |
+          printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
