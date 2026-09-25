@@ -77,5 +77,95 @@
       "reverse": true
     }
   ],
-  "note": "※ 화면 속 교과·인물·수치는 제품 설명을 위한 시연용 데이터입니다."
+  "note": "※ 화면 속 교과·인물·수치는 제품 설명을 위한 시연용 데이터입니다.",
+  "roles": {
+    "label": "역할별로 보기",
+    "items": [
+      {
+        "id": "operator",
+        "name": "운영자",
+        "product": "Lecognizer · Lecognizer AI",
+        "title": "쌓이는 학습데이터와 신호를 한 화면에서",
+        "text": "교수·학습·운영에서 생긴 활동이 국제 표준 문장으로 실시간 쌓이고, Lecognizer AI가 확인이 필요한 신호를 근거와 함께 알립니다.",
+        "points": [
+          "Statement 실시간 목록과 조건별 조회",
+          "주차별 이상 신호와 원인 후보",
+          "알림을 만든 조건과 원본 학습데이터"
+        ]
+      },
+      {
+        "id": "instructor",
+        "name": "교수자",
+        "product": "LearnHubble AI",
+        "title": "AI가 제안하고, 교수자가 정합니다",
+        "text": "신호가 근거와 함께 도착하면 AI가 보충 구간과 개입 대상을 제안합니다. 적용할지는 교수자가 확인하고 정합니다.",
+        "points": [
+          "근거가 붙은 보충 구간 제안",
+          "개입이 필요한 학습자와 이유",
+          "검토 뒤 적용, 수정도 자유롭게"
+        ]
+      },
+      {
+        "id": "learner",
+        "name": "학습자",
+        "product": "LearnHubble AI",
+        "title": "막힌 순간, 답 대신 힌트",
+        "text": "학습자는 강의와 과제를 하는 동안 필요한 순간 AI와 상호작용합니다. AI는 정답 대신 생각의 구조와 강의 근거를 건넵니다.",
+        "points": [
+          "강의실 AI 패널과 구간 퀴즈",
+          "과제 작성 중 AI 힌트",
+          "CASE 역량맵과 포트폴리오"
+        ]
+      }
+    ]
+  },
+  "stream": {
+    "title": "Lecognizer · Statement 실시간 목록",
+    "live": "실시간 수집",
+    "cols": {
+      "time": "시각",
+      "actor": "학습자",
+      "verb": "동작",
+      "object": "대상"
+    },
+    "rows": [
+      {
+        "time": "13:41:08",
+        "actor": "박서연",
+        "verb": "paused",
+        "object": "금리 기초 · 13:25"
+      },
+      {
+        "time": "13:41:05",
+        "actor": "김민준",
+        "verb": "answered",
+        "object": "구간 퀴즈 3번"
+      },
+      {
+        "time": "13:40:57",
+        "actor": "이준호",
+        "verb": "seeked",
+        "object": "금리 기초 · 13:25"
+      },
+      {
+        "time": "13:40:51",
+        "actor": "최하은",
+        "verb": "submitted",
+        "object": "과제 2 · 가계 소비"
+      },
+      {
+        "time": "13:40:44",
+        "actor": "박서연",
+        "verb": "asked",
+        "object": "강의실 AI 패널"
+      }
+    ],
+    "caption": "오늘 수집 1,374건 · 시연용"
+  },
+  "more": "제품 자세히 보기",
+  "page": {
+    "eyebrow": "Products",
+    "title": "학습데이터를 쌓고, 신호를 찾고, <span class=\"g\">사람의 판단</span>으로 잇습니다",
+    "lead": "Lecognizer와 Lecognizer AI가 학습데이터를 쌓고 분석하면, LearnHubble AI가 그 결과를 운영자·교수자·학습자의 화면으로 전합니다."
+  }
 }

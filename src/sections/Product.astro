@@ -1,40 +1,35 @@
 ---
-/** ③ 제품: 학습의 선순환 그림 + Lecognizer, Lecognizer AI */
-import Img from '../components/Img.astro';
+/** 제품(홈): 역할별 제품 화면 탭 + 세 제품 요약. 자세한 내용은 제품 페이지로 */
 import SecHead from '../components/SecHead.astro';
+import RoleTabs from '../components/RoleTabs.astro';
 import type { HomeContent } from '../lib/content';
-import type { Lang } from '../lib/i18n';
+import { pagePath, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
 
-interface Props { lang: Lang; t: HomeContent['product'] }
-const { lang, t } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['product']; story: HomeContent['story']; lhub: HomeContent['learnhubble'] }
+const { lang, t, story, lhub } = Astro.props;
+const page = url(pagePath(lang, 'product'));
+const cards = [
+  { id: 'lecognizer', kicker: t.features[0].kicker, name: t.features[0].name, text: t.features[0].text, badge: t.features[0].badge, cls: 'lec' },
+  { id: 'lecognizer-ai', kicker: t.features[1].kicker, name: t.features[1].name, text: t.features[1].text, badge: t.features[1].badge, cls: 'lec' },
+  { id: 'learnhubble', kicker: lhub.eyebrow, name: lhub.name, text: lhub.lead, badge: lhub.principle, cls: 'lhb' },
+];
 ---
 <section class="band" id="product" aria-labelledby="product-title">
   <div class="wrap">
     <SecHead lang={lang} id="product-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
-
-    <!-- 학습의 선순환 그림은 오프닝 여섯째 장면으로 옮겼다. 여기서는 세 솔루션과 세 역할을 카드로 -->
-    <ul class="loop-cards">
-      {t.loop.notes.map((n) => (
-        <li class:list={['loop-card', n.kind === 'solution' ? 'is-sol' : 'is-role']}>
-          {n.role && <b set:html={n.role} />}
-          <span class:list={['pill', n.product]}>{n.pill}</span>
-          <p set:html={n.desc} />
+    <RoleTabs t={t} story={story} id="home-role" />
+    <ul class="prod-cards">
+      {cards.map((c) => (
+        <li class:list={['prod-card', c.cls]}>
+          <p class="kick">{c.kicker}</p>
+          <h3><a href={`${page}#${c.id}`}>{c.name}</a></h3>
+          <p set:html={c.text} />
+          <span class="feat-badge" set:html={c.badge} />
         </li>
       ))}
     </ul>
-
-    {t.features.map((f) => (
-      <div class:list={['feature', { reverse: f.reverse }]}>
-        <div class="feat-copy">
-          <p class="kick">{f.kicker}</p>
-          <h3>{f.name}</h3>
-          <p set:html={f.text} />
-          <ul>{f.bullets.map((b) => <li set:html={b} />)}</ul>
-          <span class="feat-badge" set:html={f.badge} />
-        </div>
-        <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>
-      </div>
-    ))}
-    <p class="note" set:html={t.note} />
+    <p class="more-row"><a class="btn s" href={page}>{t.more}</a></p>
   </div>
 </section>
+

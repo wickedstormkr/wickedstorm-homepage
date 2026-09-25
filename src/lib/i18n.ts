@@ -15,3 +15,8 @@ export const OG_LOCALE: Record<Lang, string> = { ko: 'ko_KR', en: 'en_US', ja: '
 export const homePath = (lang: Lang) => (lang === 'ko' ? '/' : `/${lang}/index.html`);
 
 export const isLang = (s: unknown): s is Lang => typeof s === 'string' && (LANGS as readonly string[]).includes(s);
+
+/** 언어마다 따로 있는 페이지(제품·표준·사례·신뢰·회사·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
+export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'contact'] as const;
+export type Page = (typeof PAGES)[number];
+export const pagePath = (lang: Lang, page: Page) => (lang === 'ko' ? `/${page}.html` : `/${lang}/${page}.html`);

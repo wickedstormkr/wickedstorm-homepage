@@ -14,13 +14,14 @@
   "menuOpen": "메뉴 열기",
   "langLabel": "언어 선택",
   "nav": {
-    "product": "Product",
-    "learnhubble": "LearnHubble AI",
-    "standards": "Standards",
-    "news": "News",
-    "resources": "Resources",
-    "company": "Company",
-    "recruit": "Recruit",
+    "product": "제품",
+    "standards": "표준",
+    "cases": "사례",
+    "news": "소식",
+    "company": "회사",
+    "trust": "신뢰",
+    "resources": "자료 받기",
+    "recruit": "채용",
     "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
     "recruitLabel": "채용 정보 (새 창)"
   },
@@ -33,5 +34,33 @@
     "navLabel": "푸터 메뉴",
     "privacy": "개인정보처리방침",
     "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
-  }
+  },
+  "pages": {
+    "product": {
+      "title": "WICKED STORM | 제품: Lecognizer · Lecognizer AI · LearnHubble AI",
+      "description": "국제 표준 학습데이터 저장소 Lecognizer, 학습데이터의 이상 신호를 찾는 Lecognizer AI, AI와 상호작용하는 맞춤형 교수·학습 플랫폼 LearnHubble AI를 운영자·교수자·학습자 화면으로 소개합니다."
+    },
+    "standards": {
+      "title": "WICKED STORM | 표준: xAPI · Caliper · 1EdTech CASE",
+      "description": "위키드스톰이 적용한 국제 교육기술 표준과 적용 예정·설계 참조 표준을 수집·체계·증명·연동으로 묶은 표준 지도와 1EdTech 활동."
+    },
+    "cases": {
+      "title": "WICKED STORM | 사례",
+      "description": "교육부, KERIS, 인사혁신처, 서울시 등 공공·교육 현장에서 학습데이터를 수집하고 분석한 사례를 기관, 연도, 한 일, 결과로 정리했습니다."
+    },
+    "trust": {
+      "title": "WICKED STORM | 신뢰: 인증 · 특허 · 표준 활동",
+      "description": "GS 인증 1등급, xAPI LRS 인증, KOLAS AI 모델 인증, AI 특허 2건, (사)1EdTech Korea 설립 이사회 활동을 원본과 함께 확인할 수 있습니다."
+    },
+    "company": {
+      "title": "WICKED STORM | 회사",
+      "description": "학습데이터와 AI로 학습의 새로운 시대를 여는 글로벌 에듀테크 기업 위키드스톰의 비전, 연혁, 채용, 오시는 길."
+    },
+    "contact": {
+      "title": "WICKED STORM | 도입 문의",
+      "description": "도입 상담, 시연 요청, 파트너십·해외 협력을 목적별로 문의하고, 카탈로그와 회사소개서를 내려받을 수 있습니다."
+    }
+  },
+  "more": "자세히 보기",
+  "breadcrumbHome": "홈"
 }

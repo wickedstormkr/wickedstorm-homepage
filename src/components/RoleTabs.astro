@@ -1,0 +1,46 @@
+---
+/**
+ * 역할별 제품 화면: 운영자(Statement 실시간 목록 + 이상 탐지) · 교수자(학습 개입) · 학습자(AI 힌트).
+ * 제품 화면은 HTML로 다시 그린 조각이라 언어가 바뀌고 화면 낭독기가 읽는다.
+ * JS가 없으면 세 역할이 차례로 모두 보이고, JS가 있으면 탭(방향키로 이동)으로 바뀐다(src/scripts/site.ts).
+ */
+import StatementList from './fragments/StatementList.astro';
+import AnomalyPanel from './fragments/AnomalyPanel.astro';
+import InterventionPanel from './fragments/InterventionPanel.astro';
+import LearnerHint from './fragments/LearnerHint.astro';
+import type { HomeContent } from '../lib/content';
+
+interface Props { t: HomeContent['product']; story: HomeContent['story']; id: string }
+const { t, story, id } = Astro.props;
+const r = t.roles;
+const label = (product: string) => `${product} ${story.screen}`;
+const pill = (p: string) => (p.startsWith('LearnHubble') ? 'lhb' : 'lec');
+---
+<div class="roles" data-tabs>
+  <div class="role-tabs" role="tablist" aria-label={r.label} hidden>
+    {r.items.map((it, i) => (
+      <button type="button" role="tab" id={`${id}-tab-${it.id}`} aria-controls={`${id}-${it.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{it.name}</button>
+    ))}
+  </div>
+  {r.items.map((it, i) => (
+    <section class="role-panel" id={`${id}-${it.id}`} role="tabpanel" aria-labelledby={`${id}-tab-${it.id}`} data-panel={i}>
+      <div class="role-copy">
+        <p class="role-name"><b>{it.name}</b><span class:list={['pill', pill(it.product)]}>{it.product}</span></p>
+        <h3>{it.title}</h3>
+        <p class="role-text">{it.text}</p>
+        <ul class="role-points">{it.points.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <div class="role-visual">
+        {it.id === 'operator' && (
+          <div class="role-stack">
+            <StatementList t={t.stream} label={label(t.stream.title)} />
+            <AnomalyPanel t={story.signal} label={label(story.signal.title)} />
+          </div>
+        )}
+        {it.id === 'instructor' && <InterventionPanel t={story.judge} label={label(story.judge.product)} />}
+        {it.id === 'learner' && <LearnerHint t={story.next} label={label(story.next.product)} />}
+      </div>
+    </section>
+  ))}
+  <p class="note">{story.demo}</p>
+</div>

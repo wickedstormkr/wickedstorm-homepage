@@ -17,7 +17,8 @@ import Img from '../components/Img.astro';
 import type { HomeContent } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
-import { url, withBase } from '../lib/url';
+import { url } from '../lib/url';
+import { pagePath, type Page } from '../lib/i18n';
 import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK } from '../lib/story-data';
 
 interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop']; demoTopic: string }
@@ -51,8 +52,8 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
           <a class="btn p" href="#contact">{hero.ctaPrimary}</a>
           <a class="btn s" href="#product">{hero.ctaSecondary}</a>
         </div>
-        <ul class="hero-trust">
-          {hero.trust.map((i) => <li><a href={url(i.href)} set:html={withBase(i.html)} /></li>)}
+        <ul class="hero-trust" aria-label={hero.trustLabel}>
+          {hero.trust.map((i) => <li><a href={url(pagePath(lang, i.page as Page)) + i.hash} set:html={i.html} /></li>)}
         </ul>
       </div>
       <div class="scene-visual">

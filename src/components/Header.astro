@@ -1,41 +1,48 @@
 ---
+/**
+ * 헤더 메뉴: 제품 · 표준 · 사례 · 소식 · 회사 · 도입 문의(CLAUDE.md, 설계 '페이지 구성').
+ * 메뉴는 언어별 페이지로 간다. 소식은 국문만 있다. 도입 문의는 홈에서는 홈 안 문의로, 다른 페이지에서는 문의 페이지로.
+ */
 import { getHome, getUi } from '../lib/content';
-import { homePath, type Lang } from '../lib/i18n';
+import { homePath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url } from '../lib/url';
 import LangSwitch from './LangSwitch.astro';
 import MotionToggle from './MotionToggle.astro';
 
 interface Props {
   lang: Lang;
-  /** 홈 안이면 undefined(앵커만), 다른 페이지면 홈 주소 */
+  /** 홈 안이면 undefined, 다른 페이지면 홈 주소 */
   homeHref?: string;
   alternates?: Partial<Record<Lang, string>>;
-  current?: 'news';
+  current?: 'news' | Page;
 }
 const { lang, homeHref, alternates, current } = Astro.props;
 const c = getHome(lang).common;
 const ui = getUi(lang);
-const home = homeHref ?? '';
-const a = (hash: string) => `${home}${hash}`;
-const news = url('/news.html');
-const brandHref = homeHref ?? '#main';
+const isHome = homeHref === undefined;
+const pg = (p: Page) => url(pagePath(lang, p));
+const cur = (k: string) => (current === k ? 'page' : undefined);
+const contactHref = isHome ? '#contact' : pg('contact');
+const main = [
+  { k: 'product', href: pg('product'), label: c.nav.product },
+  { k: 'standards', href: pg('standards'), label: c.nav.standards },
+  { k: 'cases', href: pg('cases'), label: c.nav.cases },
+  { k: 'news', href: url('/news.html'), label: c.nav.news },
+  { k: 'company', href: pg('company'), label: c.nav.company },
+];
 ---
 <header class="site-header" id="hdr">
   <div class="hwrap">
-    <a class="brand" href={homeHref ? url(homePath(lang)) : brandHref} aria-label={c.homeLabel}>
+    <a class="brand" href={isHome ? '#main' : url(homePath(lang))} aria-label={c.homeLabel}>
       <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" />
     </a>
     <div class="hside">
       <nav class="main" aria-label={c.mainNavLabel}>
-        <a href={a('#product')}>{c.nav.product}</a>
-        <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
-        <a href={a('#standards')}>{c.nav.standards}</a>
-        <a href={news} aria-current={current === 'news' ? 'page' : undefined}>{c.nav.news}</a>
-        <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
+        {main.map((m) => <a href={m.href} aria-current={cur(m.k)}>{m.label}</a>)}
       </nav>
       <LangSwitch lang={lang} alternates={alternates} variant="menu" />
       <MotionToggle lang={lang} />
-      <a class="hcta" href={a('#contact')}>{c.cta}</a>
+      <a class="hcta" href={contactHref} aria-current={cur('contact')}>{c.cta}</a>
       <button class="menu-btn" id="menuBtn" type="button" aria-label={c.menuOpen} aria-expanded="false" aria-controls="drawer"
         data-open={ui.menuOpen} data-close={ui.menuClose}>
         <span></span><span></span><span></span>
@@ -44,13 +51,9 @@ const brandHref = homeHref ?? '#main';
   </div>
 </header>
 <nav class="drawer" id="drawer" aria-label={c.drawerLabel} hidden>
-  <a href={a('#product')}>{c.nav.product}</a>
-  <a href={a('#learnhubble')}>{c.nav.learnhubble}</a>
-  <a href={a('#standards')}>{c.nav.standards}</a>
-  <a href={news} aria-current={current === 'news' ? 'page' : undefined}>{c.nav.news}</a>
-  <a href={a('#resources')}>{c.nav.resources}</a>
-  <a href={a('#company')}>{c.nav.company}</a>
+  {main.map((m) => <a href={m.href} aria-current={cur(m.k)}>{m.label}</a>)}
+  <a href={pg('trust')} aria-current={cur('trust')}>{c.nav.trust}</a>
   <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
   <LangSwitch lang={lang} alternates={alternates} variant="row" />
-  <a class="cta" href={a('#contact')}>{c.ctaDrawer}</a>
+  <a class="cta" href={contactHref}>{c.cta}</a>
 </nav>

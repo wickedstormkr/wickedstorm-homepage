@@ -9,7 +9,7 @@ import '../styles/chrome.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LangBanner from '../components/LangBanner.astro';
-import { OG_LOCALE, LANGS, type Lang } from '../lib/i18n';
+import { OG_LOCALE, LANGS, type Lang, type Page } from '../lib/i18n';
 import { absUrl, url } from '../lib/url';
 import { getHome } from '../lib/content';
 import { GA_ID } from '../../site.config.mjs';
@@ -32,7 +32,7 @@ interface Props {
   /** 헤더 메뉴가 가리킬 홈(같은 페이지 안 앵커면 '') */
   homeHref?: string;
   /** 헤더 메뉴에서 지금 페이지 표시 */
-  current?: 'news';
+  current?: 'news' | Page;
   /** 스킵 링크가 가리킬 본문 id */
   mainId?: string;
   /** 헤더·푸터 없이(링크 페이지) */

@@ -10,16 +10,25 @@
   "ctaSecondary": "제품 보기",
   "trust": [
     {
-      "html": "<b>1EdTech Korea</b>&nbsp;설립 이사회",
-      "href": "/news/2026-07-1edtech-korea.html"
+      "html": "<b>(사)1EdTech Korea</b>&nbsp;설립 이사회",
+      "page": "trust",
+      "hash": "#1edtech"
     },
     {
-      "html": "GS 인증 1등급",
-      "href": "/news/2024-07-lecognizer-procurement.html"
+      "html": "GS 인증 1등급 · Lecognizer",
+      "page": "trust",
+      "hash": "#gs"
     },
     {
-      "html": "AI 특허 2건 등록",
-      "href": "/news/2025-11-patent-anomaly.html"
+      "html": "특허 제10-2883249호",
+      "page": "trust",
+      "hash": "#patent-2883249"
+    },
+    {
+      "html": "특허 제10-2767110호",
+      "page": "trust",
+      "hash": "#patent-2767110"
     }
-  ]
+  ],
+  "trustLabel": "인증·특허 원본"
 }

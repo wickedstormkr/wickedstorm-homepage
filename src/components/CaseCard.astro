@@ -1,0 +1,19 @@
+---
+/** 사례 카드: 기관, 연도, 한 일, 결과(성과 숫자는 사업명·기관·연도와 함께) */
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+
+type C = HomeContent['cases'];
+interface Props { lang: Lang; c: C['items'][number]; labels: C['labels']; href?: string; full?: boolean }
+const { lang, c, labels, href, full = false } = Astro.props;
+---
+<article class:list={['case-card', { full }]} id={full ? c.id : undefined}>
+  <p class="case-meta"><span class="rorg" set:html={c.org} /><span class="case-year"><span class="sr-only">{labels.year} </span>{c.year}</span></p>
+  <h3>{href ? <a href={href} set:html={phrase(c.title, lang)} /> : <span set:html={phrase(c.title, lang)} />}</h3>
+  <dl class="case-dl">
+    <div><dt>{labels.did}</dt><dd set:html={c.did} /></div>
+    <div><dt>{labels.result}</dt><dd set:html={c.result} /></div>
+  </dl>
+  <ul class="rtags">{c.tags.map((g) => <li set:html={g} />)}</ul>
+</article>

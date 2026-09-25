@@ -1,0 +1,260 @@
+{
+  "eyebrow": "Trust",
+  "title": "확인할 수 있는 <span class=\"g\">인증과 특허</span>",
+  "lead": "위키드스톰의 제품 인증, 특허, 표준 활동을 한곳에 모았습니다. 항목마다 번호와 발급 기관, 원본 또는 관련 소식으로 가는 링크를 두었습니다.",
+  "groups": [
+    {
+      "id": "certs",
+      "title": "제품 인증",
+      "items": [
+        {
+          "id": "gs",
+          "name": "GS 인증 1등급",
+          "subject": "Lecognizer V1.0",
+          "detail": "인증 품목: xAPI 기반 학습 경험 데이터 저장 및 시각화 소프트웨어",
+          "meta": [
+            {
+              "k": "인증 번호",
+              "v": "KTL-GS-24-0035"
+            },
+            {
+              "k": "발급",
+              "v": "한국산업기술시험원(KTL)"
+            },
+            {
+              "k": "시기",
+              "v": "2024년 4월"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식: 디지털서비스몰 등록",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "adl",
+          "name": "xAPI 1.0.3 LRS 인증",
+          "subject": "Lecognizer LRS 1.0.0",
+          "detail": "미국 ADL의 xAPI 1.0.3 학습데이터 저장소(LRS) 인증",
+          "meta": [
+            {
+              "k": "발급",
+              "v": "미국 ADL"
+            },
+            {
+              "k": "시기",
+              "v": "2023년 8월"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "kolas",
+          "name": "KOLAS AI 모델 인증",
+          "subject": "학습분석 진단 및 추천모델 v1.0",
+          "detail": "학습 수준 진단과 취약 영역 기반 문항 추천의 기능 적합성 확인",
+          "meta": [
+            {
+              "k": "인증 번호",
+              "v": "2024-122-VSW-K"
+            },
+            {
+              "k": "시기",
+              "v": "2024년 6월"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2024-06-ai-model-validation.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patents",
+      "title": "특허",
+      "items": [
+        {
+          "id": "patent-2883249",
+          "name": "특허 제10-2883249호",
+          "subject": "xAPI 학습 행동 데이터를 기반으로 한 이상 학습 탐지 시스템",
+          "detail": "Lecognizer AI의 이상 탐지에 적용했습니다.",
+          "meta": [
+            {
+              "k": "출원",
+              "v": "2024년 8월 20일"
+            },
+            {
+              "k": "등록",
+              "v": "2025년 11월 4일"
+            },
+            {
+              "k": "특허권자",
+              "v": "주식회사 위키드스톰"
+            }
+          ],
+          "img": "patent-anomaly.webp",
+          "imgAlt": "특허증 제10-2883249호: xAPI 학습 행동 데이터를 기반으로 한 이상 학습 탐지 시스템, 특허권자 주식회사 위키드스톰",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        },
+        {
+          "id": "patent-2767110",
+          "name": "특허 제10-2767110호",
+          "subject": "학습자 성향 분석을 위한 LLM 기반 학습자 프로파일링 방법",
+          "detail": "Lecognizer의 분석 파이프라인에 적용해 맞춤형 진단과 문항 추천의 근거로 씁니다.",
+          "meta": [
+            {
+              "k": "출원",
+              "v": "2024년 8월 20일"
+            },
+            {
+              "k": "등록",
+              "v": "2025년 2월 7일"
+            },
+            {
+              "k": "특허권자",
+              "v": "주식회사 위키드스톰"
+            }
+          ],
+          "img": "patent-profiling.webp",
+          "imgAlt": "특허증 제10-2767110호: 학습자 성향 분석을 위한 LLM 기반 학습자 프로파일링 방법, 특허권자 주식회사 위키드스톰",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2025-02-patent-profiling.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "표준 활동",
+      "items": [
+        {
+          "id": "1edtech",
+          "name": "(사)1EdTech Korea 설립 이사회",
+          "subject": "1EdTech Contributing Member",
+          "detail": "국제 교육기술 표준 컨소시엄 1EdTech의 한국 조직 설립에 이사회로 참여했고, 2026년 4월 1EdTech Contributing Member로 가입했습니다.",
+          "meta": [
+            {
+              "k": "국내 출범",
+              "v": "2026년 6월 22일 · 서울"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2026-07-1edtech-korea.html"
+            },
+            {
+              "label": "표준 지도",
+              "page": "standards"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public",
+      "title": "공공 조달·기업 인증",
+      "items": [
+        {
+          "id": "procurement",
+          "name": "조달청 디지털서비스몰 등록",
+          "subject": "Lecognizer V1.0 · 상용 소프트웨어",
+          "detail": "공공·교육기관이 조달 절차로 도입할 수 있습니다.",
+          "meta": [
+            {
+              "k": "시기",
+              "v": "2024년 6월"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "innobiz",
+          "name": "이노비즈 인증(AA)",
+          "subject": "기술혁신형 중소기업",
+          "detail": "",
+          "meta": [
+            {
+              "k": "시기",
+              "v": "2025년 5월"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "관련 소식",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "개인정보·접근성",
+      "items": [
+        {
+          "id": "privacy",
+          "name": "개인정보처리방침",
+          "subject": "",
+          "detail": "문의 폼으로 받는 개인정보의 항목, 이용 목적, 보관 기간을 밝힙니다.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "개인정보처리방침 보기",
+              "href": "/privacy.html"
+            }
+          ]
+        },
+        {
+          "id": "a11y",
+          "name": "웹 접근성",
+          "subject": "KWCAG 2.2",
+          "detail": "이 사이트는 KWCAG 2.2(WCAG 2.2 AA 수준)를 기준으로 만들고, 바꿀 때마다 자동으로 점검합니다. 움직임은 언제든 멈출 수 있습니다.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": []
+        }
+      ]
+    }
+  ],
+  "original": "원본 보기",
+  "note": "인증 번호와 특허 번호는 발급 기관의 원본과 같습니다. 특허증의 QR 코드로 현재 등록 사항을 확인할 수 있습니다."
+}
