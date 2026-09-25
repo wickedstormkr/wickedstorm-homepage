@@ -60,7 +60,7 @@ export const WEEKS = WEEK_WEIGHTS.length;
 export const HOT_WEEK = 2; // 0부터 센 3주차
 
 /** 막대(장면 4) 배치: 그림 칸 왼쪽 절반 */
-export const BARS = { x0: 0.07, step: 0.075, width: 0.05, base: 0.8, maxH: 0.56 };
+export const BARS = { x0: 0.02, step: 0.068, width: 0.046, base: 0.8, maxH: 0.56 }; // 오른쪽 54%는 이상 탐지 화면 자리(겹치지 않게)
 
 /** 결정적 난수(mulberry32) */
 export function rng(seed: number) {
@@ -74,36 +74,42 @@ export function rng(seed: number) {
 }
 
 /**
- * 장면 2 기록 행(레저): xAPI 문장 여섯 줄. 한 줄은 actor(파랑) · verb(보라) · object(마젠타) 세 칸.
- * 좌표는 기록 칸(ledger box) 기준 0~1. 칸 너비는 줄마다 조금씩 다르다(씨앗값으로 고정).
+ * 장면 2 기록 행: 위 세 줄은 xAPI(actor · verb · object), 아래 세 줄은 1EdTech Caliper(actor · action · object).
+ * 줄마다 넷째 칸은 부가 정보(xAPI context·result, Caliper extensions·edApp·session): 시각, 기기, 세션, 재생 위치, 교육과정 맥락 등.
+ * 칸 색: actor 파랑 · verb/action 보라 · object 마젠타 · 부가 정보 강조색. 좌표는 기록 칸(ledger box) 기준 0~1.
  */
-export const SLOTS = ['actor', 'verb', 'object'] as const;
-export const SLOT_COLOR = ['#2f7cff', '#7c4dff', '#e930b0'];
+export const SLOTS = ['actor', 'verb', 'object', 'extra'] as const;
+export const SLOT_COLOR = ['#2f7cff', '#7c4dff', '#e930b0', '#a3b1ff'];
 export interface LedgerPill { x: number; w: number; slot: number; cap: number }
-export interface LedgerRow { y: number; pills: LedgerPill[] }
+export interface LedgerRow { y: number; std: 'xapi' | 'caliper'; pills: LedgerPill[] }
+export interface LedgerGroup { std: 'xapi' | 'caliper'; headY: number; rows: number[] }
+export const LEDGER_ASPECT = 2.6;
 export const LEDGER = (() => {
   const r = rng(11);
-  const ROWS = 6;
   const px0 = 0.03;
   const px1 = 0.955;
   const gap = 0.008;
-  const rows: LedgerRow[] = [];
-  for (let i = 0; i < ROWS; i++) {
-    const avail = px1 - px0 - 2 * gap;
-    const f0 = 0.2 + r() * 0.08;
-    const f1 = 0.32 + r() * 0.12;
-    const w = [avail * f0, avail * f1, avail * (1 - f0 - f1)];
+  const ys = [0.2, 0.32, 0.44, 0.7, 0.82, 0.94];
+  const rows: LedgerRow[] = ys.map((y, i) => {
+    const avail = px1 - px0 - 3 * gap;
+    // 부가 정보 칸은 늘 넉넉하게(이야기의 핵심): 전체의 30% 안팎
+    const f = [0.15 + r() * 0.05, 0.2 + r() * 0.06, 0.22 + r() * 0.06];
+    const fx = 1 - f[0] - f[1] - f[2];
+    const w = [...f, fx].map((v) => v * avail);
     let x = px0;
     const pills = w.map((wi, slot) => {
-      const p = { x, w: wi, slot, cap: Math.max(5, Math.min(18, Math.round(wi * 60))) };
+      const p = { x, w: wi, slot, cap: Math.max(5, Math.min(18, Math.round(wi * 58))) };
       x += wi + gap;
       return p;
     });
-    rows.push({ y: (i + 0.5) / ROWS, pills });
-  }
-  return { rows, headX: 0.008, checkX: 0.978, pillH: 0.06 };
+    return { y, std: i < 3 ? 'xapi' : 'caliper', pills } as LedgerRow;
+  });
+  const groups: LedgerGroup[] = [
+    { std: 'xapi', headY: 0.115, rows: [0, 1, 2] },
+    { std: 'caliper', headY: 0.615, rows: [3, 4, 5] },
+  ];
+  return { rows, groups, headX: 0.008, checkX: 0.978, pillH: 0.05 };
 })();
-export const LEDGER_ASPECT = 3.2;
 
 export interface Particle {
   verb: number; // VERBS 번호
@@ -115,7 +121,7 @@ export interface Particle {
   curve: number; // 장면 사이를 옮겨 갈 때 휘는 정도(-0.25~0.25)
   z: number; // 깊이(0 먼~1 가까운): 크기·밝기·빛 번짐
   G: [number, number]; // 장면 1 성운(무대 기준)
-  ink: number; // 장면 2에서 기록 칸에 앉는 문장이면 칸 번호(줄*3+칸), 아니면 -1
+  ink: number; // 장면 2에서 기록 칸에 앉는 문장이면 칸 번호(줄*4+칸), 아니면 -1
   R: [number, number]; // 장면 2 기록 칸 자리(기록 칸 기준)
   T: [number, number]; // 성취 항목 자리(장면 3)
   B: [number, number]; // 주차별 막대(장면 4, 이상 항목만)
@@ -175,8 +181,8 @@ export function buildParticles(n: number = TODAY_TOTAL, seed = 7): Particle[] {
     row.pills.forEach((pill, si) => {
       for (let t = 0; t < pill.cap; t++) {
         const p = out[byNear[k++]];
-        p.ink = ri * 3 + si;
-        p.R = [pill.x + pill.w * (0.05 + 0.9 * ((t + 0.5) / pill.cap)) + (r() - 0.5) * 0.004, row.y + (r() - 0.5) * LEDGER.pillH * 0.5];
+        p.ink = ri * 4 + si;
+        p.R = [pill.x + pill.w * (0.05 + 0.9 * ((t + 0.5) / pill.cap)) + (r() - 0.5) * 0.004, row.y + (r() - 0.5) * LEDGER.pillH * 0.45];
         p.delay = Math.min(1, ri / LEDGER.rows.length + si * 0.04 + r() * 0.08);
         p.z = Math.max(p.z, 0.45 + r() * 0.55);
       }
@@ -244,9 +250,9 @@ export function alphaOf(p: Particle, k: LayoutKey): number {
     case 'T':
       return 0.85;
     case 'B':
-      return p.leaf === ANOMALY_LEAF ? (p.week === HOT_WEEK ? 1 : 0.6) : 0.05;
+      return p.leaf === ANOMALY_LEAF ? (p.week === HOT_WEEK ? 1 : 0.6) : 0.012;
     case 'D':
-      return p.evidence ? 1 : 0.05;
+      return p.evidence ? 1 : 0.012;
     case 'L':
       return 0.4;
   }

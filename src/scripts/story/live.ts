@@ -1,6 +1,7 @@
 /**
  * 장면 1 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(시연 문장을 돌려 쓴다).
- * 다섯 줄이 차면 맨 위 줄이 올라가며 사라진다. 한 줄이 들어올 때마다 'story:record'를 알려, 그림 층이 그 점에서 성운으로 빛을 날린다.
+ * 다섯 줄이 차면 맨 위 줄이 올라가며 사라진다. 사라지는 줄의 점은 'story:record'로 알려, 그림 층이 그 점을 별로 바꿔
+ * 배경 성운에 자리 잡게 한다(쌓인다). 그때마다 '오늘 수집' 수가 하나 는다(시연).
  * 움직임 멈춤·탭 숨김·장면 1이 보이지 않을 때는 멈춘다(KWCAG 6.2.2).
  */
 import { motionAllowed, onMotionChange } from '../motion';
@@ -20,6 +21,9 @@ export function initLive(story: HTMLElement) {
   let timer = 0;
   let inView = false;
   const GAP = 9;
+  const countEl = box.querySelector<HTMLElement>('[data-live-count]');
+  const numLocale = document.documentElement.lang === 'vi' ? 'vi-VN' : 'en-US';
+  let count = Number((countEl?.textContent ?? '0').replace(/[^0-9]/g, '')) || 0;
 
   const make = (r: Row) => {
     const li = document.createElement('li');
@@ -38,9 +42,10 @@ export function initLive(story: HTMLElement) {
     const r = pool[k++ % pool.length];
     const li = make(r);
     list.append(li);
-    story.dispatchEvent(new CustomEvent('story:record', { detail: { el: li.querySelector('.dot'), verb: r.verb } }));
     if (list.children.length > 5) {
       const first = list.children[0] as HTMLElement;
+      story.dispatchEvent(new CustomEvent('story:record', { detail: { el: first.querySelector('.dot'), verb: Number(first.dataset.verb) || 0 } }));
+      if (countEl) countEl.textContent = (++count).toLocaleString(numLocale);
       const h = first.offsetHeight + GAP;
       first.classList.add('leaving');
       list.style.transition = 'transform .55s cubic-bezier(.3,.7,.25,1)';

@@ -16,6 +16,8 @@ const hexRgb = (h: string) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 1
 
 interface Sprites { s: HTMLCanvasElement; m: HTMLCanvasElement; l: HTMLCanvasElement }
 interface Comet { x0: number; y0: number; cx: number; cy: number; x1: number; y1: number; t0: number; c: number }
+/** 실시간 수집에서 날아와 성운에 자리 잡은 새 별(무대 기준 0~1) */
+interface Landed { x: number; y: number; c: number; t0: number; d: number }
 
 export class CanvasArt implements Art {
   private ctx: CanvasRenderingContext2D;
@@ -29,6 +31,7 @@ export class CanvasArt implements Art {
   private env: PlaceEnv = {};
   private edges: [number, number, number][] = [];
   private comets: Comet[] = [];
+  private landed: Landed[] = [];
   private s = 0;
   private dpr = Math.min(1.5, devicePixelRatio || 1);
   private ambient = false;
@@ -94,17 +97,22 @@ export class CanvasArt implements Art {
     } else if (!on) this.draw();
   }
 
-  /** 실시간 수집 패널에 기록 하나가 올라오면, 그 자리(무대 px)에서 성운으로 빛 하나가 날아든다 */
+  /**
+   * 실시간 수집 패널에서 기록 한 줄이 위로 밀려 사라지면, 그 줄의 점(무대 px)이 별이 되어 성운으로 날아가 자리 잡는다.
+   * 색은 그 기록의 활동 종류. 자리 잡은 별은 장면 1 동안 배경에 남는다(최대 160개).
+   */
   emit(x: number, y: number, verb: number) {
-    if (!this.ambient || this.s > 0.6) return;
-    const p = this.ps[(Math.random() * this.ps.length) | 0];
-    const x1 = p.G[0] * this.W;
-    const y1 = p.G[1] * this.H;
+    if (!this.ambient || this.s > 0.35) return;
+    // 도착점: 패널을 피해 성운 쪽(무대 왼쪽 2/3, 글 아래·위 여백 포함)으로
+    const x1 = (0.08 + Math.random() * 0.56) * this.W;
+    const y1 = (0.1 + Math.random() * 0.8) * this.H;
     const dx = x1 - x;
     const dy = y1 - y;
     const k = (Math.random() < 0.5 ? -1 : 1) * (0.2 + Math.random() * 0.15);
     this.comets.push({ x0: x, y0: y, x1, y1, cx: (x + x1) / 2 - dy * k, cy: (y + y1) / 2 + dx * k, t0: this.clock, c: verb });
     if (this.comets.length > 12) this.comets.shift();
+    this.landed.push({ x: x1 / this.W, y: y1 / this.H, c: verb, t0: this.clock + 1.4, d: 5 + Math.random() * 6 });
+    if (this.landed.length > 160) this.landed.shift();
   }
 
   private draw() {
@@ -154,7 +162,7 @@ export class CanvasArt implements Art {
       const o = place(p, s, this.o, this.env);
       let a = o[2];
       if (s < 1 && this.ambient) a *= 0.78 + 0.22 * Math.sin(t * 1.3 + p.phase * 3);
-      if (a < 0.01) continue;
+      if (a < 0.02) continue;
       const [x, y] = px(o);
       const d = base * o[3] * (s < 1.6 && s > 0 ? 1 : 1);
       const tier = d > 11 ? 'm' : 's';
@@ -173,7 +181,19 @@ export class CanvasArt implements Art {
         }
       }
     }
-    // 5) 실시간 수집에서 날아드는 새 기록
+    // 5) 실시간 수집에서 날아와 자리 잡은 별(장면 1 배경에 남는다)
+    const ka = 1 - smooth(s / 0.4);
+    if (ka > 0.01) {
+      for (const m of this.landed) {
+        if (t < m.t0) continue;
+        const age = t - m.t0;
+        const x = m.x * this.W + Math.sin(t * 0.21 + m.d) * 3;
+        const y = m.y * this.H + Math.cos(t * 0.17 + m.d) * 3;
+        ctx.globalAlpha = Math.min(1, age / 0.3) * ka * (0.75 + 0.25 * Math.sin(t * 1.3 + m.d));
+        ctx.drawImage(this.spr[m.c][m.d > 9 ? 'm' : 's'], x - m.d / 2, y - m.d / 2, m.d, m.d);
+      }
+    }
+    // 6) 실시간 수집에서 날아드는 새 기록
     this.comets = this.comets.filter((m) => t - m.t0 < 1.8);
     for (const m of this.comets) {
       const k = clamp01((t - m.t0) / 1.4);
@@ -206,7 +226,7 @@ export class CanvasArt implements Art {
   /** 입자 색: 성운·체계 이후는 활동 종류 색, 기록 칸에 앉는 동안은 그 칸(actor·verb·object) 색 */
   private colorIndex(p: Particle, s: number, t: number) {
     if (p.ink < 0) return p.verb;
-    const slot = p.ink % 3;
+    const slot = p.ink % 4;
     if (s < 1) return t > 0.5 ? slot : p.verb;
     if (s < 2) return t > 0.5 ? p.verb : slot;
     return p.verb;
@@ -222,16 +242,16 @@ export class CanvasArt implements Art {
     if (fade <= 0.01) return;
     const ph = Math.max(8, Math.min(L.h * LEDGER.pillH, 14));
     const n = LEDGER.rows.length;
-    // 세로 칸 가이드(표 구조)
-    const gA = smooth((s - 0.3) / 0.2) * 0.13 * fade;
+    // 두 표준(xAPI · Caliper) 사이 옅은 구분선
+    const gA = smooth((s - 0.3) / 0.2) * 0.12 * fade;
     if (gA > 0.004) {
-      const r0 = LEDGER.rows[0];
-      ctx.strokeStyle = `rgba(150,164,255,${gA})`;
-      ctx.lineWidth = 1;
-      for (const pl of r0.pills.slice(1)) {
-        const gx = L.x + (pl.x - 0.004) * L.w;
-        ctx.beginPath(); ctx.moveTo(gx, L.y + L.h * 0.02); ctx.lineTo(gx, L.y + L.h * 0.98); ctx.stroke();
-      }
+      const gy = L.y + L.h * ((LEDGER.rows[2].y + LEDGER.groups[1].headY) / 2 + 0.005);
+      const g = ctx.createLinearGradient(L.x, 0, L.x + L.w, 0);
+      g.addColorStop(0, 'rgba(150,164,255,0)');
+      g.addColorStop(0.5, `rgba(150,164,255,${gA})`);
+      g.addColorStop(1, 'rgba(150,164,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(L.x, gy, L.w, 1);
     }
     LEDGER.rows.forEach((row, ri) => {
       const rp = clamp01((s - 0.3 - (ri / n) * 0.35) / 0.4);

@@ -111,7 +111,8 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     tl.from(q('.scene-judge .signal-alert'), { opacity: 0, y: -16, duration: 0.2 }, 3.7)
       .from(q('.scene-judge .fx-judge'), { opacity: 0, y: 24, duration: 0.25 }, 3.8);
     // 장면 2: 기록 칸 이름표(actor · verb · object)는 칸이 자리를 잡을 때
-    tl.from(q('.scene-statement .ledger-cols span'), { opacity: 0, y: 8, stagger: 0.05, duration: 0.2 }, 0.55);
+    tl.from(q('.scene-statement .ledger-head span'), { opacity: 0, y: 8, stagger: 0.03, duration: 0.2 }, 0.55)
+      .from(q('.scene-statement .ledger-extra'), { opacity: 0, y: 10, duration: 0.2 }, 0.8);
     // 장면 6: 고리 둘레의 이름표
     tl.from(q('.scene-next .ring-labels li'), { opacity: 0, scale: 0.9, stagger: 0.03, duration: 0.2 }, 4.7);
     tl.set({}, {}, last);

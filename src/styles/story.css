@@ -38,7 +38,7 @@
 /* 장면 3·4: 그림 칸(16:10). 이름표는 데스크톱에서만(그림 속 글자 11px 이상) */
 .art-box{position:relative;aspect-ratio:1.6;container-type:inline-size}
 .art-base{position:absolute;inset:0;width:100%;height:100%;transition:opacity .6s ease}
-.art-tag{position:absolute;left:0;top:-4px;font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.art-tag{position:absolute;left:0;top:-4px;font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
 .art-count{position:absolute;left:0;bottom:0;font-size:13px;color:var(--muted)}
 .art-count b{display:block;font-family:var(--en);font-size:clamp(22px,2.4vw,30px);color:var(--ink);letter-spacing:-.01em}
 .art-labels{list-style:none}
@@ -61,11 +61,12 @@
 .art-weeks{list-style:none}
 .art-weeks li{position:absolute;transform:translateX(-50%);font-size:max(11px,1cqw);font-weight:600;color:var(--muted)}
 .art-weeks li.hot{color:#ff9bdc}
-.art-bars .art-panel{position:absolute;right:0;bottom:0;width:60%}
+.art-bars .art-panel{position:absolute;right:0;top:0;bottom:0;width:54%;display:flex;align-items:center}
+.art-bars .art-panel .fx{width:100%}
 .art-bars .fx-anom .fx-grid{grid-template-columns:1fr}
 .art-bars .fx-anom .fx-chart{display:none}
 /* 장면 5 */
-.judge-stack{display:grid;gap:14px;max-width:600px;margin-left:auto}
+.judge-stack{display:grid;gap:12px;max-width:500px;margin-left:auto}
 .signal-alert{justify-self:start;position:relative;display:inline-block;padding:9px 16px 9px 35px;border-radius:999px;background:rgba(255,255,255,.07);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);font-size:14px;font-weight:600;color:var(--ink)}
 .signal-alert::before{content:"";position:absolute;left:16px;top:calc(9px + .75em - 4.5px);width:9px;height:9px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
@@ -137,22 +138,24 @@ html.story-pin:not(.story-gsap) .scene.is-active{opacity:1}
 @media (max-width:1023px){.signal-alert{font-size:15px}}
 
 /* 장면 1: 실시간 수집(지금 사이트의 xAPI 캡처 뷰) */
-.live{position:relative;z-index:2;max-width:560px;margin:0 0 0 auto;padding:20px;border-radius:22px;overflow:hidden;
+.live{position:relative;z-index:2;width:min(100%,520px);flex:none;margin:0 0 0 auto;padding:20px;border-radius:22px;overflow:hidden;
   background:linear-gradient(180deg,rgba(20,22,40,.92),rgba(11,12,24,.92));border:1px solid var(--line2);
   box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12)}
 .live::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;background:radial-gradient(120% 60% at 50% -10%,rgba(124,77,255,.14),transparent 60%)}
 .live-bar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.live-bar b{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#cfd3ee}
+.live-bar b{font-family:var(--en);font-size:13px;font-weight:700;letter-spacing:.02em;color:#cfd3ee}
 .live-state{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--accent)}
 .live-state::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 1.4s infinite}
 @keyframes blink{50%{opacity:.35}}
 .live-view{position:relative;z-index:2;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%)}
 .live-rows{list-style:none;display:flex;flex-direction:column;gap:9px;will-change:transform}
-.xrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
-.xrow .dot{position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 12px rgba(233,48,176,.8)}
-.xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,rgba(233,48,176,.85),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
+.xrow{display:flex;align-items:center;flex-wrap:nowrap;gap:8px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+/* 점 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 사라질 때 같은 색의 별이 된다 */
+.xrow .dot{--c:#7c4dff;position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,#fff 0 20%,var(--c) 45%);box-shadow:0 0 12px var(--c)}
+.xrow[data-verb="0"] .dot{--c:#2f7cff}.xrow[data-verb="1"] .dot{--c:#7c4dff}.xrow[data-verb="2"] .dot{--c:#e930b0}.xrow[data-verb="3"] .dot{--c:#a3b1ff}
+.xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,var(--c),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
 @keyframes dotpulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
-.chip{padding:5px 11px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip{flex:none;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap}
 .chip.actor{background:rgba(47,124,255,.16);color:#9dc0ff;border:1px solid rgba(47,124,255,.32)}
 .chip.verb{background:rgba(124,77,255,.16);color:#c3b0ff;border:1px solid rgba(124,77,255,.34)}
 .chip.object{background:rgba(233,48,176,.14);color:#ffa6e2;border:1px solid rgba(233,48,176,.3)}
@@ -168,34 +171,36 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 .live-foot{position:relative;z-index:2;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .nebula-base{display:none}
 
-/* 장면 2: 기록 행 */
+/* 장면 2: 기록 행(xAPI · Caliper, 줄마다 부가 정보) */
 .ledger{position:relative;width:100%}
-.ledger-cols{position:relative;height:26px;margin-bottom:6px}
-.ledger-cols span{position:absolute;top:0;padding-left:2px;font-size:13px;color:var(--muted);white-space:nowrap}
-.ledger-cols b{font-family:var(--mono);font-weight:600}
-.ledger-cols .c0 b{color:#9dc0ff}.ledger-cols .c1 b{color:#c3b0ff}.ledger-cols .c2 b{color:#ffa6e2}
-.ledger-box{position:relative;aspect-ratio:3.2}
+.ledger-box{position:relative;aspect-ratio:2.6;container-type:inline-size}
 .ledger-box .art-base{position:absolute;inset:0;width:100%;height:100%}
-.ledger-rest{margin-top:12px;font-size:15px;color:var(--muted);text-align:right}
+.ledger-head{position:absolute;left:0;right:0;height:0;margin:0}
+.ledger-head span{position:absolute;top:0;margin-top:-.75em;line-height:1.5;white-space:nowrap;font-size:13px;color:var(--muted)}
+.ledger-head .std{left:3%;top:-24px;font-family:var(--en);font-size:13px;font-weight:700;letter-spacing:.04em;color:#cfd3ee}
+.ledger-head .col{padding-left:2px}
+.ledger-head b{font-family:var(--mono);font-weight:600;margin-right:3px}
+.ledger-head .c0 b{color:#9dc0ff}.ledger-head .c1 b{color:#c3b0ff}.ledger-head .c2 b{color:#ffa6e2}.ledger-head .c3 b{color:var(--accent)}
+.ledger-head .c3{color:var(--ink-2);font-weight:700}
+.ledger-extra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:14px}
+.ledger-rest{font-size:15px;color:var(--ink-3)}
+.ledger-items{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.ledger-items li{padding:4px 10px;border-radius:999px;font-size:13px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1);border:1px solid rgba(163,177,255,.28)}
 .stmt-one{margin-top:28px;max-width:560px}
 html.story-pin .scene-statement{grid-template-columns:1fr;align-content:center;gap:clamp(18px,3vh,36px);text-align:center}
 html.story-pin .scene-statement .scene-visual{order:-1;display:block;max-height:none}
 html.story-pin .scene-statement .scene-copy{max-width:760px;margin-inline:auto}
 html.story-pin .scene-statement .stmt-one{display:none}
-html.story-pin .ledger{width:min(100%,1120px);margin-inline:auto}
 html.story-pin.art-live .ledger-box .art-base{opacity:0}
-@media (max-width:1023px){
-  .ledger-cols span{font-size:12px}
-  .ledger-cols b+*{display:none}
-  .live{margin-left:0}
-}
+html.story-pin .ledger{width:min(100%,1120px,calc((100vh - var(--header-h) - 380px) * 2.6));margin-inline:auto}
+@media (max-width:1023px){.live{margin-left:0}}
+@media (max-width:699px){.ledger-head{display:none}}
 @media (max-width:699px){
-  .ledger-cols{display:none}
-  .ledger-rest{text-align:left}
   .live{padding:14px}
   .xrow{padding:10px}
   .chip{font-size:13px;padding:4px 9px}
   .chip.result{margin-left:auto}
+  .xrow{flex-wrap:wrap}
   .xrow{gap:6px}
   .xrow .arw{display:none}
 }
@@ -226,3 +231,17 @@ html.story-pin.art-live .ledger-box .art-base{opacity:0}
 }
 @media (max-width:699px){
 }
+
+/* 장면 5: 교수자 화면은 장면의 한 부분이라 작게(글과 균형) */
+.scene-judge .fx-bar{padding:9px 14px}
+.scene-judge .fx-body{padding:14px 16px 16px}
+.scene-judge .fx-judge .fx-ai{margin-top:10px;padding:11px 13px}
+.scene-judge .fx-judge .fx-ai p{font-size:14.5px}
+.scene-judge .fx-judge .fx-ai small{font-size:13px}
+.scene-judge .fx-judge ol{margin-top:10px}
+.scene-judge .fx-judge li{grid-template-columns:24px 1fr;padding:7px 0}
+.scene-judge .fx-judge li i{width:22px;height:22px;font-size:12px}
+.scene-judge .fx-judge li b{font-size:14px}
+.scene-judge .fx-judge .fx-actions{margin-top:10px}
+.scene-judge .fx-btn{min-height:34px;padding:0 14px;font-size:13.5px}
+.scene-judge .fx-judge .fx-owner{margin-top:6px}

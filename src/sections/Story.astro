@@ -16,7 +16,7 @@ import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 import { pagePath, type Page } from '../lib/i18n';
-import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY, LEDGER } from '../lib/story-data';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY, LEDGER, TODAY_TOTAL } from '../lib/story-data';
 /** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
 const RING_ORDER = [0, 1, 2, 3, 4];
 
@@ -66,7 +66,7 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
               ))}
             </ol>
           </div>
-          <figcaption class="live-foot">{t.live.today}</figcaption>
+          <figcaption class="live-foot" set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(lang === 'vi' ? 'vi-VN' : 'en-US')}</b>`)} />
         </figure>
         <img class="art-base nebula-base" src={url('/art/nebula.svg')} alt="" width="1600" height="1000" decoding="async" fetchpriority="low" />
       </div>
@@ -82,13 +82,23 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
       <div class="scene-visual">
         <!-- 기록 행: 흩어진 순간들이 actor · verb · object 칸에 앉아 표준 문장이 된다(칸·입자는 그림 층, 이름표는 HTML) -->
         <div class="ledger">
-          <p class="ledger-cols" aria-hidden="true">
-            {LEDGER.rows[0].pills.map((pl, i) => <span class={`c${i}`} style={`left:${pct(pl.x)};width:${pct(pl.w)}`}><b lang="en">{t.ledger.cols[i].k}</b> {t.ledger.cols[i].v}</span>)}
-          </p>
           <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
-            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="500" loading="lazy" decoding="async" />
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="615" loading="lazy" decoding="async" />
+            {LEDGER.groups.map((g) => {
+              const row = LEDGER.rows[g.rows[0]];
+              const keys = [['actor', t.ledger.cols.actor], [g.std === 'xapi' ? 'verb' : 'action', g.std === 'xapi' ? t.ledger.cols.verb : t.ledger.cols.action], ['object', t.ledger.cols.object], [t.ledger.extraKey[g.std], t.ledger.cols.extra]];
+              return (
+                <p class:list={['ledger-head', g.std]} style={`top:${pct(g.headY)}`} aria-hidden="true">
+                  <span class="std" lang="en">{g.std === 'xapi' ? t.ledger.xapi : t.ledger.caliper}</span>
+                  {row.pills.map((pl, i) => <span class={`col c${i}`} style={`left:${pct(pl.x)}`}><b lang="en">{keys[i][0]}</b> {keys[i][1]}</span>)}
+                </p>
+              );
+            })}
           </div>
-          <p class="ledger-rest">{t.ledger.rest}</p>
+          <div class="ledger-extra">
+            <p class="ledger-rest">{t.ledger.rest}</p>
+            <ul class="ledger-items" aria-label={t.ledger.cols.extra}>{t.ledger.extraItems.map((x) => <li>{x}</li>)}</ul>
+          </div>
         </div>
         <div class="stmt-one">
           <StatementCard t={t.statement} label={t.statement.caption} />

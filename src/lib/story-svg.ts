@@ -103,7 +103,7 @@ export function ledgerSvg() {
     const cx = LEDGER.checkX * LW;
     return pills + `<circle cx="${f(hx)}" cy="${f(y)}" r="7" fill="url(#hg)"/><circle cx="${f(cx)}" cy="${f(y)}" r="5" fill="#a3b1ff"/><circle cx="${f(cx)}" cy="${f(y)}" r="9" fill="none" stroke="#a3b1ff" stroke-opacity=".5" stroke-width="1.5"/>`;
   }).join('');
-  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2.4 + p.z * 1.6).toFixed(1)}" fill="${SLOT_COLOR[p.ink % 3]}"/>`).join('');
+  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2.4 + p.z * 1.6).toFixed(1)}" fill="${SLOT_COLOR[p.ink % 4]}"/>`).join('');
   const defs = `<defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#e930b0"/><stop offset=".52" stop-color="#7c4dff"/><stop offset="1" stop-color="#2f7cff"/></linearGradient><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}">${defs}${rows}<g filter="url(#glow)">${dots}</g></svg>`;
 }
