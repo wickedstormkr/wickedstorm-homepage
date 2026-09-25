@@ -26,9 +26,9 @@
 .scene-moment h1 .line{display:block}
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
 .hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
-.hero-trust{list-style:none;display:flex;flex-wrap:wrap;align-items:center;row-gap:4px;margin-top:32px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
-.hero-trust li{display:inline-flex;align-items:center}
-.hero-trust li:not(:last-child)::after{content:"";width:1px;height:14px;background:var(--line2);margin:0 18px}
+.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,max-content);column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
+.hero-trust li{display:flex;align-items:center;gap:9px}
+.hero-trust li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.8}
 .hero-trust a{display:inline-block;padding:11px 0;line-height:22px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px;transition:color .2s}
 .hero-trust a:hover{color:#fff;text-decoration-color:var(--accent)}
 .hero-trust b{color:var(--ink-2)}
@@ -101,8 +101,7 @@ html.story-pin .loop-art figcaption{display:table;margin-left:auto;padding:4px 1
   .scene{padding:56px 0}
   .scene-moment{padding-top:calc(var(--header-h) + 28px)}
   .hero-cta .btn{flex:1 1 auto}
-  .hero-trust{flex-direction:column;align-items:flex-start;row-gap:0}
-  .hero-trust li:not(:last-child)::after{display:none}
+  .hero-trust{grid-template-columns:1fr}
   .stmt-pair{grid-template-columns:1fr;gap:0}
   .stmt-link{width:2px;height:24px;margin-left:28px;background:linear-gradient(180deg,rgba(233,48,176,.9),rgba(124,77,255,.9))}
   .art-bars .fx-anom .fx-grid{grid-template-columns:1fr}

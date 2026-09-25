@@ -23,7 +23,7 @@
   3. 미리 그린 SVG(900개): 빌드 때 그림. 폰, 움직임 줄이기, JS 없음
 - WebGL 셰이더는 `place()`와 같은 규칙을 옮긴 것입니다.
 
-## 제품 화면(HTML로 다시 그림)
+## 제품 화면(HTML로 다시 그림, 사이트와 같은 어두운 톤)
 `src/components/fragments/`: 강의실 퀴즈, xAPI Statement, Lecognizer AI 이상 탐지(특허 번호 칩은 특허 원문 링크), LearnHubble AI 교수자 개입, 학습자 AI 힌트. 버튼 모양은 장식이라 누를 수 없습니다(span). 화면 속 인물·교과·수치는 시연용이라고 장면 아래에 적었습니다.
 
 ## 접근성
