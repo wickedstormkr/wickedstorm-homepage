@@ -86,11 +86,11 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
         <h2 class="scene-title" id="scene-t-2" set:html={phrase(sc[1].title!, lang)} />
+        <p class="ledger-std"><b lang="en">{t.ledger.std.xapi}</b><span class="swap" aria-hidden="true">⇄</span><span class="sr-only">, </span><b lang="en">{t.ledger.std.caliper}</b><span class="ledger-note">{t.ledger.std.note}</span></p>
         {sc[1].text && <p class="scene-text" set:html={body(sc[1].text)} />}
       </div>
       <div class="scene-visual">
         <div class="ledger">
-          <p class="ledger-std"><b lang="en">{t.ledger.std.xapi}</b><span class="swap" aria-hidden="true">⇄</span><span class="sr-only">, </span><b lang="en">{t.ledger.std.caliper}</b><span class="ledger-note">{t.ledger.std.note}</span></p>
           <dl class="ledger-cols" style={ledgerGrid}>
             {t.ledger.cols.map((c, i) => (
               <div class={`c${i}`}>
