@@ -6,8 +6,8 @@ import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 
-interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText; contactHref?: string }
-const { lang, t, ui, contactHref = '#contact' } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText; contactHref?: string; site?: HomeContent['product']['solutions'][number] }
+const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
 ---
 <section class="band lhub" id="learnhubble" aria-labelledby="lhub-title">
   <div class="wrap">
@@ -25,7 +25,7 @@ const { lang, t, ui, contactHref = '#contact' } = Astro.props;
           ))}
         </ol>
         <p class="lhub-principle" set:html={t.principle} />
-        <div class="lhub-cta"><a class="btn p" href={contactHref} data-topic={t.cta.topic}>{t.cta.label}</a></div>
+        <div class="lhub-cta"><a class="btn p" href={contactHref} data-topic={t.cta.topic}>{t.cta.label}</a>{site && <a class="prod-site" href={site.site} target="_blank" rel="noopener" aria-label={site.siteAria}>{site.siteLabel}<span aria-hidden="true"> ↗</span></a>}</div>
       </div>
       <figure class="frame lhub-main">
         <Img name={t.main.img} alt={t.main.alt} sizes="(min-width: 1024px) 720px, calc(100vw - 48px)" />

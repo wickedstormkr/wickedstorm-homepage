@@ -96,11 +96,11 @@
 @keyframes st-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes st-row{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:none}}
 @keyframes st-bar{from{transform:scaleY(0)}to{transform:none}}
-html.js:not(.story-pin):not(.motion-paused) .scene[data-scene]:not(.play) :is(.fx-stmt dl>div,.signal-alert,.fx-judge,.case-list li,.art-box .art-base,.moment-tag,.ring-labels li){opacity:0}
+html.js:not(.story-pin):not(.motion-paused) .scene[data-scene]:not(.play) :is(.fx-stmt dl>div,.signal-alert,.fx-judge,.case-list li,.art-box .art-base,.ledger-box .art-base,.ring-labels li){opacity:0}
 html.js:not(.story-pin) .scene.play .fx-stmt dl>div{animation:st-row .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 140ms + 200ms)}
 html.js:not(.story-pin) .scene.play :is(.signal-alert,.art-box .art-base){animation:st-in .6s ease both}
 html.js:not(.story-pin) .scene.play .fx-judge{animation:st-in .6s .35s ease both}
-html.js:not(.story-pin) .scene.play .moment-tag{animation:st-in .6s .3s ease both}
+html.js:not(.story-pin) .scene.play .ledger-box .art-base{animation:st-in .6s ease both}
 html.js:not(.story-pin) .scene.play .ring-labels li{animation:st-in .5s ease both;animation-delay:calc(var(--i,0) * 90ms + 200ms)}
 html.js:not(.story-pin) .scene.play .case-list li{animation:st-row .4s ease both;animation-delay:calc(var(--i,0) * 80ms)}
 html.js:not(.story-pin) .scene.play .fx-bars li{transform-origin:bottom;animation:st-bar .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms + 150ms)}
@@ -110,11 +110,12 @@ html.motion-paused .scene *{animation:none!important}
 html.story-pin .story{height:calc(100vh * 6)}
 html.story-pin .story-stage{position:sticky;top:0;height:100vh;overflow:hidden}
 html.story-pin .story-art{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+html.story-pin .story-deep{z-index:0}
 html.story-pin .scene{position:absolute;inset:0;z-index:2;width:auto;margin:0;min-height:0;
   padding:calc(var(--header-h) + 24px) max(var(--gutter),calc((100vw - var(--wrap)) / 2)) 96px;opacity:0;pointer-events:none}
 html.story-pin .scene.is-active{pointer-events:auto}
 html.story-pin .scene-visual{max-height:calc(100vh - var(--header-h) - 130px);display:flex;align-items:center;justify-content:flex-end}
-html.story-pin :is(.art-box,.moment-stage){width:min(100%,calc((100vh - var(--header-h) - 150px) * 1.6))}
+html.story-pin .art-box{width:min(100%,calc((100vh - var(--header-h) - 150px) * 1.6))}
 html.story-pin .judge-stack,html.story-pin .stmt-one{width:100%}
 html.story-pin.art-live .art-base{opacity:0}
 .art-lines{display:none}
@@ -135,27 +136,69 @@ html.story-pin:not(.story-gsap) .scene.is-active{opacity:1}
 /* 터치 화면: 신호 알림도 문단 크기(15px) */
 @media (max-width:1023px){.signal-alert{font-size:15px}}
 
-/* 장면 1: 흩어진 학습의 순간들과 주인공 점 */
-.moment-stage{position:relative;aspect-ratio:1.6;container-type:inline-size}
-.moment{position:absolute;left:38%;top:44%}
-.moment-dot{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#fff 0 22%,#7c4dff 45%,transparent 72%);box-shadow:0 0 22px 6px rgba(124,77,255,.55)}
-.moment-dot::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(163,177,255,.55);animation:moment-ring 2.4s ease-out infinite}
-html.motion-paused .moment-dot::after{animation:none;opacity:.5}
-html.story-pin.art-live .moment-dot{background:none;box-shadow:none}
-@keyframes moment-ring{from{transform:scale(.5);opacity:.9}to{transform:scale(1.6);opacity:0}}
-.moment-tag{position:absolute;left:26px;top:-20px;display:grid;gap:2px;width:max-content;max-width:min(300px,52cqw);padding:10px 14px 11px;border-radius:12px;
-  background:rgba(14,16,32,.78);border:1px solid rgba(163,177,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.moment-tag::before{content:"";position:absolute;left:-18px;top:28px;width:18px;height:1px;background:linear-gradient(90deg,transparent,rgba(163,177,255,.7))}
-.moment-k{font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--accent)}
-.moment-v{font-size:15px;color:var(--ink);line-height:1.45}
-.moment-v b{font-family:var(--en);font-weight:700;margin-right:4px}
-.moment-r{font-size:13.5px;font-weight:700;color:#ff7ccf}
+/* 장면 1: 실시간 수집(지금 사이트의 xAPI 캡처 뷰) */
+.live{position:relative;z-index:2;max-width:560px;margin:0 0 0 auto;padding:20px;border-radius:22px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(20,22,40,.92),rgba(11,12,24,.92));border:1px solid var(--line2);
+  box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12)}
+.live::after{content:"";position:absolute;inset:0;border-radius:22px;pointer-events:none;background:radial-gradient(120% 60% at 50% -10%,rgba(124,77,255,.14),transparent 60%)}
+.live-bar{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.live-bar b{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#cfd3ee}
+.live-state{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--accent)}
+.live-state::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.35}}
+.live-view{position:relative;z-index:2;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 14px,#000 calc(100% - 6px),transparent 100%)}
+.live-rows{list-style:none;display:flex;flex-direction:column;gap:9px;will-change:transform}
+.xrow{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:11px 13px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.xrow .dot{position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:var(--grad);box-shadow:0 0 12px rgba(233,48,176,.8)}
+.xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,rgba(233,48,176,.85),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
+@keyframes dotpulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
+.chip{padding:5px 11px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap}
+.chip.actor{background:rgba(47,124,255,.16);color:#9dc0ff;border:1px solid rgba(47,124,255,.32)}
+.chip.verb{background:rgba(124,77,255,.16);color:#c3b0ff;border:1px solid rgba(124,77,255,.34)}
+.chip.object{background:rgba(233,48,176,.14);color:#ffa6e2;border:1px solid rgba(233,48,176,.3)}
+.chip.result{margin-left:auto;background:rgba(255,255,255,.06);color:#dfe3f7;border:1px solid rgba(255,255,255,.16)}
+.xrow .arw{flex:none;font-size:13px;color:var(--muted)}
+.xrow.in{animation:xin .45s cubic-bezier(.2,.7,.2,1) both}
+.xrow.in .chip{animation:chipin .45s ease both}
+.xrow.in .chip.verb{animation-delay:60ms}.xrow.in .chip.object{animation-delay:120ms}.xrow.in .chip.result{animation-delay:180ms}
+@keyframes xin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes chipin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.xrow.leaving{opacity:0;transition:opacity .4s ease}
+html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{animation:none}
+.live-foot{position:relative;z-index:2;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.nebula-base{display:none}
 
-/* 장면 2: 그 점이 문장이 된다 */
-.stmt-one{position:relative;max-width:560px;margin-left:auto;padding-left:34px}
-.stmt-dot{position:absolute;left:0;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#7c4dff 50%,transparent 72%);box-shadow:0 0 18px 4px rgba(124,77,255,.5)}
-.stmt-dot::after{content:"";position:absolute;left:14px;top:6px;width:20px;height:2px;background:linear-gradient(90deg,rgba(163,177,255,.9),rgba(233,48,176,.9))}
-html.story-pin.art-live .stmt-dot{background:none;box-shadow:none}
+/* 장면 2: 기록 행 */
+.ledger{position:relative;width:100%}
+.ledger-cols{position:relative;height:26px;margin-bottom:6px}
+.ledger-cols span{position:absolute;top:0;padding-left:2px;font-size:13px;color:var(--muted);white-space:nowrap}
+.ledger-cols b{font-family:var(--mono);font-weight:600}
+.ledger-cols .c0 b{color:#9dc0ff}.ledger-cols .c1 b{color:#c3b0ff}.ledger-cols .c2 b{color:#ffa6e2}
+.ledger-box{position:relative;aspect-ratio:3.2}
+.ledger-box .art-base{position:absolute;inset:0;width:100%;height:100%}
+.ledger-rest{margin-top:12px;font-size:15px;color:var(--muted);text-align:right}
+.stmt-one{margin-top:28px;max-width:560px}
+html.story-pin .scene-statement{grid-template-columns:1fr;align-content:center;gap:clamp(18px,3vh,36px);text-align:center}
+html.story-pin .scene-statement .scene-visual{order:-1;display:block;max-height:none}
+html.story-pin .scene-statement .scene-copy{max-width:760px;margin-inline:auto}
+html.story-pin .scene-statement .stmt-one{display:none}
+html.story-pin .ledger{width:min(100%,1120px);margin-inline:auto}
+html.story-pin.art-live .ledger-box .art-base{opacity:0}
+@media (max-width:1023px){
+  .ledger-cols span{font-size:12px}
+  .ledger-cols b+*{display:none}
+  .live{margin-left:0}
+}
+@media (max-width:699px){
+  .ledger-cols{display:none}
+  .ledger-rest{text-align:left}
+  .live{padding:14px}
+  .xrow{padding:10px}
+  .chip{font-size:13px;padding:4px 9px}
+  .chip.result{margin-left:auto}
+  .xrow{gap:6px}
+  .xrow .arw{display:none}
+}
 
 /* 장면 6: 선순환 고리 */
 .ring-box{overflow:visible}
@@ -173,16 +216,6 @@ html.story-pin.art-live .stmt-dot{background:none;box-shadow:none}
 .ring-l.c.b::before{left:calc(50% - 4.5px);top:-20px}
 .ring-caption{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;margin:0;text-align:center;font-size:15px;line-height:1.6;color:var(--ink-3)}
 @media (max-width:1023px){
-  .moment-stage{aspect-ratio:auto;min-height:0;display:grid}
-  .moment-stage .art-base{position:relative;width:100%;height:auto;aspect-ratio:1.6}
-  /* 폰·태블릿: 점은 그림 위에, 이름표는 그림 아래에(그림을 가리지 않게) */
-  .moment{position:static}
-  .moment-dot{left:calc(38% - 9px);top:calc(46% - 9px)}
-  .moment-tag{position:relative;left:auto;top:auto;margin-top:14px;max-width:none;width:auto}
-  .moment-tag::before{display:none}
-  .stmt-one{margin-left:0;padding-left:0;padding-top:26px}
-  .stmt-dot{left:24px;top:0;margin-top:0}
-  .stmt-dot::after{left:6px;top:14px;width:2px;height:14px;background:linear-gradient(180deg,rgba(163,177,255,.9),rgba(233,48,176,.9))}
   .ring-box{aspect-ratio:auto;display:grid;gap:18px;min-width:0;width:100%}
   .ring-box>*{min-width:0}
   .ring-box .art-base{position:relative;width:100%;height:auto;aspect-ratio:1.6}

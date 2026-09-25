@@ -169,9 +169,14 @@ test.describe('문의 폼', () => {
     });
   });
 
-  test('시연 요청 버튼은 문의사항 첫 줄을 채운다', async ({ page }) => {
-    await page.goto('');
-    await page.locator('.lhub-cta a[data-topic]').click();
-    await expect(page.locator('#cform [name=userMemo]')).toHaveValue('LearnHubble AI 시연을 요청합니다.\n');
+  test('문의 목적을 고르면 문의사항 첫 줄을 채우고, 다른 목적을 고르면 첫 줄만 바꾼다', async ({ page }) => {
+    await page.goto('contact.html');
+    const memo = page.locator('#cform [name=userMemo]');
+    await page.locator('.purpose[data-topic]').nth(1).click();
+    await expect(memo).toHaveValue('제품 시연을 요청합니다.\n');
+    await memo.press('End');
+    await memo.pressSequentially('10월 둘째 주');
+    await page.locator('.purpose[data-topic]').nth(0).click();
+    await expect(memo).toHaveValue('도입 상담을 요청합니다.\n10월 둘째 주');
   });
 });

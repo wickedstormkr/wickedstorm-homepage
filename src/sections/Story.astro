@@ -16,7 +16,7 @@ import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 import { pagePath, type Page } from '../lib/i18n';
-import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY } from '../lib/story-data';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY, LEDGER } from '../lib/story-data';
 /** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
 const RING_ORDER = [0, 1, 2, 3, 4];
 
@@ -56,18 +56,19 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         </ul>
       </div>
       <div class="scene-visual">
-        <!-- 흩어진 학습의 순간들(은하). 그중 하나가 이 이야기의 주인공이다 -->
-        <div class="moment-stage">
-          <img class="art-base" src={url('/art/galaxy.svg')} alt="" width="1600" height="1000" decoding="async" fetchpriority="low" />
-          <div class="moment">
-            <span class="moment-dot" data-anchor="moment" aria-hidden="true"></span>
-            <p class="moment-tag">
-              <span class="moment-k">{t.moment.label}</span>
-              <span class="moment-v"><b class="tnum">{t.moment.time}</b> {t.moment.who} · {t.moment.what}</span>
-              <span class="moment-r">{t.moment.result}</span>
-            </p>
+        <!-- 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(움직임 멈춤이면 멈춘다, story/live.ts) -->
+        <figure class="live" aria-label={t.live.label} data-live={JSON.stringify(t.live.rows)}>
+          <div class="live-bar"><b>{t.live.title}</b><span class="live-state">{t.live.state}</span></div>
+          <div class="live-view">
+            <ol class="live-rows" data-live-rows>
+              {t.live.rows.slice(0, 5).map((r) => (
+                <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
+              ))}
+            </ol>
           </div>
-        </div>
+          <figcaption class="live-foot">{t.live.today}</figcaption>
+        </figure>
+        <img class="art-base nebula-base" src={url('/art/nebula.svg')} alt="" width="1600" height="1000" decoding="async" fetchpriority="low" />
       </div>
     </article>
 
@@ -79,8 +80,17 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         <p class="scene-text">{sc[1].text}</p>
       </div>
       <div class="scene-visual">
+        <!-- 기록 행: 흩어진 순간들이 actor · verb · object 칸에 앉아 표준 문장이 된다(칸·입자는 그림 층, 이름표는 HTML) -->
+        <div class="ledger">
+          <p class="ledger-cols" aria-hidden="true">
+            {LEDGER.rows[0].pills.map((pl, i) => <span class={`c${i}`} style={`left:${pct(pl.x)};width:${pct(pl.w)}`}><b lang="en">{t.ledger.cols[i].k}</b> {t.ledger.cols[i].v}</span>)}
+          </p>
+          <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="500" loading="lazy" decoding="async" />
+          </div>
+          <p class="ledger-rest">{t.ledger.rest}</p>
+        </div>
         <div class="stmt-one">
-          <span class="stmt-dot" data-anchor="stmt" aria-hidden="true"></span>
           <StatementCard t={t.statement} label={t.statement.caption} />
         </div>
       </div>

@@ -51,6 +51,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
             <p set:html={f.text} />
             <ul>{f.bullets.map((b) => <li set:html={b} />)}</ul>
             <a class="feat-badge" href={url(pagePath(lang, 'trust')) + (i === 0 ? '#gs' : '#patents')} set:html={f.badge} />
+            {i === 1 && <p><a class="prod-site" href={p.solutions[0].site} target="_blank" rel="noopener" aria-label={p.solutions[0].siteAria}>{p.solutions[0].siteLabel}<span aria-hidden="true"> ↗</span></a></p>}
           </div>
           <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>
         </div>
@@ -59,6 +60,6 @@ const ids = ['lecognizer', 'lecognizer-ai'];
     </div>
   </section>
 
-  <LearnHubble lang={lang} t={t.learnhubble} ui={getUi(lang)} contactHref={url(pagePath(lang, 'contact'))} />
+  <LearnHubble lang={lang} t={t.learnhubble} ui={getUi(lang)} contactHref={url(pagePath(lang, 'contact'))} site={p.solutions[1]} />
   <CtaBand lang={lang} />
 </Page>

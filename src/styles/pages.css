@@ -24,7 +24,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 @media (max-width:699px){.role-tabs{display:flex}.role-tabs [role=tab]{flex:1;padding:0 8px}}
 
 /* 세 제품 요약 */
-.prod-cards{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:clamp(48px,6vw,80px)}
+.prod-cards{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:clamp(48px,6vw,80px)}
 .prod-card{display:flex;flex-direction:column;align-items:flex-start;padding:28px 26px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line);position:relative;overflow:hidden}
 .prod-card::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:var(--grad-lec)}
 .prod-card.lhb::before{background:var(--grad-lhb)}
@@ -179,3 +179,12 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .page .band.trust-group{padding:clamp(36px,4vw,56px) 0 0}
 .page .band.cta-band{padding-top:clamp(56px,7vw,96px)}
 @media (max-width:1023px){.feature .feat-badge{display:inline-flex;align-items:center;min-height:44px}}
+.prod-names{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin:12px 0 14px;font-family:var(--en);font-size:clamp(24px,2.4vw,30px);letter-spacing:-.02em}
+.prod-names span+span::before{content:"·";margin-right:14px;color:var(--faint)}
+.prod-card.lec .prod-names{background:var(--grad-lec);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.prod-card.lhb .prod-names{background:var(--grad-lhb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.prod-card.lec .prod-names span+span::before,.prod-card.lhb .prod-names span+span::before{-webkit-text-fill-color:var(--faint)}
+.prod-badges{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.prod-badges li{padding:6px 12px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--ink-2)}
+.prod-links{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:auto}
+.prod-site{display:inline-flex;align-items:center;min-height:44px;font-family:var(--en);font-size:15px;font-weight:700;color:var(--accent);text-decoration:underline;text-underline-offset:4px}

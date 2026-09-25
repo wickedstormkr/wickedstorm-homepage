@@ -39,22 +39,35 @@ const strong = () => {
   return (nav.hardwareConcurrency ?? 2) >= 4 && (nav.deviceMemory ?? 8) >= 4 && matchMedia('(pointer: fine)').matches;
 };
 
+/**
+ * 그림 층 고르기: 주 그림은 캔버스(별 스프라이트·기록 행·체계). 성능이 되는 기기는 그 뒤에 WebGL 먼 별 층을 더한다.
+ * WebGL을 못 쓰면 캔버스만으로, 캔버스도 못 쓰면 미리 그린 그림(SVG)이 그대로 남는다.
+ */
 async function pickArt(canvas: HTMLCanvasElement): Promise<Art | null> {
-  if (strong()) {
-    try {
-      const { WebGLArt } = await import('./webgl-art');
-      const gl = new WebGLArt(canvas);
-      if (gl.ok) return gl;
-      gl.destroy();
-    } catch { /* 캔버스로 */ }
-  }
+  let main: CanvasArt;
   try {
-    // WebGL을 시도한 캔버스는 2D 문맥을 얻지 못하므로 새 캔버스로 바꾼다
-    const fresh = canvas.cloneNode() as HTMLCanvasElement;
-    canvas.replaceWith(fresh);
-    return new CanvasArt(fresh);
+    main = new CanvasArt(canvas);
   } catch {
     return null;
+  }
+  if (!strong()) return main;
+  try {
+    const { DeepField } = await import('./webgl-art');
+    const back = document.createElement('canvas');
+    back.className = 'story-art story-deep';
+    back.setAttribute('aria-hidden', 'true');
+    canvas.before(back);
+    const deep = new DeepField(back);
+    if (!deep.ok) { deep.destroy(); back.remove(); return main; }
+    return {
+      resize: (w, h, box, a) => { deep.resize(w, h); main.resize(w, h, box, a); },
+      setScene: (s) => { deep.setScene(s); main.setScene(s); },
+      setAmbient: (on) => { deep.setAmbient(on); main.setAmbient(on); },
+      emit: (x, y, v) => main.emit(x, y, v),
+      destroy: () => { deep.destroy(); back.remove(); main.destroy(); },
+    };
+  } catch {
+    return main;
   }
 }
 
@@ -80,25 +93,27 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
 
     /* 장면 타임라인: 길이 5(장면 값과 같다) */
     const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
-    gsap.set(scenes, { autoAlpha: 0 });
-    gsap.set(scenes[0], { autoAlpha: 1 });
+    gsap.set(scenes, { opacity: 0 });
+    gsap.set(scenes[0], { opacity: 1 });
     for (let i = 1; i <= last; i++) {
-      tl.to(scenes[i - 1], { autoAlpha: 0, y: -24, duration: 0.3 }, i - 0.35)
-        .fromTo(scenes[i], { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.3 }, i - 0.3);
+      // 장면 1→2는 기록 행이 첫 화면 위에 그려지기 전에 글을 먼저 걷는다
+      const out = i === 1 ? 0.15 : i - 0.35;
+      const inn = i === 1 ? 0.55 : i - 0.3;
+      tl.to(scenes[i - 1], { opacity: 0, y: -24, duration: 0.25 }, out)
+        .fromTo(scenes[i], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3 }, inn);
     }
     // 장면 2: 응답이 문장으로 펼쳐진다(항목 하나씩)
-    tl.from(q('.scene-statement .fx-stmt dl>div'), { autoAlpha: 0, x: -14, stagger: 0.045, duration: 0.14 }, 0.68);
     // 장면 3: 입자가 자리를 잡을 때 이름표
-    tl.from(q('.scene-store .art-labels li'), { autoAlpha: 0, stagger: 0.02, duration: 0.15 }, 1.75);
+    tl.from(q('.scene-store .art-labels li'), { opacity: 0, stagger: 0.02, duration: 0.15 }, 1.75);
     // 장면 4: 막대가 모인 뒤 실제 이상 탐지 화면으로 착지
-    tl.from(q('.scene-signal .art-panel'), { autoAlpha: 0, x: 40, duration: 0.25 }, 2.8);
+    tl.from(q('.scene-signal .art-panel'), { opacity: 0, x: 40, duration: 0.25 }, 2.8);
     // 장면 5: 신호 도착 → 교수자 화면
-    tl.from(q('.scene-judge .signal-alert'), { autoAlpha: 0, y: -16, duration: 0.2 }, 3.7)
-      .from(q('.scene-judge .fx-judge'), { autoAlpha: 0, y: 24, duration: 0.25 }, 3.8);
-    // 장면 1→2: 이름표가 사라지고 문장이 펼쳐진다
-    tl.to(q('.scene-moment .moment-tag'), { autoAlpha: 0, duration: 0.2 }, 0.3);
+    tl.from(q('.scene-judge .signal-alert'), { opacity: 0, y: -16, duration: 0.2 }, 3.7)
+      .from(q('.scene-judge .fx-judge'), { opacity: 0, y: 24, duration: 0.25 }, 3.8);
+    // 장면 2: 기록 칸 이름표(actor · verb · object)는 칸이 자리를 잡을 때
+    tl.from(q('.scene-statement .ledger-cols span'), { opacity: 0, y: 8, stagger: 0.05, duration: 0.2 }, 0.55);
     // 장면 6: 고리 둘레의 이름표
-    tl.from(q('.scene-next .ring-labels li'), { autoAlpha: 0, scale: 0.9, stagger: 0.03, duration: 0.2 }, 4.7);
+    tl.from(q('.scene-next .ring-labels li'), { opacity: 0, scale: 0.9, stagger: 0.03, duration: 0.2 }, 4.7);
     tl.set({}, {}, last);
 
     let art: Art | null = null;
@@ -113,16 +128,11 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
         const a = boxIn(alert, stage);
         shift = [(a.x - 34 - box.x) / box.w - D_CENTER[0], (a.y + a.h / 2 - box.y) / box.h - D_CENTER[1]];
       }
-      // 주인공 입자가 설 자리: 장면 1 이름표의 점, 장면 2 문장 카드의 왼쪽 끝(무대 기준 0~1)
+      // 장면 2 기록 칸(무대 px)
       const W = stage.clientWidth;
       const H = stage.clientHeight;
-      const at = (sel: string): [number, number] | undefined => {
-        const el = story.querySelector<HTMLElement>(sel);
-        if (!el) return undefined;
-        const r = boxIn(el, stage);
-        return [(r.x + r.w / 2) / W, (r.y + r.h / 2) / H];
-      };
-      art.resize(W, H, box, { shift, heroG: at('[data-anchor="moment"]'), heroF: at('[data-anchor="stmt"]') });
+      const lg = story.querySelector<HTMLElement>('[data-ledger]');
+      art.resize(W, H, box, { shift, ledger: lg ? boxIn(lg, stage) : undefined });
       art.setScene(tl.time());
     };
 
@@ -168,8 +178,17 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
       });
     }
     addEventListener('resize', resize);
+    // 실시간 수집 패널에 기록이 올라오면 그 점에서 성운으로 빛이 날아든다(story/live.ts가 알린다)
+    const onRecord = (e: Event) => {
+      const d = (e as CustomEvent<{ el: HTMLElement; verb: number }>).detail;
+      if (!art?.emit || !d?.el) return;
+      const r = boxIn(d.el, stage);
+      art.emit(r.x + r.w / 2, r.y + r.h / 2, d.verb);
+    };
+    story.addEventListener('story:record', onRecord);
 
     return () => {
+      story.removeEventListener('story:record', onRecord);
       alive = false;
       st.kill();
       tl.eventCallback('onUpdate', null);

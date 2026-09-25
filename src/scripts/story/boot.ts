@@ -5,6 +5,8 @@
  *   첫 화면이 뜬 뒤 연출 층(enhance.ts: GSAP·Lenis·데이터 아트)을 불러와 이어받는다. 불러오지 못해도 이야기는 끝까지 넘어간다.
  * - 키보드: 장면 이동 목록(링크), 보이지 않는 장면 안으로 초점이 가면 그 장면으로 스크롤
  */
+import { initLive } from './live';
+
 const PIN_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)';
 
 export interface StoryHooks {
@@ -21,6 +23,7 @@ export function initStory() {
   const links = [...story.querySelectorAll<HTMLAnchorElement>('.story-nav a[data-go]')];
   const last = scenes.length - 1;
   const mq = matchMedia(PIN_MQ);
+  initLive(story);
 
   /* 세로 장면: 화면에 들어오면 재생 */
   const io = new IntersectionObserver(

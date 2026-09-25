@@ -42,7 +42,7 @@
 .lhub-points b{font-size:16px;font-weight:700;color:#fff}
 .lhub-points span{color:var(--muted);font-size:15px;line-height:1.6}
 .lhub-principle{margin-top:20px;font-size:15px;font-weight:600;color:var(--ink-2)}
-.lhub-cta{margin-top:26px}
+.lhub-cta{margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
 .lhub .frame figcaption{padding:10px 14px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);background:var(--panel)}
 .lhub .frame figcaption i{font-style:normal;font-family:var(--en);font-weight:700;color:var(--faint);margin-right:8px}
 .lhub-sub{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
