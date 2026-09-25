@@ -1,0 +1,71 @@
+---
+/** 홈(네 언어 공용). 섹션 순서는 지금 사이트 그대로. */
+import Base from '../layouts/Base.astro';
+// 페이지 스타일은 공통 스타일(Base: 토큰·기본) 뒤에 온다
+import '../styles/cards.css';
+import '../styles/home.css';
+import Hero from '../sections/Hero.astro';
+import Pipeline from '../sections/Pipeline.astro';
+import Product from '../sections/Product.astro';
+import LearnHubble from '../sections/LearnHubble.astro';
+import References from '../sections/References.astro';
+import Standards from '../sections/Standards.astro';
+import News from '../sections/News.astro';
+import Resources from '../sections/Resources.astro';
+import Company from '../sections/Company.astro';
+import Contact from '../sections/Contact.astro';
+import { getHome, getUi } from '../lib/content';
+import { LANGS, homePath, type Lang } from '../lib/i18n';
+import { absUrl } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getHome(lang);
+const ui = getUi(lang);
+const alternates = Object.fromEntries(LANGS.map((l) => [l, homePath(l)])) as Record<Lang, string>;
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: '주식회사 위키드스톰',
+  alternateName: 'Wicked Storm Inc.',
+  foundingDate: '2021',
+  taxID: '135-88-02020',
+  url: absUrl('/'),
+  logo: absUrl('/img/og-image.png'),
+  slogan: 'Every Learning Moment, Designed for Growth.',
+  email: 'manager@wickedstorm.kr',
+  telephone: '+82-2-2205-1470',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '마곡중앙로 161-8, A동 901~905호',
+    addressLocality: '강서구',
+    addressRegion: '서울특별시',
+    addressCountry: 'KR',
+  },
+};
+---
+<Base
+  lang={lang}
+  title={t.common.meta.title}
+  description={t.common.meta.description}
+  ogTitle={t.common.meta.ogTitle}
+  ogDescription={t.common.meta.ogDescription}
+  twitterTitle={t.common.meta.twitterTitle}
+  twitterDescription={t.common.meta.twitterDescription}
+  path={homePath(lang)}
+  alternates={alternates}
+  jsonLd={lang === 'ko' ? org : undefined}
+>
+  <main id="main" tabindex="-1">
+    <Hero lang={lang} t={t.hero} />
+    <Pipeline lang={lang} t={t.pipeline} />
+    <Product lang={lang} t={t.product} />
+    <LearnHubble lang={lang} t={t.learnhubble} />
+    <References lang={lang} t={t.references} />
+    <Standards lang={lang} t={t.standards} />
+    <News lang={lang} t={t.news} ui={ui} />
+    <Resources lang={lang} t={t.resources} />
+    <Company lang={lang} t={t.company} ui={ui} />
+    <Contact lang={lang} t={t.contact} ui={ui} />
+  </main>
+</Base>

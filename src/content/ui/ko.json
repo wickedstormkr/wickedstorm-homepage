@@ -1,0 +1,40 @@
+{
+  "menuOpen": "메뉴 열기",
+  "menuClose": "메뉴 닫기",
+  "histLess": "세부 연혁 접기",
+  "motion": {
+    "pause": "움직임 멈춤",
+    "play": "움직임 재생",
+    "label": "화면의 움직임 멈추기와 재생"
+  },
+  "langBanner": {
+    "text": "이 페이지는 한국어로도 볼 수 있습니다.",
+    "go": "한국어로 보기",
+    "close": "닫기"
+  },
+  "newWindow": "(새 창)",
+  "notFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "text": "주소가 바뀌었거나 없어진 페이지입니다. 아래에서 원하는 곳으로 이동해 주세요.",
+    "home": "홈으로"
+  },
+  "form": {
+    "field": {
+      "userName": "이름을 입력해 주세요.",
+      "userCompany": "소속을 입력해 주세요.",
+      "userEmail": "이메일을 입력해 주세요.",
+      "userTraffic": "유입 경로를 선택해 주세요.",
+      "userTrafficEtc": "유입 경로를 입력해 주세요.",
+      "userMemo": "문의사항을 입력해 주세요.",
+      "checkPrivacy": "개인정보 수집·이용에 동의해 주세요."
+    },
+    "emailFmt": "이메일 형식을 확인해 주세요.",
+    "required": "필수 항목입니다.",
+    "etcDirect": "유입 경로 직접 입력 *",
+    "etcOther": "기타 내용 *",
+    "sending": "전송 중입니다…",
+    "sent": "문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.",
+    "failed": "전송에 실패했습니다. manager@wickedstorm.kr로 보내주세요."
+  },
+  "open": "바로가기"
+}

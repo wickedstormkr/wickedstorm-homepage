@@ -1,0 +1,73 @@
+{
+  "eyebrow": "Resources",
+  "title": "資料ダウンロード",
+  "lead": "展示会でお配りしたカタログと会社案内を、PDFでダウンロードいただけます。",
+  "cards": [
+    {
+      "thumb": "thumb-catalog.webp",
+      "thumbAlt": "Wicked Storm 製品カタログ 2026 表紙",
+      "wide": false,
+      "title": "Wicked Storm 製品カタログ 2026",
+      "text": "Lecognizer、LearnHubble AI、そしてLearning Loopを8ページにまとめました。",
+      "links": [
+        {
+          "label": "韓国語 PDF",
+          "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
+          "lang": "ko",
+          "id": "catalog_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Catalog_2026_EN.pdf",
+          "lang": "en",
+          "id": "catalog_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Catalog_2026_JA.pdf",
+          "lang": "ja",
+          "id": "catalog_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Catalog_2026_VI.pdf",
+          "lang": "vi",
+          "id": "catalog_vi"
+        }
+      ]
+    },
+    {
+      "thumb": "thumb-profile.webp",
+      "thumbAlt": "Wicked Storm 会社案内 2026 表紙",
+      "wide": true,
+      "title": "Wicked Storm 会社案内 2026",
+      "text": "沿革、事業領域、主な導入実績、認証と特許をまとめました。",
+      "links": [
+        {
+          "label": "韓国語 PDF",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
+          "lang": "ko",
+          "id": "profile_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_EN.pdf",
+          "lang": "en",
+          "id": "profile_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_JA.pdf",
+          "lang": "ja",
+          "id": "profile_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_VI.pdf",
+          "lang": "vi",
+          "id": "profile_vi"
+        }
+      ]
+    }
+  ]
+}

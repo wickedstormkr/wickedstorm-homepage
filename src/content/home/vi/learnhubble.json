@@ -1,0 +1,60 @@
+{
+  "eyebrow": "Learning Experience Platform",
+  "name": "LearnHubble AI",
+  "title": "<span class=\"gc nw\">Nền&nbsp;tảng giảng&nbsp;dạy</span> <span class=\"gc nw\">và học&nbsp;tập</span> cá&nbsp;nhân&nbsp;hóa, tương&nbsp;tác với AI",
+  "lead": "AI giải thích và gợi ý đúng lúc người học cần khi học và làm bài tập.",
+  "points": [
+    {
+      "num": "01",
+      "title": "Portfolio",
+      "text": "So sánh năng&nbsp;lực học thuật đã tích&nbsp;lũy với năng&nbsp;lực mà nghề nghiệp mục tiêu yêu&nbsp;cầu."
+    },
+    {
+      "num": "02",
+      "title": "Gợi ý bài tập",
+      "text": "Khi người&nbsp;học ngừng viết, đưa ra gợi ý về cấu trúc và điều kiện thay vì đáp án."
+    },
+    {
+      "num": "03",
+      "title": "Bản đồ năng&nbsp;lực",
+      "text": "Tìm nguyên nhân gây khó khăn từ các khóa học và năng&nbsp;lực được liên kết qua 1EdTech CASE."
+    },
+    {
+      "num": "04",
+      "title": "Bảng AI trong lớp&nbsp;học",
+      "text": "Đưa ra giải thích, quiz và tài&nbsp;liệu ở phần do giảng&nbsp;viên thiết kế."
+    }
+  ],
+  "principle": "Người học tự viết câu trả lời, còn giảng viên xem xét việc can thiệp và áp dụng.",
+  "cta": {
+    "label": "Yêu cầu trình diễn LearnHubble AI",
+    "topic": "Tôi muốn yêu cầu trình diễn LearnHubble AI."
+  },
+  "main": {
+    "img": "lh-portfolio.webp",
+    "alt": "Màn hình portfolio phù hợp nghề nghiệp của người học trên LearnHubble AI: biểu đồ radar so sánh năng lực học thuật từng học kỳ với năng lực mà nghề nghiệp mục tiêu yêu cầu, cùng bảng đối chiếu yêu cầu nghề nghiệp",
+    "num": "01",
+    "caption": "Portfolio phù hợp nghề nghiệp"
+  },
+  "subs": [
+    {
+      "img": "lh-assignment.webp",
+      "alt": "Màn hình bài tập của người học trên LearnHubble AI: khi người học ngừng viết, trợ lý AI đề xuất gợi ý viết bài, kiểm tra mức độ đạt được và xác nhận căn cứ trong bài giảng",
+      "num": "02",
+      "caption": "Gợi ý từ AI khi làm bài tập"
+    },
+    {
+      "img": "lh-casemap.webp",
+      "alt": "Màn hình bản đồ năng lực của người học trên LearnHubble AI: quan hệ giữa các khóa học tiên quyết, hiện tại, tiếp theo và năng lực được liên kết qua CASE",
+      "num": "03",
+      "caption": "Bản đồ năng&nbsp;lực CASE"
+    },
+    {
+      "img": "lh-lecture-qa.webp",
+      "alt": "Màn hình lớp học trên LearnHubble AI: các phần cần chú ý, diễn đàn hỏi đáp và quiz theo phần trong bảng AI bên phải",
+      "num": "04",
+      "caption": "Q&amp;A trong lớp&nbsp;học và quiz theo phần"
+    }
+  ],
+  "note": "※ Đây là ví dụ màn hình của người học. Bài giảng, nhân vật và số liệu trong màn hình là dữ liệu minh họa."
+}

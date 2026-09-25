@@ -1,0 +1,163 @@
+{
+  "eyebrow": "Company · Vision",
+  "title": "学習データとAIで<br>学びの新時代を切り拓く<br><span class=\"gc\">グローバルエドテック企業</span>",
+  "lead": "あらゆる学習体験を国際標準のデータでつなぎ、より良い教育と成長の根拠をつくります。",
+  "slogan": {
+    "label": "Slogan",
+    "text": "学びのすべての瞬間を、成長のデータとして設計します。"
+  },
+  "stats": [
+    {
+      "value": "2021",
+      "unit": "",
+      "label": "設立年"
+    },
+    {
+      "value": "2",
+      "unit": "件",
+      "label": "AI特許取得"
+    },
+    {
+      "value": "1",
+      "unit": "等級",
+      "label": "GS認証（Lecognizer）"
+    },
+    {
+      "value": "3",
+      "unit": "種",
+      "label": "国際標準を適用 · xAPI・Caliper・CASE"
+    }
+  ],
+  "film": {
+    "label": "Wicked Storm 企業紹介映像",
+    "caption": "Wicked Storm 企業紹介映像 · 89秒"
+  },
+  "history": {
+    "eyebrow": "History",
+    "title": "<span class=\"yr gc\">2021〜2026</span>、標準の上に築いてきた歩み",
+    "listLabel": "Wicked Stormの沿革 2021〜2026",
+    "years": [
+      {
+        "year": "2021",
+        "highlights": [
+          {
+            "html": "<span>株式会社Wicked Stormを設立</span>"
+          },
+          {
+            "html": "人事革新処、国家人材開発知能型オープンプラットフォームのLRS構築（第2期）",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KIRD、次世代統合教育システムの学習分析コンサルティング",
+          "ビサン教育、スマートプラットフォームのコンサルティング・構築"
+        ]
+      },
+      {
+        "year": "2022",
+        "highlights": [
+          {
+            "html": "KERIS、K-エデュ統合プラットフォームISMP、学習分析指標・分析標準の策定",
+            "href": "#references"
+          },
+          {
+            "html": "ソウル特別市、ソウル型教育プラットフォームのLRS構築",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "学習データ収集・管理ソリューション（LRS）を自社開発",
+          "人事革新処（第3期）、ライブ映像のxAPI収集",
+          "ベンチャー企業認証を取得",
+          "韓国貿易協会、FTA統合プラットフォーム活性化事業"
+        ]
+      },
+      {
+        "year": "2023",
+        "highlights": [
+          {
+            "html": "インテリジェント学習分析ソリューションLecognizerをリリース",
+            "href": "#product"
+          },
+          {
+            "html": "プロセス評価AI技術の開発、CASEに基づく知識空間の構築（産業通商資源部）",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "米国ADLのxAPI LRS認証を取得",
+          "KERIS、AIデジタル教科書開発ガイドラインを共同執筆",
+          "KERIS、小学校算数授業支援システムの高度化",
+          "中小ベンチャー企業部の「飛び石」課題に選定",
+          "AIデジタル教科書向け教育課程標準体系の配布モデル設計",
+          "東亜出版、AIデジタル教科書プラットフォーム構築"
+        ]
+      },
+      {
+        "year": "2024",
+        "highlights": [
+          {
+            "html": "LecognizerがGS 1等級認証を取得",
+            "href": "#product"
+          },
+          {
+            "html": "教育部、AIデジタル教科書学習データハブ構築",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KERIS、小学校算数授業支援システムの運営",
+          "調達庁デジタルサービスモールに製品登録",
+          "学習診断・推薦モデルがAIモデル認証を取得（KOLAS）",
+          "AI特許2件を出願（学習異常検知・LLM活用の学習者プロファイリング）",
+          "KERIS、学習データ辞書の開発研究"
+        ]
+      },
+      {
+        "year": "2025",
+        "highlights": [
+          {
+            "html": "特許取得：LLM活用の学習者プロファイリング手法（第10-2767110号）",
+            "href": "/news/2025-02-patent-profiling.html"
+          },
+          {
+            "html": "特許取得：xAPI学習異常検知システム（第10-2883249号）",
+            "href": "/news/2025-11-patent-anomaly.html"
+          }
+        ],
+        "more": [
+          "KERIS、小学校算数授業支援システムの運営",
+          "中小ベンチャー企業部の市場対応型課題に選定",
+          "INNOBIZ（技術革新型中小企業）認証を取得（AA）",
+          "江原アイロAIプラットフォーム構築",
+          "KERIS、市・道教育庁の学習データ収集連携体制",
+          "NICE D&amp;R、次世代システム構築"
+        ]
+      },
+      {
+        "year": "2026",
+        "highlights": [
+          {
+            "html": "1EdTech Korea設立理事会に参画（共同設立会員社）",
+            "href": "#standards"
+          },
+          {
+            "html": "KERIS、国際標準に基づく学習データ標準化体系・活用モデル構築",
+            "href": "#references"
+          },
+          {
+            "html": "EdTech Korea Fair 2026に出展、Learning Loopのデモを実施",
+            "href": "/news/2026-09-edtech-korea-fair.html"
+          }
+        ],
+        "more": [
+          "京畿道教育庁、ハイラーニングAIプラットフォーム運営",
+          "江原特別自治道教育庁、AIプラットフォーム運営",
+          "京畿道AI教員コンピテンシー統合支援システムのLRS構築",
+          "AIデジタル教科書学習データハブのLRS保守"
+        ]
+      }
+    ],
+    "more": "詳しい沿革をすべて見る"
+  }
+}

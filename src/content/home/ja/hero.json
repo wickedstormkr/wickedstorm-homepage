@@ -1,0 +1,67 @@
+{
+  "eyebrow": "<span>Every Learning Moment, <span class=\"nw\">Designed for Growth.</span></span>",
+  "lines": [
+    "学びのすべての瞬間を",
+    "<span class=\"g\">成長のデータ</span>として",
+    "設計します"
+  ],
+  "lead": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、<br class=\"br-d\">AIが分析して、管理者・教員・学習者の次の行動へとつなげます。",
+  "ctaPrimary": "導入のご相談",
+  "ctaSecondary": "製品を見る",
+  "trust": [
+    {
+      "html": "<b>1EdTech Korea</b>&nbsp;設立理事会",
+      "href": "/news/2026-07-1edtech-korea.html"
+    },
+    {
+      "html": "GS 1等級認証",
+      "href": "/news/2024-07-lecognizer-procurement.html"
+    },
+    {
+      "html": "AI特許2件取得",
+      "href": "/news/2025-11-patent-anomaly.html"
+    }
+  ],
+  "capture": {
+    "badge": "Lecognizer · 国際標準で収集",
+    "live": "リアルタイム収集",
+    "rows": [
+      {
+        "actor": "学習者",
+        "verb": "視聴",
+        "object": "概念講義 04",
+        "result": "2回リピート"
+      },
+      {
+        "actor": "学習者",
+        "verb": "回答",
+        "object": "確認クイズ",
+        "result": "正解"
+      },
+      {
+        "actor": "教員",
+        "verb": "設計",
+        "object": "補充区間",
+        "result": "適用"
+      },
+      {
+        "actor": "学習者",
+        "verb": "提出",
+        "object": "記述式課題",
+        "result": "期限内"
+      },
+      {
+        "actor": "学習者",
+        "verb": "質問",
+        "object": "講義Q&A",
+        "result": "回答 3"
+      }
+    ],
+    "signalLabel": "AI<br>Signal",
+    "signal": "兆候 · 繰り返し再生の区間"
+  },
+  "overlay": {
+    "main": "学びのすべての瞬間が、<span class=\"g\">国際標準のデータ</span>として蓄積されます",
+    "sub": "Lecognizerが収集し、AIが兆候を見つけ出します。"
+  }
+}

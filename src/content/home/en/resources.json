@@ -1,0 +1,73 @@
+{
+  "eyebrow": "Resources",
+  "title": "Downloads",
+  "lead": "Download the catalog and company profile we handed out at trade fairs as PDFs.",
+  "cards": [
+    {
+      "thumb": "thumb-catalog.webp",
+      "thumbAlt": "Wicked Storm Catalog 2026 cover",
+      "wide": false,
+      "title": "Wicked Storm Catalog 2026",
+      "text": "Lecognizer, LearnHubble AI, and the Learning Loop in 8 pages.",
+      "links": [
+        {
+          "label": "Korean PDF",
+          "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
+          "lang": "ko",
+          "id": "catalog_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Catalog_2026_EN.pdf",
+          "lang": "en",
+          "id": "catalog_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Catalog_2026_JA.pdf",
+          "lang": "ja",
+          "id": "catalog_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Catalog_2026_VI.pdf",
+          "lang": "vi",
+          "id": "catalog_vi"
+        }
+      ]
+    },
+    {
+      "thumb": "thumb-profile.webp",
+      "thumbAlt": "Wicked Storm Company Profile 2026 cover",
+      "wide": true,
+      "title": "Wicked Storm Company Profile 2026",
+      "text": "Our history, business areas, key references, certifications, and patents.",
+      "links": [
+        {
+          "label": "Korean PDF",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
+          "lang": "ko",
+          "id": "profile_ko"
+        },
+        {
+          "label": "English",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_EN.pdf",
+          "lang": "en",
+          "id": "profile_en"
+        },
+        {
+          "label": "日本語",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_JA.pdf",
+          "lang": "ja",
+          "id": "profile_ja"
+        },
+        {
+          "label": "Tiếng Việt",
+          "file": "/files/WICKEDSTORM_Company_Profile_2026_VI.pdf",
+          "lang": "vi",
+          "id": "profile_vi"
+        }
+      ]
+    }
+  ]
+}

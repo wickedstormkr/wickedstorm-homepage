@@ -1,0 +1,63 @@
+/* 디자인 토큰: 이 파일 한 곳에 모은다.
+   값은 지금 사이트(homepage_renewal css/style.css :root)를 그대로 옮겼고, 규칙은 CLAUDE.md '색'을 따른다.
+   - 어두운 톤이 기본: 배경 --bg #06070e, 패널 --panel #0e1020
+   - 브랜드 그라디언트는 하나(--grad). 글자 그라디언트는 모두 이것
+   - 제품 색은 그 조각: --grad-lec(Lecognizer·Lecognizer AI, 마젠타 쪽), --grad-lhb(LearnHubble AI, 파랑 쪽)
+   - 작은 강조색(링크, 라이브 점, 완료 표시)은 --accent #a3b1ff. 청록은 쓰지 않는다 */
+:root{
+  /* 배경·면 */
+  --bg:#06070e;
+  --bg2:#0a0b16;
+  --bg3:#080a16;       /* 섹션 사이 그라디언트 끝(표준·회사·문의) */
+  --panel:#0e1020;
+  --panel-hi:#141628;  /* 수집 스트림 패널 위쪽 */
+  --footer:#080a14;
+
+  /* 글자 */
+  --ink:#eef1fb;
+  --ink-2:#dfe3f7;     /* 강조 본문(원칙 문장, 슬로건) */
+  --ink-3:#c7cbe6;     /* 목록 본문 */
+  --lead:#b3b8d4;      /* 섹션 리드 */
+  --muted:#8b90ad;
+  --faint:#767c9e;     /* 배경 #06070e 위 4.6:1 */
+
+  /* 선 */
+  --line:rgba(255,255,255,.09);
+  --line2:rgba(255,255,255,.14);
+  --line3:rgba(255,255,255,.38);
+
+  /* 브랜드 */
+  --magenta:#e930b0;
+  --violet:#7c4dff;
+  --blue:#2f7cff;
+  --accent:#a3b1ff;
+  --danger:#ff6b8a;    /* 폼 오류 */
+  --grad:linear-gradient(92deg,#e930b0,#7c4dff 52%,#2f7cff);
+  /* AA 대비용 파생 그라디언트: 흰 글자가 얹히는 작은 태그(.ntag) 전용, 양 끝을 4.6:1 이상으로 낮춤 */
+  --grad-tag:linear-gradient(92deg,#cf2b9d,#7c4dff 52%,#2a70e6);
+  --grad-lec:linear-gradient(92deg,#e930b0,#9a4bf0);
+  --grad-lhb:linear-gradient(92deg,#6d56ff,#2f7cff);
+
+  /* 글꼴 */
+  --font:"Pretendard Variable",Pretendard,-apple-system,system-ui,"Noto Sans KR",sans-serif;
+  --en:"Sora",var(--font);
+  --mono:ui-monospace,Menlo,monospace;
+
+  /* 글자 크기: 본문 15px 이상(CLAUDE.md), 그림 속 글자는 데스크톱에서만 11px 이상 */
+  --fs-body:15px;
+  --fs-small:13.5px;
+  --fs-min:11px;
+  --lh-body:1.62;
+
+  /* 레이아웃 */
+  --wrap:1240px;
+  --gutter:24px;       /* 좌우 여백(폭 - 2×gutter) */
+  --header-h:76px;
+  --tap:44px;          /* 터치에서 누르는 곳 최소 크기 */
+  --radius-s:12px;
+  --radius-m:16px;
+  --radius-l:20px;
+
+  /* 반응형 기준(미디어 쿼리에는 변수를 못 쓰므로 값만 기록):
+     폰 ≤699px · 태블릿 700~1023px · 데스크톱 ≥1024px */
+}

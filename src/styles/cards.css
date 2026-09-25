@@ -1,0 +1,38 @@
+/* 소식 카드(홈 '최근 소식'과 소식 목록 공용) */
+/* ================= ⑦ 소식 카드(홈·소식 목록 공용) ================= */
+.news-grid{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.ncard{height:100%;border-radius:18px;background:var(--panel);border:1px solid var(--line);transition:border-color .25s;display:flex;flex-direction:column}
+.ncard:hover{border-color:var(--line2)}
+.ncard .nimg{aspect-ratio:4/3;overflow:hidden;border-radius:17px 17px 0 0;background:linear-gradient(160deg,#141733,#0a0b16);display:flex;align-items:center;justify-content:center;padding:16px}
+.ncard .nimg img{width:100%;height:100%;object-fit:contain;object-position:center;border-radius:4px}
+.ncard .ncover{position:relative;padding:0;display:block;background:linear-gradient(150deg,#161a3a,#0a0b16 72%)}
+.ncard .ncover::before{content:"";position:absolute;inset:0;background:radial-gradient(115% 88% at 16% 12%,rgba(124,77,255,.34),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(47,124,255,.16),transparent 60%)}
+.ncard .ncover[data-cover="insight"]::before{background:radial-gradient(115% 88% at 16% 12%,rgba(47,124,255,.32),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(124,77,255,.18),transparent 60%)}
+.ncard .ncover[data-cover="story"]::before{background:radial-gradient(115% 88% at 16% 12%,rgba(233,48,176,.28),transparent 58%),radial-gradient(92% 82% at 94% 98%,rgba(124,77,255,.18),transparent 60%)}
+.ncard .cover-rail{position:absolute;left:22px;right:22px;top:22px;height:2px;border-radius:2px;background:var(--grad);opacity:.55}
+.ncard .cover-cat{position:absolute;left:22px;bottom:20px;font-family:var(--en);font-weight:700;font-size:clamp(28px,3.4vw,36px);letter-spacing:-.02em;line-height:1;
+  text-transform:lowercase;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ncard .nbody{padding:22px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.nmeta{display:flex;align-items:center;gap:10px;font-family:var(--en);font-size:13px;color:var(--faint);font-weight:600}
+.ntag{padding:3px 9px;border-radius:6px;background:var(--grad-tag);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em}
+.ncard h3{font-size:16.5px;font-weight:700;line-height:1.4;letter-spacing:-.02em}
+.nmore{display:inline-flex;align-items:center;gap:6px;margin-top:auto;font-family:var(--en);font-size:13px;font-weight:700;color:var(--muted);transition:color .2s}
+.nmore i{font-style:normal;font-size:16px;line-height:1;transition:transform .3s}
+a.ncard:hover .nmore{color:var(--accent)}
+a.ncard:hover .nmore i{transform:translateX(3px)}
+@media (min-width:1024px){.ncard h3{min-height:calc(1.4em * 2)}}
+@media (min-width:700px) and (max-width:1023px){
+  .news-grid{gap:14px}
+  .ncard .nbody{padding:18px 18px 20px}
+  .ncard h3{font-size:15.5px}
+}
+/* 채널 띠(site-config SOCIAL이 채워진 경우에만 보인다) */
+.channels{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;margin-top:clamp(36px,4vw,56px);padding-top:28px;border-top:1px solid var(--line)}
+.ch-title{font-size:18px;font-weight:800;letter-spacing:-.02em;color:#fff;text-wrap:balance}
+.ch-sub{margin-top:6px;max-width:58ch;color:var(--muted);font-size:15px}
+.ch-links{display:flex;gap:12px;flex-wrap:wrap}
+.ch-link{display:flex;flex-direction:column;gap:2px;min-width:180px;padding:14px 20px;border-radius:14px;border:1px solid var(--line2)}
+.ch-link:hover{border-color:#fff}
+.ch-k{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.ch-v{font-weight:700;color:#fff}
+

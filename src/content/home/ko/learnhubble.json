@@ -1,0 +1,60 @@
+{
+  "eyebrow": "Learning Experience Platform",
+  "name": "LearnHubble AI",
+  "title": "AI와 상호작용하는 맞춤형 <span class=\"gc nw\">교수·학습 플랫폼</span>",
+  "lead": "학습자가 강의와 과제를 하는 동안, 도움이 필요한 순간 AI가 설명과 힌트를 건넵니다.",
+  "points": [
+    {
+      "num": "01",
+      "title": "포트폴리오",
+      "text": "쌓은 교과역량을 목표 직무의 요구 역량과 비교합니다."
+    },
+    {
+      "num": "02",
+      "title": "과제 힌트",
+      "text": "작성이 멈추면 정답 대신 구조와 조건 중심의 힌트를 건넵니다."
+    },
+    {
+      "num": "03",
+      "title": "역량맵",
+      "text": "1EdTech CASE로 연결된 강의와 역량에서 어려움의 원인을 찾습니다."
+    },
+    {
+      "num": "04",
+      "title": "강의실 AI 패널",
+      "text": "교수자가 설계한 구간에서 설명·퀴즈·자료를 건넵니다."
+    }
+  ],
+  "principle": "답은 학습자가 직접 쓰고, 개입과 적용은 교수자가 확인합니다.",
+  "cta": {
+    "label": "LearnHubble AI 시연 요청",
+    "topic": "LearnHubble AI 시연을 요청합니다."
+  },
+  "main": {
+    "img": "lh-portfolio.webp",
+    "alt": "LearnHubble AI 학습자 직무 적합 포트폴리오 화면: 학기별 교과역량을 목표 직무 요구 역량과 비교한 레이더 차트와 직무 요건 매핑",
+    "num": "01",
+    "caption": "직무 적합 포트폴리오"
+  },
+  "subs": [
+    {
+      "img": "lh-assignment.webp",
+      "alt": "LearnHubble AI 학습자 과제 화면: 작성이 멈추자 AI 어시스턴트가 작성 힌트·성취수준 점검·강의 근거 확인을 제안",
+      "num": "02",
+      "caption": "과제 작성 중 AI 힌트"
+    },
+    {
+      "img": "lh-casemap.webp",
+      "alt": "LearnHubble AI 학습자 역량맵 화면: CASE로 연결된 선수·현재·후속 강의와 역량 관계",
+      "num": "03",
+      "caption": "CASE 역량맵"
+    },
+    {
+      "img": "lh-lecture-qa.webp",
+      "alt": "LearnHubble AI 강의실 화면: 확인이 필요한 구간과 질문 게시판, 오른쪽 AI 패널의 구간 퀴즈",
+      "num": "04",
+      "caption": "강의실 Q&amp;A와 구간 퀴즈"
+    }
+  ],
+  "note": "※ 학습자 화면 예시입니다. 화면 속 강의·인물·수치는 시연용 데이터입니다."
+}

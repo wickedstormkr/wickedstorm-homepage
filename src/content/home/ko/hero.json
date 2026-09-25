@@ -1,0 +1,67 @@
+{
+  "eyebrow": "<span>Every Learning Moment, <span class=\"nw\">Designed for Growth.</span></span>",
+  "lines": [
+    "학습의 모든 순간을",
+    "<span class=\"g\">성장의 데이터</span>로",
+    "설계합니다"
+  ],
+  "lead": "위키드스톰은 학습 활동을 국제 표준 학습데이터로 수집·저장하고, <br class=\"br-d\">AI로 분석해 운영자·교수자·학습자의 다음 행동으로 잇습니다.",
+  "ctaPrimary": "도입 문의",
+  "ctaSecondary": "제품 보기",
+  "trust": [
+    {
+      "html": "<b>1EdTech Korea</b>&nbsp;설립 이사회",
+      "href": "/news/2026-07-1edtech-korea.html"
+    },
+    {
+      "html": "GS 인증 1등급",
+      "href": "/news/2024-07-lecognizer-procurement.html"
+    },
+    {
+      "html": "AI 특허 2건 등록",
+      "href": "/news/2025-11-patent-anomaly.html"
+    }
+  ],
+  "capture": {
+    "badge": "Lecognizer · 국제 표준 수집",
+    "live": "실시간 수집",
+    "rows": [
+      {
+        "actor": "학습자",
+        "verb": "시청함",
+        "object": "개념 강의 04",
+        "result": "2회 반복"
+      },
+      {
+        "actor": "학습자",
+        "verb": "응답함",
+        "object": "확인 퀴즈",
+        "result": "정답"
+      },
+      {
+        "actor": "교수자",
+        "verb": "설계함",
+        "object": "보충 구간",
+        "result": "적용"
+      },
+      {
+        "actor": "학습자",
+        "verb": "제출함",
+        "object": "서술형 과제",
+        "result": "기한 내"
+      },
+      {
+        "actor": "학습자",
+        "verb": "질문함",
+        "object": "강의 Q&A",
+        "result": "답변 3"
+      }
+    ],
+    "signalLabel": "AI<br>Signal",
+    "signal": "신호 · 반복 재생 구간"
+  },
+  "overlay": {
+    "main": "학습의 모든 순간이 <span class=\"g\">국제 표준 데이터</span>로 쌓입니다",
+    "sub": "Lecognizer가 수집하고, AI가 신호를 찾습니다."
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "eyebrow": "Contact",
+  "title": "Adopting learning data, standards, or AI?<br>Let’s <span class=\"g\">review</span> it together",
+  "lead": "From Lecognizer adoption and LearnHubble AI demos to learning data design consulting and partnership discussions, we tailor our guidance to your institution’s environment.",
+  "info": {
+    "telLabel": "Tel",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "address": "901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+    "note": "We will review your inquiry and reply to the email address you entered."
+  },
+  "form": {
+    "noscript": "The inquiry form requires JavaScript. Please enable JavaScript in your browser or email <a href=\"mailto:manager@wickedstorm.kr\">manager@wickedstorm.kr</a>.",
+    "name": {
+      "label": "Name *",
+      "placeholder": "Name"
+    },
+    "company": {
+      "label": "Organization *",
+      "placeholder": "Organization/Institution"
+    },
+    "email": {
+      "label": "Email *",
+      "placeholder": "abc@example.com"
+    },
+    "traffic": {
+      "label": "How did you hear about us? *",
+      "options": [
+        {
+          "value": "",
+          "label": "Select how you heard about us"
+        },
+        {
+          "value": "direct",
+          "label": "Other (type in)"
+        },
+        {
+          "value": "portal",
+          "label": "Search engine"
+        },
+        {
+          "value": "etc",
+          "auto": "인스타그램",
+          "label": "Instagram"
+        },
+        {
+          "value": "etc",
+          "auto": "블로그",
+          "label": "Blog"
+        },
+        {
+          "value": "etc",
+          "auto": "박람회·행사",
+          "label": "Trade fair or event"
+        },
+        {
+          "value": "job_posting",
+          "label": "Job posting"
+        },
+        {
+          "value": "news",
+          "label": "News article"
+        },
+        {
+          "value": "referral",
+          "label": "Referral"
+        },
+        {
+          "value": "etc",
+          "label": "Other"
+        }
+      ]
+    },
+    "trafficEtc": {
+      "label": "How you found us *",
+      "placeholder": "Please specify"
+    },
+    "memo": {
+      "label": "Inquiry *",
+      "placeholder": "Purpose of adoption, systems to connect, timeline, etc."
+    },
+    "privacy": "I agree to the <a href=\"/privacy.html\">collection and use of personal information</a> for handling my inquiry.",
+    "submit": "Send inquiry"
+  }
+}

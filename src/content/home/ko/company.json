@@ -1,0 +1,163 @@
+{
+  "eyebrow": "Company · Vision",
+  "title": "학습데이터와 AI로<br>학습의 새로운 시대를 여는<br><span class=\"gc\">글로벌 에듀테크 기업</span>",
+  "lead": "모든 학습 경험을 국제표준 데이터로 연결해, 더 나은 교육과 성장의 근거를 만듭니다.",
+  "slogan": {
+    "label": "Slogan",
+    "text": "학습의 모든 순간을 성장의 데이터로 설계합니다."
+  },
+  "stats": [
+    {
+      "value": "2021",
+      "unit": "",
+      "label": "설립 연도"
+    },
+    {
+      "value": "2",
+      "unit": "건",
+      "label": "AI 특허 등록"
+    },
+    {
+      "value": "1",
+      "unit": "등급",
+      "label": "GS 인증 (Lecognizer)"
+    },
+    {
+      "value": "3",
+      "unit": "종",
+      "label": "국제 표준 적용 · xAPI·Caliper·CASE"
+    }
+  ],
+  "film": {
+    "label": "위키드스톰 기업 홍보 영상",
+    "caption": "위키드스톰 기업 홍보 영상 · 89초"
+  },
+  "history": {
+    "eyebrow": "History",
+    "title": "<span class=\"yr gc\">2021~2026</span>, 표준 위에 쌓아 온 길",
+    "listLabel": "위키드스톰 연혁 2021~2026",
+    "years": [
+      {
+        "year": "2021",
+        "highlights": [
+          {
+            "html": "<span>㈜위키드스톰 설립</span>"
+          },
+          {
+            "html": "인사혁신처 국가인재개발 지능형 오픈 플랫폼 LRS 구축(2단계)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KIRD 차세대 통합교육시스템 학습분석 컨설팅",
+          "비상교육 스마트 플랫폼 컨설팅·구축"
+        ]
+      },
+      {
+        "year": "2022",
+        "highlights": [
+          {
+            "html": "KERIS K-에듀 통합플랫폼 ISMP, 학습분석 지표·분석 표준 수립",
+            "href": "#references"
+          },
+          {
+            "html": "서울시 서울형 교육 플랫폼 LRS 구축",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "학습데이터 수집·관리 솔루션(LRS) 자체 개발",
+          "인사혁신처 3단계, 실시간 화상 xAPI 수집",
+          "벤처기업 인증",
+          "한국무역협회 FTA 통합 플랫폼 활성화"
+        ]
+      },
+      {
+        "year": "2023",
+        "highlights": [
+          {
+            "html": "지능형 학습분석 솔루션 Lecognizer 출시",
+            "href": "#product"
+          },
+          {
+            "html": "과정 중심 평가 AI 기술 개발, CASE 표준 지식공간 구축(산업부)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "미국 ADL xAPI LRS 인증",
+          "KERIS AI디지털교과서 개발 가이드라인 공동 집필",
+          "KERIS 초등수학 수업 지원시스템 고도화",
+          "중기부 디딤돌 과제 선정",
+          "AIDT 교육과정 표준체계 배포 모델 설계",
+          "동아출판 AIDT 플랫폼 구축"
+        ]
+      },
+      {
+        "year": "2024",
+        "highlights": [
+          {
+            "html": "Lecognizer GS 인증 1등급 획득",
+            "href": "#product"
+          },
+          {
+            "html": "교육부 AI 디지털교과서 학습데이터 허브 구축",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KERIS 초등수학 지원시스템 운영",
+          "나라장터 디지털쇼핑몰 제품 등록",
+          "AI 학습 진단·추천 모델 인증(KOLAS)",
+          "AI 특허 출원 2건(이상 학습 탐지·LLM 학습자 프로파일링)",
+          "KERIS 학습데이터 사전 개발 연구"
+        ]
+      },
+      {
+        "year": "2025",
+        "highlights": [
+          {
+            "html": "특허 등록, LLM 기반 학습자 프로파일링(10-2767110)",
+            "href": "/news/2025-02-patent-profiling.html"
+          },
+          {
+            "html": "특허 등록, xAPI 이상 학습 탐지 시스템(10-2883249)",
+            "href": "/news/2025-11-patent-anomaly.html"
+          }
+        ],
+        "more": [
+          "KERIS 초등수학 지원시스템 운영",
+          "중기부 시장대응형 과제 선정",
+          "이노비즈 인증(AA)",
+          "강원아이로 AI 플랫폼 구축",
+          "KERIS 시도교육청 학습데이터 수집 연계 체제",
+          "NICE디앤알 차세대 시스템 구축"
+        ]
+      },
+      {
+        "year": "2026",
+        "highlights": [
+          {
+            "html": "(사)1EdTech Korea 설립 공동 회원사·이사회 참여",
+            "href": "#standards"
+          },
+          {
+            "html": "KERIS 국제 표준 기반 학습데이터 표준화 체계·활용 모델 구축",
+            "href": "#references"
+          },
+          {
+            "html": "2026 에듀테크 코리아 페어 참가, 학습의 선순환 시연",
+            "href": "/news/2026-09-edtech-korea-fair.html"
+          }
+        ],
+        "more": [
+          "경기도교육청 하이러닝 AI 플랫폼 운영",
+          "강원도교육청 AI 플랫폼 운영",
+          "경기도 AI 교원 역량 통합지원시스템 LRS 구축",
+          "AIDT 학습데이터 허브 LRS 유지관리"
+        ]
+      }
+    ],
+    "more": "세부 연혁 모두 보기"
+  }
+}

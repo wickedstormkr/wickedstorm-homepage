@@ -1,0 +1,98 @@
+{
+  "eyebrow": "Standards Leadership",
+  "title": "표준을 쓰는 것을 넘어,<br><span class=\"gc\">표준을 함께 만듭니다</span>",
+  "lead": "위키드스톰은 국제 교육기술 표준 컨소시엄 1EdTech의 한국 조직인 <b class=\"nw\" style=\"color:#dfe3f7\">(사)1EdTech Korea</b> 설립 이사회로 참여하며, <span class=\"nw\">1EdTech Contributing Member</span>로 활동합니다. xAPI·Caliper와 1EdTech CASE를 제품과 사업에 적용해 왔습니다.",
+  "badge": "1EdTech Korea 설립 이사회 · <b>Contributing&nbsp;Member</b>",
+  "cards": [
+    {
+      "name": "xAPI",
+      "text": "학습 활동 데이터 수집 표준",
+      "status": "apply",
+      "statusLabel": "적용",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://github.com/adlnet/xAPI-Spec",
+      "ariaLabel": "xAPI 공식 스펙 (새 창)"
+    },
+    {
+      "name": "CASE",
+      "text": "교육과정·성취기준·역량 체계 표준",
+      "status": "apply",
+      "statusLabel": "적용",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/case",
+      "ariaLabel": "CASE 공식 스펙 (새 창)"
+    },
+    {
+      "name": "Caliper",
+      "text": "학습 이벤트 데이터 표준",
+      "status": "apply",
+      "statusLabel": "적용",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/caliper",
+      "ariaLabel": "Caliper 공식 스펙 (새 창)"
+    },
+    {
+      "name": "Open Badges 3.0",
+      "text": "디지털 성취 증거(배지) 발행 표준",
+      "status": "soon",
+      "statusLabel": "적용 예정",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/open-badges",
+      "ariaLabel": "Open Badges 3.0 공식 스펙 (새 창)"
+    },
+    {
+      "name": "CLR 2.0",
+      "text": "학습자의 종합 학습 기록 표준",
+      "status": "soon",
+      "statusLabel": "적용 예정",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/clr",
+      "ariaLabel": "CLR 2.0 공식 스펙 (새 창)"
+    },
+    {
+      "name": "EduAPI",
+      "text": "차세대 교육 데이터 연동 API",
+      "status": "soon",
+      "statusLabel": "적용 예정",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/edu-api",
+      "ariaLabel": "EduAPI 공식 스펙 (새 창)"
+    },
+    {
+      "name": "Digital Credentials",
+      "text": "검증 가능한 디지털 자격증명 생태계",
+      "status": "soon",
+      "statusLabel": "적용 예정",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/workstream/credentials",
+      "ariaLabel": "Digital Credentials 공식 스펙 (새 창)"
+    },
+    {
+      "name": "OneRoster",
+      "text": "명단·성적 연동 표준",
+      "status": "ref",
+      "statusLabel": "설계 참조",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/oneroster",
+      "ariaLabel": "OneRoster 공식 스펙 (새 창)"
+    },
+    {
+      "name": "LTI",
+      "text": "학습 도구 상호운용 표준",
+      "status": "ref",
+      "statusLabel": "설계 참조",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/lti",
+      "ariaLabel": "LTI 공식 스펙 (새 창)"
+    },
+    {
+      "name": "QTI",
+      "text": "평가 문항 상호운용 표준",
+      "status": "ref",
+      "statusLabel": "설계 참조",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/qti",
+      "ariaLabel": "QTI 공식 스펙 (새 창)"
+    }
+  ]
+}

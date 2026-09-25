@@ -1,0 +1,31 @@
+---
+/**
+ * 언어 선택. 원어 이름(한국어 · English · 日本語 · Tiếng Việt)으로 쓴다.
+ * 이 페이지의 다른 언어판이 있으면 그리로, 없으면(국문 전용 페이지) 그 언어의 홈으로 간다.
+ * variant="menu": 헤더의 펼침 목록(details, JS 없이 키보드로 열고 닫힘) / "row": 모바일 메뉴 안 한 줄
+ */
+import { getHome } from '../lib/content';
+import { LANGS, LANG_NAME, homePath, type Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; alternates?: Partial<Record<Lang, string>>; variant: 'menu' | 'row' }
+const { lang, alternates, variant } = Astro.props;
+const label = getHome(lang).common.langLabel;
+const items = LANGS.map((l) => ({ l, href: url(alternates?.[l] ?? homePath(l)), name: LANG_NAME[l], cur: l === lang }));
+---
+{variant === 'menu' ? (
+  <details class="lang-menu">
+    <summary aria-label={`${label}: ${LANG_NAME[lang]}`}>{LANG_NAME[lang]}</summary>
+    <ul>
+      {items.map((i) => (
+        <li><a href={i.href} hreflang={i.l} lang={i.l} aria-current={i.cur ? 'true' : undefined}>{i.name}</a></li>
+      ))}
+    </ul>
+  </details>
+) : (
+  <div class="lang-row" role="group" aria-label={label}>
+    {items.map((i) => (
+      <a href={i.href} hreflang={i.l} lang={i.l} aria-current={i.cur ? 'true' : undefined}>{i.name}</a>
+    ))}
+  </div>
+)}

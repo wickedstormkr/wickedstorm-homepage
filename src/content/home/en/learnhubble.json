@@ -1,0 +1,60 @@
+{
+  "eyebrow": "Learning Experience Platform",
+  "name": "LearnHubble AI",
+  "title": "A personalized teaching and <span class=\"gc nw\">learning platform</span> with AI interaction",
+  "lead": "In lectures and assignments, AI offers explanations and hints when needed.",
+  "points": [
+    {
+      "num": "01",
+      "title": "Portfolio",
+      "text": "Compares accumulated academic competencies with the competencies a target job requires."
+    },
+    {
+      "num": "02",
+      "title": "Assignment hints",
+      "text": "When writing stalls, gives structure-and-condition hints, not answers."
+    },
+    {
+      "num": "03",
+      "title": "Competency Map",
+      "text": "Helps trace the causes of difficulty through lectures and competencies linked by 1EdTech CASE."
+    },
+    {
+      "num": "04",
+      "title": "Classroom AI panel",
+      "text": "Offers explanations, quizzes, and materials in sections the instructor designed."
+    }
+  ],
+  "principle": "Learners write their own answers, and instructors confirm interventions and what is applied.",
+  "cta": {
+    "label": "Request a LearnHubble AI demo",
+    "topic": "We would like to request a LearnHubble AI demo."
+  },
+  "main": {
+    "img": "lh-portfolio.webp",
+    "alt": "LearnHubble AI learner job-fit Portfolio screen: a radar chart comparing academic competencies by semester with the competencies a target job requires, plus job requirement mapping",
+    "num": "01",
+    "caption": "Job-fit Portfolio"
+  },
+  "subs": [
+    {
+      "img": "lh-assignment.webp",
+      "alt": "LearnHubble AI learner assignment screen: when writing stalls, the AI assistant suggests a writing hint, an achievement level check, and a look at the lecture evidence",
+      "num": "02",
+      "caption": "AI hints while writing an assignment"
+    },
+    {
+      "img": "lh-casemap.webp",
+      "alt": "LearnHubble AI learner Competency Map screen: prerequisite, current, and follow-up lectures linked by CASE, and how their competencies relate",
+      "num": "03",
+      "caption": "CASE Competency Map"
+    },
+    {
+      "img": "lh-lecture-qa.webp",
+      "alt": "LearnHubble AI classroom screen: sections that need attention, the Q&A board, and a section quiz in the AI panel on the right",
+      "num": "04",
+      "caption": "Classroom Q&amp;A and section quizzes"
+    }
+  ],
+  "note": "※ Example learner screens. Lectures, people, and figures on screen are demo data."
+}

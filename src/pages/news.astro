@@ -1,0 +1,68 @@
+---
+/** 소식 목록(/news.html). 소식은 국문만 있다. 분류 버튼은 JS가 있을 때만 거르고, 없으면 모두 보인다. */
+import Base from '../layouts/Base.astro';
+// 페이지 스타일은 공통 스타일(Base: 토큰·기본) 뒤에 온다
+import '../styles/cards.css';
+import '../styles/article.css';
+import NewsCard from '../components/NewsCard.astro';
+import { allPosts, CATEGORY_KO } from '../lib/posts';
+import { getUi } from '../lib/content';
+import { homePath } from '../lib/i18n';
+import { url } from '../lib/url';
+
+const posts = await allPosts();
+const ui = getUi('ko');
+const cats = ['all', 'news', 'story', 'insight'] as const;
+const label = { all: '전체', ...CATEGORY_KO };
+---
+<Base lang="ko" title="WICKED STORM | 소식" description="위키드스톰의 특허·제품 소식과 표준·기술 인사이트, 현장 이야기를 전합니다." path="/news.html" homeHref={url(homePath('ko'))} current="news">
+  <main id="main" tabindex="-1">
+    <section class="band page-top board" aria-labelledby="board-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> Feed · Update</p>
+          <h1 class="h-lg" id="board-title">소식</h1>
+          <p class="sec-lead">위키드스톰의 특허·제품 소식과 표준·기술 인사이트, 현장 이야기를 전합니다.</p>
+        </div>
+        <div class="board-tabs" role="group" aria-label="소식 분류" hidden data-tabs>
+          {cats.map((c) => <button class="board-tab" type="button" data-cat={c} aria-pressed={c === 'all' ? 'true' : 'false'}>{label[c]}</button>)}
+        </div>
+        <p class="sr-only" role="status" aria-live="polite" data-board-status></p>
+        <ul class="news-grid" data-board>
+          {posts.map((p) => (
+            <li data-cat={p.category}>
+              <NewsCard post={p} more="기사 보기" go={ui.open} newWindow={ui.newWindow} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+</Base>
+<script>
+  // 분류 거르기. 주소 해시(#news, #story, #insight)로 바로 열 수 있다(지금 사이트 news.html과 같은 방식)
+  const tabs = document.querySelector<HTMLElement>('[data-tabs]');
+  const items = [...document.querySelectorAll<HTMLElement>('[data-board] > li')];
+  const status = document.querySelector<HTMLElement>('[data-board-status]');
+  if (tabs) {
+    tabs.hidden = false;
+    const btns = [...tabs.querySelectorAll<HTMLButtonElement>('button')];
+    const apply = (cat: string) => {
+      if (!btns.some((b) => b.dataset.cat === cat)) cat = 'all';
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === cat)));
+      let n = 0;
+      items.forEach((li) => { const on = cat === 'all' || li.dataset.cat === cat; li.hidden = !on; if (on) n++; });
+      const name = btns.find((b) => b.dataset.cat === cat)?.textContent ?? '';
+      if (status) status.textContent = `${name} · ${n}건`;
+    };
+    btns.forEach((b) => b.addEventListener('click', () => {
+      const cat = b.dataset.cat ?? 'all';
+      history.replaceState(null, '', cat === 'all' ? location.pathname : `#${cat}`);
+      apply(cat);
+    }));
+    // 옛 상세 딥링크(news.html#p=<id>)는 기사 주소로 보낸다
+    const m = /^#p=([a-z0-9-]+)$/.exec(location.hash);
+    if (m) location.replace(new URL(`news/${m[1]}.html`, location.href).href);
+    else apply(location.hash.slice(1) || 'all');
+  }
+</script>

@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "WICKED STORM | Every Learning Moment, Designed for Growth.",
+    "description": "Wicked Storm collects and stores learning activities as learning data using global standards. AI analyzes this data to inform the next steps in education. Lecognizer · LearnHubble AI · Founding board member of 1EdTech Korea.",
+    "ogTitle": "WICKED STORM · Every Learning Moment, Designed for Growth.",
+    "ogDescription": "Lecognizer, a learning data repository built on global standards, and LearnHubble AI, an AI-powered learning experience platform. Shaping a new era of learning through data and AI.",
+    "twitterTitle": "WICKED STORM",
+    "twitterDescription": "Every Learning Moment, Designed for Growth. Shaping a new era of learning through data and AI."
+  },
+  "skipLink": "Skip to main content",
+  "homeLabel": "WICKED STORM home",
+  "mainNavLabel": "Main menu",
+  "drawerLabel": "Mobile menu",
+  "menuOpen": "Open menu",
+  "langLabel": "Select language",
+  "nav": {
+    "product": "Product",
+    "learnhubble": "LearnHubble AI",
+    "standards": "Standards",
+    "news": "News",
+    "resources": "Resources",
+    "company": "Company",
+    "recruit": "Recruit",
+    "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
+    "recruitLabel": "Recruit (opens in a new window)"
+  },
+  "cta": "Contact us",
+  "ctaDrawer": "Contact us →",
+  "footer": {
+    "company": "Wicked Storm Inc.&nbsp;· CEO Jeongjun Lee&nbsp;· Business Registration No. <span style=\"white-space:nowrap\">135-88-02020</span>",
+    "address": "901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "navLabel": "Footer menu",
+    "privacy": "Privacy Policy",
+    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  }
+}

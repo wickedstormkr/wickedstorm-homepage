@@ -1,0 +1,31 @@
+---
+/** ⑥ 표준·1EdTech. 카드마다 공식 스펙으로 가는 링크(주장은 확인할 수 있게) */
+import SecHead from '../components/SecHead.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['standards'] }
+const { lang, t } = Astro.props;
+---
+<section class="band std" id="standards" aria-labelledby="std-title">
+  <div class="wrap">
+    <SecHead lang={lang} id="std-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+      <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.badge} /></span></p>
+    </SecHead>
+    <ul class="std-grid">
+      {t.cards.map((c) => (
+        <li>
+          <a class="std-card" href={c.href} target="_blank" rel="noopener noreferrer" aria-label={c.ariaLabel}>
+            <span class:list={['k', c.status]}>{c.name}</span>
+            <p set:html={c.text} />
+            <span class="std-meta">
+              <span class:list={['st', c.status]}>{c.statusLabel}</span>
+              <span class="pd" set:html={c.products} />
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

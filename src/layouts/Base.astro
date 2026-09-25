@@ -1,0 +1,136 @@
+---
+/**
+ * 모든 페이지의 틀: head(메타·OG·hreflang·canonical·글꼴), 헤더, 본문, 푸터, 공통 스크립트.
+ * alternates가 있으면(홈) 네 언어 hreflang과 x-default를 넣는다. 없으면 이 페이지 하나만(국문 전용 페이지).
+ */
+import '../styles/fonts.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/chrome.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LangBanner from '../components/LangBanner.astro';
+import { OG_LOCALE, LANGS, type Lang } from '../lib/i18n';
+import { absUrl, url } from '../lib/url';
+import { getHome } from '../lib/content';
+import { GA_ID } from '../../site.config.mjs';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** 이 페이지의 주소(사이트 루트 기준, 예: '/news.html') */
+  path: string;
+  /** 언어별 같은 페이지 주소. 홈만 네 언어가 있다 */
+  alternates?: Partial<Record<Lang, string>>;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  twitterTitle?: string;
+  twitterDescription?: string;
+  noindex?: boolean;
+  /** 헤더 메뉴가 가리킬 홈(같은 페이지 안 앵커면 '') */
+  homeHref?: string;
+  /** 헤더 메뉴에서 지금 페이지 표시 */
+  current?: 'news';
+  /** 스킵 링크가 가리킬 본문 id */
+  mainId?: string;
+  /** 헤더·푸터 없이(링크 페이지) */
+  bare?: boolean;
+  jsonLd?: Record<string, unknown>;
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  alternates,
+  ogTitle = title,
+  ogDescription = description,
+  ogImage = lang === 'ko' ? '/img/og-home.jpg' : `/img/og-home-${lang}.jpg`,
+  ogType = 'website',
+  twitterTitle = ogTitle,
+  twitterDescription = ogDescription,
+  noindex = false,
+  homeHref,
+  current,
+  mainId = 'main',
+  bare = false,
+  jsonLd,
+} = Astro.props;
+
+const common = getHome(lang).common;
+const canonical = absUrl(path);
+const ogAbs = /^https?:/.test(ogImage) ? ogImage : absUrl(ogImage);
+const ogIsDefault = /\/img\/og-(home|image)/.test(ogImage);
+/* 첫 화면 글자가 쓰는 Pretendard 청크만 미리 받는다(지금 사이트 실측: 히어로+헤더 12청크).
+   LCP가 히어로 제목 글자라 글꼴 도착이 곧 LCP다. 한국어 페이지에만 쓴다(다른 언어는 라틴 청크 하나로 충분). */
+const PRELOAD_KO = [73, 75, 80, 82, 84, 85, 86, 87, 88, 89, 90, 91];
+const preloads = lang === 'ko' && !bare ? PRELOAD_KO.map((n) => `/fonts/pretendard/woff2-dynamic-subset/PretendardVariable.subset.${n}.woff2`) : [];
+if (lang === 'vi') preloads.push('/fonts/pretendard/PretendardVariable.vi.woff2');
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script is:inline>
+  // JS가 도는 브라우저 표시 + 움직임 멈춤 상태를 첫 그리기 전에 반영(깜박임 방지)
+  (function (d) {
+    var r = d.documentElement; r.classList.add('js');
+    var p = null; try { p = localStorage.getItem('ws-motion'); } catch (e) {}
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (p === 'paused' || (p === null && reduce)) r.classList.add('motion-paused');
+  })(document);
+</script>
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{alternates && LANGS.filter((l) => alternates[l]).map((l) => <link rel="alternate" hreflang={l} href={absUrl(alternates[l]!)} />)}
+{alternates?.ko && <link rel="alternate" hreflang="x-default" href={absUrl(alternates.ko)} />}
+{noindex && <meta name="robots" content="noindex, follow" />}
+<meta name="theme-color" content="#06070e" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content="WICKED STORM" />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogAbs} />
+{ogIsDefault && <meta property="og:image:width" content="1200" />}
+{ogIsDefault && <meta property="og:image:height" content="630" />}
+<meta property="og:locale" content={OG_LOCALE[lang]} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={twitterTitle} />
+<meta name="twitter:description" content={twitterDescription} />
+<meta name="twitter:image" content={ogAbs} />
+<link rel="icon" href={url('/favicon.ico')} sizes="any" />
+<link rel="apple-touch-icon" href={url('/img/favicon.png')} />
+{preloads.map((href) => <link rel="preload" href={url(href)} as="font" type="font/woff2" crossorigin />)}
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+{GA_ID && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', GA_ID);
+    </script>
+  </>
+)}
+<slot name="head" />
+</head>
+<body>
+{!bare && <a class="skip-link" href={`#${mainId}`}>{common.skipLink}</a>}
+{!bare && <Header lang={lang} homeHref={homeHref} alternates={alternates} current={current} />}
+<slot />
+{!bare && <Footer lang={lang} homeHref={homeHref} />}
+{alternates && <LangBanner lang={lang} alternates={alternates} />}
+<script>
+  import '../scripts/site';
+</script>
+</body>
+</html>

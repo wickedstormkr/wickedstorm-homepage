@@ -1,0 +1,98 @@
+{
+  "eyebrow": "Standards Leadership",
+  "title": "標準を使うだけでなく、<br><span class=\"gc\">標準をともにつくります</span>",
+  "lead": "Wicked Stormは、国際的な教育技術標準コンソーシアム1EdTechの韓国組織である<b class=\"nw\" style=\"color:#dfe3f7\">1EdTech Korea</b>の設立理事会に参画し、<span class=\"nw\">1EdTech Contributing Member</span>として活動しています。xAPI・Caliperと1EdTech CASEを製品と事業に適用してきました。",
+  "badge": "1EdTech Korea設立理事会 · <b>Contributing&nbsp;Member</b>",
+  "cards": [
+    {
+      "name": "xAPI",
+      "text": "学習活動データの収集標準",
+      "status": "apply",
+      "statusLabel": "適用",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://github.com/adlnet/xAPI-Spec",
+      "ariaLabel": "xAPI公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "CASE",
+      "text": "教育課程・達成基準・コンピテンシー体系の標準",
+      "status": "apply",
+      "statusLabel": "適用",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/case",
+      "ariaLabel": "CASE公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "Caliper",
+      "text": "学習イベントデータの標準",
+      "status": "apply",
+      "statusLabel": "適用",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/caliper",
+      "ariaLabel": "Caliper公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "Open Badges 3.0",
+      "text": "デジタルな達成証明（バッジ）の発行標準",
+      "status": "soon",
+      "statusLabel": "適用予定",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/open-badges",
+      "ariaLabel": "Open Badges 3.0公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "CLR 2.0",
+      "text": "学習者の総合的な学習記録の標準",
+      "status": "soon",
+      "statusLabel": "適用予定",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/clr",
+      "ariaLabel": "CLR 2.0公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "EduAPI",
+      "text": "次世代の教育データ連携API",
+      "status": "soon",
+      "statusLabel": "適用予定",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/edu-api",
+      "ariaLabel": "EduAPI公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "Digital Credentials",
+      "text": "検証可能なデジタル資格証明のエコシステム",
+      "status": "soon",
+      "statusLabel": "適用予定",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/workstream/credentials",
+      "ariaLabel": "Digital Credentials公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "OneRoster",
+      "text": "名簿・成績の連携標準",
+      "status": "ref",
+      "statusLabel": "設計参照",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/oneroster",
+      "ariaLabel": "OneRoster公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "LTI",
+      "text": "学習ツールの相互運用標準",
+      "status": "ref",
+      "statusLabel": "設計参照",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/lti",
+      "ariaLabel": "LTI公式仕様（新しいウィンドウ）"
+    },
+    {
+      "name": "QTI",
+      "text": "評価問題の相互運用標準",
+      "status": "ref",
+      "statusLabel": "設計参照",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/qti",
+      "ariaLabel": "QTI公式仕様（新しいウィンドウ）"
+    }
+  ]
+}

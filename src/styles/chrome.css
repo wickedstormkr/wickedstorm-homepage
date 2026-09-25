@@ -1,0 +1,92 @@
+/* 사이트 틀: 헤더, 모바일 메뉴, 언어 선택, 움직임 멈춤 버튼, 언어 안내 띠, 푸터 */
+
+/* ---- 헤더 ---- */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:50;height:var(--header-h);display:flex;align-items:center;
+  transition:transform .35s ease,background .3s,border-color .3s;border-bottom:1px solid transparent}
+.site-header.scrolled{background:rgba(8,9,18,.96);border-bottom-color:var(--line)}
+.site-header.hide{transform:translateY(-100%)}
+.hwrap{width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;min-height:var(--tap)}
+.brand img{height:21px;width:auto}
+.hside{display:flex;align-items:center;gap:clamp(10px,1.4vw,20px)}
+nav.main{display:flex;gap:clamp(14px,2vw,32px);align-items:center;font-family:var(--en);font-size:14px;font-weight:600}
+nav.main a{color:var(--muted);transition:color .18s;white-space:nowrap}
+nav.main a:hover,nav.main a[aria-current="page"]{color:#fff}
+.hcta{display:inline-flex;align-items:center;min-height:40px;padding:0 20px;border-radius:999px;background:var(--grad);color:#fff;
+  font-size:14px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+
+/* 언어 선택: 원어 이름. 넓은 화면은 펼침 목록(details), 좁은 화면은 메뉴 안에 네 언어를 나란히 */
+.lang-menu{position:relative;font-family:var(--en);font-size:14px;font-weight:600}
+.lang-menu summary{list-style:none;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--line2);
+  border-radius:999px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.lang-menu summary::-webkit-details-marker{display:none}
+.lang-menu summary::after{content:"";width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.lang-menu[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+.lang-menu ul{list-style:none;position:absolute;right:0;top:calc(100% + 8px);min-width:160px;padding:6px;border-radius:14px;
+  background:var(--panel);border:1px solid var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.lang-menu a{display:flex;align-items:center;min-height:var(--tap);padding:0 14px;border-radius:10px;color:var(--ink-3);white-space:nowrap}
+.lang-menu a:hover{background:rgba(255,255,255,.06);color:#fff}
+.lang-menu a[aria-current="true"]{color:#fff;background:rgba(255,255,255,.08)}
+.lang-row{display:flex;flex-wrap:wrap;gap:8px}
+.lang-row a{display:inline-flex;align-items:center;min-height:var(--tap);padding:0 16px;border-radius:999px;border:1px solid var(--line2);
+  font-size:15px;font-weight:600;color:var(--ink-3)}
+.lang-row a[aria-current="true"]{color:#fff;background:rgba(255,255,255,.08);border-color:var(--line3)}
+
+/* 움직임 멈춤 버튼: 오른쪽 위에 늘 보인다. 아이콘은 CSS(멈춤 = 두 막대, 재생 = 삼각형) */
+.motion-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;min-width:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line2);
+  font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.motion-btn:hover{border-color:var(--line3)}
+.motion-ico{position:relative;width:12px;height:12px;flex:none}
+.motion-ico::before,.motion-ico::after{content:"";position:absolute;top:0;bottom:0;width:4px;border-radius:1px;background:currentColor}
+.motion-ico::before{left:1px}.motion-ico::after{right:1px}
+.motion-btn[aria-pressed="true"] .motion-ico::before{left:2px;width:0;border-radius:0;background:none;
+  border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor}
+.motion-btn[aria-pressed="true"] .motion-ico::after{display:none}
+.motion-btn .motion-play{display:none}
+.motion-btn[aria-pressed="true"] .motion-pause{display:none}
+.motion-btn[aria-pressed="true"] .motion-play{display:inline}
+@media (max-width:1279px){
+  .motion-btn{padding:0;justify-content:center;width:var(--tap);height:var(--tap)}
+  .motion-btn .motion-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
+}
+
+/* 햄버거 / 메뉴 */
+.menu-btn{display:none;width:var(--tap);height:var(--tap);position:relative;border-radius:10px}
+.menu-btn span{position:absolute;left:12px;right:12px;height:2px;background:#fff;border-radius:2px;
+  transition:transform .3s,opacity .3s;top:50%}
+.menu-btn span:nth-child(1){transform:translateY(-6px)}
+.menu-btn span:nth-child(3){transform:translateY(6px)}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:49;background:var(--bg);display:flex;flex-direction:column;justify-content:center;
+  gap:4px;padding:calc(var(--header-h) + 8px) 32px 32px;overflow-y:auto;transform:translateY(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
+.drawer.open{transform:translateY(0)}
+.drawer>a{font-family:var(--en);font-size:26px;font-weight:700;color:#fff;padding:10px 0;border-bottom:1px solid var(--line)}
+.drawer>a.cta{border:0;margin-top:14px;color:var(--accent)}
+.drawer .lang-row{margin-top:18px}
+html.nav-open{overflow:hidden}
+
+@media (max-width:1023px){
+  nav.main,.hside .lang-menu,.hside .hcta{display:none}
+  .menu-btn{display:block}
+}
+
+/* ---- 언어 안내 띠: 자동 이동 대신 안내만 한다. 화면 아래에 떠서 본문을 밀지 않는다(CLS 0) ---- */
+.lang-banner{position:fixed;left:50%;bottom:16px;z-index:45;transform:translateX(-50%);width:min(640px,100% - 2*var(--gutter));
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 10px 10px 20px;border-radius:18px;
+  background:#141628;border:1px solid var(--line2);box-shadow:0 20px 60px rgba(0,0,0,.6);font-size:15px;color:var(--ink-2)}
+.lang-banner p{flex:1 1 220px}
+.lang-banner a{display:inline-flex;align-items:center;min-height:var(--tap);padding:0 18px;border-radius:999px;background:var(--grad);color:#fff;font-weight:700;white-space:nowrap}
+.lang-banner button{width:var(--tap);height:var(--tap);border-radius:999px;color:var(--muted);font-size:22px;line-height:1}
+.lang-banner button:hover{color:#fff}
+
+/* ---- 푸터 ---- */
+.site-footer{background:var(--footer);border-top:1px solid var(--line);padding:56px 0 40px;font-size:15px;color:var(--muted)}
+.foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.foot-grid img{height:19px;width:auto;margin-bottom:16px}
+.foot-grid p{margin-top:2px}
+.foot-nav{display:flex;column-gap:22px;row-gap:0;font-family:var(--en);font-weight:600;flex-wrap:wrap;align-content:flex-start}
+.foot-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);min-width:var(--tap);color:var(--muted);transition:color .18s}
+.foot-nav a:hover{color:#fff}
+.site-footer .legal{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--faint);font-family:var(--en)}

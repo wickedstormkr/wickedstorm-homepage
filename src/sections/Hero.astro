@@ -1,0 +1,64 @@
+---
+/**
+ * ① 히어로. 1단계는 정적인 기본 층만: 제목, 리드, 버튼, 증빙 한 줄, 수집 스트림 패널(정지 화면).
+ * 여섯 장면 오프닝(2단계)은 이 층 위에 얹고, 이 층만으로도 첫 화면이 완결되어야 한다.
+ * LCP 요소는 제목 글자라 이미지·영상·캔버스가 없다(히어로 영상 자동 재생 금지).
+ */
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url, withBase } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['hero'] }
+const { lang, t } = Astro.props;
+// 신호 줄(장식): 고정된 모양의 스파크라인
+const spark = [8, 12, 10, 15, 13, 18, 16, 22, 19, 17, 24, 28, 25, 30].map((v, i) => `${(i * 240) / 13},${34 - v}`).join(' ');
+---
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={t.eyebrow} /></p>
+      <h1 id="hero-title">
+        {t.lines.map((l) => <span class="line" set:html={phrase(l, lang)} />)}
+      </h1>
+      <p class="hero-lead" set:html={t.lead} />
+      <div class="hero-cta">
+        <a class="btn p" href="#contact">{t.ctaPrimary}</a>
+        <a class="btn s" href="#product">{t.ctaSecondary}</a>
+      </div>
+      <ul class="hero-trust">
+        {t.trust.map((i) => <li><a href={url(i.href)} set:html={withBase(i.html)} /></li>)}
+      </ul>
+    </div>
+
+    <figure class="capture">
+      <div class="cap-top">
+        <span class="cap-badge"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={t.capture.badge} /></span>
+        <span class="cap-live">{t.capture.live}</span>
+      </div>
+      <ul class="stream">
+        {t.capture.rows.map((r) => (
+          <li class="xrow">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="chip actor">{r.actor}</span><span class="arrow" aria-hidden="true">→</span>
+            <span class="chip verb">{r.verb}</span><span class="arrow" aria-hidden="true">→</span>
+            <span class="chip object">{r.object}</span>
+            <span class="chip result">{r.result}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="cap-foot" aria-hidden="true">
+        <span class="ins-label" set:html={t.capture.signalLabel} />
+        <svg class="spark" viewBox="0 0 240 34" preserveAspectRatio="none">
+          <defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#e930b0" /><stop offset=".52" stop-color="#7c4dff" /><stop offset="1" stop-color="#2f7cff" /></linearGradient></defs>
+          <polyline points={spark} fill="none" stroke="url(#sg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span class="ins-chip">{t.capture.signal}</span>
+      </div>
+      <figcaption>
+        <p class="ho-main" set:html={phrase(t.overlay.main, lang)} />
+        <p class="ho-sub" set:html={t.overlay.sub} />
+      </figcaption>
+    </figure>
+  </div>
+</section>

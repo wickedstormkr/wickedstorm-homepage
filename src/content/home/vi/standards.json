@@ -1,0 +1,98 @@
+{
+  "eyebrow": "Standards Leadership",
+  "title": "Không chỉ áp&nbsp;dụng chuẩn,<br><span class=\"gc\">mà còn cùng xây&nbsp;dựng chuẩn</span>",
+  "lead": "Wicked Storm là thành viên hội đồng sáng lập <b class=\"nw\" style=\"color:#dfe3f7\">1EdTech Korea</b>, tổ chức tại Hàn Quốc của 1EdTech (liên minh chuẩn quốc tế về công nghệ giáo dục), đồng thời hoạt động với tư cách <span class=\"nw\">1EdTech Contributing Member</span>. Chúng tôi đã áp dụng xAPI, Caliper và 1EdTech CASE vào sản phẩm và các dự án.",
+  "badge": "Thành viên hội đồng sáng lập 1EdTech Korea · <b>Contributing&nbsp;Member</b>",
+  "cards": [
+    {
+      "name": "xAPI",
+      "text": "Chuẩn thu&nbsp;thập dữ&nbsp;liệu hoạt&nbsp;động học&nbsp;tập",
+      "status": "apply",
+      "statusLabel": "Đã áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://github.com/adlnet/xAPI-Spec",
+      "ariaLabel": "Đặc tả chính thức xAPI (cửa sổ mới)"
+    },
+    {
+      "name": "CASE",
+      "text": "Chuẩn cho chương&nbsp;trình giáo&nbsp;dục, yêu&nbsp;cầu cần&nbsp;đạt và khung năng&nbsp;lực",
+      "status": "apply",
+      "statusLabel": "Đã áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/case",
+      "ariaLabel": "Đặc tả chính thức CASE (cửa sổ mới)"
+    },
+    {
+      "name": "Caliper",
+      "text": "Chuẩn dữ&nbsp;liệu sự&nbsp;kiện học&nbsp;tập",
+      "status": "apply",
+      "statusLabel": "Đã áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/caliper",
+      "ariaLabel": "Đặc tả chính thức Caliper (cửa sổ mới)"
+    },
+    {
+      "name": "Open Badges 3.0",
+      "text": "Chuẩn phát hành minh&nbsp;chứng thành&nbsp;tích số (huy&nbsp;hiệu)",
+      "status": "soon",
+      "statusLabel": "Dự kiến áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/open-badges",
+      "ariaLabel": "Đặc tả chính thức Open Badges 3.0 (cửa sổ mới)"
+    },
+    {
+      "name": "CLR 2.0",
+      "text": "Chuẩn hồ&nbsp;sơ học&nbsp;tập toàn&nbsp;diện của người&nbsp;học",
+      "status": "soon",
+      "statusLabel": "Dự kiến áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/clr",
+      "ariaLabel": "Đặc tả chính thức CLR 2.0 (cửa sổ mới)"
+    },
+    {
+      "name": "EduAPI",
+      "text": "API kết&nbsp;nối dữ&nbsp;liệu giáo&nbsp;dục thế&nbsp;hệ mới",
+      "status": "soon",
+      "statusLabel": "Dự kiến áp dụng",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/edu-api",
+      "ariaLabel": "Đặc tả chính thức EduAPI (cửa sổ mới)"
+    },
+    {
+      "name": "Digital Credentials",
+      "text": "Hệ sinh thái chứng chỉ số có&nbsp;thể xác&nbsp;minh",
+      "status": "soon",
+      "statusLabel": "Dự kiến áp dụng",
+      "products": "Lecognizer · LearnHubble AI",
+      "href": "https://www.1edtech.org/workstream/credentials",
+      "ariaLabel": "Đặc tả chính thức Digital Credentials (cửa sổ mới)"
+    },
+    {
+      "name": "OneRoster",
+      "text": "Chuẩn kết&nbsp;nối danh&nbsp;sách và điểm&nbsp;số",
+      "status": "ref",
+      "statusLabel": "Tham chiếu thiết kế",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/oneroster",
+      "ariaLabel": "Đặc tả chính thức OneRoster (cửa sổ mới)"
+    },
+    {
+      "name": "LTI",
+      "text": "Chuẩn liên&nbsp;thông công&nbsp;cụ học&nbsp;tập",
+      "status": "ref",
+      "statusLabel": "Tham chiếu thiết kế",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/lti",
+      "ariaLabel": "Đặc tả chính thức LTI (cửa sổ mới)"
+    },
+    {
+      "name": "QTI",
+      "text": "Chuẩn liên&nbsp;thông câu&nbsp;hỏi đánh&nbsp;giá",
+      "status": "ref",
+      "statusLabel": "Tham chiếu thiết kế",
+      "products": "LearnHubble AI",
+      "href": "https://www.1edtech.org/standards/qti",
+      "ariaLabel": "Đặc tả chính thức QTI (cửa sổ mới)"
+    }
+  ]
+}

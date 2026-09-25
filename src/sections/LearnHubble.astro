@@ -1,0 +1,47 @@
+---
+/** ④ LearnHubble AI */
+import Img from '../components/Img.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['learnhubble'] }
+const { lang, t } = Astro.props;
+---
+<section class="band lhub" id="learnhubble" aria-labelledby="lhub-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.eyebrow} /></p>
+      <p class="lhub-name">{t.name}</p>
+      <h2 class="h-lg" id="lhub-title" set:html={phrase(t.title, lang)} />
+      <p class="sec-lead" set:html={t.lead} />
+    </div>
+    <div class="lhub-top">
+      <div class="lhub-copy">
+        <ol class="lhub-points">
+          {t.points.map((p) => (
+            <li><i aria-hidden="true">{p.num}</i><b set:html={p.title} /><span set:html={p.text} /></li>
+          ))}
+        </ol>
+        <p class="lhub-principle" set:html={t.principle} />
+        <div class="lhub-cta"><a class="btn p" href="#contact" data-topic={t.cta.topic}>{t.cta.label}</a></div>
+      </div>
+      <figure class="frame lhub-main">
+        <Img name={t.main.img} alt={t.main.alt} sizes="(min-width: 1024px) 720px, calc(100vw - 48px)" />
+        <figcaption><i>{t.main.num}</i><span set:html={t.main.caption} /></figcaption>
+      </figure>
+    </div>
+    <ul class="lhub-sub">
+      {t.subs.map((s) => (
+        <li>
+          <figure class="frame">
+            <Img name={s.img} alt={s.alt} sizes="(min-width: 1024px) 400px, (min-width: 700px) 32vw, 82vw" />
+            <figcaption><i>{s.num}</i><span set:html={s.caption} /></figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="note" set:html={t.note} />
+  </div>
+</section>

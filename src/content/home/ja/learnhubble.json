@@ -1,0 +1,60 @@
+{
+  "eyebrow": "Learning Experience Platform",
+  "name": "LearnHubble AI",
+  "title": "AIと対話するパーソナライズ型の<span class=\"gc nw\">教育・学習プラットフォーム</span>",
+  "lead": "学習者が講義や課題に取り組む中、必要なときにAIが説明とヒントを提供します。",
+  "points": [
+    {
+      "num": "01",
+      "title": "ポートフォリオ",
+      "text": "身につけた科目コンピテンシーを、目標とする職務に求められるコンピテンシーと比較します。"
+    },
+    {
+      "num": "02",
+      "title": "課題のヒント",
+      "text": "作成が止まると、正解ではなく構造と条件を重視したヒントを提供します。"
+    },
+    {
+      "num": "03",
+      "title": "コンピテンシーマップ",
+      "text": "1EdTech CASEで連携された講義とコンピテンシーから、つまずきの原因を探ります。"
+    },
+    {
+      "num": "04",
+      "title": "講義室AIパネル",
+      "text": "教員が設計した区間で、説明・クイズ・資料を提供します。"
+    }
+  ],
+  "principle": "答えは学習者が自分で書き、支援と適用は教員が確認します。",
+  "cta": {
+    "label": "LearnHubble AIのデモを依頼",
+    "topic": "LearnHubble AIのデモを希望します。"
+  },
+  "main": {
+    "img": "lh-portfolio.webp",
+    "alt": "LearnHubble AI 学習者の職務適合ポートフォリオ画面：学期別の科目コンピテンシーを目標職務の要求コンピテンシーと比較したレーダーチャートと、職務要件のマッピング",
+    "num": "01",
+    "caption": "職務適合ポートフォリオ"
+  },
+  "subs": [
+    {
+      "img": "lh-assignment.webp",
+      "alt": "LearnHubble AI 学習者の課題画面：作成が止まると、AIアシスタントが作成のヒント・達成水準の点検・講義の根拠確認を提案",
+      "num": "02",
+      "caption": "課題作成中のAIヒント"
+    },
+    {
+      "img": "lh-casemap.webp",
+      "alt": "LearnHubble AI 学習者のコンピテンシーマップ画面：CASEで連携された前提・現在・後続の講義とコンピテンシーの関係",
+      "num": "03",
+      "caption": "CASEコンピテンシーマップ"
+    },
+    {
+      "img": "lh-lecture-qa.webp",
+      "alt": "LearnHubble AI 講義室画面：確認が必要な区間と質問掲示板、右側のAIパネルに表示される区間クイズ",
+      "num": "04",
+      "caption": "講義室Q&amp;Aと区間クイズ"
+    }
+  ],
+  "note": "※ 学習者画面の例です（韓国語UI）。画面内の講義・人物・数値はデモ用データです。"
+}

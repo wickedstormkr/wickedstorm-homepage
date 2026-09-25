@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Pipeline",
+  "title": "Collect and store using global standards, then <span class=\"g\">analyze</span>",
+  "lead": "Learning data follows global standards from the moment it arrives, and is stored and analyzed just as it was collected.",
+  "steps": [
+    {
+      "index": "01",
+      "tag": "Collect",
+      "title": "Standards-based collection",
+      "text": "Real-time collection using global standards",
+      "detail": "Gathers learning data from all teaching, learning, and operational activities to the same standard."
+    },
+    {
+      "index": "02",
+      "tag": "Store",
+      "title": "Storage",
+      "text": "Stored with curriculum context",
+      "detail": "Stores each learning activity with its context, including the curriculum item where it took place."
+    },
+    {
+      "index": "03",
+      "tag": "Analyze",
+      "title": "AI analysis",
+      "text": "Detects unusual patterns and issues alerts",
+      "detail": "From accumulated learning data, flags where many learners struggled, in order of priority."
+    },
+    {
+      "index": "04",
+      "tag": "Act",
+      "title": "Insight",
+      "text": "People review and act",
+      "detail": "People review the alerts and raw data and make the decision, and the results are recorded as learning data again."
+    }
+  ],
+  "loop": {
+    "index": "ONE PIPELINE",
+    "title": "Collect · Store · Analyze, in one flow",
+    "sub": "Learning data collected using global standards is stored in one place and analyzed by AI",
+    "steps": [
+      {
+        "num": "01",
+        "label": "Collect",
+        "note": "Real-time collection using global standards",
+        "url": "lecognizer.wickedstorm.kr/statements",
+        "img": "pipe-collect.webp",
+        "alt": "Lecognizer data view screen: a list of learning activity Statements collected using global standards"
+      },
+      {
+        "num": "02",
+        "label": "Store",
+        "note": "Stored with curriculum context",
+        "url": "lecognizer.wickedstorm.kr/dashboard",
+        "img": "pipe-store.webp",
+        "alt": "Lecognizer dashboard screen: stored learning data and collection trends"
+      },
+      {
+        "num": "03",
+        "label": "Analyze",
+        "note": "Lecognizer AI anomaly detection",
+        "url": "lecognizer.wickedstorm.kr/ai-signals",
+        "img": "pipe-analyze.webp",
+        "alt": "Lecognizer AI screen: learning data loaded per CASE curriculum framework, with AI anomaly detection"
+      }
+    ],
+    "arcText": "Results applied in teaching become learning data again",
+    "caption": "In Lecognizer, collection, storage, and analysis run as one flow"
+  }
+}

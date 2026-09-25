@@ -1,0 +1,81 @@
+{
+  "eyebrow": "Product · Learning Loop",
+  "title": "세 솔루션과 세 역할이<br><span class=\"g\">학습의 선순환</span>을 완성합니다",
+  "lead": "Lecognizer가 학습데이터를 쌓고 신호를 찾으면, <span class=\"nw\">LearnHubble AI</span>가 그 신호를 운영자·교수자·학습자의 판단과 행동으로 잇습니다.",
+  "loop": {
+    "img": "learning-loop.webp",
+    "alt": "학습의 선순환: 학습자의 활동이 Lecognizer에 쌓이고, Lecognizer AI가 신호를 찾으면 학과 교육과정 운영자와 교수자가 LearnHubble AI에서 판단해 적용하고, 그 결과가 다시 학습자에게 이어지는 순환 구조",
+    "notes": [
+      {
+        "kind": "solution",
+        "style": "--x:26.5%;--y:4%;--w:18%;--align:right",
+        "pill": "Lecognizer",
+        "product": "lec",
+        "desc": "모든 학습 활동이 국제 표준 규격으로 수집되어 1EdTech CASE 체계로 쌓입니다"
+      },
+      {
+        "kind": "solution",
+        "style": "--x:85.5%;--y:26.5%;--w:13.5%",
+        "pill": "Lecognizer AI",
+        "product": "lec",
+        "desc": "쌓인 학습데이터에서 많은 학습자가 어려워한 구간을 AI가 찾아, 다음 학기 설계의 근거를 만듭니다"
+      },
+      {
+        "kind": "role",
+        "style": "--x:79%;--y:74%;--w:19.5%",
+        "role": "학과 교육과정 운영자",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "AI의 알림과 원본 데이터를 보고 다음 학기 <span class=\"nw\">교과·직무역량</span> 체계(CASE 기반)를 보완합니다"
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:66%;--w:15.5%;--align:right",
+        "role": "교수자",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "AI 알림을 보고 추가 수업을 설계하거나, 필요한 학습자에게 개입합니다"
+      },
+      {
+        "kind": "role",
+        "style": "--x:1.5%;--y:28%;--w:15.5%;--align:right",
+        "role": "학습자",
+        "pill": "LearnHubble AI",
+        "product": "lhb",
+        "desc": "필요한 순간 AI와 상호작용하며, 학습이 끊기지 않고 효과적으로 이어집니다"
+      }
+    ],
+    "caption": "이번 학기에 쌓인 학습데이터가 다음 학기 교육을 설계하는 근거가 됩니다."
+  },
+  "features": [
+    {
+      "kicker": "Learning Data Repository",
+      "name": "Lecognizer",
+      "text": "AI 기반 이상 탐지를 갖춘 국제 표준 학습데이터 저장소입니다. 교수·학습·운영의 모든 활동에서 생기는 학습데이터를 실시간으로 수집·저장하고, 1EdTech CASE 교육과정 맥락과 함께 쌓습니다.",
+      "bullets": [
+        "국제 표준 기반 실시간 수집·저장, 시스템이 바뀌어도 이어지는 학습데이터",
+        "종합 대시보드와 맞춤형 시각화, 조건별 조회와 JSON·CSV 내려받기",
+        "국가 단위 학습데이터 허브와 교육청·기업 AI 플랫폼에 적용"
+      ],
+      "badge": "GS 인증 1등급",
+      "img": "dash-main-public.webp",
+      "alt": "Lecognizer 종합 대시보드 화면 예시",
+      "reverse": false
+    },
+    {
+      "kicker": "AI Anomaly Detection",
+      "name": "Lecognizer AI",
+      "text": "Lecognizer에 쌓인 학습데이터를 분석하는 AI 솔루션입니다. 평소와 다른 신호와 많은 학습자가 어려워한 구간을 찾아 알리고, 그 근거가 된 원본 데이터까지 이어서 보여 줍니다.",
+      "bullets": [
+        "확인이 필요한 신호를 우선순위로 정리해 알림",
+        "알림을 만든 조건과 원본 학습데이터까지 한 흐름으로 확인",
+        "AI는 찾고 분석하며, 판단은 운영자와 교수자가 합니다"
+      ],
+      "badge": "AI 특허 2건 등록 · 이상 학습 탐지 · 학습자 프로파일링",
+      "img": "lecognizer-ai-detect.webp",
+      "alt": "Lecognizer AI 이상 탐지 화면 예시: 실시간으로 쌓이는 Statement 목록과, 3주차 한 구간에 멈춤·되감기·오답이 몰린 이상 신호와 원인 후보",
+      "reverse": true
+    }
+  ],
+  "note": "※ 화면 속 교과·인물·수치는 제품 설명을 위한 시연용 데이터입니다."
+}

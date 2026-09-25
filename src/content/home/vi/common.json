@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "WICKED STORM | Biến mỗi khoảnh khắc học tập thành dữ liệu cho sự phát triển",
+    "description": "Wicked Storm thu thập và lưu trữ dữ liệu học tập theo chuẩn quốc tế, dùng AI phân tích và kết nối với bước tiếp theo trong giáo dục. Lecognizer · LearnHubble AI · Thành viên hội đồng sáng lập 1EdTech Korea.",
+    "ogTitle": "WICKED STORM · Biến mỗi khoảnh khắc học tập thành dữ liệu cho sự phát triển",
+    "ogDescription": "Lecognizer, kho dữ liệu học tập theo chuẩn quốc tế, và LearnHubble AI, nền tảng trải nghiệm học tập AI. Mở ra kỷ nguyên học tập mới với dữ liệu học tập và AI.",
+    "twitterTitle": "WICKED STORM",
+    "twitterDescription": "Every Learning Moment, Designed for Growth. Mở ra kỷ nguyên học tập mới với dữ liệu học tập và AI."
+  },
+  "skipLink": "Chuyển đến nội dung chính",
+  "homeLabel": "Trang chủ WICKED STORM",
+  "mainNavLabel": "Menu chính",
+  "drawerLabel": "Menu di động",
+  "menuOpen": "Mở menu",
+  "langLabel": "Chọn ngôn ngữ",
+  "nav": {
+    "product": "Product",
+    "learnhubble": "LearnHubble AI",
+    "standards": "Standards",
+    "news": "News",
+    "resources": "Resources",
+    "company": "Company",
+    "recruit": "Recruit",
+    "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
+    "recruitLabel": "Thông tin tuyển dụng (cửa sổ mới)"
+  },
+  "cta": "Liên hệ",
+  "ctaDrawer": "Liên hệ →",
+  "footer": {
+    "company": "Wicked Storm Inc.&nbsp;· Người đại diện: Jeongjun Lee&nbsp;· Số đăng ký kinh doanh: <span style=\"white-space:nowrap\">135-88-02020</span>",
+    "address": "Phòng 901 đến 905, Tòa A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Hàn Quốc",
+    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "navLabel": "Menu chân trang",
+    "privacy": "Chính sách bảo mật thông tin cá nhân",
+    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "eyebrow": "Pipeline",
+  "title": "Thu&nbsp;thập theo chuẩn quốc&nbsp;tế, lưu&nbsp;trữ và <span class=\"g\">phân&nbsp;tích</span>",
+  "lead": "Dữ liệu học tập được thu thập theo chuẩn quốc tế ngay từ đầu, rồi được lưu trữ và phân tích nguyên vẹn như khi thu thập.",
+  "steps": [
+    {
+      "index": "01",
+      "tag": "Collect",
+      "title": "Thu&nbsp;thập theo chuẩn",
+      "text": "Thu thập theo thời gian thực, theo chuẩn quốc tế",
+      "detail": "Thu thập dữ liệu học tập từ mọi hoạt động giảng dạy, học tập và vận hành theo cùng một chuẩn."
+    },
+    {
+      "index": "02",
+      "tag": "Store",
+      "title": "Lưu&nbsp;trữ",
+      "text": "Tích lũy cùng ngữ cảnh chương trình giáo dục",
+      "detail": "Tích lũy kèm ngữ cảnh cho biết hoạt động học tập diễn ra ở mục nào trong chương trình giáo dục."
+    },
+    {
+      "index": "03",
+      "tag": "Analyze",
+      "title": "Phân&nbsp;tích bằng AI",
+      "text": "Phát hiện và cảnh báo dấu hiệu bất thường",
+      "detail": "Từ dữ liệu học tập tích lũy, sắp xếp ưu tiên và cảnh báo những phần nhiều người học gặp khó khăn."
+    },
+    {
+      "index": "04",
+      "tag": "Act",
+      "title": "Insight",
+      "text": "Con người ra quyết định và hành động",
+      "detail": "Con người xem xét cảnh báo và dữ liệu gốc để ra quyết định, rồi kết quả lại được tích lũy thành dữ liệu học tập."
+    }
+  ],
+  "loop": {
+    "index": "ONE PIPELINE",
+    "title": "Thu thập · Lưu trữ · Phân tích trong một luồng",
+    "sub": "Dữ liệu học tập thu thập theo chuẩn quốc tế được lưu trữ tập trung và phân tích bằng AI",
+    "steps": [
+      {
+        "num": "01",
+        "label": "Thu&nbsp;thập",
+        "note": "Thu thập theo thời gian thực, theo chuẩn quốc tế",
+        "url": "lecognizer.wickedstorm.kr/statements",
+        "img": "pipe-collect.webp",
+        "alt": "Màn hình tra cứu dữ liệu của Lecognizer: danh sách Statement về hoạt động học tập được thu thập theo chuẩn quốc tế"
+      },
+      {
+        "num": "02",
+        "label": "Lưu&nbsp;trữ",
+        "note": "Tích lũy cùng ngữ cảnh chương trình giáo dục",
+        "url": "lecognizer.wickedstorm.kr/dashboard",
+        "img": "pipe-store.webp",
+        "alt": "Màn hình bảng điều khiển của Lecognizer: tình trạng dữ liệu học tập đã tích lũy và xu hướng thu thập"
+      },
+      {
+        "num": "03",
+        "label": "Phân&nbsp;tích",
+        "note": "Lecognizer AI phát hiện dấu hiệu bất thường",
+        "url": "lecognizer.wickedstorm.kr/ai-signals",
+        "img": "pipe-analyze.webp",
+        "alt": "Màn hình Lecognizer AI: tình trạng tích lũy theo khung chương trình giáo dục CASE và phát hiện dấu hiệu bất thường bằng AI"
+      }
+    ],
+    "arcText": "Kết quả áp dụng vào giảng dạy lại trở thành dữ liệu học tập",
+    "caption": "Trong Lecognizer, thu thập, lưu trữ và phân tích diễn ra trong một luồng liền mạch"
+  }
+}

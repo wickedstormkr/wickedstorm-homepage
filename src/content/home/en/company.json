@@ -1,0 +1,163 @@
+{
+  "eyebrow": "Company · Vision",
+  "title": "A <span class=\"gc\">global EdTech company</span><br>shaping a new era of learning<br>through data and AI.",
+  "lead": "We connect every learning experience through data built on global standards, creating the foundation for better education and growth.",
+  "slogan": {
+    "label": "Slogan",
+    "text": "Every Learning Moment, Designed for Growth."
+  },
+  "stats": [
+    {
+      "value": "2021",
+      "unit": "",
+      "label": "Year founded"
+    },
+    {
+      "value": "2",
+      "unit": "",
+      "label": "AI patents granted"
+    },
+    {
+      "value": "1",
+      "unit": "",
+      "label": "GS certification grade (Lecognizer)"
+    },
+    {
+      "value": "3",
+      "unit": "",
+      "label": "Global standards applied · xAPI, Caliper, CASE"
+    }
+  ],
+  "film": {
+    "label": "Wicked Storm corporate video",
+    "caption": "Wicked Storm corporate video · 89 sec"
+  },
+  "history": {
+    "eyebrow": "History",
+    "title": "<span class=\"yr gc\">2021 to 2026</span>: the path we built on standards",
+    "listLabel": "Wicked Storm history, 2021 to 2026",
+    "years": [
+      {
+        "year": "2021",
+        "highlights": [
+          {
+            "html": "<span>Founded Wicked Storm Inc.</span>"
+          },
+          {
+            "html": "Ministry of Personnel Management, LRS build for the National HRD Intelligent Open Platform (Phase 2)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KIRD, learning analytics consulting for the next-generation integrated education system",
+          "Visang Education, smart platform consulting and build"
+        ]
+      },
+      {
+        "year": "2022",
+        "highlights": [
+          {
+            "html": "KERIS, K-Edu Integrated Platform ISMP, learning analytics indicators and analytics standards",
+            "href": "#references"
+          },
+          {
+            "html": "Seoul Metropolitan Government, Seoul Education Platform LRS build",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "Developed an in-house learning data collection and management solution (LRS)",
+          "Ministry of Personnel Management (Phase 3), real-time video xAPI collection",
+          "Venture enterprise certification",
+          "Korea International Trade Association, FTA Integrated Platform activation"
+        ]
+      },
+      {
+        "year": "2023",
+        "highlights": [
+          {
+            "html": "Launched Lecognizer, an intelligent learning analytics solution",
+            "href": "#product"
+          },
+          {
+            "html": "Developed AI for process-based assessment and built a CASE knowledge space (Ministry of Trade, Industry and Energy)",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "xAPI LRS certification from ADL (U.S.)",
+          "KERIS, co-authored the AI Digital Textbook development guidelines",
+          "KERIS, elementary math class support system enhancement",
+          "Selected for the Ministry of SMEs and Startups (MSS) Startup Growth Technology Development R&amp;D Program (Stepping-Stone)",
+          "AI Digital Textbook (AIDT) curriculum standards distribution model design",
+          "Dong-A Publishing, AIDT platform build"
+        ]
+      },
+      {
+        "year": "2024",
+        "highlights": [
+          {
+            "html": "Lecognizer earned GS (Good Software) Grade 1 certification",
+            "href": "#product"
+          },
+          {
+            "html": "Ministry of Education, AI Digital Textbook learning data hub build",
+            "href": "#references"
+          }
+        ],
+        "more": [
+          "KERIS, elementary math class support system operation",
+          "Listed on the Public Procurement Service’s Digital Service Mall",
+          "AI model certification for the Learning Analytics Diagnosis and Recommendation Model (KOLAS)",
+          "2 AI patents filed (learning anomaly detection, LLM-based learner profiling)",
+          "KERIS, learning data dictionary development study"
+        ]
+      },
+      {
+        "year": "2025",
+        "highlights": [
+          {
+            "html": "Patent granted, LLM-based learner profiling (10-2767110)",
+            "href": "/news/2025-02-patent-profiling.html"
+          },
+          {
+            "html": "Patent granted, xAPI learning anomaly detection system (10-2883249)",
+            "href": "/news/2025-11-patent-anomaly.html"
+          }
+        ],
+        "more": [
+          "KERIS, elementary math class support system operation",
+          "Selected for the MSS SME Technology Innovation Development R&amp;D Program (market-responsive)",
+          "INNOBIZ certification (AA)",
+          "Gangwon i-ro AI platform build",
+          "KERIS, learning data collection linkage system for provincial offices of education",
+          "NICE D&amp;R, next-generation system build"
+        ]
+      },
+      {
+        "year": "2026",
+        "highlights": [
+          {
+            "html": "Joined 1EdTech Korea as a co-founding member and founding board member",
+            "href": "#standards"
+          },
+          {
+            "html": "KERIS, learning data standardization framework and utilization model based on global standards",
+            "href": "#references"
+          },
+          {
+            "html": "Exhibited at EdTech Korea Fair 2026 and demonstrated the Learning Loop",
+            "href": "/news/2026-09-edtech-korea-fair.html"
+          }
+        ],
+        "more": [
+          "Gyeonggi Provincial Office of Education, Hi-Learning AI platform operation",
+          "Gangwon Office of Education, AI platform operation",
+          "Gyeonggi AI teacher competency integrated support system, LRS build",
+          "AIDT learning data hub LRS maintenance"
+        ]
+      }
+    ],
+    "more": "Show full history"
+  }
+}

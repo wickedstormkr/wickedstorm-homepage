@@ -1,0 +1,35 @@
+---
+/** ⑧ 자료 받기: 카탈로그·회사소개서 PDF(네 언어). 보고 있는 언어의 파일을 맨 앞에 */
+import Img from '../components/Img.astro';
+import SecHead from '../components/SecHead.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; t: HomeContent['resources'] }
+const { lang, t } = Astro.props;
+---
+<section class="band" id="resources" aria-labelledby="res-title">
+  <div class="wrap">
+    <SecHead lang={lang} id="res-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+    <ul class="res-grid">
+      {t.cards.map((c) => (
+        <li>
+          <article class="res-card">
+            <Img name={c.thumb} alt={c.thumbAlt} sizes="120px" class:list={['res-thumb', { wide: c.wide }]} />
+            <div class="res-body">
+              <h3 set:html={phrase(c.title, lang)} />
+              <p set:html={c.text} />
+              <div class="res-links">
+                {c.links.map((l) => (
+                  <a href={url(l.file)} target="_blank" rel="noopener" lang={l.lang} hreflang={l.lang} type="application/pdf" data-dl={l.id} class:list={{ cur: l.lang === lang }}>{l.label}</a>
+                ))}
+              </div>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

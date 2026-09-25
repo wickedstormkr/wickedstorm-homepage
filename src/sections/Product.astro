@@ -1,0 +1,46 @@
+---
+/** ③ 제품: 학습의 선순환 그림 + Lecognizer, Lecognizer AI */
+import Img from '../components/Img.astro';
+import SecHead from '../components/SecHead.astro';
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+
+interface Props { lang: Lang; t: HomeContent['product'] }
+const { lang, t } = Astro.props;
+---
+<section class="band" id="product" aria-labelledby="product-title">
+  <div class="wrap">
+    <SecHead lang={lang} id="product-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+
+    <figure class="loop-figure">
+      <div class="loop-stage">
+        <Img name={t.loop.img} alt={t.loop.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" />
+        <ol class="loop-notes">
+          {t.loop.notes.map((n) => (
+            <li class:list={[n.kind === 'solution' ? 'ln-sol' : 'ln-role', { 'align-right': n.style.includes('--align:right') }]} style={n.style}>
+              {n.role && <b set:html={n.role} />}
+              <span class:list={['pill', n.product]}>{n.pill}</span>
+              <span class="ln-desc" set:html={n.desc} />
+            </li>
+          ))}
+        </ol>
+      </div>
+      <figcaption class="note" set:html={t.loop.caption} />
+    </figure>
+
+    {t.features.map((f) => (
+      <div class:list={['feature', { reverse: f.reverse }]}>
+        <div class="feat-copy">
+          <p class="kick">{f.kicker}</p>
+          <h3>{f.name}</h3>
+          <p set:html={f.text} />
+          <ul>{f.bullets.map((b) => <li set:html={b} />)}</ul>
+          <span class="feat-badge" set:html={f.badge} />
+        </div>
+        <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>
+      </div>
+    ))}
+    <p class="note" set:html={t.note} />
+  </div>
+</section>

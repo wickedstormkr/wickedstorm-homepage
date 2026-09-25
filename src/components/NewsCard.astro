@@ -1,0 +1,40 @@
+---
+/** 소식 카드(홈 '최근 소식'과 소식 목록 공용). 썸네일이 없으면 카테고리 커버 */
+import Img from './Img.astro';
+import { CATEGORY_TAG, postPath, type Post } from '../lib/posts';
+import { hasImg } from '../lib/images';
+import { url } from '../lib/url';
+
+interface Props {
+  post: Post;
+  /** 언어별 제목·대체 글·버튼 글(없으면 국문) */
+  title?: string;
+  alt?: string;
+  more: string;
+  go: string;
+  newWindow: string;
+  tag?: string;
+  titleLang?: string;
+}
+const { post, title = post.title, alt = post.title, more, go, newWindow, tag = CATEGORY_TAG[post.category], titleLang } = Astro.props;
+const ext = !!post.externalUrl;
+const thumb = post.thumb && hasImg(post.thumb) ? post.thumb.replace(/^\.\/img\//, '') : null;
+---
+<a
+  class="ncard"
+  href={ext ? post.externalUrl! : url(postPath(post))}
+  data-cat={post.category}
+  target={ext ? '_blank' : undefined}
+  rel={ext ? 'noopener noreferrer' : undefined}
+>
+  {thumb ? (
+    <div class="nimg"><Img name={thumb} alt={alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" /></div>
+  ) : (
+    <div class="nimg ncover" data-cover={post.category} aria-hidden="true"><span class="cover-rail"></span><span class="cover-cat">{CATEGORY_TAG[post.category].toLowerCase()}</span></div>
+  )}
+  <div class="nbody">
+    <div class="nmeta"><span class="ntag">{tag}</span> <time datetime={post.date.replace(/\./g, '-')}>{post.date}</time></div>
+    <h3 lang={titleLang} set:html={title} />
+    <span class="nmore">{ext ? go : more} <i aria-hidden="true">{ext ? '↗' : '→'}</i>{ext && <span class="sr-only">{newWindow}</span>}</span>
+  </div>
+</a>
