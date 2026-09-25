@@ -4,7 +4,7 @@
  */
 import type { APIRoute } from 'astro';
 import { allPosts } from '../lib/posts';
-import { LANGS, homePath } from '../lib/i18n';
+import { LANGS, PAGES, PAGE_LANGS, homePath, pagePath } from '../lib/i18n';
 import { absUrl } from '../lib/url';
 
 export const GET: APIRoute = async () => {
@@ -13,6 +13,7 @@ export const GET: APIRoute = async () => {
     + `<xhtml:link rel="alternate" hreflang="x-default" href="${absUrl(homePath('ko'))}"/>`;
   const urls = [
     ...LANGS.map((l) => `<url><loc>${absUrl(homePath(l))}</loc>${alt}</url>`),
+    ...PAGES.flatMap((pg) => PAGE_LANGS.map((l) => `<url><loc>${absUrl(pagePath(l, pg))}</loc></url>`)),
     `<url><loc>${absUrl('/news.html')}</loc></url>`,
     `<url><loc>${absUrl('/privacy.html')}</loc></url>`,
     ...posts.map((p) => `<url><loc>${absUrl(`/news/${p.id}.html`)}</loc><lastmod>${p.date.replace(/\./g, '-')}</lastmod></url>`),

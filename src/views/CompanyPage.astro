@@ -1,0 +1,45 @@
+---
+/** 회사 페이지: 비전·수치 → 기업 영상 → 전체 연혁 → 채용 → 오시는 길 */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import Company from '../sections/Company.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getHome, getUi } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = getHome(lang);
+const t = h.company;
+const nav = h.common.nav;
+---
+<Page lang={lang} page="company">
+  <section class="band page-top page-head-band" aria-labelledby="page-title">
+    <div class="wrap"><PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead} /></div>
+  </section>
+  <Company lang={lang} t={t} ui={getUi(lang)} full />
+  <section class="band careers" id="careers" aria-labelledby="careers-title">
+    <div class="wrap">
+      <div class="cta-box">
+        <div>
+          <p class="eyebrow"><span>{t.careers.eyebrow}</span></p>
+          <h2 id="careers-title" set:html={phrase(t.careers.title, lang)} />
+          <p set:html={t.careers.lead} />
+        </div>
+        <div class="hero-cta"><a class="btn p" href={nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={nav.recruitLabel}>{t.careers.cta}</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="band" id="location" aria-labelledby="loc-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="loc-title">{t.location.title}</h2>
+      <dl class="loc-dl">
+        <div><dt>Address</dt><dd>{t.location.address}</dd></div>
+        <div><dt>Tel</dt><dd><a href="tel:0222051470">{t.location.tel}</a></dd></div>
+        <div><dt>Email</dt><dd><a href={`mailto:${t.location.email}`}>{t.location.email}</a></dd></div>
+      </dl>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Page>

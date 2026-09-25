@@ -19,4 +19,7 @@ export const isLang = (s: unknown): s is Lang => typeof s === 'string' && (LANGS
 /** 언어마다 따로 있는 페이지(제품·표준·사례·신뢰·회사·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
 export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'contact'] as const;
 export type Page = (typeof PAGES)[number];
-export const pagePath = (lang: Lang, page: Page) => (lang === 'ko' ? `/${page}.html` : `/${lang}/${page}.html`);
+/** 페이지를 만든 언어. 번역은 마지막 단계에서 채우고, 그 전까지 다른 언어의 메뉴는 국문 페이지로 간다 */
+export const PAGE_LANGS: readonly Lang[] = ['ko'];
+export const pagePath = (lang: Lang, page: Page) =>
+  lang === 'ko' || !PAGE_LANGS.includes(lang) ? `/${page}.html` : `/${lang}/${page}.html`;

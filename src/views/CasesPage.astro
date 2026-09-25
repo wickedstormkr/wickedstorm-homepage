@@ -1,0 +1,35 @@
+---
+/** 사례 페이지: 기관 로고 → 사례 넷(기관, 연도, 한 일, 결과) → 그 밖의 사업(연혁과 같은 목록) */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import CaseCard from '../components/CaseCard.astro';
+import Img from '../components/Img.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getHome } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getHome(lang).cases;
+---
+<Page lang={lang} page="cases">
+  <section class="band page-top" aria-labelledby="page-title">
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+      <figure class="ref-logos"><Img name={t.logos.img} alt={t.logos.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" /></figure>
+      <ul class="case-grid two">
+        {t.items.map((c) => <li><CaseCard lang={lang} c={c} labels={t.labels} full /></li>)}
+      </ul>
+      <p class="note">{t.note}</p>
+    </div>
+  </section>
+  <section class="band" aria-labelledby="others-title">
+    <div class="wrap">
+      <h2 class="sub-title" id="others-title">{t.others.title}</h2>
+      <ol class="act-list">
+        {t.others.items.map((o) => <li><span class="act-date tnum">{o.year}</span><span>{o.text}</span></li>)}
+      </ol>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Page>

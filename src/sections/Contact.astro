@@ -5,13 +5,22 @@ import type { HomeContent, UiText } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { withBase } from '../lib/url';
 
-interface Props { lang: Lang; t: HomeContent['contact']; ui: UiText }
-const { lang, t, ui } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['contact']; ui: UiText; page?: boolean }
+/** page: 문의 페이지(머리는 페이지가 h1로 둔다) */
+const { lang, t, ui, page = false } = Astro.props;
 const f = t.form;
 ---
-<section class="band contact" id="contact" aria-labelledby="contact-title">
+<section class="band contact" id="contact" aria-labelledby={page ? 'page-title' : 'contact-title'}>
   <div class="wrap">
-    <SecHead lang={lang} id="contact-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+    {page ? null : <SecHead lang={lang} id="contact-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />}
+    <div class="purposes">
+      <p class="purposes-title">{t.purposes.title} <span>{t.purposes.hint}</span></p>
+      <ul class="purpose-grid">
+        {t.purposes.items.map((p) => (
+          <li><a class="purpose" href="#cform" data-topic={p.topic}><b>{p.name}</b><span>{p.desc}</span></a></li>
+        ))}
+      </ul>
+    </div>
     <div class="contact-grid">
       <div class="ci-info">
         <span class="lab">{t.info.telLabel}</span><a href="tel:0222051470">02-2205-1470</a>

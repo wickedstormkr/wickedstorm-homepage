@@ -1,0 +1,24 @@
+---
+/**
+ * 언어별 페이지(제품·표준·사례·신뢰·회사·문의)의 틀. 메타는 common.pages에서, 헤더 메뉴에 지금 페이지를 표시한다.
+ * 다른 언어 주소는 그 언어 페이지를 만든 뒤에만 hreflang으로 싣는다(PAGE_LANGS).
+ */
+import Base from './Base.astro';
+import '../styles/cards.css';
+import '../styles/home.css';
+import '../styles/fragments.css';
+import '../styles/pages.css';
+import { getHome } from '../lib/content';
+import { PAGE_LANGS, homePath, pagePath, type Lang, type Page } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang; page: Page }
+const { lang, page } = Astro.props;
+const meta = getHome(lang).common.pages[page];
+const alternates = Object.fromEntries(PAGE_LANGS.map((l) => [l, pagePath(l, page)])) as Partial<Record<Lang, string>>;
+---
+<Base lang={lang} title={meta.title} description={meta.description} path={pagePath(lang, page)} alternates={alternates} homeHref={url(homePath(lang))} current={page}>
+  <main id="main" tabindex="-1" class="page">
+    <slot />
+  </main>
+</Base>

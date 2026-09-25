@@ -27,13 +27,19 @@ const files = (dir, ext) => {
 
 /* 1) 모양 */
 const shape = (v) => (Array.isArray(v) ? v.map(shape) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, shape(v[k])])) : typeof v);
+// 번역은 마지막 단계에서 채운다. 그 전까지(--strict-i18n 없이) 모양 차이는 '번역 대기'로만 알린다
+const STRICT_I18N = process.argv.includes('--strict-i18n');
+const pending = [];
 for (const section of readdirSync('src/content/home/ko')) {
   const ko = JSON.stringify(shape(JSON.parse(readFileSync(`src/content/home/ko/${section}`, 'utf8'))));
   for (const l of ['en', 'ja', 'vi']) {
-    const other = JSON.stringify(shape(JSON.parse(readFileSync(`src/content/home/${l}/${section}`, 'utf8'))));
-    if (other !== ko) errors.push(`모양 다름: src/content/home/${l}/${section} (국문과 키·배열 길이가 다름)`);
+    const f = `src/content/home/${l}/${section}`;
+    let other = null;
+    try { other = JSON.stringify(shape(JSON.parse(readFileSync(f, 'utf8')))); } catch { /* 파일 없음 */ }
+    if (other !== ko) (STRICT_I18N ? errors : pending).push(`${other === null ? '파일 없음' : '모양 다름'}: ${f} (국문과 키·배열 길이가 다름)`);
   }
 }
+if (pending.length) console.log(`번역 대기 ${pending.length}건(국문 문구로 대신 보임):\n  ` + pending.join('\n  '));
 {
   const ko = JSON.stringify(shape(JSON.parse(readFileSync('src/content/ui/ko.json', 'utf8'))));
   for (const l of ['en', 'ja', 'vi']) if (JSON.stringify(shape(JSON.parse(readFileSync(`src/content/ui/${l}.json`, 'utf8')))) !== ko) errors.push(`모양 다름: src/content/ui/${l}.json`);

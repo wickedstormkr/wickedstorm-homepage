@@ -1,0 +1,20 @@
+---
+/** 문의 페이지: 목적별 시작(도입 상담·시연 요청·파트너십·해외) + 문의 폼 + 자료 받기 */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import Contact from '../sections/Contact.astro';
+import Resources from '../sections/Resources.astro';
+import { getHome, getUi } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = getHome(lang);
+---
+<Page lang={lang} page="contact">
+  <section class="band page-top page-head-band" aria-labelledby="page-title">
+    <div class="wrap"><PageHead lang={lang} eyebrow={h.contact.eyebrow} title={h.contact.title} lead={h.contact.lead} /></div>
+  </section>
+  <Contact lang={lang} t={h.contact} ui={getUi(lang)} page />
+  <Resources lang={lang} t={h.resources} />
+</Page>

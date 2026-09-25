@@ -1,13 +1,13 @@
 ---
-/** ④ LearnHubble AI */
+/** LearnHubble AI(제품 페이지): 네 기능, 원칙, 실제 화면 */
 import Img from '../components/Img.astro';
 import type { HomeContent, UiText } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 
-interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText }
-const { lang, t, ui } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText; contactHref?: string }
+const { lang, t, ui, contactHref = '#contact' } = Astro.props;
 ---
 <section class="band lhub" id="learnhubble" aria-labelledby="lhub-title">
   <div class="wrap">
@@ -25,7 +25,7 @@ const { lang, t, ui } = Astro.props;
           ))}
         </ol>
         <p class="lhub-principle" set:html={t.principle} />
-        <div class="lhub-cta"><a class="btn p" href="#contact" data-topic={t.cta.topic}>{t.cta.label}</a></div>
+        <div class="lhub-cta"><a class="btn p" href={contactHref} data-topic={t.cta.topic}>{t.cta.label}</a></div>
       </div>
       <figure class="frame lhub-main">
         <Img name={t.main.img} alt={t.main.alt} sizes="(min-width: 1024px) 720px, calc(100vw - 48px)" />

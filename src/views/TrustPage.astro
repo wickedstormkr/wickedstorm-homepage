@@ -1,0 +1,70 @@
+---
+/**
+ * 신뢰 페이지: 인증·특허·표준 활동·공공 조달·개인정보·접근성. 항목마다 번호·발급 기관·시기와 원본(특허증)·관련 소식 링크.
+ * 홈 첫 화면의 증빙 한 줄이 이 페이지의 항목(#gs, #patent-2883249 …)으로 온다.
+ */
+import { getImage } from 'astro:assets';
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import Img from '../components/Img.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { getHome } from '../lib/content';
+import { img } from '../lib/images';
+import { pagePath, type Lang, type Page as P } from '../lib/i18n';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getHome(lang).trust;
+/** 원본 보기: 특허증 원본 크기 그림 */
+const full = async (name: string) => (await getImage({ src: img(name), format: 'webp' })).src;
+const originals: Record<string, string> = {};
+for (const g of t.groups) for (const it of g.items) if (it.img) originals[it.id] = await full(it.img);
+const href = (l: { href?: string; page?: string }) => (l.page ? url(pagePath(lang, l.page as P)) : url(l.href!));
+---
+<Page lang={lang} page="trust">
+  <section class="band page-top" aria-labelledby="page-title">
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+      <nav class="trust-toc" aria-label={t.eyebrow}>
+        {t.groups.map((g) => <a href={`#${g.id}`}>{g.title}</a>)}
+      </nav>
+    </div>
+  </section>
+  {t.groups.map((g) => (
+    <section class="band trust-group" id={g.id} aria-labelledby={`${g.id}-title`}>
+      <div class="wrap">
+        <h2 class="sub-title" id={`${g.id}-title`}>{g.title}</h2>
+        <ul class:list={['trust-grid', { docs: g.items.some((i) => i.img) }]}>
+          {g.items.map((it) => (
+            <li>
+              <article class="trust-card" id={it.id}>
+                {it.img && (
+                  <a class="trust-doc" href={originals[it.id]} target="_blank" rel="noopener">
+                    <Img name={it.img} alt={it.imgAlt} sizes="(min-width: 1024px) 260px, 40vw" />
+                    <span class="trust-doc-l">{t.original}</span>
+                  </a>
+                )}
+                <div class="trust-body">
+                  <h3>{it.name}</h3>
+                  {it.subject && <p class="trust-subject">{it.subject}</p>}
+                  {it.detail && <p class="trust-detail">{it.detail}</p>}
+                  {it.meta.length > 0 && (
+                    <dl class="trust-meta">{it.meta.map((m) => <div><dt>{m.k}</dt><dd class="tnum">{m.v}</dd></div>)}</dl>
+                  )}
+                  {it.links.length > 0 && (
+                    <p class="trust-links">{it.links.map((l) => <a href={href(l)}>{l.label}</a>)}</p>
+                  )}
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+  <section class="band" aria-label={t.eyebrow}>
+    <div class="wrap"><p class="note">{t.note}</p></div>
+  </section>
+  <CtaBand lang={lang} />
+</Page>

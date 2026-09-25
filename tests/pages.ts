@@ -11,6 +11,8 @@ export const HOMES: PageDef[] = [
   { id: 'home-ja', path: 'ja/index.html', lang: 'ja' },
   { id: 'home-vi', path: 'vi/index.html', lang: 'vi' },
 ];
+/** 언어별 페이지(번역 단계 전까지 국문만) */
+export const PAGES: PageDef[] = ['product', 'standards', 'cases', 'trust', 'company', 'contact'].map((p) => ({ id: p, path: `${p}.html`, lang: 'ko' as const }));
 /** 그 밖의 페이지(국문) */
 export const OTHERS: PageDef[] = [
   { id: 'news', path: 'news.html', lang: 'ko' },
@@ -21,7 +23,7 @@ export const OTHERS: PageDef[] = [
   { id: 'links', path: 'links.html', lang: 'ko' },
   { id: '404', path: '404.html', lang: 'ko' },
 ];
-export const ALL = [...HOMES, ...OTHERS];
+export const ALL = [...HOMES, ...PAGES, ...OTHERS];
 
 export const LOCALE = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', vi: 'vi-VN' } as const;
 export const viewportHeight = (w: number) => (w < 700 ? 844 : w < 1024 ? 1100 : 900);

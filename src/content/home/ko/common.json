@@ -62,5 +62,11 @@
     }
   },
   "more": "자세히 보기",
-  "breadcrumbHome": "홈"
+  "breadcrumbHome": "홈",
+  "ctaBand": {
+    "title": "기관 환경에 맞춰 함께 검토하겠습니다",
+    "text": "도입 상담, 시연 요청, 파트너십·해외 협력을 목적별로 문의할 수 있습니다.",
+    "primary": "도입 문의",
+    "secondary": "자료 받기"
+  }
 }

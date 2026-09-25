@@ -3,55 +3,77 @@
 import { getImage } from 'astro:assets';
 import SecHead from '../components/SecHead.astro';
 import type { HomeContent, UiText } from '../lib/content';
-import type { Lang } from '../lib/i18n';
+import { pagePath, type Lang, type Page } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url, withBase } from '../lib/url';
 import poster from '../assets/media/company-film-poster.webp';
 
-interface Props { lang: Lang; t: HomeContent['company']; ui: UiText }
-const { lang, t, ui } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['company']; ui: UiText; full?: boolean }
+/** full: 회사 페이지(영상·전체 연혁·채용·오시는 길). 아니면 홈(수치·주요 이정표·채용 한 줄) */
+const { lang, t, ui, full = false } = Astro.props;
 const posterImg = await getImage({ src: poster, format: 'webp', width: Math.min(1280, poster.width) });
-/** 연혁 링크: 홈 안 앵커는 그대로, 사이트 주소는 base를 붙인다 */
-const href = (h: string) => (h.startsWith('#') ? h : url(h));
+/** 연혁 링크: 옛 홈 앵커(#product·#references·#standards)는 새 페이지로, 사이트 주소는 base를 붙인다 */
+const ANCHOR: Record<string, Page> = { '#product': 'product', '#references': 'cases', '#standards': 'standards' };
+const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.startsWith('#') ? h : url(h));
 ---
-<section class="band company" id="company" aria-labelledby="co-title">
+<section class:list={['band company', { 'page-top-less': full }]} id={full ? 'vision' : 'company'} aria-labelledby={full ? 'page-title' : 'co-title'}>
   <div class="wrap">
-    <SecHead lang={lang} id="co-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-      <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
-    </SecHead>
+    {full ? <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p> : (
+      <SecHead lang={lang} id="co-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+        <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
+      </SecHead>
+    )}
     <ul class="co-stats">
       {t.stats.map((s) => (
         <li class="co-stat"><b class="tnum">{s.value}{s.unit && <span class="unit">{s.unit}</span>}</b><span set:html={s.label} /></li>
       ))}
     </ul>
-    <figure class="frame media-frame film" id="film">
-      <video width="1280" height="720" controls playsinline preload="none" poster={posterImg.src} aria-label={t.film.label}>
-        <source src={url('/media/company-film.mp4')} type="video/mp4" />
-      </video>
-      <figcaption set:html={t.film.caption} />
-    </figure>
+    {!full && (
+      <>
+        <h3 class="sub-title">{t.milestones.title}</h3>
+        <ol class="miles">
+          {t.milestones.items.map((m) => <li><span class="miles-y tnum">{m.year}</span><span>{m.text}</span></li>)}
+        </ol>
+        <div class="careers-row">
+          <p><b>{t.careers.eyebrow}</b> <span set:html={t.careers.lead} /></p>
+          <div class="hero-cta">
+            <a class="btn s" href={url(pagePath(lang, 'company'))}>{t.more}</a>
+          </div>
+        </div>
+      </>
+    )}
+    {full && (
+      <>
+        <figure class="frame media-frame film" id="film">
+          <video width="1280" height="720" controls playsinline preload="none" poster={posterImg.src} aria-label={t.film.label}>
+            <source src={url('/media/company-film.mp4')} type="video/mp4" />
+          </video>
+          <figcaption set:html={t.film.caption} />
+        </figure>
 
-    <div class="history" id="history">
-      <div class="hist-head">
-        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.history.eyebrow} /></p>
-        <h3 class="hist-title" set:html={phrase(t.history.title, lang)} />
-      </div>
-      <ol class="hist-list" aria-label={t.history.listLabel}>
-        {t.history.years.map((y) => (
-          <li class="hist-item">
-            <div class="hist-year">{y.year}</div>
-            <div class="hist-body">
-              <ul class="hist-hl">
-                {y.highlights.map((h) => (
-                  <li>{h.href ? <a href={href(h.href)}><span set:html={withBase(h.html)} /><span class="arw" aria-hidden="true">→</span></a> : <span set:html={h.html} />}</li>
-                ))}
-              </ul>
-              <ul class="hist-dim">{y.more.map((m) => <li set:html={m} />)}</ul>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <button class="hist-more" type="button" aria-expanded="false" aria-controls="history" data-more={t.history.more} data-less={ui.histLess}>{t.history.more}</button>
-    </div>
+        <div class="history" id="history">
+          <div class="hist-head">
+            <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.history.eyebrow} /></p>
+            <h3 class="hist-title" set:html={phrase(t.history.title, lang)} />
+          </div>
+          <ol class="hist-list" aria-label={t.history.listLabel}>
+            {t.history.years.map((y) => (
+              <li class="hist-item">
+                <div class="hist-year">{y.year}</div>
+                <div class="hist-body">
+                  <ul class="hist-hl">
+                    {y.highlights.map((h) => (
+                      <li>{h.href ? <a href={href(h.href)}><span set:html={withBase(h.html)} /><span class="arw" aria-hidden="true">→</span></a> : <span set:html={h.html} />}</li>
+                    ))}
+                  </ul>
+                  <ul class="hist-dim">{y.more.map((m) => <li set:html={m} />)}</ul>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <button class="hist-more" type="button" aria-expanded="false" aria-controls="history" data-more={t.history.more} data-less={ui.histLess}>{t.history.more}</button>
+        </div>
+      </>
+    )}
   </div>
 </section>
