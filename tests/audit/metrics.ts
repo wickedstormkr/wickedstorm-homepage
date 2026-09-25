@@ -133,6 +133,18 @@ export function audit(opts: { touch: boolean }): AuditResult {
     /* 2) 칸 밖 글자: 글자 상자가 요소 상자를 벗어남(1px 허용) */
     const bad = toks.find((k) => k.rect.right > br.right + 1.5 || k.rect.left < br.left - 1.5);
     if (bad) out.outside.push(`${name(b)} "${bad.text}" ${Math.round(bad.rect.left)}~${Math.round(bad.rect.right)} / 칸 ${Math.round(br.left)}~${Math.round(br.right)}`);
+    // 부모 칸(overflow:hidden·clip)에 잘려 안 보이는 글자. 가로로 넘기는 칸(auto·scroll)은 넘겨 보면 되므로 제외
+    else {
+      for (let p = b.parentElement; p && p !== document.body; p = p.parentElement) {
+        const o = getComputedStyle(p).overflowX;
+        if (o === 'auto' || o === 'scroll') break;
+        if (o !== 'hidden' && o !== 'clip') continue;
+        const pr = p.getBoundingClientRect();
+        const cut = toks.find((k) => k.rect.right > pr.right + 1.5 || k.rect.left < pr.left - 1.5);
+        if (cut) out.outside.push(`${name(b)} "${cut.text}" 잘림(${name(p)})`);
+        break;
+      }
+    }
     /* 4) 본문 15px */
     const text = (b.textContent || '').replace(/\s+/g, ' ').trim();
     // 대문자 라벨(아이브로우·기관명 라벨)은 본문이 아니다

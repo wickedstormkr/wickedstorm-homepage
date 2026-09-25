@@ -13,6 +13,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
+  // 실패 흔적(trace)은 따로 두어, 점검 결과 파일(test-results/audit 등)을 지우지 않게 한다
+  outputDir: 'test-results/pw-artifacts',
   workers: process.env.CI ? 4 : undefined,
   reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'test-results/results.json' }]],
   use: {

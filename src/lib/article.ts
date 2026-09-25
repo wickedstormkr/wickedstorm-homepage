@@ -67,7 +67,10 @@ export async function renderBody(html: string): Promise<string> {
     return `\u0000IMG${jobs.length - 1}\u0000`;
   });
   const done = await Promise.all(jobs);
-  return out.replace(/\u0000IMG(\d+)\u0000/g, (_m, i: string) => done[Number(i)]);
+  out = out.replace(/\u0000IMG(\d+)\u0000/g, (_m, i: string) => done[Number(i)]);
+  // 제목 단계: 페이지 제목이 h1이므로 본문 소제목은 h2부터(h3만 있으면 h2로 올린다)
+  if (!/<h2>/.test(out) && /<h3>/.test(out)) out = out.replace(/<(\/?)h3>/g, '<$1h2>');
+  return out;
 }
 
 /** 요약(메타 설명): 태그를 걷어 내고 160자 */

@@ -32,6 +32,10 @@ nav.main a:hover,nav.main a[aria-current="page"]{color:#fff}
   font-size:15px;font-weight:600;color:var(--ink-3)}
 .lang-row a[aria-current="true"]{color:#fff;background:rgba(255,255,255,.08);border-color:var(--line3)}
 
+/* 다른 언어로 쓴 글(언어 이름, 다른 언어 PDF 링크, 안내 띠)은 시스템 글꼴로 그린다.
+   웹 글꼴로 그리면 '한국어·日本語·Tiếng Việt' 몇 글자 때문에 페이지마다 다른 언어 글꼴 조각(각 25KB 안팎)을 더 받는다 */
+.lang-menu summary,.lang-menu a,.lang-row a,.res-links a[lang],.lang-banner [lang]{font-family:var(--font-system)}
+
 /* 움직임 멈춤 버튼: 오른쪽 위에 늘 보인다. 아이콘은 CSS(멈춤 = 두 막대, 재생 = 삼각형) */
 .motion-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;min-width:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line2);
   font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}

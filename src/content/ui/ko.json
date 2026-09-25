@@ -36,5 +36,6 @@
     "sent": "문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.",
     "failed": "전송에 실패했습니다. manager@wickedstorm.kr로 보내주세요."
   },
-  "open": "바로가기"
+  "open": "바로가기",
+  "lhubScreens": "LearnHubble AI 화면 예시"
 }

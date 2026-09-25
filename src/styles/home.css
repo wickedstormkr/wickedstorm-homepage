@@ -26,7 +26,7 @@
 /* 수집 스트림 패널(정지 화면: 대표 다섯 문장) */
 .capture{position:relative;margin:0;border-radius:22px;background:linear-gradient(180deg,var(--panel-hi),#0b0c18);
   border:1px solid var(--line2);box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12);padding:20px;overflow:hidden}
-.cap-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.cap-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-bottom:12px}
 .cap-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#cfd3ee}
 .cap-badge .sym{height:15px}
 .cap-live{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;color:var(--accent);font-family:var(--en);font-weight:600;white-space:nowrap}
@@ -41,10 +41,10 @@
 .chip.object{background:rgba(233,48,176,.14);color:#ffa6e2;border:1px solid rgba(233,48,176,.3)}
 .chip.result{margin-left:auto;background:rgba(255,255,255,.06);color:var(--ink-2);border:1px solid rgba(255,255,255,.16);font-family:var(--en);font-variant-numeric:tabular-nums}
 .arrow{color:var(--muted);font-size:13px;flex:none}
-.cap-foot{display:flex;align-items:center;gap:14px;margin-top:12px;padding-top:16px;border-top:1px solid var(--line)}
+.cap-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:12px;padding-top:16px;border-top:1px solid var(--line)}
 .ins-label{font-family:var(--en);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);line-height:1.2}
 .spark{flex:1;height:34px;min-width:40px}
-.ins-chip{display:inline-flex;align-items:center;white-space:nowrap;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;background:var(--grad);color:#fff}
+.ins-chip{display:inline-block;max-width:100%;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;background:var(--grad);color:#fff}
 .capture figcaption{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
 .ho-main{font-size:clamp(17px,1.6vw,20px);font-weight:800;letter-spacing:-.03em;line-height:1.35}
 .ho-sub{margin-top:6px;color:var(--lead);font-size:15px;font-weight:500}
@@ -164,7 +164,7 @@
 .pill{display:inline-block;padding:.3cqw .85cqw;border-radius:999px;color:#fff;font-family:var(--en);font-size:clamp(11px,1.08cqw,15px);font-weight:700;letter-spacing:-.01em;white-space:nowrap}
 .pill.lec{background:var(--grad-lec);box-shadow:0 0 1.6cqw rgba(192,59,205,.42)}
 .pill.lhb{background:var(--grad-lhb);box-shadow:0 0 1.6cqw rgba(79,104,255,.46)}
-.loop-notes .ln-role b{font-size:clamp(12px,1.3cqw,18px);font-weight:800;color:#d7c6ff;letter-spacing:-.02em;white-space:nowrap}
+.loop-notes .ln-role b{font-size:clamp(12px,1.3cqw,18px);font-weight:800;color:#d7c6ff;letter-spacing:-.02em;text-wrap:balance}
 .loop-notes .ln-desc{font-size:clamp(11px,.92cqw,13px);line-height:1.5;color:#c4bde4;text-wrap:balance;text-shadow:0 1px 8px rgba(6,4,24,.9)}
 .loop-figure>figcaption{margin-top:12px}
 /* 1023px 이하: 그림 속 글자가 작아지므로 같은 설명을 그림 아래 목록으로(그림 속 글자는 데스크톱에서만) */

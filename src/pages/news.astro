@@ -27,6 +27,7 @@ const label = { all: '전체', ...CATEGORY_KO };
         <div class="board-tabs" role="group" aria-label="소식 분류" hidden data-tabs>
           {cats.map((c) => <button class="board-tab" type="button" data-cat={c} aria-pressed={c === 'all' ? 'true' : 'false'}>{label[c]}</button>)}
         </div>
+        <h2 class="sr-only">소식 목록</h2>
         <p class="sr-only" role="status" aria-live="polite" data-board-status></p>
         <ul class="news-grid" data-board>
           {posts.map((p) => (

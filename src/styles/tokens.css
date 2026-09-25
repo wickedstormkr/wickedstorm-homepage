@@ -39,9 +39,11 @@
   --grad-lhb:linear-gradient(92deg,#6d56ff,#2f7cff);
 
   /* 글꼴 */
-  --font:"Pretendard Variable",Pretendard,-apple-system,system-ui,"Noto Sans KR",sans-serif;
-  --en:"Sora",var(--font);
+  /* 대체 글꼴: 글꼴이 오기 전·글꼴에 없는 글자(일본어)용. 한글 시스템 글꼴 이름을 명시해야 브라우저가 글자마다 글꼴을 찾지 않는다 */
+  --font:"Pretendard Variable","Pretendard Fallback","Pretendard KR Fallback",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans CJK KR","Noto Sans KR","Hiragino Sans","Noto Sans CJK JP",sans-serif;
+  --en:"Sora","Sora Fallback",var(--font);
   --mono:ui-monospace,Menlo,monospace;
+  --font-system:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Hiragino Sans","Noto Sans CJK KR","Noto Sans",sans-serif;
 
   /* 글자 크기: 본문 15px 이상(CLAUDE.md), 그림 속 글자는 데스크톱에서만 11px 이상 */
   --fs-body:15px;

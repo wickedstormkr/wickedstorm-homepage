@@ -3,7 +3,6 @@
  * 모든 페이지의 틀: head(메타·OG·hreflang·canonical·글꼴), 헤더, 본문, 푸터, 공통 스크립트.
  * alternates가 있으면(홈) 네 언어 hreflang과 x-default를 넣는다. 없으면 이 페이지 하나만(국문 전용 페이지).
  */
-import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/chrome.css';
@@ -65,11 +64,6 @@ const common = getHome(lang).common;
 const canonical = absUrl(path);
 const ogAbs = /^https?:/.test(ogImage) ? ogImage : absUrl(ogImage);
 const ogIsDefault = /\/img\/og-(home|image)/.test(ogImage);
-/* 첫 화면 글자가 쓰는 Pretendard 청크만 미리 받는다(지금 사이트 실측: 히어로+헤더 12청크).
-   LCP가 히어로 제목 글자라 글꼴 도착이 곧 LCP다. 한국어 페이지에만 쓴다(다른 언어는 라틴 청크 하나로 충분). */
-const PRELOAD_KO = [73, 75, 80, 82, 84, 85, 86, 87, 88, 89, 90, 91];
-const preloads = lang === 'ko' && !bare ? PRELOAD_KO.map((n) => `/fonts/pretendard/woff2-dynamic-subset/PretendardVariable.subset.${n}.woff2`) : [];
-if (lang === 'vi') preloads.push('/fonts/pretendard/PretendardVariable.vi.woff2');
 ---
 <!doctype html>
 <html lang={lang}>
@@ -108,7 +102,10 @@ if (lang === 'vi') preloads.push('/fonts/pretendard/PretendardVariable.vi.woff2'
 <meta name="twitter:image" content={ogAbs} />
 <link rel="icon" href={url('/favicon.ico')} sizes="any" />
 <link rel="apple-touch-icon" href={url('/img/favicon.png')} />
-{preloads.map((href) => <link rel="preload" href={url(href)} as="font" type="font/woff2" crossorigin />)}
+{/* 글꼴(Pretendard·Sora)은 첫 그리기를 막지 않게 비동기로: 첫 화면은 시스템 글꼴로 바로 그리고, 도착하면 바꿔 그린다(font-display:swap).
+   글꼴 400KB 안팎을 기다리면 폰 LCP 2.5초 예산을 넘는다(Lighthouse 측정). */}
+<link rel="stylesheet" href={url('/fonts/fonts.css')} media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href={url('/fonts/fonts.css')} /></noscript>
 {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 {GA_ID && (
   <>

@@ -18,7 +18,7 @@ const posts = defineCollection({
     summary: z.string(),
     body: z.string(),
     thumb: z.string().nullable(),
-    externalUrl: z.string().url().nullable(),
+    externalUrl: z.url().nullable(),
     pinned: z.boolean().default(false),
   }),
 });

@@ -1,0 +1,117 @@
+# 자동 점검: 빌드, 타입, 콘텐츠 규칙, 깨진 링크, 반응형(폭 9 × 네 언어), axe, 동작, Lighthouse(폰 예산)
+# 결과표는 작업 요약과 PR 댓글(한 개를 계속 갱신)에 남는다. 원본은 아티팩트(점검-결과)로 받는다.
+name: 점검
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: 빌드와 자동 점검
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      # 호스팅이 정해지면 여기(또는 저장소 변수)만 바꾼다. site.config.mjs 참고
+      SITE_URL: https://wickedstorm.kr
+      BASE_PATH: /
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 의존성
+        run: npm ci
+
+      - name: 한글·일본어 시스템 글꼴(폰과 같은 조건으로 첫 화면을 재기 위해)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
+      - name: 브라우저(Playwright Chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: 타입 검사
+        id: types
+        continue-on-error: true
+        run: npm run check
+
+      - name: 빌드
+        run: npm run build
+
+      - name: 콘텐츠 규칙
+        id: content
+        continue-on-error: true
+        run: npm run test:content
+
+      - name: 깨진 링크(사이트 안)
+        id: links
+        continue-on-error: true
+        run: npm run test:links
+
+      - name: 바깥 링크(경고만)
+        continue-on-error: true
+        run: npm run test:links:external
+
+      - name: 브라우저 테스트(반응형·axe·동작)
+        id: e2e
+        continue-on-error: true
+        run: npm run test:e2e
+
+      - name: Lighthouse(폰 성능 예산)
+        id: lh
+        continue-on-error: true
+        run: npm run test:lh
+
+      - name: 결과표
+        if: always()
+        run: |
+          npm run report > /dev/null
+          cat test-results/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: PR 댓글(결과표)
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- ws-ci-report -->';
+            const run = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = `${marker}\n${fs.readFileSync('test-results/report.md', 'utf8')}\n[작업 기록과 아티팩트](${run}) · 커밋 ${context.sha.slice(0, 7)}`;
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const mine = comments.find((c) => c.body && c.body.includes(marker));
+            if (mine) await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+
+      - name: 아티팩트
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: 점검-결과
+          path: |
+            test-results/
+            playwright-report/
+            .lighthouseci/
+          retention-days: 30
+
+      - name: 판정
+        if: always()
+        run: |
+          fail=0
+          for s in "types:${{ steps.types.outcome }}" "content:${{ steps.content.outcome }}" "links:${{ steps.links.outcome }}" "e2e:${{ steps.e2e.outcome }}" "lighthouse:${{ steps.lh.outcome }}"; do
+            echo "$s"; case "$s" in *:failure) fail=1;; esac
+          done
+          exit $fail

@@ -4,7 +4,6 @@ import Img from '../components/Img.astro';
 import SecHead from '../components/SecHead.astro';
 import type { HomeContent } from '../lib/content';
 import type { Lang } from '../lib/i18n';
-import { phrase } from '../lib/phrase';
 
 interface Props { lang: Lang; t: HomeContent['product'] }
 const { lang, t } = Astro.props;
