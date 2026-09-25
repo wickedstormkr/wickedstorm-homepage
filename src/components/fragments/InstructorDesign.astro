@@ -1,7 +1,8 @@
 ---
 /**
  * LearnHubble AI 교수자 · 수업 설계: 확인이 필요한 구간(세 칸, 칸마다 시각 · 구간 / 근거 두 줄) → AI 추천(보충 설명·확인 퀴즈) → 교수자가 고쳐서 적용.
- * compact(이야기 장면 5): 신호가 온 구간 하나와 추천만. full(제품 역할 탭): 구간 셋, 추천과 확인 퀴즈 초안을 나란히(운영자 화면과 같은 두 칸 짜임).
+ * 영역은 셋: 데이터(구간) · AI 영역(추천과 AI가 쓴 확인 퀴즈 초안을 한 상자에, .fx-ai) · 사람의 결정(아래 줄).
+ * compact(이야기 장면 5): 신호가 온 구간 하나와 추천만. full(제품 역할 탭): 구간 셋, AI 영역 안에 추천과 퀴즈 초안을 나란히(운영자 화면과 같은 두 칸 짜임).
  * 라벨(시각·AI 추천)은 내용과 같은 줄에 두어 상자 높이를 늘리지 않는다.
  * 한 줄 상자(격자)의 칸 사이에는 띄어쓰기를 두지 않는다: 조판(typeset.ts)이 &nbsp;로 바꾸면 격자 칸이 하나 더 생긴다.
  */
@@ -19,9 +20,10 @@ const segs = full ? t.segments : t.segments.filter((s) => s.hot);
         <li class:list={{ hot: s.hot }}><span class="fx-time tnum">{s.time}</span><b>{s.title}</b><small>{s.note}</small></li>
       ))}
     </ul>
-    <div class="fx-plan">
-      <div class="fx-ai">
-        <p><span class="fx-tag">{t.ai}</span>{t.proposal}</p>
+    <div class="fx-ai">
+      <div class="fx-ai-main">
+        <span class="fx-ai-tag">{t.ai}</span>
+        <p>{t.proposal}</p>
         <small>{t.detail}</small>
       </div>
       {full && (
