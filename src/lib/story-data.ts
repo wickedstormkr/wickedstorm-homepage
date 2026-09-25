@@ -7,7 +7,8 @@
  *
  * 같은 씨앗값으로 언제나 같은 모양을 만든다. 빌드 때 미리 그린 그림(SVG, src/pages/art/*),
  * 캔버스, WebGL이 모두 이 모듈을 쓰므로 세 층이 같은 그림을 그린다.
- * 좌표는 16:10 그림 칸 기준(x 0~1, y 0~1).
+ * 좌표: 장면 1·2(G 별밭, F 흐름)는 무대 전체 기준(0~1), 장면 3~6은 16:10 그림 칸 기준(x 0~1, y 0~1).
+ * 무대 기준 좌표는 그릴 때 place()의 stage로 그림 칸 기준으로 바꾼다.
  */
 
 export const VERBS = ['watched', 'answered', 'submitted', 'asked'] as const;
@@ -58,6 +59,10 @@ export const WEEK_WEIGHTS = [26, 34, 86, 30, 24, 20];
 export const WEEKS = WEEK_WEIGHTS.length;
 export const HOT_WEEK = 2; // 0부터 센 3주차
 
+/** 흐름(장면 2) 줄기의 위치(무대 기준 y): 장면 글과 제품 화면 아래, 장면 목록 위 */
+export const FLOW_Y = 0.755;
+export const FLOW_GAP = 0.032;
+
 /** 막대(장면 4) 배치: 그림 칸 왼쪽 절반 */
 export const BARS = { x0: 0.07, step: 0.075, width: 0.05, base: 0.8, maxH: 0.56 };
 
@@ -79,7 +84,9 @@ export interface Particle {
   evidence: boolean; // 장면 5에서 교수자 화면으로 가는 근거 문장
   delay: number; // 0~1 흐름 순서
   phase: number; // 떠다님 위상
-  S: [number, number]; // 흘러 들어오기 전(그림 칸 왼쪽 밖)
+  mag: number; // 별밭에서의 밝기·크기(0.5~1.6)
+  G: [number, number]; // 장면 1 별밭: 학습의 순간들이 무대 전체에 흩어져 있다(무대 기준)
+  F: [number, number]; // 장면 2 흐름: 활동 종류마다 한 줄기로 늘어선 표준 문장(무대 기준)
   T: [number, number]; // 성취 항목 자리(장면 3)
   B: [number, number]; // 주차별 막대(장면 4, 이상 항목만)
   D: [number, number]; // 근거 묶음(장면 5)
@@ -112,9 +119,13 @@ export function buildParticles(n: number, seed = 7): Particle[] {
     const a = r() * Math.PI * 2;
     const rr = Math.pow(r(), 0.55);
     const T: [number, number] = [node.x + Math.cos(a) * rr * LEAF_R, node.y + Math.sin(a) * rr * 0.05];
-    // 흐름: 활동 종류마다 한 줄기로 들어온다
-    const S: [number, number] = [-0.08 - r() * 0.5, 0.22 + verb * 0.18 + (r() - 0.5) * 0.12];
-    out.push({ verb, leaf, week, evidence, delay: r(), phase: r() * Math.PI * 2, S, T, B: [0, 0], D: [0, 0], L: [0, 0] });
+    // 별밭: 오른쪽(제품 화면 쪽)에 조금 더 모이고, 글이 있는 왼쪽은 성기게
+    const gx = Math.pow(r(), 0.72);
+    const G: [number, number] = [gx, 0.06 + r() * 0.9];
+    const mag = 0.5 + Math.pow(r(), 3) * 1.1;
+    // 흐름: 화면 아래쪽에 활동 종류별 네 줄기(위에서부터 시청·응답·제출·질문)
+    const F: [number, number] = [r() * 1.08 - 0.04, FLOW_Y + verb * FLOW_GAP + (r() - 0.5) * 0.01];
+    out.push({ verb, leaf, week, evidence, delay: r(), phase: r() * Math.PI * 2, mag, G, F, T, B: [0, 0], D: [0, 0], L: [0, 0] });
   }
   // 막대: 이상 항목 문장을 주차별로 쌓는다(칸 채우기)
   const anomalous = out.filter((p) => p.leaf === ANOMALY_LEAF);
@@ -155,15 +166,21 @@ export function buildParticles(n: number, seed = 7): Particle[] {
   return out;
 }
 
-/** 장면별 배치 순서: 장면 1·2는 흘러 들어오기 전, 3 체계, 4 막대, 5 근거, 6 고리 */
-export const LAYOUT_BY_SCENE = ['S', 'S', 'T', 'B', 'D', 'L'] as const;
+/** 장면별 배치: 1 별밭, 2 흐름, 3 체계, 4 막대, 5 근거, 6 고리 */
+export const LAYOUT_BY_SCENE = ['G', 'F', 'T', 'B', 'D', 'L'] as const;
+/** 무대 기준 배치(G·F)를 그림 칸 기준으로 바꾸는 값: 칸 좌표 = x0 + 무대 좌표 × sx */
+export interface StageMap { x0: number; y0: number; sx: number; sy: number }
+export const STAGE_IS_BOX: StageMap = { x0: 0, y0: 0, sx: 1, sy: 1 };
 export type LayoutKey = (typeof LAYOUT_BY_SCENE)[number];
 
 /** 배치별 밝기(0이면 보이지 않음) */
 export function alphaOf(p: Particle, k: LayoutKey): number {
   switch (k) {
-    case 'S':
-      return 0;
+    case 'G':
+      // 대부분은 흐린 먼지, 몇몇만 밝은 별. 제목·글이 있는 왼쪽은 더 흐리게
+      return (0.07 + (p.mag - 0.5) * 0.75) * (0.35 + 0.65 * Math.min(1, p.G[0] / 0.55));
+    case 'F':
+      return 0.75;
     case 'T':
       return 0.85;
     case 'B':
@@ -177,6 +194,8 @@ export function alphaOf(p: Particle, k: LayoutKey): number {
 export function sizeOf(p: Particle, k: LayoutKey): number {
   if (k === 'B' && p.leaf === ANOMALY_LEAF) return p.week === HOT_WEEK ? 1.5 : 1.2;
   if (k === 'D' && p.evidence) return 1.3;
+  if (k === 'G') return 0.55 + p.mag * 0.55;
+  if (k === 'F') return 0.85;
   return 1;
 }
 
@@ -192,20 +211,23 @@ const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
  * shift: 근거 묶음(D)을 화면의 신호 알림 쪽으로 옮기는 양(그림 칸 비율).
  * 다음 장면으로 넘어가는 구간(소수부 0.3~1.0)에서 입자마다 순서(delay)를 두고 옮겨 가, 흐름처럼 보인다.
  */
-export function place(p: Particle, s: number, out: Float32Array | number[] = [0, 0, 0, 0], shift?: readonly [number, number]) {
+export function place(p: Particle, s: number, out: Float32Array | number[] = [0, 0, 0, 0], shift?: readonly [number, number], stage: StageMap = STAGE_IS_BOX) {
   const n = LAYOUT_BY_SCENE.length - 1;
   const i = Math.max(0, Math.min(n, Math.floor(s)));
   const j = Math.min(n, i + 1);
   const ka = LAYOUT_BY_SCENE[i];
   const kb = LAYOUT_BY_SCENE[j];
   const t = ka === kb ? 0 : ease(clamp01((s - i - 0.3 - p.delay * 0.35) / 0.35));
-  const moved = (k: LayoutKey) => (k === 'D' && p.evidence && shift ? [p.D[0] + shift[0], p.D[1] + shift[1]] : p[k]);
+  const moved = (k: LayoutKey): [number, number] => {
+    if (k === 'G' || k === 'F') return [stage.x0 + p[k][0] * stage.sx, stage.y0 + p[k][1] * stage.sy];
+    return k === 'D' && p.evidence && shift ? [p.D[0] + shift[0], p.D[1] + shift[1]] : p[k];
+  };
   const a = moved(ka);
   const b = moved(kb);
   let x: number;
   let y: number;
-  if (ka === 'S' && kb === 'T') {
-    // 이차 베지어: 왼쪽 밖 → 뿌리 근처 → 성취 항목
+  if (ka === 'F' && kb === 'T') {
+    // 이차 베지어: 흐름 줄기 → 뿌리 근처 → 성취 항목
     const cx = ROOT.x + 0.06;
     const cy = ROOT.y + (a[1] - 0.5) * 0.25;
     const u = 1 - t;
