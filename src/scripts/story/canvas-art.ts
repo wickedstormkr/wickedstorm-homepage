@@ -57,8 +57,10 @@ export class CanvasArt implements Art {
     this.ps = buildParticles();
     this.curves = signalCurves(this.ps);
     this.cur = new Float32Array(this.ps.length * 2);
-    // 가까운(밝은) 별일수록 조금 더 빨리 따라온다: 뒤쪽 별이 늦게 흘러와 깊이가 생긴다
-    this.rate = Float32Array.from(this.ps, (p) => 4.2 + p.z * 2.6 + p.phase * 0.25);
+    // 가까운(밝은) 별일수록 조금 더 빨리 따라온다: 뒤쪽 별이 늦게 흘러와 깊이가 생긴다.
+    // 장면 값 자체가 이미 스크롤을 부드럽게 따라가므로(Lenis·scrub), 여기서는 짧게(시간 상수 0.06~0.11초):
+    // 더 길면 장면 글·그림보다 입자가 0.3~0.8초 늦게 도착해 굼떠 보인다.
+    this.rate = Float32Array.from(this.ps, (p) => 9 + p.z * 5 + p.phase * 0.5);
     // 색: 활동 종류(시청·응답·제출·질문). 기록 칸 색(누가 파랑 · ~하다 보라 · 무엇을 마젠타 · 부가 정보 강조색)도 같은 넷
     this.cols = VERBS.map((v) => hexRgb(VERB_COLOR[v]));
     this.spr = this.cols.map((c) => ({ s: sprite(c, 16, 0.9, 0.78), m: sprite(c, 36, 0.85, 0.62) }));
@@ -126,7 +128,8 @@ export class CanvasArt implements Art {
     this.drawChart();
     // 3) 별: 목표 자리를 부드럽게 따라가고, 움직이는 동안은 빠르기만큼 늘어난 빛으로
     const t = this.clock;
-    const dt = Math.min(0.05, Math.max(0, t - this.lastT));
+    // 프레임이 느린 브라우저(Safari 30fps 안팎, 가끔 80ms)에서도 입자가 실제 시간만큼 따라오게 넉넉히 둔다(지수 감쇠라 커도 튀지 않는다)
+    const dt = Math.min(0.12, Math.max(0, t - this.lastT));
     this.lastT = t;
     const follow = this.ambient && this.primed && dt > 0;
     this.primed = true;
