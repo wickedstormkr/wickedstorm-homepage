@@ -82,7 +82,7 @@ section{position:relative;z-index:2}
    누를 수 있는 것은 누를 수 있게, 아닌 것은 아니게 그린다(CLAUDE.md '원칙').
    - 주 버튼(.btn.p): 그라디언트 알약 + 화살표. 보조 버튼(.btn.s): 테두리 알약 + 화살표. 화살표는 → 사이트 안, ↗ 새 창
    - 글 속 링크: 밑줄. 링크 카드: 화살표와 올렸을 때의 변화
-   - 이름표(상태·분류·인증처럼 누를 수 없는 것): 테두리 없는 작은 직사각형. 알약·테두리 모양 금지
+   - 이름표(상태·분류·인증처럼 누를 수 없는 것): 테두리 없이 옅은 바탕의 작은 글자. 테두리·진한 채움 금지(버튼처럼 보인다)
    - 제품 이름 표시(.pname): 글자 그라디언트. 채운 알약 금지(주 버튼과 같아 보인다)
    - 제품 화면 그림(.fx, .frame) 안은 누를 수 없다: 신호등 창 틀, 평평한 앱 버튼, 밑줄 없음 */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border-radius:999px;

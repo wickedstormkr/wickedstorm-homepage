@@ -75,7 +75,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
                 ))}
               </ol>
             </div>
-            <p class="live-foot"><span set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(locale)}</b>`)} /><span class="live-note">{t.live.note}</span></p>
+            <p class="live-foot" set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(locale)}</b>`)} />
           </Window>
         </div>
       </div>
@@ -86,7 +86,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(1)} · </span>{sc[1].beat}</p>
         <h2 class="scene-title" id="scene-t-2" set:html={phrase(sc[1].title!, lang)} />
-        <p class="scene-text" set:html={body(sc[1].text)} />
+        {sc[1].text && <p class="scene-text" set:html={body(sc[1].text)} />}
       </div>
       <div class="scene-visual">
         <div class="ledger">
@@ -100,7 +100,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
             ))}
           </dl>
           <div class="ledger-box" data-ledger role="img" aria-label={t.ledger.label}>
-            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="516" loading="lazy" decoding="async" />
+            <img class="art-base" src={url('/art/ledger.svg')} alt="" width="1600" height="286" loading="lazy" decoding="async" />
           </div>
           <div class="ledger-foot" style={ledgerGrid}>
             <p class="ledger-rest">{t.ledger.rest}</p>
@@ -115,7 +115,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(2)} · </span>{sc[2].beat}</p>
         <h2 class="scene-title" id="scene-t-3" set:html={phrase(sc[2].title!, lang)} />
-        <p class="scene-text" set:html={body(sc[2].text)} />
+        {sc[2].text && <p class="scene-text" set:html={body(sc[2].text)} />}
         <ul class="art-legend">
           <li class="legend-title">{t.store.legend}</li>
           {VERBS.map((v) => <li><i style={`--c:${VERB_COLOR[v]}`} aria-hidden="true"></i>{t.store.verbs[v]}</li>)}
@@ -126,16 +126,15 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
           <img class="art-base" src={url('/art/case-tree.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <img class="art-lines" src={url('/art/case-lines.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
-          <p class="art-count" aria-hidden="true"><span>{t.store.countLabel}</span><b class="tnum" data-live-count>{TODAY_TOTAL.toLocaleString(locale)}</b></p>
           <ul class="art-labels" aria-hidden="true">
             {CASE_NODES.map((n) => (
-              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}{n.count && <small>{n.count.toLocaleString('en-US')}</small>}</li>
+              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}</li>
             ))}
           </ul>
         </div>
         <p class="case-cap" id="case-cap">{t.store.listLabel}</p>
         <ol class="case-list" aria-labelledby="case-cap">
-          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span><b>{n.count!.toLocaleString(locale)}{t.store.unit}</b></li>)}
+          {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`--i:${i}`}><span>{nodeName(n.id)}</span>{n.anomaly && <b>{t.signal.tag}</b>}</li>)}
         </ol>
       </div>
     </article>
@@ -145,7 +144,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(3)} · </span>{sc[3].beat}</p>
         <h2 class="scene-title" id="scene-t-4" set:html={phrase(sc[3].title!, lang)} />
-        <p class="scene-text" set:html={body(sc[3].text)} />
+        {sc[3].text && <p class="scene-text" set:html={body(sc[3].text)} />}
       </div>
       <div class="scene-visual">
         <AnomalyPanel t={t.signal} label={label(t.signal.title)} />
@@ -157,7 +156,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(4)} · </span>{sc[4].beat}</p>
         <h2 class="scene-title" id="scene-t-5" set:html={phrase(sc[4].title!, lang)} />
-        <p class="scene-text" set:html={body(sc[4].text)} />
+        {sc[4].text && <p class="scene-text" set:html={body(sc[4].text)} />}
       </div>
       <div class="scene-visual">
         <div class="judge-stack">
@@ -172,7 +171,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
       <div class="scene-copy">
         <p class="beat"><span aria-hidden="true">{num(5)} · </span>{sc[5].beat}</p>
         <h2 class="scene-title" id="scene-t-6" set:html={phrase(sc[5].title!, lang)} />
-        <p class="scene-text" set:html={body(sc[5].text)} />
+        {sc[5].text && <p class="scene-text" set:html={body(sc[5].text)} />}
         <div class="hero-cta">
           <a class="btn p" href="#contact">{t.next.contact}</a>
           <a class="btn s" href="#contact" data-topic={demoTopic}>{t.next.demo}</a>
@@ -197,7 +196,6 @@ const ledgerGrid = `grid-template-columns:${LEDGER.cols.map((c) => pct(c.w / inn
         </div>
       </div>
     </article>
-    <p class="story-demo">{t.demo}</p>
   </div>
 </section>
 <span id="after-story" tabindex="-1"></span>

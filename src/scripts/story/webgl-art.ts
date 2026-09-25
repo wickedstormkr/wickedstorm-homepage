@@ -15,7 +15,7 @@ void main(){
   vec2 p = aP.xy;
   p.y = fract(p.y - uS * (.015 + z * .05));
   p.x += sin(uTime * .05 + aPh) * .004 * z;
-  vA = (.1 + z * .38) * (uAmb > .5 ? .7 + .3 * sin(uTime * (.8 + z) + aPh * 6.) : 1.);
+  vA = (.06 + z * .26) * (uAmb > .5 ? .7 + .3 * sin(uTime * (.8 + z) + aPh * 6.) : 1.);
   vC = aC;
   gl_Position = vec4(p.x * 2. - 1., 1. - p.y * 2., 0., 1.);
   gl_PointSize = (1.2 + z * z * 3.2) * uDpr;
@@ -40,7 +40,7 @@ export class DeepField {
   private t0 = performance.now();
   private dpr = Math.min(1.5, devicePixelRatio || 1);
 
-  constructor(canvas: HTMLCanvasElement, count = 4200) {
+  constructor(canvas: HTMLCanvasElement, count = 2400) {
     try {
       const renderer = new Renderer({ canvas, dpr: this.dpr, alpha: true, premultipliedAlpha: true, antialias: false, webgl: 2 });
       const gl = renderer.gl;

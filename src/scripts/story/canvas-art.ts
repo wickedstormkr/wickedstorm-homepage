@@ -2,13 +2,13 @@
  * 데이터 아트 주 층(캔버스 2D, 입자 = 오늘 수집 1,374건).
  * 별 하나하나를 광원처럼: 흰 코어 + 색 번짐 스프라이트를 가까움(z)에 따라 크기를 나눠
  * 'lighter' 합성으로 겹쳐 그린다(지금 사이트 히어로와 같은 방식). 옮겨 가는 동안에는 짧은 꼬리를 남긴다.
- * 장면 1: 성운 + 가까운 별끼리 옅은 선(실시간 수집 창에서 밀려난 한 건이 별이 되는 움직임은 HTML 층, story/live.ts)
- * 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 입자가 착지하며 칸이 왼쪽부터 채워진다
+ * 장면 1: 옅은 성운. 실시간 수집 창에서 밀려난 한 건은 HTML 층(story/live.ts)이 날려 보내고, 도착하면 여기서 같은 별 모양으로 자리 잡는다(land)
+ * 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 입자가 착지하며 심볼 모양의 막대가 왼쪽부터 차오른다
  * 장면 3: CASE 성취 항목(지표)마다 모인다
  * 장면 4: 이상 탐지 화면의 그래프 칸에 시간축 분포로 착지(직전 학기 점선과 비교, 3주차 구간이 솟는다)
  * 장면 5·6: 근거 줄기 → 선순환 고리(story-data.ts place)
  */
-import { buildParticles, place, progress, signalCurves, chartX, CHART, SPIKE, HOT_WEEK, VERBS, VERB_COLOR, LEDGER, type Particle, type PlaceEnv, type BoxMap } from '../../lib/story-data';
+import { buildParticles, place, progress, signalCurves, chartX, CHART, SPIKE, HOT_WEEK, VERBS, VERB_COLOR, LEDGER, ROW_COLOR, type Particle, type PlaceEnv, type BoxMap } from '../../lib/story-data';
 import type { Art, ArtBox, ArtAnchors } from './art-types';
 
 type Rect = { x: number; y: number; w: number; h: number };
@@ -19,6 +19,8 @@ const hexRgb = (h: string) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 1
 const windowed = (s: number, a: number, b: number, c: number, d: number) => smooth((s - a) / (b - a)) * (1 - smooth((s - c) / (d - c)));
 
 interface Sprites { s: HTMLCanvasElement; m: HTMLCanvasElement }
+/** 실시간 수집에서 날아와 자리 잡은 새 별(무대 기준 0~1) */
+interface Landed { x: number; y: number; c: number; t0: number; d: number }
 
 export class CanvasArt implements Art {
   private ctx: CanvasRenderingContext2D;
@@ -32,7 +34,7 @@ export class CanvasArt implements Art {
   private ledger: Rect | null = null;
   private chart: Rect | null = null;
   private env: PlaceEnv = {};
-  private edges: [number, number, number][] = [];
+  private landed: Landed[] = [];
   private s = 0;
   private dpr = Math.min(1.5, devicePixelRatio || 1);
   private ambient = false;
@@ -48,8 +50,8 @@ export class CanvasArt implements Art {
     this.ctx = ctx;
     this.ps = buildParticles();
     this.curves = signalCurves(this.ps);
-    // 색: 0~3 활동 종류(시청·응답·제출·질문). 기록 칸 색(actor 파랑 · verb 보라 · object 마젠타 · 부가 정보 강조색)도 같은 넷
-    this.cols = VERBS.map((v) => hexRgb(VERB_COLOR[v]));
+    // 색: 0~3 활동 종류(시청·응답·제출·질문), 4~7 기록 행의 줄 색(심볼처럼 마젠타 → 파랑 네 단계)
+    this.cols = [...VERBS.map((v) => hexRgb(VERB_COLOR[v])), ...ROW_COLOR.map(hexRgb)];
     this.spr = this.cols.map((c) => ({ s: sprite(c, 16, 0.9, 0.78), m: sprite(c, 36, 0.85, 0.62) }));
   }
 
@@ -70,18 +72,6 @@ export class CanvasArt implements Art {
       chart: this.chart ? toBox(this.chart) : undefined,
       shift: a.shift,
     };
-    // 성운의 옅은 선: 가까운(밝은) 별끼리 150px 안쪽 쌍 중 강한 130개만(다 이으면 거미줄이 된다)
-    const bright = this.ps.map((p, i) => i).filter((i) => this.ps[i].z >= 0.55);
-    const e: [number, number, number][] = [];
-    for (let i = 0; i < bright.length; i++) {
-      for (let j = i + 1; j < bright.length; j++) {
-        const p = this.ps[bright[i]];
-        const q = this.ps[bright[j]];
-        const d = Math.hypot((p.G[0] - q.G[0]) * w, (p.G[1] - q.G[1]) * h);
-        if (d < 150) e.push([bright[i], bright[j], 1 - d / 150]);
-      }
-    }
-    this.edges = e.sort((x, y) => y[2] - x[2]).slice(0, 130);
     this.draw();
   }
 
@@ -104,6 +94,16 @@ export class CanvasArt implements Art {
     } else if (!on) this.draw();
   }
 
+  /**
+   * 실시간 수집 창에서 날아온 한 건(무대 px, 활동 종류)이 성운에 자리 잡는다: 성운의 가까운 별과 같은 스프라이트·크기.
+   * 장면 1 동안만 보이고(글과 함께 물러난다), 많아지면 오래된 것부터 지운다.
+   */
+  land(x: number, y: number, verb: number) {
+    this.landed.push({ x: x / this.W, y: y / this.H, c: verb, t0: this.clock, d: 0.9 + Math.random() * 0.5 });
+    if (this.landed.length > 90) this.landed.shift();
+    if (!this.raf) this.draw();
+  }
+
   private draw() {
     const { ctx, box, dpr, s } = this;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -112,17 +112,6 @@ export class CanvasArt implements Art {
     const base = Math.max(4.5, box.w * 0.0095);
     const px = (o: ArrayLike<number>) => [box.x + o[0] * box.w, box.y + o[1] * box.h];
 
-    // 1) 성운의 옅은 선(구조가 생기기 전까지만)
-    const la = 1 - clamp01(s / 0.5);
-    if (la > 0.01) {
-      ctx.lineWidth = 0.6;
-      for (const [i, j, k] of this.edges) {
-        const a = px(place(this.ps[i], s, this.o, this.env));
-        const b = px(place(this.ps[j], s, this.o2, this.env));
-        ctx.strokeStyle = `rgba(148,164,255,${k * 0.16 * la})`;
-        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
-      }
-    }
     // 2) 기록 행(칸·채움·기록 헤드·확인 점)
     this.drawLedger();
     // 3) 분포 그래프의 곡선(직전 학기 점선 · 이번 학기 선 · 솟은 구간의 빛)
@@ -174,110 +163,75 @@ export class CanvasArt implements Art {
         }
       }
     }
+    // 6) 실시간 수집에서 날아와 자리 잡은 별(성운의 가까운 별과 같은 모양, 장면 1 동안)
+    const ka = 1 - smooth(s / 0.3);
+    if (ka > 0.01) {
+      for (const m of this.landed) {
+        const age = t - m.t0;
+        const d = base * m.d * (age < 0.35 ? 1 + (0.35 - age) * 1.6 : 1);
+        const x = m.x * this.W;
+        const y = m.y * this.H;
+        ctx.globalAlpha = Math.min(1, 0.35 + age * 2) * ka * 0.8 * (0.82 + 0.18 * Math.sin(t * 1.3 + m.d * 9));
+        ctx.drawImage(this.spr[m.c].s, x - d / 2, y - d / 2, d, d);
+      }
+    }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  /** 입자 색: 성운·체계 이후는 활동 종류 색, 기록 칸에 앉는 동안은 그 칸(actor·verb·object·부가 정보) 색 */
+  /** 입자 색: 성운·체계 이후는 활동 종류 색, 기록 행에 앉는 동안은 그 줄의 색(심볼처럼 마젠타 → 파랑) */
   private colorIndex(p: Particle, s: number, t: number) {
     if (p.ink < 0) return p.verb;
-    const slot = p.ink % 4;
-    if (s < 1) return t > 0.5 ? slot : p.verb;
-    if (s < 2) return t > 0.5 ? p.verb : slot;
+    const row = 4 + Math.floor(p.ink / 4);
+    if (s < 1) return t > 0.5 ? row : p.verb;
+    if (s < 2) return t > 0.5 ? p.verb : row;
     return p.verb;
   }
   private color(p: Particle, s: number, t: number) { return this.cols[this.colorIndex(p, s, t)]; }
 
-  /** 기록 행: 칸(표준이 정한 틀)이 먼저 자리 잡고, 입자가 앉는 만큼 채워지며(줄마다 길이가 다르다), 끝나면 확인 점이 찍힌다 */
+  /** 기록 행: 입자가 앉는 만큼 막대가 왼쪽부터 차오르고, 다 차면 심볼과 같은 네 줄 막대가 된다(빈 틀은 그리지 않는다) */
   private drawLedger() {
     const L = this.ledger;
     const { ctx, s } = this;
     if (!L || s < 0.2 || s > 2.4) return;
     const fade = 1 - smooth((s - 1.3) / 0.25);
     if (fade <= 0.01) return;
-    const ph = Math.max(8, Math.min(L.h * LEDGER.pillH, 14));
+    const bh = Math.max(8, Math.min(L.h * LEDGER.barH, 30));
     const n = LEDGER.rows.length;
+    ctx.save();
     LEDGER.rows.forEach((row, ri) => {
       const rp = clamp01((s - 0.3 - (ri / n) * 0.35) / 0.4);
       if (rp <= 0.001) return;
+      const c = this.cols[4 + ri];
       const y = L.y + row.y * L.h;
-      const py = y - ph / 2;
-      const first = row.pills[0];
-      const last = row.pills[row.pills.length - 1];
-      const x0 = L.x + first.x * L.w;
-      const x1 = L.x + (last.x + last.w) * L.w;
-      const sweep = x0 + (x1 - x0) * rp;
-      ctx.save();
-      ctx.globalAlpha = fade;
-      // 행 바탕 띠
-      rr(ctx, x0 - 8, py - 6, x1 - x0 + 16, ph + 12, (ph + 12) / 2);
-      ctx.fillStyle = `rgba(255,255,255,${0.025 * rp})`;
-      ctx.fill();
-      for (const pl of row.pills) {
-        const c = this.cols[pl.slot];
-        const x = L.x + pl.x * L.w;
-        const w = pl.w * L.w;
-        const fw = pl.fill * w;
-        // 칸 외곽선(틀)은 옅게, 채워진 길이만큼 선명하게
-        rr(ctx, x, py, w, ph, ph / 2);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${0.12 + rp * 0.18})`;
-        ctx.stroke();
-        const filled = clamp01((sweep - x) / fw) * fw;
-        if (filled > 0.5) {
-          ctx.save();
-          rr(ctx, x, py, w, ph, ph / 2);
-          ctx.clip();
-          ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${pl.slot === 3 ? 0.32 : 0.26})`;
-          rr(ctx, x, py, Math.max(ph, filled), ph, ph / 2);
-          ctx.fill();
-          ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${0.35 + rp * 0.5})`;
-          ctx.stroke();
-          ctx.fillStyle = 'rgba(255,255,255,0.08)';
-          for (let tx = x + 7; tx < x + filled - 3; tx += 14) ctx.fillRect(tx, py + 2.5, 1, ph - 5);
-          ctx.restore();
-        }
-      }
-      // 기록 헤드(지금 쓰는 중)
-      const sw = Math.min(1, (rp - 0.1) / 0.15, (0.9 - rp) / 0.15);
-      if (sw > 0.01) {
-        const g = ctx.createLinearGradient(0, py - 6, 0, py + ph + 6);
-        g.addColorStop(0, 'rgba(170,185,255,0)');
-        g.addColorStop(0.5, `rgba(170,185,255,${0.55 * sw})`);
-        g.addColorStop(1, 'rgba(170,185,255,0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(sweep - 1, py - 6, 2, ph + 12);
-        ctx.fillStyle = `rgba(220,228,255,${0.7 * sw})`;
-        ctx.beginPath(); ctx.arc(sweep, y, 2, 0, 6.283); ctx.fill();
-      }
-      // 행머리 점(심볼 그라디언트 + 옅은 빛)
-      const hx = L.x + LEDGER.headX * L.w;
-      const hg = ctx.createRadialGradient(hx, y, 2.7, hx, y, 14);
-      hg.addColorStop(0, 'rgba(163,177,255,.55)');
-      hg.addColorStop(1, 'rgba(163,177,255,0)');
-      ctx.globalAlpha = rp * fade;
-      ctx.fillStyle = hg;
-      ctx.beginPath(); ctx.arc(hx, y, 14, 0, 6.283); ctx.fill();
-      const lg = ctx.createLinearGradient(hx - 4.5, 0, hx + 4.5, 0);
-      lg.addColorStop(0, '#e930b0'); lg.addColorStop(0.52, '#7c4dff'); lg.addColorStop(1, '#2f7cff');
-      ctx.fillStyle = lg;
-      ctx.beginPath(); ctx.arc(hx, y, 4.5, 0, 6.283); ctx.fill();
-      // 확인 점(행 완성)
-      const cA = clamp01((rp - 0.7) / 0.3);
-      if (cA > 0.01) {
-        const cx = L.x + LEDGER.checkX * L.w;
-        const pop = 1 - (1 - cA) * (1 - cA);
-        const sc = 1.3 - 0.3 * pop;
-        const aa = Math.min(1, cA * 2.4) * fade;
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = `rgba(163,177,255,${aa})`;
-        ctx.beginPath(); ctx.arc(cx, y, 3.4 * sc, 0, 6.283); ctx.fill();
-        ctx.strokeStyle = `rgba(163,177,255,${aa * 0.5})`;
+      const sweep = L.x + L.w * rp;
+      for (const b of row.bars) {
+        const x = L.x + b.x * L.w;
+        const w = b.w * L.w;
+        const filled = Math.min(w, sweep - x);
+        if (filled <= 0.5) continue;
+        const fw = Math.max(bh, filled);
+        rr(ctx, x, y - bh / 2, fw, bh, bh / 2);
+        ctx.globalAlpha = fade;
+        ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},0.5)`;
+        ctx.fill();
         ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.arc(cx, y, 5.8 * sc, 0, 6.283); ctx.stroke();
+        ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},0.9)`;
+        ctx.stroke();
       }
-      ctx.restore();
+      // 쓰는 중인 자리(옅은 빛 선)
+      const sw = Math.min(1, (rp - 0.05) / 0.1, (0.95 - rp) / 0.1);
+      if (sw > 0.01) {
+        const g = ctx.createLinearGradient(0, y - bh, 0, y + bh);
+        g.addColorStop(0, 'rgba(220,228,255,0)');
+        g.addColorStop(0.5, `rgba(220,228,255,${0.6 * sw * fade})`);
+        g.addColorStop(1, 'rgba(220,228,255,0)');
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = g;
+        ctx.fillRect(sweep - 1, y - bh, 2, bh * 2);
+      }
     });
+    ctx.restore();
   }
 
   /** 분포 그래프: 직전 학기(점선)와 이번 학기(선), 그리고 3주차 13:25–14:40 구간 뒤의 옅은 빛 */

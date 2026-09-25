@@ -217,7 +217,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .prod-card.lhb .prod-names{background:var(--grad-lhb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .prod-card.lec .prod-names span+span::before,.prod-card.lhb .prod-names span+span::before{-webkit-text-fill-color:var(--faint)}
 .prod-badges{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
-/* 인증·기능 이름표(누를 수 없음): 테두리 없는 작은 직사각형 */
-.prod-badges li{padding:3px 8px;border-radius:5px;font-size:13px;font-weight:700;background:rgba(255,255,255,.06);color:var(--ink-2)}
+/* 인증·기능 이름표(누를 수 없음): 테두리 없이 옅은 바탕 */
+.prod-badges li{padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;background:rgba(255,255,255,.06);color:var(--ink-2)}
 .prod-links{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:auto}
 .prod-site{display:inline-flex;align-items:center;min-height:44px;font-family:var(--en);font-size:15px;font-weight:700;color:var(--accent);text-decoration:underline;text-underline-offset:4px}

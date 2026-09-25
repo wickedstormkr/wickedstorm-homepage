@@ -80,18 +80,17 @@
   "note": "※ 화면 속 교과·인물·수치는 제품 설명을 위한 시연용 데이터입니다.",
   "roles": {
     "label": "역할별로 보기",
-    "note": "화면은 제품 설명을 위한 시연 화면입니다.",
     "items": [
       {
         "id": "operator",
         "name": "운영자",
         "product": "LearnHubble AI",
         "title": "근거를 보고 <span class=\"g\">교육과정</span>을 보완합니다",
-        "text": "Lecognizer AI가 찾은 이상 신호가 교육과정 수준의 문제라면, AI가 1EdTech CASE 교과역량 체계의 보완안을 추천합니다. 운영자가 검토해 다음 학기에 반영합니다.",
+        "text": "Lecognizer AI가 찾은 이상 신호가 교육과정 수준의 문제라면, AI가 1EdTech CASE 체계에 선수학습 연결(CFAssociation)을 추천합니다. 운영자가 검토해 다음 학기에 반영합니다.",
         "points": [
           "이상 신호가 어느 수준의 문제인지 판단",
-          "CASE 연결 보완 추천(선수 관계 · 학습성과 추가)",
-          "기존 항목을 덮어쓰지 않아 지난 학기 학습데이터 유지"
+          "CFAssociation으로 선수학습 연결 추천(precedes)",
+          "기존 CFItem을 그대로 두어 지난 학기 학습데이터 유지"
         ]
       },
       {
@@ -166,40 +165,30 @@
   ],
   "operator": {
     "product": "LearnHubble AI · 운영자",
-    "crumb": "교육과정 개정 · 1EdTech CASE",
-    "signal": "Lecognizer AI 이상 신호 · ‘위험요인 비교’ · 같은 학습성과를 다루는 세 활동에서 함께 나타남",
-    "levelLabel": "이 신호는 어느 수준의 문제인가요?",
+    "crumb": "CASE 개정",
+    "signal": "Lecognizer AI 이상 신호 · 위험요인 비교",
+    "levelLabel": "문제 수준",
     "levels": [
       {
-        "t": "데이터 품질 또는 일시 현상",
-        "a": "보류",
+        "t": "일시 현상",
         "on": false
       },
       {
-        "t": "한 교과의 교수설계 문제",
-        "a": "교수자에게 전달",
+        "t": "교수설계",
         "on": false
       },
       {
-        "t": "교육과정 수준의 문제",
-        "a": "CASE 검토",
+        "t": "교육과정",
         "on": true
       }
     ],
-    "treeLabel": "CFDocument · 대학 교과역량 체계",
+    "treeLabel": "CFDocument · 교과역량 체계",
     "tree": [
       {
         "lv": 1,
-        "k": "교과역량",
+        "k": "역량",
         "v": "분석적 판단",
         "s": "",
-        "tone": ""
-      },
-      {
-        "lv": 2,
-        "k": "학습성과",
-        "v": "위험요인 식별",
-        "s": "유지",
         "tone": ""
       },
       {
@@ -211,7 +200,7 @@
       },
       {
         "lv": 1,
-        "k": "교과역량",
+        "k": "역량",
         "v": "기초 개념",
         "s": "",
         "tone": ""
@@ -220,20 +209,20 @@
         "lv": 2,
         "k": "학습성과",
         "v": "금리 기초",
-        "s": "선수 항목",
+        "s": "선수학습",
         "tone": "new"
       }
     ],
     "ai": "AI 추천",
-    "proposal": "‘금리 기초’를 ‘위험요인 비교’의 선수 항목으로 연결하는 것을 추천합니다",
+    "proposal": "CFAssociation 추가: 선수학습 연결",
     "assoc": {
       "from": "금리 기초",
       "type": "precedes",
       "to": "위험요인 비교"
     },
-    "note": "기존 항목을 덮어쓰지 않아 지난 학기 학습데이터가 그대로 남습니다.",
+    "note": "기존 CFItem은 그대로 둡니다",
     "edit": "수정",
-    "apply": "검토 후 반영",
-    "owner": "반영 여부는 운영자가 정합니다"
+    "apply": "반영",
+    "owner": "반영은 운영자가 정합니다"
   }
 }

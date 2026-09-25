@@ -1,10 +1,13 @@
 ---
-/** 사례(홈): 기관 로고 한 줄 + 대표 사례 셋. 전체는 사례 페이지로 */
+/**
+ * 사례(홈): 처음 레퍼런스 카드 구성(기관 · 제목 · 한 문단 · 분야 이름표) 넷을 두 줄로, 그 아래 기관 로고 한 줄.
+ * 한 일·결과로 나눈 자세한 카드와 그 밖의 사업은 사례 페이지로.
+ */
 import Img from '../components/Img.astro';
 import SecHead from '../components/SecHead.astro';
-import CaseCard from '../components/CaseCard.astro';
 import type { HomeContent } from '../lib/content';
 import { pagePath, type Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang; t: HomeContent['cases'] }
@@ -14,10 +17,22 @@ const page = url(pagePath(lang, 'cases'));
 <section class="band" id="references" aria-labelledby="ref-title">
   <div class="wrap">
     <SecHead lang={lang} id="ref-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
-    <figure class="ref-logos"><Img name={t.logos.img} alt={t.logos.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" /></figure>
-    <ul class="case-grid">
-      {t.homePick.map((i) => <li><CaseCard lang={lang} c={t.items[i]} labels={t.labels} href={`${page}#${t.items[i].id}`} /></li>)}
+    <ul class="ref-grid">
+      {t.homePick.map((i) => {
+        const c = t.items[i];
+        return (
+          <li>
+            <article class="ref-card">
+              <p class="rorg" set:html={c.org} />
+              <h3 set:html={phrase(c.title, lang)} />
+              <p set:html={c.summary} />
+              <ul class="rtags">{c.tags.map((g) => <li set:html={g} />)}</ul>
+            </article>
+          </li>
+        );
+      })}
     </ul>
+    <figure class="ref-logos"><Img name={t.logos.img} alt={t.logos.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" /></figure>
     <p class="more-row"><a class="btn s" href={page}>{t.more}</a></p>
   </div>
 </section>

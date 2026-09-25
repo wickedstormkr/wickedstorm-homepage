@@ -2,7 +2,7 @@
  * 미리 그린 그림(기본 층): 데이터 아트 모델(story-data.ts)을 빌드 때 SVG로 그린다.
  * 움직임 줄이기·저전력·JS 없음·폰에서 이 그림만으로 이야기가 완결된다. 그림 속 글자는 없다(이름표는 HTML).
  */
-import { buildParticles, signalCurves, chartX, CASE_NODES, CHART, SPIKE, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, SLOT_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
+import { buildParticles, signalCurves, chartX, CASE_NODES, CHART, SPIKE, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, LEDGER, LEDGER_ASPECT, ROW_COLOR, alphaOf, sizeOf, type LayoutKey } from './story-data';
 
 const W = 1600;
 const H = 1000;
@@ -91,28 +91,20 @@ export function signalSvg() {
     + '</svg>';
 }
 
-/** 장면 2: 다 채워진 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸은 모든 줄이 같고 채워진 길이만 다르다 */
+/** 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸마다 심볼과 같은 네 줄 막대, 줄 색은 브랜드 그라디언트 네 단계 */
 export function ledgerSvg() {
   const LW = 1600;
   const LH = Math.round(LW / LEDGER_ASPECT);
-  const ph = Math.min(LEDGER.pillH * LH, 24);
+  const bh = LEDGER.barH * LH;
   const ps = buildParticles().filter((p) => p.ink >= 0);
-  const rows = LEDGER.rows.map((row) => {
+  const bars = LEDGER.rows.map((row) => {
     const y = row.y * LH;
-    const pills = row.pills.map((pl) => {
-      const c = SLOT_COLOR[pl.slot];
-      const x = f(pl.x * LW);
-      const top = f(y - ph / 2);
-      return `<rect x="${x}" y="${top}" width="${f(pl.w * LW)}" height="${f(ph)}" rx="${f(ph / 2)}" fill="none" stroke="${c}" stroke-opacity=".3"/>`
-        + `<rect x="${x}" y="${top}" width="${f(Math.max(ph, pl.w * pl.fill * LW))}" height="${f(ph)}" rx="${f(ph / 2)}" fill="${c}" fill-opacity="${pl.slot === 3 ? '.32' : '.26'}" stroke="${c}" stroke-opacity=".85"/>`;
-    }).join('');
-    const hx = LEDGER.headX * LW;
-    const cx = LEDGER.checkX * LW;
-    return pills + `<circle cx="${f(hx)}" cy="${f(y)}" r="7" fill="url(#hg)"/><circle cx="${f(cx)}" cy="${f(y)}" r="5" fill="#a3b1ff"/><circle cx="${f(cx)}" cy="${f(y)}" r="9" fill="none" stroke="#a3b1ff" stroke-opacity=".5" stroke-width="1.5"/>`;
+    const c = ROW_COLOR[row.bars[0].row];
+    return row.bars.map((b) => `<rect x="${f(b.x * LW)}" y="${f(y - bh / 2)}" width="${f(b.w * LW)}" height="${f(bh)}" rx="${f(bh / 2)}" fill="${c}" fill-opacity=".5" stroke="${c}" stroke-opacity=".9" stroke-width="1.5"/>`).join('');
   }).join('');
-  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2.4 + p.z * 1.6).toFixed(1)}" fill="${SLOT_COLOR[p.ink % 4]}"/>`).join('');
-  const defs = `<defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#e930b0"/><stop offset=".52" stop-color="#7c4dff"/><stop offset="1" stop-color="#2f7cff"/></linearGradient><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}">${defs}${rows}<g filter="url(#glow)">${dots}</g></svg>`;
+  const dots = ps.map((p) => `<circle cx="${f(p.R[0] * LW)}" cy="${f(p.R[1] * LH)}" r="${(2 + p.z * 1.4).toFixed(1)}" fill="#fff" fill-opacity="${(0.55 + p.z * 0.35).toFixed(2)}"/>`).join('');
+  const defs = `<defs><filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}">${defs}${bars}<g filter="url(#glow)">${dots}</g></svg>`;
 }
 
 /** 장면 6: 모든 문장이 모인 선순환 고리 */

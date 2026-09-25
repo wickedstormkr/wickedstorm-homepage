@@ -1,7 +1,8 @@
 /**
  * 장면 1 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(시연 문장을 돌려 쓴다).
  * 다섯 줄이 차면 맨 위 줄이 올라가며 사라지고, 그 줄의 점(활동 종류 색)이 별이 되어 날아가 장면의 하늘에 자리 잡는다(쌓인다).
- * 그때마다 '오늘 수집' 수가 하나 는다(시연, 장면 3의 수도 같이). 데스크톱·폰 모두 같은 움직임(HTML 층이라 캔버스가 없어도 된다).
+ * 그때마다 창 아래 '오늘 수집' 수가 하나 는다. 날아가는 움직임은 HTML 층(창 위), 자리 잡은 별은
+ * 데스크톱 그림 층이 있으면 성운과 같은 스프라이트로(story:land → canvas-art land), 없으면(폰) 같은 모양의 CSS 별로 남는다.
  * 움직임 멈춤·탭 숨김·장면 1이 보이지 않을 때는 멈춘다(KWCAG 6.2.2).
  */
 import { motionAllowed, onMotionChange } from '../motion';
@@ -35,10 +36,14 @@ export function initLive(story: HTMLElement) {
   scene.prepend(sky);
   scene.append(fly);
 
-  const land = (x: number, y: number, W: number, H: number, c: string) => {
+  const land = (x: number, y: number, W: number, H: number, c: string, verb: number) => {
+    if (root.classList.contains('story-pin') && root.classList.contains('art-live')) {
+      story.dispatchEvent(new CustomEvent('story:land', { detail: { x, y, verb } }));
+      return;
+    }
     const s = document.createElement('i');
     s.className = 'spark';
-    s.style.cssText = `--c:${c};--d:${(3.5 + Math.random() * 3.5).toFixed(1)}px;--tw:-${(Math.random() * 3.6).toFixed(2)}s;left:${((x / W) * 100).toFixed(2)}%;top:${((y / H) * 100).toFixed(2)}%`;
+    s.style.cssText = `--c:${c};--d:${(6 + Math.random() * 3).toFixed(1)}px;--tw:-${(Math.random() * 3.6).toFixed(2)}s;left:${((x / W) * 100).toFixed(2)}%;top:${((y / H) * 100).toFixed(2)}%`;
     sky.append(s);
     while (sky.children.length > MAX_STARS) sky.firstElementChild?.remove();
   };
@@ -71,7 +76,7 @@ export function initLive(story: HTMLElement) {
       const y = u * u * y0 + 2 * u * t * cy + t * t * y1;
       return { transform: `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${(1 - t * 0.45).toFixed(3)})` };
     });
-    [[10, 1, 0], [7, 0.5, 45], [5, 0.25, 90]].forEach(([size, op, delay], i) => {
+    [[9, 1, 0], [7, 0.45, 45], [5, 0.2, 90]].forEach(([size, op, delay], i) => {
       const el = document.createElement('i');
       el.className = 'spark';
       el.style.cssText = `--c:${c};--d:${size}px;opacity:${op}`;
@@ -79,7 +84,7 @@ export function initLive(story: HTMLElement) {
       const a = el.animate(frames, { duration: 1300, delay, easing: 'cubic-bezier(.35,.1,.25,1)', fill: 'both' });
       a.onfinish = () => {
         el.remove();
-        if (i === 0) land(x1, y1, S.width, S.height, c);
+        if (i === 0) land(x1, y1, S.width, S.height, c, verb);
       };
     });
   };

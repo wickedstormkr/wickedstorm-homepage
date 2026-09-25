@@ -61,6 +61,27 @@ test.describe('오프닝 이야기', () => {
     await expect(page.locator('#scene-next')).toHaveClass(/is-active/, { timeout: 8000 });
   });
 
+  test('데스크톱: 내려갔다가 처음으로 돌아오면 앞 장면 글이 남지 않는다', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('');
+    await expect(page.locator('html')).toHaveClass(/story-gsap/, { timeout: 8000 });
+    const op = (sel: string) => page.locator(sel).evaluate((el) => Number(getComputedStyle(el).opacity));
+    // 장면 2 글이 반쯤 들어온 자리(s ≈ 0.62)와 장면 3 한가운데를 거쳐 맨 위로
+    for (const s of [0.62, 2.1, 0]) {
+      await page.evaluate((v) => {
+        const st = document.querySelector<HTMLElement>('#story')!;
+        window.scrollTo(0, st.offsetTop + ((st.offsetHeight - innerHeight) * v) / 5);
+      }, s);
+      await page.waitForTimeout(1500);
+    }
+    await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('0.00');
+    expect(await op('#scene-moment .scene-copy')).toBe(1);
+    for (const id of ['statement', 'store', 'signal', 'judge', 'next']) {
+      expect(await op(`#scene-${id} .scene-copy`), id).toBe(0);
+      expect(await op(`#scene-${id} .scene-visual`), id).toBe(0);
+    }
+  });
+
   test('폰: 장면을 세로로 잇고, 화면에 들어오면 그 장면의 움직임을 재생한다', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
     const page = await ctx.newPage();

@@ -1,7 +1,8 @@
 ---
 /**
  * LearnHubble AI 운영자 · 교육과정 개정(1EdTech CASE): Lecognizer AI 이상 신호가 어느 수준의 문제인지 가르고,
- * 교육과정 수준이면 AI가 CASE 체계 보완(선수 관계 precedes 연결)을 추천한다. 반영은 운영자가 정한다.
+ * 교육과정 수준이면 AI가 CASE 체계 보완을 추천한다: 역량(CFItem) 아래 학습성과를 선수학습으로 잇는 CFAssociation(precedes).
+ * 반영은 운영자가 정한다. 글은 CASE 용어(CFDocument · CFItem · CFAssociation) 중심으로 짧게.
  * docs/source/mockups/lxp-case-revision.html · screens/cap-운영자-CASE개정.webp의 구성을 따른다.
  */
 import Window from './Window.astro';
@@ -12,13 +13,13 @@ const { t, label } = Astro.props;
 <Window class="fx-case" label={label} title={t.product} crumb={t.crumb}>
   <div class="fx-body">
     <p class="fx-signal">{t.signal}</p>
-    <p class="fx-h">{t.levelLabel}</p>
-    <ul class="fx-levels">
-      {t.levels.map((l) => <li class:list={{ on: l.on }}><span>{l.t}</span><small>{l.a}</small></li>)}
-    </ul>
+    <div class="fx-levels">
+      <p class="fx-h">{t.levelLabel}</p>
+      <ul>{t.levels.map((l) => <li class:list={{ on: l.on }}>{l.t}</li>)}</ul>
+    </div>
     <div class="fx-case-grid">
       <div class="fx-tree">
-        <p class="fx-h" lang="en">{t.treeLabel}</p>
+        <p class="fx-h">{t.treeLabel}</p>
         <ul>
           {t.tree.map((n) => (
             <li class:list={[`lv${n.lv}`, n.tone]}><small>{n.k}</small><b>{n.v}</b>{n.s && <em>{n.s}</em>}</li>

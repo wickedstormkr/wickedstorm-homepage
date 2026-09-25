@@ -76,12 +76,13 @@
 /* 3. LearnHubble AI 운영자 · 교육과정 개정(CASE) */
 .fx-signal{position:relative;margin-bottom:12px;padding:9px 12px 9px 28px;border-radius:9px;font-size:13px;line-height:1.5;color:var(--fx-ink2);background:rgba(255,255,255,.03);border:1px solid var(--fx-line)}
 .fx-signal::before{content:"";position:absolute;left:12px;top:calc(9px + .75em - 4px);width:8px;height:8px;border-radius:50%;background:var(--magenta);box-shadow:0 0 8px var(--magenta)}
-.fx-levels{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px}
-.fx-levels li{display:grid;gap:2px;padding:8px 10px;border-radius:8px;border:1px solid var(--fx-line);font-size:13px;color:var(--fx-muted)}
-.fx-levels li small{font-size:12px;color:var(--fx-muted)}
-.fx-levels li.on{border-color:rgba(163,177,255,.5);background:rgba(163,177,255,.08);color:var(--fx-ink)}
-.fx-levels li.on span::before{content:"✓ ";color:var(--accent);font-weight:800}
-.fx-levels li.on small{color:var(--accent)}
+/* 문제 수준: 한 줄 선택(교육과정 선택됨) */
+.fx-levels{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-bottom:14px}
+.fx-levels .fx-h{margin:0}
+.fx-levels ul{list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.fx-levels li{padding:4px 10px;border-radius:6px;font-size:13px;color:var(--fx-muted);background:rgba(255,255,255,.04)}
+.fx-levels li.on{color:var(--fx-ink);background:rgba(163,177,255,.14)}
+.fx-levels li.on::before{content:"✓ ";color:var(--accent);font-weight:800}
 .fx-case-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:12px;align-items:start}
 .fx-tree ul{list-style:none;display:grid;gap:4px}
 .fx-tree li{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:8px;padding:7px 10px;border-radius:7px;font-size:13.5px}
@@ -128,7 +129,7 @@
   .fx-bar{flex-wrap:wrap;row-gap:2px}
   .fx-crumb{flex-basis:100%;order:3;padding-left:59px;white-space:normal;overflow:visible}
   .fx-body{padding:14px}
-  .fx-segs,.fx-levels,.fx-case-grid,.fx-learn-grid{grid-template-columns:1fr}
+  .fx-segs,.fx-case-grid,.fx-learn-grid{grid-template-columns:1fr}
   .fx-lecture{border-right:0;border-bottom:1px solid var(--fx-line)}
   .fx-chart{aspect-ratio:1.9}
   .fx-legend{display:none}

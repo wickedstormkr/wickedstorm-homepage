@@ -65,6 +65,7 @@ async function pickArt(canvas: HTMLCanvasElement): Promise<Art | null> {
       resize: (w, h, box, a) => { deep.resize(w, h); main.resize(w, h, box, a); },
       setScene: (s) => { deep.setScene(s); main.setScene(s); },
       setAmbient: (on) => { deep.setAmbient(on); main.setAmbient(on); },
+      land: (x, y, v) => main.land(x, y, v),
       destroy: () => { deep.destroy(); back.remove(); main.destroy(); },
     };
   } catch {
@@ -78,7 +79,6 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
   const stage = story.querySelector<HTMLElement>('.story-stage')!;
   const scenes = [...story.querySelectorAll<HTMLElement>('.scene[data-scene]')];
   const last = scenes.length - 1;
-  const q = (sel: string) => story.querySelectorAll<HTMLElement>(sel);
   const copies = scenes.map((s) => s.querySelector<HTMLElement>('.scene-copy')!);
   const visuals = scenes.map((s) => s.querySelector<HTMLElement>('.scene-visual')!);
 
@@ -94,36 +94,14 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     gsap.ticker.lagSmoothing(0);
     hooks.scrollTo = (y) => lenis.scrollTo(y, { duration: 1.1 });
 
-    /* 장면 타임라인: 길이 5(장면 값과 같다). 장면 글과 그림을 따로 움직인다(opacity·transform만) */
-    const tl = gsap.timeline({ paused: true, defaults: { ease: 'power2.out' } });
-    gsap.set(scenes, { opacity: 1 });
-    gsap.set([...copies.slice(1), ...visuals.slice(1)], { opacity: 0 });
-    // 1 → 2: 첫 화면 글·실시간 수집 창이 먼저 물러나고, 별이 기록 행에 앉는 동안 칸 이름(.42)과 글(.55)이 들어온다
-    tl.to([copies[0], visuals[0]], { opacity: 0, y: -20, duration: 0.18 }, 0.12)
-      .to(q('.scene-moment :is(.live-sky,.live-fly)'), { opacity: 0, duration: 0.2 }, 0.12)
-      .fromTo(visuals[1], { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.42)
-      .from(q('.scene-statement .ledger-cols > div'), { opacity: 0, y: 8, stagger: 0.04, duration: 0.15 }, 0.46)
-      .from(q('.scene-statement .ledger-foot'), { opacity: 0, y: 8, duration: 0.15 }, 0.82)
-      .fromTo(copies[1], { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.2 }, 0.55);
-    for (let i = 2; i <= last; i++) {
-      const b = i - 1;
-      tl.to([copies[i - 1], visuals[i - 1]], { opacity: 0, y: -20, duration: 0.15 }, b + 0.3)
-        .fromTo(visuals[i], { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2 }, b + 0.52)
-        .fromTo(copies[i], { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.18 }, b + 0.72);
-    }
-    // 장면 3: 입자가 성취 항목에 자리를 잡을 때 이름표와 오늘 수집 수
-    tl.from(q('.scene-store :is(.art-labels li,.art-tag,.art-count)'), { opacity: 0, stagger: 0.015, duration: 0.14 }, 1.74);
-    // 장면 4: 분포가 그래프 칸에 착지한 뒤 AI가 찾은 구간 표시 → 찾은 것(원인 후보·근거)
-    tl.from(q('.scene-signal .fx-flag'), { opacity: 0, y: -6, duration: 0.12 }, 2.8)
-      .from(q('.scene-signal .fx-finding > *'), { opacity: 0, y: 8, stagger: 0.04, duration: 0.14 }, 2.82);
-    // 장면 5: 신호 도착 → 교수자 화면
-    tl.from(q('.scene-judge .signal-alert'), { opacity: 0, y: -12, duration: 0.15 }, 3.55)
-      .from(q('.scene-judge .fx'), { opacity: 0, y: 20, duration: 0.2 }, 3.64);
-    // 장면 6: 고리 둘레의 이름표(장면 값 5에서 끝난다)
-    tl.from(q('.scene-next .ring-labels li'), { opacity: 0, scale: 0.92, stagger: 0.04, duration: 0.12 }, 4.72)
-      .from(q('.scene-next .ring-caption'), { opacity: 0, duration: 0.12 }, 4.8);
+    /*
+     * 장면 값 s(0~5)는 스크롤을 부드럽게 따라가는 빈 타임라인의 시각이다(ScrollTrigger scrub).
+     * 장면 글·그림과 그 안의 등장 움직임은 트윈이 아니라 s에서 바로 계산해 그린다(scene-fx 아래).
+     * 되감거나 빠르게 오르내려도 앞 장면 글이 남는 일이 없다: 같은 s에서는 언제나 같은 모습.
+     */
+    const tl = gsap.timeline({ paused: true });
     tl.set({}, {}, last);
-
+    const fx = sceneFx(story, scenes, copies, visuals);
     let art: Art | null = null;
     const artBox = story.querySelector<HTMLElement>('.scene-store [data-art-box]');
     const alert = story.querySelector<HTMLElement>('.scene-judge .signal-alert');
@@ -157,12 +135,15 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     // 지금 장면(목차·누를 수 있는 장면): 다음 장면 글이 들어오는 때에 맞춘다(1→2는 .45, 그 뒤는 소수부 .72)
     const current = (s: number) => (s < 1 ? (s >= 0.45 ? 1 : 0) : Math.min(last, Math.floor(s + 0.28)));
     // 스크럽으로 따라가는 동안에도 그림·현재 장면을 맞춘다(ScrollTrigger onUpdate는 스크롤 때만 불린다)
-    tl.eventCallback('onUpdate', () => {
+    const render = () => {
       const s = tl.time();
       story.dataset.s = s.toFixed(2);
+      fx.apply(s);
       art?.setScene(s);
       setActive(current(s));
-    });
+    };
+    tl.eventCallback('onUpdate', render);
+    render();
 
     /* 떠다님: 움직임 허용 + 이야기가 화면에 있음 + 탭이 보임 */
     let inView = true;
@@ -189,10 +170,19 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
       });
     }
     addEventListener('resize', resize);
+    // 실시간 수집 창에서 날아간 별이 도착하면 성운의 별과 같은 모양으로 그린다(story/live.ts가 알린다, 장면 기준 px)
+    const scene0 = scenes[0];
+    const onLand = (e: Event) => {
+      const d = (e as CustomEvent<{ x: number; y: number; verb: number }>).detail;
+      if (!art?.land || !d) return;
+      art.land(d.x + scene0.offsetLeft, d.y + scene0.offsetTop, d.verb);
+    };
+    story.addEventListener('story:land', onLand);
     // 글꼴이 늦게 와서 글 높이가 바뀌면 착지 자리(기록 칸·그래프 칸)도 다시 잰다
     document.fonts?.ready.then(() => { if (alive) resize(); });
 
     return () => {
+      story.removeEventListener('story:land', onLand);
       alive = false;
       st.kill();
       tl.eventCallback('onUpdate', null);
@@ -207,8 +197,68 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
       art?.destroy();
       art = null;
       root.classList.remove('story-gsap', 'art-live');
-      // GSAP이 바꾼 값만 지운다(위치를 정한 인라인 스타일: 이름표 자리·기록 행 칸 너비·별 자리는 그대로)
-      gsap.set([...scenes, ...q('.scene *')], { clearProps: 'opacity,transform' });
+      // 연출 층이 바꾼 값만 지운다(위치를 정한 인라인 스타일: 이름표 자리·기록 행 칸 너비·별 자리는 그대로)
+      fx.clear();
     };
   });
+}
+
+/*
+ * 장면 글·그림 표시(장면 값 s의 함수). 한 전환(소수부 f) 안의 순서:
+ * 앞 장면 글·그림이 빠짐(f .30–.45) → 입자가 옮겨 감 → 다음 장면 그림(.52) → 다음 장면 글(.72).
+ * 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 일찍(첫 화면 .12 빠짐, 그림 .42, 글 .55).
+ * 옮김은 CSS translate 속성으로(이름표 자리를 정한 transform과 겹치지 않게).
+ */
+interface Part { el: HTMLElement; inAt?: number; inDur?: number; outAt?: number; outDur?: number; dyIn: number; dyOut: number }
+const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
+
+function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[], visuals: HTMLElement[]) {
+  const last = scenes.length - 1;
+  const parts: Part[] = [];
+  const all = (sel: string) => [...story.querySelectorAll<HTMLElement>(sel)];
+  scenes.forEach((_, i) => {
+    const outAt = i === last ? undefined : i === 0 ? 0.12 : i + 0.3;
+    const outDur = i === 0 ? 0.18 : 0.15;
+    const vIn = i === 0 ? undefined : i === 1 ? 0.42 : i - 1 + 0.52;
+    const cIn = i === 0 ? undefined : i === 1 ? 0.55 : i - 1 + 0.72;
+    parts.push({ el: visuals[i], inAt: vIn, inDur: 0.2, outAt, outDur, dyIn: i === 1 ? 0 : 16, dyOut: -20 });
+    parts.push({ el: copies[i], inAt: cIn, inDur: i === 1 ? 0.2 : 0.18, outAt, outDur, dyIn: 20, dyOut: -20 });
+  });
+  // 첫 장면의 하늘(자리 잡은 별)과 날아가는 별은 첫 화면 글과 함께 물러난다
+  all('.scene-moment :is(.live-sky,.live-fly)').forEach((el) => parts.push({ el, outAt: 0.12, outDur: 0.2, dyIn: 0, dyOut: 0 }));
+  // 장면 안의 등장 움직임(차례대로 한 번): 시작, 간격, 길이, 아래에서 올라오는 거리
+  const reveal = (sel: string, at: number, stagger: number, dur: number, dy: number) =>
+    all(sel).forEach((el, k) => parts.push({ el, inAt: at + k * stagger, inDur: dur, dyIn: dy, dyOut: 0 }));
+  reveal('.scene-statement .ledger-cols > div', 0.46, 0.04, 0.15, 8);
+  reveal('.scene-statement .ledger-foot', 0.82, 0, 0.15, 8);
+  reveal('.scene-store :is(.art-labels li,.art-tag)', 1.74, 0.015, 0.14, 0);
+  reveal('.scene-signal .fx-flag', 2.8, 0, 0.12, -6);
+  reveal('.scene-signal .fx-finding > *', 2.82, 0.04, 0.14, 8);
+  reveal('.scene-judge .signal-alert', 3.55, 0, 0.15, -12);
+  reveal('.scene-judge .judge-stack > .fx', 3.64, 0, 0.2, 20);
+  reveal('.scene-next .ring-labels li', 4.72, 0.04, 0.12, 6);
+  reveal('.scene-next .ring-caption', 4.8, 0, 0.12, 0);
+  const prev = new Map<HTMLElement, string>();
+  scenes.forEach((sc) => { sc.style.opacity = '1'; });
+  return {
+    apply(s: number) {
+      for (const p of parts) {
+        const pin = p.inAt === undefined ? 1 : easeOut(clamp01((s - p.inAt) / (p.inDur ?? 0.2)));
+        const pout = p.outAt === undefined ? 0 : easeOut(clamp01((s - p.outAt) / (p.outDur ?? 0.15)));
+        const o = pin * (1 - pout);
+        const y = (1 - pin) * p.dyIn + pout * p.dyOut;
+        const key = `${o.toFixed(3)}|${y.toFixed(1)}`;
+        if (prev.get(p.el) === key) continue;
+        prev.set(p.el, key);
+        p.el.style.opacity = o.toFixed(3);
+        p.el.style.translate = Math.abs(y) < 0.05 ? '' : `0 ${y.toFixed(1)}px`;
+      }
+    },
+    clear() {
+      for (const p of parts) { p.el.style.opacity = ''; p.el.style.translate = ''; }
+      scenes.forEach((sc) => { sc.style.opacity = ''; });
+      prev.clear();
+    },
+  };
 }
