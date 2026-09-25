@@ -53,8 +53,12 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .lane-head b{font-size:20px;letter-spacing:-.02em}
 .lane-desc{margin-top:8px;min-height:3.2em;color:var(--muted);font-size:14.5px;line-height:1.6}
 .lane-items{list-style:none;display:grid;gap:8px;margin-top:18px}
-/* 공식 스펙 링크(새 창): 테두리 칸 + ↗ + 올렸을 때 밝아짐 */
-.std-chip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+/* 공식 스펙 링크(새 창): 테두리 칸 + ↗ + 올렸을 때 밝아짐.
+   모든 칸을 같은 짜임으로: 이름은 왼쪽 위, 상태(적용·적용 예정·설계 참조)는 오른쪽 아래. 한 줄에 놓인 칸은 높이를 맞춘다
+   (이름이 짧은 칸만 상태가 이름 옆에 붙어 칸마다 모양이 달라지지 않게) */
+.lane-items>li{display:flex}
+.std-chip{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:6px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+.std-chip span{align-self:flex-end}
 .std-chip:hover{border-color:var(--line3);background:rgba(255,255,255,.05)}
 .std-chip b{white-space:nowrap;font-family:var(--en);font-size:15.5px;font-weight:800;letter-spacing:-.01em}
 .std-chip span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
