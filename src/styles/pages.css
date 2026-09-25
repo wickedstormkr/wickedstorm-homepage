@@ -30,7 +30,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .prod-card.lhb::before{background:var(--grad-lhb)}
 .prod-card .kick{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .prod-card h3{margin:10px 0 12px;font-family:var(--en);font-size:24px;letter-spacing:-.02em}
-.prod-card h3 a{display:inline-block;padding:6px 0}
+.prod-card h3 a{display:inline-flex;align-items:center;min-height:44px}
 .prod-card h3 a::after{content:" →";color:var(--faint);transition:color .2s}
 .prod-card h3 a:hover::after{color:#fff}
 .prod-card p{color:var(--ink-3);font-size:15px;line-height:1.65}
@@ -49,9 +49,9 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .lane-head b{font-size:20px;letter-spacing:-.02em}
 .lane-desc{margin-top:8px;min-height:3.2em;color:var(--muted);font-size:14.5px;line-height:1.6}
 .lane-items{list-style:none;display:grid;gap:8px;margin-top:18px}
-.std-chip{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+.std-chip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
 .std-chip:hover{border-color:var(--line3);background:rgba(255,255,255,.05)}
-.std-chip b{font-family:var(--en);font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.std-chip b{white-space:nowrap;font-family:var(--en);font-size:15.5px;font-weight:800;letter-spacing:-.01em}
 .std-chip span{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted)}
 .std-chip span::before,.std-legend .dot{content:"";width:7px;height:7px;border-radius:50%;background:var(--faint)}
 .std-chip.apply{border-color:rgba(163,177,255,.32);background:rgba(124,77,255,.1)}
@@ -84,9 +84,9 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .case-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
 .case-meta .rorg{font-size:13px;font-weight:700;color:#d7c6ff}
 .case-year{font-family:var(--en);font-size:13px;font-weight:700;color:var(--muted)}
-.case-card h3{margin:12px 0 16px;font-size:20px;letter-spacing:-.03em;line-height:1.35}
-.case-card h3 a{display:inline-block;padding:2px 0}
-.case-card h3 a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent)}
+.case-card .case-h{margin:12px 0 16px;font-size:20px;letter-spacing:-.03em;line-height:1.35}
+.case-card .case-h a{display:inline-block;padding:2px 0}
+.case-card .case-h a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent)}
 .case-dl{display:grid;gap:12px;margin:0}
 .case-dl div{display:grid;gap:4px}
 .case-dl dt{font-size:12.5px;font-weight:700;color:var(--faint);letter-spacing:.02em}
@@ -106,7 +106,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .act-list{list-style:none;margin-top:22px;border-top:1px solid var(--line)}
 .act-list li{display:grid;grid-template-columns:7em 1fr;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px;color:var(--ink-3)}
 .act-date{font-family:var(--en);font-size:13.5px;font-weight:700;color:var(--muted)}
-.act-list a{display:inline-block;padding:4px 0;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px}
+.act-list a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px}
 .act-list a:hover{color:#fff;text-decoration-color:var(--accent)}
 @media (max-width:699px){.act-list li{grid-template-columns:1fr;gap:2px}}
 .case-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px}
@@ -158,7 +158,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .loc-dl div{display:grid;grid-template-columns:7em 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px}
 .loc-dl dt{font-family:var(--en);font-size:13.5px;font-weight:700;color:var(--muted)}
 .loc-dl dd{margin:0;color:var(--ink-2)}
-.loc-dl a{display:inline-block;padding:4px 0}
+.loc-dl a{display:inline-flex;align-items:center;min-height:44px}
 
 /* 문의 목적 */
 .purposes{margin-bottom:28px}
@@ -178,3 +178,4 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .page .band.page-head-band{padding-bottom:0}
 .page .band.trust-group{padding:clamp(36px,4vw,56px) 0 0}
 .page .band.cta-band{padding-top:clamp(56px,7vw,96px)}
+@media (max-width:1023px){.feature .feat-badge{display:inline-flex;align-items:center;min-height:44px}}

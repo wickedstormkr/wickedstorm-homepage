@@ -8,18 +8,17 @@
  *   데이터 아트는 성능에 따라 WebGL(OGL) → 캔버스 → 미리 그린 그림 순으로 고른다.
  * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰은 그림 아래 목록으로.
  */
-import QuizCard from '../components/fragments/QuizCard.astro';
 import StatementCard from '../components/fragments/StatementCard.astro';
 import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
 import InterventionPanel from '../components/fragments/InterventionPanel.astro';
-import LearnerHint from '../components/fragments/LearnerHint.astro';
-import Img from '../components/Img.astro';
 import type { HomeContent } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 import { pagePath, type Page } from '../lib/i18n';
-import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK } from '../lib/story-data';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, WEEK_WEIGHTS, BARS, HOT_WEEK, RING_NODES, RING_R, ringXY } from '../lib/story-data';
+/** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
+const RING_ORDER = [0, 1, 2, 3, 4];
 
 interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop']; demoTopic: string }
 const { lang, t, hero, loop, demoTopic } = Astro.props;
@@ -57,7 +56,18 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         </ul>
       </div>
       <div class="scene-visual">
-        <QuizCard t={t.quiz} label={label(t.quiz.product)} />
+        <!-- 흩어진 학습의 순간들(은하). 그중 하나가 이 이야기의 주인공이다 -->
+        <div class="moment-stage">
+          <img class="art-base" src={url('/art/galaxy.svg')} alt="" width="1600" height="1000" decoding="async" fetchpriority="low" />
+          <div class="moment">
+            <span class="moment-dot" data-anchor="moment" aria-hidden="true"></span>
+            <p class="moment-tag">
+              <span class="moment-k">{t.moment.label}</span>
+              <span class="moment-v"><b class="tnum">{t.moment.time}</b> {t.moment.who} · {t.moment.what}</span>
+              <span class="moment-r">{t.moment.result}</span>
+            </p>
+          </div>
+        </div>
       </div>
     </article>
 
@@ -69,9 +79,8 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         <p class="scene-text">{sc[1].text}</p>
       </div>
       <div class="scene-visual">
-        <div class="stmt-pair">
-          <QuizCard t={t.quiz} answered compact label={label(t.quiz.product)} />
-          <span class="stmt-link" aria-hidden="true"></span>
+        <div class="stmt-one">
+          <span class="stmt-dot" data-anchor="stmt" aria-hidden="true"></span>
           <StatementCard t={t.statement} label={t.statement.caption} />
         </div>
       </div>
@@ -152,12 +161,21 @@ const week = (n: number) => t.signal.week.replace('{n}', String(n));
         </div>
       </div>
       <div class="scene-visual">
-        <div class="next-stack">
-          <LearnerHint t={t.next} label={label(t.next.product)} />
-          <figure class="loop-art">
-            <Img name={loop.img} alt={loop.alt} sizes="(min-width: 1024px) 56vw, calc(100vw - 48px)" />
-            <figcaption class="note" set:html={loop.caption} />
-          </figure>
+        <!-- 모든 문장이 고리가 되어 돈다. 고리 둘레에 세 솔루션과 세 역할 -->
+        <div class="art-box ring-box">
+          <img class="art-base" src={url('/art/loop-ring.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
+          <ol class="ring-labels" aria-label={t.ring.label}>
+            {RING_ORDER.map((k, i) => {
+              const n = loop.notes[k];
+              const [x, y] = ringXY(-Math.PI / 2 + (i * Math.PI * 2) / RING_NODES, RING_R);
+              return (
+                <li class:list={['ring-l', x > 0.55 ? 'r' : x < 0.45 ? 'l' : 'c', y < 0.5 ? 't' : 'b']} style={`left:${pct(x)};top:${pct(y)}`}>
+                  <span class:list={['pill', n.product]}>{n.pill}</span>{n.role && <b set:html={n.role} />}
+                </li>
+              );
+            })}
+          </ol>
+          <p class="ring-caption" set:html={loop.caption} />
         </div>
       </div>
     </article>

@@ -2,7 +2,7 @@
  * 미리 그린 그림(기본 층): 데이터 아트 모델(story-data.ts)을 빌드 때 SVG로 그린다.
  * 움직임 줄이기·저전력·JS 없음·폰에서 이 그림만으로 이야기가 완결된다. 그림 속 글자는 없다(이름표는 HTML).
  */
-import { buildParticles, CASE_NODES, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, alphaOf, sizeOf, type LayoutKey } from './story-data';
+import { buildParticles, CASE_NODES, VERBS, VERB_COLOR, ANOMALY_LEAF, HOT_WEEK, GALAXY, galaxy, alphaOf, sizeOf, type LayoutKey } from './story-data';
 
 const W = 1600;
 const H = 1000;
@@ -69,4 +69,32 @@ export function barsSvg() {
     return `<g fill="${VERB_COLOR[v]}" filter="url(#glow)">${c}</g>`;
   }).join('');
   return head(DEFS) + `<line x1="${0.05 * W}" x2="${0.52 * W}" y1="${0.81 * H}" y2="${0.81 * H}" stroke="#ffffff" stroke-opacity=".18" stroke-width="2"/>` + cs + '</svg>';
+}
+
+/** 장면 1: 흩어진 학습의 순간들(은하, 회전 0). 주인공 점과 이름표는 HTML */
+export function galaxySvg() {
+  const ps = buildParticles(2000, 7).filter((p) => !p.hero);
+  const cs = VERBS.map((v, vi) => {
+    const c = ps
+      .filter((p) => p.verb === vi)
+      .map((p) => {
+        const [x, y, d] = galaxy(p, 0, 1.6);
+        // 폰의 작은 그림에서도 보이도록 WebGL 층보다 밝고 크게
+        const a = (0.25 + (p.mag - 0.5) * 0.9) * (0.5 + 0.5 * d);
+        return `<circle cx="${f((x - GALAXY.cx + 0.5) * W)}" cy="${f((y - GALAXY.cy + 0.5) * H)}" r="${(3 + p.mag * 3).toFixed(1)}" opacity="${Math.min(1, a).toFixed(2)}"/>`;
+      })
+      .join('');
+    return `<g fill="${VERB_COLOR[v]}">${c}</g>`;
+  }).join('');
+  return head() + cs + '</svg>';
+}
+
+/** 장면 6: 모든 문장이 모인 선순환 고리 */
+export function ringSvg() {
+  const ps = buildParticles(900, 7);
+  const cs = VERBS.map((v, vi) => {
+    const c = ps.filter((p) => p.verb === vi).map((p) => `<circle cx="${f(p.L[0] * W)}" cy="${f(p.L[1] * H)}" r="3"/>`).join('');
+    return `<g fill="${VERB_COLOR[v]}" opacity=".7" filter="url(#glow)">${c}</g>`;
+  }).join('');
+  return head(DEFS) + cs + '</svg>';
 }

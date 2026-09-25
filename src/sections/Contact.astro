@@ -10,7 +10,7 @@ interface Props { lang: Lang; t: HomeContent['contact']; ui: UiText; page?: bool
 const { lang, t, ui, page = false } = Astro.props;
 const f = t.form;
 ---
-<section class="band contact" id="contact" aria-labelledby={page ? 'page-title' : 'contact-title'}>
+<section class="band contact" id="contact" aria-labelledby={page ? undefined : 'contact-title'} aria-label={page ? t.purposes.title : undefined}>
   <div class="wrap">
     {page ? null : <SecHead lang={lang} id="contact-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead} />}
     <div class="purposes">

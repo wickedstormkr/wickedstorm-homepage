@@ -84,13 +84,17 @@ export interface Particle {
   evidence: boolean; // 장면 5에서 교수자 화면으로 가는 근거 문장
   delay: number; // 0~1 흐름 순서
   phase: number; // 떠다님 위상
+  hero: boolean; // 이야기의 주인공: 박서연의 구간 퀴즈 3번 응답(장면 1 이름표, 장면 2 문장)
+  curve: number; // 장면 사이를 옮겨 갈 때 휘는 정도(-0.25~0.25)
   mag: number; // 별밭에서의 밝기·크기(0.5~1.6)
-  G: [number, number]; // 장면 1 별밭: 학습의 순간들이 무대 전체에 흩어져 있다(무대 기준)
+  Gp: [number, number, number]; // 장면 1 은하: 반지름·각도·높이(도는 원반 위, 그릴 때 투영)
+  G: [number, number]; // 장면 1을 회전 0으로 투영한 자리(무대 기준, 미리 그린 그림용)
   F: [number, number]; // 장면 2 흐름: 활동 종류마다 한 줄기로 늘어선 표준 문장(무대 기준)
   T: [number, number]; // 성취 항목 자리(장면 3)
   B: [number, number]; // 주차별 막대(장면 4, 이상 항목만)
   D: [number, number]; // 근거 묶음(장면 5)
-  L: [number, number]; // 선순환 고리(장면 6)
+  L: [number, number]; // 선순환 고리(장면 6, 회전 0)
+  La: [number, number]; // 선순환 고리의 각도·반지름(그릴 때 돌린다)
 }
 
 function pickWeighted(r: () => number, weights: number[]) {
@@ -119,14 +123,26 @@ export function buildParticles(n: number, seed = 7): Particle[] {
     const a = r() * Math.PI * 2;
     const rr = Math.pow(r(), 0.55);
     const T: [number, number] = [node.x + Math.cos(a) * rr * LEAF_R, node.y + Math.sin(a) * rr * 0.05];
-    // 별밭: 오른쪽(제품 화면 쪽)에 조금 더 모이고, 글이 있는 왼쪽은 성기게
-    const gx = Math.pow(r(), 0.72);
-    const G: [number, number] = [gx, 0.06 + r() * 0.9];
+    // 은하: 두 팔을 가진 원반. 가운데가 촘촘하고 바깥으로 갈수록 성기다
+    const gr = Math.pow(r(), 0.62);
+    const arm = (i % 2) * Math.PI;
+    const ga = arm + gr * 4.6 + (r() - 0.5) * (0.9 + gr * 0.8);
+    const gh = (r() - 0.5) * 0.16 * (1.1 - gr);
+    const Gp: [number, number, number] = [gr * (0.92 + r() * 0.16), ga, gh];
     const mag = 0.5 + Math.pow(r(), 3) * 1.1;
     // 흐름: 화면 아래쪽에 활동 종류별 네 줄기(위에서부터 시청·응답·제출·질문)
     const F: [number, number] = [r() * 1.08 - 0.04, FLOW_Y + verb * FLOW_GAP + (r() - 0.5) * 0.01];
-    out.push({ verb, leaf, week, evidence, delay: r(), phase: r() * Math.PI * 2, mag, G, F, T, B: [0, 0], D: [0, 0], L: [0, 0] });
+    out.push({ verb, leaf, week, evidence, hero: false, curve: (r() - 0.5) * 0.5, delay: r(), phase: r() * Math.PI * 2, mag, Gp, G: [0, 0], F, T, B: [0, 0], D: [0, 0], L: [0, 0], La: [0, 0] });
   }
+  // 주인공: 첫 입자를 '위험요인 비교' 항목·3주차·응답(오답)·근거 문장으로 정한다
+  {
+    const h = out[0];
+    const node = LEAVES[ANOMALY_LEAF];
+    Object.assign(h, { hero: true, verb: 1, leaf: ANOMALY_LEAF, week: HOT_WEEK, evidence: true, mag: 1.6, delay: 0.5, curve: 0.18 });
+    h.T = [node.x, node.y];
+    h.F = [0.5, FLOW_Y + FLOW_GAP];
+  }
+  out.forEach((p) => { const g = galaxy(p, 0, 1.6); p.G = [g[0], g[1]]; });
   // 막대: 이상 항목 문장을 주차별로 쌓는다(칸 채우기)
   const anomalous = out.filter((p) => p.leaf === ANOMALY_LEAF);
   const perWeek = Array.from({ length: WEEKS }, () => [] as Particle[]);
@@ -157,30 +173,65 @@ export function buildParticles(n: number, seed = 7): Particle[] {
       p.D = [D_CENTER[0] + Math.cos(a) * rr, D_CENTER[1] + Math.sin(a) * rr * ART_ASPECT];
     } else p.D = p.T;
   });
-  // 선순환 고리: 그림을 두르는 원(16:10 칸에서 둥글게 보이도록 세로 반지름을 늘린다)
+  // 선순환 고리: 그림 칸 가운데 원. 다섯 자리(학습자·Lecognizer·Lecognizer AI·운영자·교수자) 근처가 조금 더 밝게 모인다
   out.forEach((p, i) => {
-    const a = (i / n) * Math.PI * 2 + (r() - 0.5) * 0.05;
-    const rad = 0.47 + (r() - 0.5) * 0.03;
-    p.L = [0.5 + Math.cos(a) * rad, 0.5 + Math.sin(a) * rad * ART_ASPECT * 0.98];
+    let a = (i / n) * Math.PI * 2 + (r() - 0.5) * 0.05;
+    const k = Math.round(((a + Math.PI / 2) / (Math.PI * 2)) * RING_NODES) / RING_NODES;
+    const node = k * Math.PI * 2 - Math.PI / 2;
+    a += (node - a) * 0.35 * r();
+    const rad = RING_R + (r() - 0.5) * 0.035;
+    p.La = [a, rad];
+    p.L = ringXY(a, rad);
   });
   return out;
 }
 
+/** 은하(장면 1): 무대 기준 가운데·반지름(가로 기준), 원반 기울기 */
+export const GALAXY = { cx: 0.68, cy: 0.54, r: 0.25, tilt: 1.12 };
+/**
+ * 은하 위 자리: spin만큼 돌린 원반을 기울여 원근으로 투영한다. [x, y, 깊이(0 뒤~1 앞), 원근 배율] (무대 기준)
+ * ar: 무대 가로/세로 비(원반이 둥글게 보이도록)
+ */
+export function galaxy(p: Particle, spin: number, ar: number): [number, number, number, number] {
+  const [r, a0, h] = p.Gp;
+  const a = a0 + spin * (1.25 - r * 0.7);
+  const x = Math.cos(a) * r;
+  const z = Math.sin(a) * r;
+  const ct = Math.cos(GALAXY.tilt);
+  const st = Math.sin(GALAXY.tilt);
+  const y2 = h * ct - z * st;
+  const z2 = h * st + z * ct;
+  const per = 2.6 / (2.6 - z2);
+  return [GALAXY.cx + x * per * GALAXY.r, GALAXY.cy + y2 * per * GALAXY.r * ar, (z2 + 1) / 2, per];
+}
+/** 선순환 고리: 그림 칸 기준 가운데 원, 다섯 자리 */
+export const RING_R = 0.3;
+export const RING_NODES = 5;
+export const ringXY = (a: number, rad: number): [number, number] => [0.5 + Math.cos(a) * rad, 0.5 + Math.sin(a) * rad * ART_ASPECT * 0.98];
+
 /** 장면별 배치: 1 별밭, 2 흐름, 3 체계, 4 막대, 5 근거, 6 고리 */
 export const LAYOUT_BY_SCENE = ['G', 'F', 'T', 'B', 'D', 'L'] as const;
 /** 무대 기준 배치(G·F)를 그림 칸 기준으로 바꾸는 값: 칸 좌표 = x0 + 무대 좌표 × sx */
-export interface StageMap { x0: number; y0: number; sx: number; sy: number }
-export const STAGE_IS_BOX: StageMap = { x0: 0, y0: 0, sx: 1, sy: 1 };
+export interface StageMap { x0: number; y0: number; sx: number; sy: number; ar: number }
+export const STAGE_IS_BOX: StageMap = { x0: 0, y0: 0, sx: 1, sy: 1, ar: 1.6 };
+/** 그릴 때의 조건: 근거 묶음 옮김, 무대 좌표, 흐른 시간(움직임 멈춤이면 멈춘다), 주인공이 설 자리(무대 기준) */
+export interface PlaceEnv {
+  shift?: readonly [number, number];
+  stage?: StageMap;
+  time?: number;
+  heroG?: readonly [number, number];
+  heroF?: readonly [number, number];
+}
 export type LayoutKey = (typeof LAYOUT_BY_SCENE)[number];
 
 /** 배치별 밝기(0이면 보이지 않음) */
 export function alphaOf(p: Particle, k: LayoutKey): number {
   switch (k) {
     case 'G':
-      // 대부분은 흐린 먼지, 몇몇만 밝은 별. 제목·글이 있는 왼쪽은 더 흐리게
-      return (0.07 + (p.mag - 0.5) * 0.75) * (0.35 + 0.65 * Math.min(1, p.G[0] / 0.55));
+      // 대부분은 흐린 먼지, 몇몇만 밝은 별
+      return p.hero ? 1 : 0.1 + (p.mag - 0.5) * 0.72;
     case 'F':
-      return 0.75;
+      return p.hero ? 1 : 0.7;
     case 'T':
       return 0.85;
     case 'B':
@@ -194,6 +245,7 @@ export function alphaOf(p: Particle, k: LayoutKey): number {
 export function sizeOf(p: Particle, k: LayoutKey): number {
   if (k === 'B' && p.leaf === ANOMALY_LEAF) return p.week === HOT_WEEK ? 1.5 : 1.2;
   if (k === 'D' && p.evidence) return 1.3;
+  if (p.hero) return k === 'G' || k === 'F' ? 4.2 : 2;
   if (k === 'G') return 0.55 + p.mag * 0.55;
   if (k === 'F') return 0.85;
   return 1;
@@ -206,40 +258,71 @@ export const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * 
 const ROOT = CASE_NODES[0];
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
+const fract = (v: number) => v - Math.floor(v);
+const smooth = (e0: number, e1: number, v: number) => { const t = clamp01((v - e0) / (e1 - e0)); return t * t * (3 - 2 * t); };
+
 /**
  * 장면 값 s(0~5, 장면 사이는 소수)에서 입자의 자리·밝기·크기. 캔버스·WebGL(셰이더)이 같은 규칙을 쓴다.
- * shift: 근거 묶음(D)을 화면의 신호 알림 쪽으로 옮기는 양(그림 칸 비율).
- * 다음 장면으로 넘어가는 구간(소수부 0.3~1.0)에서 입자마다 순서(delay)를 두고 옮겨 가, 흐름처럼 보인다.
+ * 다음 장면으로 넘어가는 구간(소수부 0.3~1.0)에서 입자마다 순서(delay)를 두고, 휘어진 길(curve)로 옮겨 가 흐름이 된다.
+ * 결과: [x, y(그림 칸 기준), 밝기, 크기]
  */
-export function place(p: Particle, s: number, out: Float32Array | number[] = [0, 0, 0, 0], shift?: readonly [number, number], stage: StageMap = STAGE_IS_BOX) {
+export function place(p: Particle, s: number, out: Float32Array | number[] = [0, 0, 0, 0], env: PlaceEnv = {}) {
+  const st = env.stage ?? STAGE_IS_BOX;
+  const time = env.time ?? 0;
   const n = LAYOUT_BY_SCENE.length - 1;
   const i = Math.max(0, Math.min(n, Math.floor(s)));
   const j = Math.min(n, i + 1);
   const ka = LAYOUT_BY_SCENE[i];
   const kb = LAYOUT_BY_SCENE[j];
   const t = ka === kb ? 0 : ease(clamp01((s - i - 0.3 - p.delay * 0.35) / 0.35));
-  const moved = (k: LayoutKey): [number, number] => {
-    if (k === 'G' || k === 'F') return [stage.x0 + p[k][0] * stage.sx, stage.y0 + p[k][1] * stage.sy];
-    return k === 'D' && p.evidence && shift ? [p.D[0] + shift[0], p.D[1] + shift[1]] : p[k];
+  const toBox = (x: number, y: number): [number, number] => [st.x0 + x * st.sx, st.y0 + y * st.sy];
+  let depth = 1;
+  let edge = 1;
+  const pos = (k: LayoutKey): [number, number] => {
+    switch (k) {
+      case 'G': {
+        if (p.hero && env.heroG) return toBox(env.heroG[0], env.heroG[1]);
+        const g = galaxy(p, time * 0.05 + Math.min(s, 1.2) * 0.9, st.ar);
+        depth = g[2];
+        return toBox(g[0], g[1]);
+      }
+      case 'F': {
+        if (p.hero && env.heroF) return toBox(env.heroF[0], env.heroF[1]);
+        // 줄기를 따라 오른쪽으로 흐른다(가장자리에서 흐려지며 다시 들어온다)
+        const fx = fract(p.F[0] + time * (0.012 + p.verb * 0.003));
+        edge = smooth(0, 0.08, fx) * smooth(1, 0.92, fx);
+        return toBox(fx, p.F[1]);
+      }
+      case 'D':
+        return p.evidence && env.shift ? [p.D[0] + env.shift[0], p.D[1] + env.shift[1]] : p.D;
+      case 'L':
+        return ringXY(p.La[0] + time * 0.035, p.La[1]);
+      default:
+        return p[k];
+    }
   };
-  const a = moved(ka);
-  const b = moved(kb);
-  let x: number;
-  let y: number;
+  const a = pos(ka);
+  const dA = depth; const eA = edge;
+  depth = 1; edge = 1;
+  const b = pos(kb);
+  const dB = depth; const eB = edge;
+  let cx: number;
+  let cy: number;
   if (ka === 'F' && kb === 'T') {
-    // 이차 베지어: 흐름 줄기 → 뿌리 근처 → 성취 항목
-    const cx = ROOT.x + 0.06;
-    const cy = ROOT.y + (a[1] - 0.5) * 0.25;
-    const u = 1 - t;
-    x = u * u * a[0] + 2 * u * t * cx + t * t * b[0];
-    y = u * u * a[1] + 2 * u * t * cy + t * t * b[1];
+    // 흐름 줄기 → 뿌리(CFDocument) 근처 → 성취 항목
+    cx = ROOT.x + 0.06;
+    cy = ROOT.y + (a[1] - 0.5) * 0.25;
   } else {
-    x = a[0] + (b[0] - a[0]) * t;
-    y = a[1] + (b[1] - a[1]) * t;
+    // 곧은 선 대신 입자마다 조금씩 다르게 휘는 길
+    cx = (a[0] + b[0]) / 2 - (b[1] - a[1]) * p.curve;
+    cy = (a[1] + b[1]) / 2 + (b[0] - a[0]) * p.curve;
   }
-  out[0] = x;
-  out[1] = y;
-  out[2] = alphaOf(p, ka) + (alphaOf(p, kb) - alphaOf(p, ka)) * t;
+  const u = 1 - t;
+  out[0] = u * u * a[0] + 2 * u * t * cx + t * t * b[0];
+  out[1] = u * u * a[1] + 2 * u * t * cy + t * t * b[1];
+  const va = alphaOf(p, ka) * (ka === 'G' ? 0.45 + 0.55 * dA : 1) * eA;
+  const vb = alphaOf(p, kb) * (kb === 'G' ? 0.45 + 0.55 * dB : 1) * eB;
+  out[2] = va + (vb - va) * t;
   out[3] = sizeOf(p, ka) + (sizeOf(p, kb) - sizeOf(p, ka)) * t;
   return out;
 }

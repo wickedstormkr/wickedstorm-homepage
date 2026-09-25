@@ -95,9 +95,10 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     // 장면 5: 신호 도착 → 교수자 화면
     tl.from(q('.scene-judge .signal-alert'), { autoAlpha: 0, y: -16, duration: 0.2 }, 3.7)
       .from(q('.scene-judge .fx-judge'), { autoAlpha: 0, y: 24, duration: 0.25 }, 3.8);
-    // 장면 6: 학습자 힌트와 선순환
-    tl.from(q('.scene-next .fx-hint'), { autoAlpha: 0, y: 20, duration: 0.25 }, 4.7)
-      .from(q('.scene-next .loop-art'), { autoAlpha: 0, scale: 0.96, duration: 0.25 }, 4.75);
+    // 장면 1→2: 이름표가 사라지고 문장이 펼쳐진다
+    tl.to(q('.scene-moment .moment-tag'), { autoAlpha: 0, duration: 0.2 }, 0.3);
+    // 장면 6: 고리 둘레의 이름표
+    tl.from(q('.scene-next .ring-labels li'), { autoAlpha: 0, scale: 0.9, stagger: 0.03, duration: 0.2 }, 4.7);
     tl.set({}, {}, last);
 
     let art: Art | null = null;
@@ -112,7 +113,16 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
         const a = boxIn(alert, stage);
         shift = [(a.x - 34 - box.x) / box.w - D_CENTER[0], (a.y + a.h / 2 - box.y) / box.h - D_CENTER[1]];
       }
-      art.resize(stage.clientWidth, stage.clientHeight, box, shift);
+      // 주인공 입자가 설 자리: 장면 1 이름표의 점, 장면 2 문장 카드의 왼쪽 끝(무대 기준 0~1)
+      const W = stage.clientWidth;
+      const H = stage.clientHeight;
+      const at = (sel: string): [number, number] | undefined => {
+        const el = story.querySelector<HTMLElement>(sel);
+        if (!el) return undefined;
+        const r = boxIn(el, stage);
+        return [(r.x + r.w / 2) / W, (r.y + r.h / 2) / H];
+      };
+      art.resize(W, H, box, { shift, heroG: at('[data-anchor="moment"]'), heroF: at('[data-anchor="stmt"]') });
       art.setScene(tl.time());
     };
 

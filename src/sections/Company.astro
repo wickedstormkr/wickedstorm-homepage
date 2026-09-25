@@ -16,7 +16,7 @@ const posterImg = await getImage({ src: poster, format: 'webp', width: Math.min(
 const ANCHOR: Record<string, Page> = { '#product': 'product', '#references': 'cases', '#standards': 'standards' };
 const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.startsWith('#') ? h : url(h));
 ---
-<section class:list={['band company', { 'page-top-less': full }]} id={full ? 'vision' : 'company'} aria-labelledby={full ? 'page-title' : 'co-title'}>
+<section class:list={['band company', { 'page-top-less': full }]} id={full ? 'vision' : 'company'} aria-labelledby={full ? undefined : 'co-title'} aria-label={full ? t.history.eyebrow : undefined}>
   <div class="wrap">
     {full ? <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p> : (
       <SecHead lang={lang} id="co-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
@@ -54,7 +54,7 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
         <div class="history" id="history">
           <div class="hist-head">
             <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.history.eyebrow} /></p>
-            <h3 class="hist-title" set:html={phrase(t.history.title, lang)} />
+            <Fragment set:html={`<${full ? 'h2' : 'h3'} class="hist-title">${phrase(t.history.title, lang)}</${full ? 'h2' : 'h3'}>`} />
           </div>
           <ol class="hist-list" aria-label={t.history.listLabel}>
             {t.history.years.map((y) => (
