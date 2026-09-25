@@ -4,6 +4,7 @@
  * 결과는 test-results/audit/<페이지>@<폭>.json 에도 남긴다(scripts/checks/report.mjs가 PR 요약표로 묶는다).
  */
 import { test, expect } from '@playwright/test';
+import { waitForFonts } from './fonts';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { audit } from './audit/metrics';
 import { ALL, WIDTHS, TOUCH_MAX, LOCALE, viewportHeight } from './pages';
@@ -17,7 +18,7 @@ for (const pg of ALL) {
         const ctx = await browser.newContext({ viewport: { width: w, height: viewportHeight(w) }, locale: LOCALE[pg.lang], reducedMotion: 'reduce' });
         const page = await ctx.newPage();
         await page.goto(pg.path, { waitUntil: 'load' });
-        await page.evaluate(() => document.fonts.ready);
+        await waitForFonts(page);
         const r = await page.evaluate(audit, { touch: w <= TOUCH_MAX });
         writeFileSync(`test-results/audit/${pg.id}@${w}.json`, JSON.stringify({ page: pg.id, lang: pg.lang, width: w, ...r }, null, 1));
         await ctx.close();

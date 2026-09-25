@@ -33,6 +33,8 @@ try {
       await page.evaluate(async () => {
         for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); }
         window.scrollTo(0, 0);
+        await new Promise((r) => (document.readyState === 'complete' ? r() : addEventListener('load', r, { once: true })));
+        void document.body.offsetHeight;
         await document.fonts.ready;
       });
       await page.waitForLoadState('networkidle');

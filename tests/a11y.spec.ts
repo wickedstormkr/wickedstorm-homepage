@@ -4,6 +4,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { waitForFonts } from './fonts';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { ALL, LOCALE } from './pages';
 
@@ -15,7 +16,7 @@ for (const pg of ALL) {
       const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, locale: LOCALE[pg.lang] });
       const page = await ctx.newPage();
       await page.goto(pg.path, { waitUntil: 'load' });
-      await page.evaluate(() => document.fonts.ready);
+      await waitForFonts(page);
       const r = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice']).analyze();
       const v = r.violations.map((x) => ({ id: x.id, impact: x.impact, help: x.help, nodes: x.nodes.slice(0, 5).map((n) => n.target.join(' ')) }));
       writeFileSync(`test-results/axe/${pg.id}@${w}.json`, JSON.stringify({ page: pg.id, width: w, violations: v }, null, 1));

@@ -104,7 +104,14 @@ const ogIsDefault = /\/img\/og-(home|image)/.test(ogImage);
 <link rel="apple-touch-icon" href={url('/img/favicon.png')} />
 {/* 글꼴(Pretendard·Sora)은 첫 그리기를 막지 않게 비동기로: 첫 화면은 시스템 글꼴로 바로 그리고, 도착하면 바꿔 그린다(font-display:swap).
    글꼴 400KB 안팎을 기다리면 폰 LCP 2.5초 예산을 넘는다(Lighthouse 측정). */}
-<link rel="stylesheet" href={url('/fonts/fonts.css')} media="print" onload="this.media='all'" />
+<!-- media="print"로 받아만 두고(1KB), 페이지 load 뒤에 적용한다. 글꼴 파일은 적용할 때 요청되므로 첫 그리기·LCP와 떨어진다 -->
+<link rel="stylesheet" href={url('/fonts/fonts.css')} media="print" id="wsFonts" />
+<script is:inline>
+  (function () {
+    var on = function () { var l = document.getElementById('wsFonts'); if (l) l.media = 'all'; };
+    if (document.readyState === 'complete') on(); else window.addEventListener('load', on, { once: true });
+  })();
+</script>
 <noscript><link rel="stylesheet" href={url('/fonts/fonts.css')} /></noscript>
 {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 {GA_ID && (

@@ -64,7 +64,7 @@ npm run report               # 결과를 한 장의 표로(test-results/report.m
   - 움직임 멈춤 버튼과 reduced-motion
   - 언어 안내 띠(자동 이동 없음), hreflang·canonical, 모바일 메뉴
   - 문의 폼: 오류 표시, UTM 유입 경로, 보내는 값이 지금 서버 계약과 같은지(실제 전송은 가로챔)
-- **Lighthouse**(`lighthouserc.cjs`): 폰 에뮬레이션, 3회 중앙값.
+- **Lighthouse**(`lighthouserc.cjs`): 폰 에뮬레이션, 5회 중앙값.
   - 예산: LCP ≤ 2.5s, CLS ≤ 0.1, TBT ≤ 200ms, 첫 로드 JS ≤ 90KB(gzip).
   - INP는 실험실에서 잴 수 없어 TBT로 대신합니다.
   - 폰과 같은 조건이 되도록 CI에는 한글 시스템 글꼴(fonts-noto-cjk)을 설치합니다.

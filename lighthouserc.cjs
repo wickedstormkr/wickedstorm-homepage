@@ -9,7 +9,7 @@ module.exports = {
     collect: {
       staticDistDir: './dist',
       url: ['/index.html', '/en/index.html', '/vi/index.html', '/news.html', '/news/2026-09-edtech-korea-fair.html'],
-      numberOfRuns: 3,
+      numberOfRuns: 5,
       settings: {
         chromeFlags: '--no-sandbox --headless=new',
         // 첫 로드 기준: 캐시 없이, 한국어 브라우저로
