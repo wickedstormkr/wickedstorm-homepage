@@ -2,6 +2,7 @@
 /**
  * ⑦ 최근 소식: 소식 컬렉션의 고정(pinned) 글 세 장. 소식 본문은 국문만 있으므로,
  * 다른 언어 페이지는 콘텐츠 파일(news.json cards)의 번역 제목을 쓰고 없으면 국문 제목에 lang="ko"를 붙인다.
+ * 소식 목록으로 가는 버튼은 다른 섹션처럼 섹션 끝(보조 버튼). 목록은 국문만 있다(hreflang="ko").
  */
 import NewsCard from '../components/NewsCard.astro';
 import type { HomeContent, UiText } from '../lib/content';
@@ -18,12 +19,9 @@ const moreLabel = t.cards[0]?.more ?? '';
 ---
 <section class="band" id="news" aria-labelledby="news-title">
   <div class="wrap">
-    <div class="sec-head rowlink">
-      <div>
-        <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.eyebrow} /></p>
-        <h2 class="h-lg" id="news-title" set:html={phrase(t.title, lang)} />
-      </div>
-      <a class="sec-more" href={url('/news.html')}>{t.more} <span aria-hidden="true">→</span></a>
+    <div class="sec-head">
+      <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.eyebrow} /></p>
+      <h2 class="h-lg" id="news-title" set:html={phrase(t.title, lang)} />
     </div>
     <ul class="news-grid">
       {posts.map((p) => {
@@ -37,6 +35,7 @@ const moreLabel = t.cards[0]?.more ?? '';
         );
       })}
     </ul>
+    <p class="more-row"><a class="btn s" href={url('/news.html')} hreflang={lang === 'ko' ? undefined : 'ko'}>{t.more}</a></p>
     <div class="channels" data-social-group hidden>
       <div class="ch-copy">
         <p class="ch-title" set:html={t.channels.title} />

@@ -76,9 +76,6 @@ h1,h2,h3{letter-spacing:-.035em;line-height:1.12;font-weight:800}
 section{position:relative;z-index:2}
 .band{padding:clamp(88px,11vw,150px) 0}
 .sec-head{margin-bottom:clamp(40px,5vw,68px)}
-.sec-head.rowlink{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.sec-more{display:inline-flex;align-items:center;gap:6px;min-height:var(--tap);font-family:var(--en);font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;transition:color .2s}
-.sec-more:hover{color:var(--accent)}
 
 /* ---- 누를 수 있는 것과 없는 것(affordance) ----
    누를 수 있는 것은 누를 수 있게, 아닌 것은 아니게 그린다(CLAUDE.md '원칙').
