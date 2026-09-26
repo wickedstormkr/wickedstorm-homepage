@@ -94,11 +94,11 @@ export function initLive(story: HTMLElement) {
     li.className = 'xrow in';
     li.dataset.verb = String(r.verb);
     const chip = (cls: string, txt: string) => { const s = document.createElement('span'); s.className = `chip ${cls}`; s.textContent = txt; return s; };
-    const arw = () => { const s = document.createElement('span'); s.className = 'arw'; s.setAttribute('aria-hidden', 'true'); s.textContent = '→'; return s; };
+    const arw = (cls = '') => { const s = document.createElement('span'); s.className = `arw ${cls}`.trim(); s.setAttribute('aria-hidden', 'true'); s.textContent = '→'; return s; };
     const dot = document.createElement('span');
     dot.className = 'dot';
     dot.setAttribute('aria-hidden', 'true');
-    li.append(dot, chip('actor', r.a), arw(), chip('verb', r.v), arw(), chip('object', r.o), chip('result', r.r));
+    li.append(dot, chip('actor', r.a), arw(), chip('verb', r.v), arw('brk'), chip('object', r.o), chip('result', r.r));
     return li;
   };
 
@@ -134,9 +134,27 @@ export function initLive(story: HTMLElement) {
     if (active()) { if (!timer) timer = window.setTimeout(tick, 1200); }
     else if (timer) { clearTimeout(timer); timer = 0; }
   };
-  // 보기 창 높이를 다섯 줄에 맞춰 둔다(줄이 오갈 때 창 높이가 흔들리지 않게)
+  const view = list.parentElement!;
+  /** 시연 문장 전부가 한 줄 짜임에 글이 잘리지 않고 들어가는가(폭·언어마다 다르다: 베트남어 폰은 넘친다) */
+  const oneLineFits = () => {
+    const probe = document.createElement('ol');
+    probe.className = 'live-rows';
+    probe.setAttribute('aria-hidden', 'true');
+    probe.style.cssText = 'position:absolute;left:0;right:0;top:0;visibility:hidden;pointer-events:none';
+    pool.forEach((r) => { const li = make(r); li.classList.remove('in'); probe.append(li); });
+    view.append(probe);
+    const ok = [...probe.children].every((li) => {
+      const o = li.querySelector<HTMLElement>('.object');
+      return li.scrollWidth <= li.clientWidth + 1 && (!o || o.scrollWidth <= o.clientWidth + 1);
+    });
+    probe.remove();
+    return ok;
+  };
+  // 한 줄에 다 들어가지 않는 문장이 하나라도 있으면 모든 줄을 같은 두 줄 짜임으로(.live.two, story.css: 줄 높이가 고르게).
+  // 그다음 보기 창 높이를 다섯 줄에 맞춰 둔다(줄이 오갈 때 창 높이가 흔들리지 않게)
   const fix = () => {
-    const view = list.parentElement!;
+    box.classList.remove('two');
+    box.classList.toggle('two', !oneLineFits());
     const rows = [...list.children].slice(0, 5) as HTMLElement[];
     const h = rows.reduce((a, r) => a + r.offsetHeight, 0) + GAP * (rows.length - 1);
     if (h > 0) view.style.height = `${h}px`;

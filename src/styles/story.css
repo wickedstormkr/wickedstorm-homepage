@@ -28,6 +28,10 @@
 .scene-moment .eyebrow{margin-bottom:26px}
 .scene-moment h1{font-size:clamp(30px,4.2vw,56px);line-height:1.14}
 .scene-moment h1 .line{display:block}
+/* 영어·베트남어 제목은 줄이 한국어보다 길다(가장 긴 줄 ≈ 글자 크기의 11배): 줄마다 한 줄에 들어가게 폰·데스크톱에서 한 단계 작게.
+   태블릿은 제목 칸이 넓어 그대로. 고정 이야기는 아래 html.story-pin 규칙 */
+@media (max-width:699px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(26px,calc((100vw - 48px) / 11.3),30px)}}
+@media (min-width:1024px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(28px,3.3vw,44px)}}
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
 .hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
 .hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,max-content);column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
@@ -47,7 +51,7 @@
 .live-view{position:relative;margin:14px 14px 0;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%)}
 .live-rows{list-style:none;display:flex;flex-direction:column;gap:9px;will-change:transform}
-.xrow{display:flex;align-items:center;flex-wrap:nowrap;gap:7px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
+.xrow{--xrow-gap:7px;display:flex;align-items:center;flex-wrap:nowrap;gap:var(--xrow-gap);padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
 /* 점과 '~하다' 칸의 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 목록을 지나가면 같은 색의 별이 된다 */
 .xrow{--c:#7c4dff;--ct:#c3b0ff}
 .xrow[data-verb="0"]{--c:#2f7cff;--ct:#a8c3ff}
@@ -68,6 +72,11 @@
 @keyframes xin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes chipin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .xrow.leaving{opacity:0;transition:opacity .4s ease}
+/* 두 줄 짜임(story/live.ts가 시연 문장 하나라도 한 줄에 다 들어가지 않을 때 모든 줄에 건다): 누가 → 하다 / 무엇을 · 결과.
+   둘째 화살표가 줄바꿈 자리가 되고, 둘째 줄은 점 오른쪽(누가 칸 시작)에 맞춘다 */
+.live.two .xrow{flex-wrap:wrap;row-gap:0}
+.live.two .xrow .brk{display:block;flex-basis:100%;height:6px;overflow:hidden;visibility:hidden}
+.live.two .chip.object{margin-left:calc(9px + var(--xrow-gap,7px))}
 html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{animation:none}
 .live-foot{margin-top:12px;padding:11px 16px 13px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .live-foot b{color:var(--ink)}
@@ -106,7 +115,8 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 .ledger-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:14px;padding-inline:3% 4.5%}
 .ledger-rest{padding-left:2px;font-size:15px;color:var(--ink-3)}
 .ledger-items{list-style:none;display:flex;flex-wrap:wrap;gap:5px}
-@media (min-width:1024px){.ledger-items{flex-wrap:nowrap}.ledger-items li{white-space:nowrap}}
+/* 부가 정보 이름표는 칸이 모자라면 다음 줄로(언어마다 길이가 다르다: 베트남어는 한 줄이면 칸 밖으로 나간다). 이름표 하나는 한 줄 */
+.ledger-items li{white-space:nowrap}
 /* 부가 정보 항목: 누를 수 없는 이름표(테두리 없이 옅은 바탕) */
 .ledger-items li{padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1)}
 
@@ -119,6 +129,10 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 .art-labels li{position:absolute;font-size:max(11px,1.05cqw);line-height:1.3;color:var(--ink-3);white-space:nowrap;pointer-events:none}
 .art-labels li.branch{transform:translate(-50%,calc(-100% - 12px));text-align:center;color:var(--muted);font-weight:600}
 /* 뿌리(CFDocument)와 전공 마디는 다른 마디처럼 점 위 가운데. 두 이름이 붙지 않게 ' · '에서 두 줄로 나눈다(Story.astro) */
+/* 이웃 가지 이름표와 겹치면(긴 번역: 영어·베트남어·일본어) site.ts가 넓은 쪽부터 폭(max-width)을 좁혀 여러 줄로 나눈다.
+   낱말(일본어는 BudouX 구) 안에서는 끊지 않는다 */
+.art-box.art-tight .art-labels li.branch{white-space:normal;text-wrap:balance}
+.art-box .art-labels :is(li,.bx){overflow-wrap:normal}
 .art-labels li.leaf{transform:translate(calc(6cqw + 10px),-50%);max-width:23%;white-space:normal;text-wrap:balance;font-weight:600}
 .art-labels li.leaf small{display:block;font-family:var(--en);font-size:max(11px,.9cqw);font-weight:600;color:var(--faint)}
 .art-labels li.hot,.art-labels li.hot small{color:var(--hot)}
@@ -187,8 +201,10 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   .hero-trust{grid-template-columns:1fr}
   .live .fx-bar{gap:8px}
   .live-view{margin:12px 10px 0}
-  .xrow{gap:5px;padding:9px}
+  .xrow{--xrow-gap:5px;padding:9px}
   .xrow .arw{display:none}
+  /* 스크립트가 없으면 줄마다 칩째로 다음 줄로(글이 칸 밖으로 나가지 않게) */
+  html:not(.js) .xrow{flex-wrap:wrap;row-gap:6px}
   .chip{padding:4px 7px}
   /* 기록 행 머리: 폰은 칸 이름을 목록으로(누가 · actor …), 그림은 그 아래 */
   .ledger-cols{grid-template-columns:1fr!important;column-gap:0!important;padding-inline:0!important;margin-bottom:14px;border-top:1px solid var(--line)}
@@ -218,8 +234,7 @@ html.story-pin .scene{position:absolute;inset:0;z-index:2;width:auto;margin:0;mi
 html.story-pin .scene.is-active{pointer-events:auto}
 /* 낮은 데스크톱 화면(노트북): 첫 화면 글이 아래 장면 목차에 닿지 않게 제목·간격을 화면 높이에 맞춘다 */
 html.story-pin .scene-moment h1{font-size:clamp(30px,min(4.2vw,6.2vh),56px)}
-/* 베트남어 제목은 한국어보다 길고 줄간격이 넓어(성조 부호) 한 단계 작게 */
-html.story-pin:lang(vi) .scene-moment h1{font-size:clamp(28px,min(3.4vw,5vh),46px)}
+html.story-pin:is(:lang(en),:lang(vi)) .scene-moment h1{font-size:clamp(28px,min(3.3vw,5vh),44px)}
 @media (max-height:860px){
   html.story-pin .scene-moment .eyebrow{margin-bottom:16px}
   html.story-pin .hero-lead{margin-top:18px}

@@ -72,7 +72,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
             <div class="live-view">
               <ol class="live-rows" data-live-rows>
                 {t.live.rows.slice(0, 5).map((r) => (
-                  <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
+                  <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw brk" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
                 ))}
               </ol>
             </div>
@@ -136,7 +136,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
           <ul class="art-labels" aria-hidden="true">
             {CASE_NODES.map((n) => (
-              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id).split(' · ').map((part, k) => (k ? [<br />, part] : part))}</li>
+              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`} set:html={nodeName(n.id).split(' · ').map((part) => phrase(part, lang)).join('<br>')} />
             ))}
           </ul>
         </div>
