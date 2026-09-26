@@ -102,9 +102,21 @@ export function initLive(story: HTMLElement) {
     return li;
   };
 
+  /** 줄 자리: 위에서부터 줄 높이를 쌓은 자리로 translate만 바꾼다(줄은 position:absolute, story.css .live-rows.abs).
+      줄이 들고 나도 다른 줄의 레이아웃 위치는 그대로라 레이아웃 이동(CLS)으로 세지 않는다. shift만큼 모두 위로 */
+  const place = (shift = 0, animate = false) => {
+    let y = -shift;
+    for (const li of [...list.children] as HTMLElement[]) {
+      li.style.transition = animate ? 'translate .55s cubic-bezier(.3,.7,.25,1), opacity .4s ease' : 'none';
+      li.style.translate = `0 ${y}px`;
+      y += li.offsetHeight + GAP;
+    }
+  };
+
   const push = () => {
     const r = pool[k++ % pool.length];
     list.append(make(r));
+    place(); // 새 줄은 맨 아래 자리(보기 창 밖)에
     if (list.children.length > 5) {
       const first = list.children[0] as HTMLElement;
       const dot = first.querySelector<HTMLElement>('.dot');
@@ -113,12 +125,10 @@ export function initLive(story: HTMLElement) {
       counts.forEach((el) => { el.textContent = count.toLocaleString(numLocale); });
       const h = first.offsetHeight + GAP;
       first.classList.add('leaving');
-      list.style.transition = 'transform .55s cubic-bezier(.3,.7,.25,1)';
-      list.style.transform = `translateY(-${h}px)`;
+      requestAnimationFrame(() => place(h, true)); // 모두 한 칸 위로
       window.setTimeout(() => {
         first.remove();
-        list.style.transition = 'none';
-        list.style.transform = 'none';
+        place();
       }, 600);
     }
   };
@@ -152,14 +162,19 @@ export function initLive(story: HTMLElement) {
   };
   // 한 줄에 다 들어가지 않는 문장이 하나라도 있으면 모든 줄을 같은 두 줄 짜임으로(.live.two, story.css: 줄 높이가 고르게).
   // 그다음 보기 창 높이를 다섯 줄에 맞춰 둔다(줄이 오갈 때 창 높이가 흔들리지 않게)
+  /** 폰의 영어 · 베트남어는 CSS가 처음부터 두 줄(story.css --two): 그때는 재지 않는다 */
+  const cssTwo = () => getComputedStyle(box).getPropertyValue('--two').trim() === '1';
   const fix = () => {
     box.classList.remove('two');
-    box.classList.toggle('two', !oneLineFits());
+    if (!cssTwo()) box.classList.toggle('two', !oneLineFits());
     const rows = [...list.children].slice(0, 5) as HTMLElement[];
     const h = rows.reduce((a, r) => a + r.offsetHeight, 0) + GAP * (rows.length - 1);
     if (h > 0) view.style.height = `${h}px`;
+    if (list.classList.contains('abs')) place();
   };
   fix();
+  list.classList.add('abs');
+  place();
   addEventListener('resize', fix);
   document.fonts?.ready.then(fix);
   new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(box);

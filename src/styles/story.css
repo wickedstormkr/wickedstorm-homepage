@@ -54,7 +54,7 @@
 @keyframes blink{50%{opacity:.35}}
 .live-view{position:relative;margin:14px 14px 0;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%)}
-.live-rows{list-style:none;display:flex;flex-direction:column;gap:9px;will-change:transform}
+.live-rows{list-style:none;display:flex;flex-direction:column;gap:9px}
 .xrow{--xrow-gap:7px;display:flex;align-items:center;flex-wrap:nowrap;gap:var(--xrow-gap);padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
 /* 점과 '~하다' 칸의 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 목록을 지나가면 같은 색의 별이 된다 */
 .xrow{--c:#7c4dff;--ct:#c3b0ff}
@@ -76,11 +76,21 @@
 @keyframes xin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes chipin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .xrow.leaving{opacity:0;transition:opacity .4s ease}
+/* 스크립트가 켜지면 줄은 제자리(absolute)에 두고 translate로만 옮긴다(story/live.ts place): 레이아웃 이동(CLS)이 없다 */
+.live-rows.abs{position:relative}
+.live-rows.abs>.xrow{position:absolute;left:0;right:0;top:0}
 /* 두 줄 짜임(story/live.ts가 시연 문장 하나라도 한 줄에 다 들어가지 않을 때 모든 줄에 건다): 누가 → 하다 / 무엇을 · 결과.
-   둘째 화살표가 줄바꿈 자리가 되고, 둘째 줄은 점 오른쪽(누가 칸 시작)에 맞춘다 */
+   둘째 화살표가 줄바꿈 자리가 되고, 둘째 줄은 점 오른쪽(누가 칸 시작)에 맞춘다.
+   폰의 영어 · 베트남어는 한 줄에 들어가지 않으므로 처음부터(스크립트 전에) 두 줄: 불러오는 중에 짜임이 바뀌어 화면이 밀리지 않게(--two) */
 .live.two .xrow{flex-wrap:wrap;row-gap:0}
 .live.two .xrow .brk{display:block;flex-basis:100%;height:6px;overflow:hidden;visibility:hidden}
 .live.two .chip.object{margin-left:calc(9px + var(--xrow-gap,7px))}
+@media (max-width:699px){
+  html:is(:lang(en),:lang(vi)) .live{--two:1}
+  html:is(:lang(en),:lang(vi)) .live .xrow{flex-wrap:wrap;row-gap:0}
+  html:is(:lang(en),:lang(vi)) .live .xrow .brk{display:block;flex-basis:100%;height:6px;overflow:hidden;visibility:hidden}
+  html:is(:lang(en),:lang(vi)) .live .chip.object{margin-left:calc(9px + var(--xrow-gap,7px))}
+}
 html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{animation:none}
 .live-foot{margin-top:12px;padding:11px 16px 13px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .live-foot b{color:var(--ink)}
