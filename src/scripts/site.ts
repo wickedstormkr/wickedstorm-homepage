@@ -83,11 +83,16 @@ const root = doc.documentElement;
   const update = () => {
     ticking = false;
     let show = window.scrollY > window.innerHeight * 0.9;
-    if (show && story && root.classList.contains('story-pin')) {
+    let deep = false;
+    if (story && root.classList.contains('story-pin')) {
       const r = story.getBoundingClientRect();
-      if (r.top <= 1 && r.bottom >= window.innerHeight - 1) show = false;
+      const inStory = r.top <= 1 && r.bottom >= window.innerHeight - 1;
+      if (inStory) show = false;
+      // 첫 장면을 지나 장면을 넘기는 동안: 언어 안내 띠를 숨긴다(story.css)
+      deep = inStory && r.top < -window.innerHeight * 0.3;
     }
     btn.classList.toggle('show', show);
+    root.classList.toggle('story-deep', deep);
   };
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();

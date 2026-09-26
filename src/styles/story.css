@@ -242,6 +242,10 @@ html.story-pin .scene-statement .scene-copy{max-width:780px}
 html.story-pin .scene-statement .scene-text{text-wrap:balance}
 html.story-pin .scene-statement .ledger{width:min(100%,1180px,calc((100vh - 473px) * 3.1));margin-inline:auto;text-align:left}
 html.story-pin .story-nav{display:block;position:absolute;z-index:4;left:max(var(--gutter),calc((100vw - var(--wrap)) / 2));bottom:22px}
+/* 언어 안내 띠(화면 아래 가운데): 첫 장면에서는 장면 목차 · 이야기 조작을 그 위로 올리고(html.lb-open, --lb-h: site.ts),
+   장면을 넘기는 동안(html.story-deep)은 띠를 숨긴다. 장면 글이 아래까지 내려오는 장면(국제 표준 등)과 겹치지 않게 */
+html.lb-open.story-pin:not(.story-deep) :is(.story-nav,.story-ctrl){bottom:calc(var(--lb-h,64px) + 28px)}
+html.story-deep .lang-banner{visibility:hidden;opacity:0}
 .story-nav ol{list-style:none;display:flex;gap:4px}
 .story-nav a{display:flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;border-radius:999px;font-size:13px;font-weight:600;color:var(--faint);transition:color .2s,background .2s,box-shadow .2s}
 .story-nav a .n{font-family:var(--en);font-size:12px}
