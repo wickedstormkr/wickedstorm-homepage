@@ -51,8 +51,9 @@ nav.main a:hover,nav.main a[aria-current="page"]{color:#fff}
   gap:4px;padding:calc(var(--header-h) + 8px) 32px 32px;overflow-y:auto;transform:translateY(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1)}
 .drawer.open{transform:translateY(0)}
 .drawer>a{font-family:var(--en);font-size:26px;font-weight:700;color:#fff;padding:10px 0;border-bottom:1px solid var(--line)}
-/* 메뉴 끝의 도입 문의: 헤더와 같은 주 버튼(전체 폭) */
+/* 메뉴 끝의 도입 문의: 헤더와 같은 주 버튼(폰은 전체 폭, 태블릿은 글 길이만큼) */
 .drawer>a.cta{margin-top:22px;padding:0 28px;border:0;font-family:inherit;font-size:16px;color:#fff}
+@media (min-width:700px){.drawer>a.cta{align-self:flex-start;padding:0 36px}}
 .drawer .lang-row{margin-top:18px}
 /* 폰: 네 언어 버튼은 2×2(한 줄에 셋, 다음 줄에 하나가 되지 않게) */
 @media (max-width:699px){.drawer .lang-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.drawer .lang-row a{justify-content:center}}
