@@ -1,10 +1,10 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "Three solutions and three roles<br>complete the <span class=\"g\">Learning&nbsp;Loop</span>",
-  "lead": "When Lecognizer builds up learning data and finds signals, <span class=\"nw\">LearnHubble AI</span> carries those signals into the decisions and actions of administrators, instructors, and learners.",
+  "title": "From collection and analysis to the classroom,<br>connected in the <span class=\"g\">Learning&nbsp;Loop</span>",
+  "lead": "When Lecognizer builds up learning data and finds anomaly signals, <span class=\"nw\">LearnHubble AI</span> carries those signals into the decisions and actions of administrators, instructors, and learners.",
   "loop": {
     "img": "learning-loop.webp",
-    "alt": "Learning Loop: learner activity is recorded in Lecognizer, Lecognizer AI finds signals, the Curriculum Administrator and the Instructor decide and apply changes in LearnHubble AI, and the results return to learners in a continuous cycle",
+    "alt": "Learning Loop: learner activity builds up in Lecognizer, Lecognizer AI finds signals, the Curriculum Administrator and the instructor decide and apply changes in LearnHubble AI, and the results flow back to learners in a continuous cycle",
     "notes": [
       {
         "kind": "solution",
@@ -26,7 +26,7 @@
         "role": "Curriculum Administrator",
         "pill": "LearnHubble AI",
         "product": "lhb",
-        "desc": "Administrators review AI alerts and raw data. They refine CASE-based <span class=\"nw\">academic and job-related</span> competency frameworks."
+        "desc": "Administrators review AI alerts and raw data, then refine next semester’s CASE-based <span class=\"nw\">academic and job-related</span> competency frameworks."
       },
       {
         "kind": "role",
@@ -65,17 +65,164 @@
     {
       "kicker": "AI Anomaly Detection",
       "name": "Lecognizer AI",
-      "text": "An AI solution that analyzes learning data stored in Lecognizer. It finds unusual patterns and where many learners struggled, flags them, and then shows the raw data behind each alert.",
+      "text": "An AI solution that analyzes learning data stored in Lecognizer. It finds and flags unusual patterns and where many learners struggled, and shows the raw data behind each alert.",
       "bullets": [
         "Prioritizes signals that need attention and issues alerts",
-        "Review the conditions behind each alert and the raw learning data in one flow",
+        "Shows the conditions behind each alert and the raw learning data in one flow",
         "AI finds and analyzes, while administrators and instructors make the decisions"
       ],
       "badge": "2 granted AI patents · Learning anomaly detection · Learner profiling",
       "img": "lecognizer-ai-detect.webp",
-      "alt": "Example of the Lecognizer AI anomaly detection screen: Statements stored in real time, and an anomaly in week 3 where pauses, rewinds, and wrong answers cluster in one segment, with a likely cause",
+      "alt": "Example of the Lecognizer AI anomaly detection screen: Statements stored in real time, and an anomaly signal in week 3 where pauses, rewinds, and wrong answers cluster in one section, with a likely cause",
       "reverse": true
     }
   ],
-  "note": "※ Subjects, people, and figures on screen are demo data for product illustration."
+  "note": "※ Subjects, people, and figures on screen are demo data for product illustration.",
+  "roles": {
+    "label": "View by role",
+    "items": [
+      {
+        "id": "operator",
+        "name": "Administrator",
+        "product": "LearnHubble AI",
+        "title": "Refine the <span class=\"g\">curriculum</span> based on evidence",
+        "text": "If an anomaly signal found by Lecognizer AI points to a curriculum-level issue, AI suggests a prerequisite link (CFAssociation) in the 1EdTech CASE framework. The administrator reviews the suggestion and applies it for the next semester.",
+        "points": [
+          "Judging the level of issue behind an anomaly signal",
+          "A prerequisite link suggested as a CFAssociation (precedes)",
+          "Existing CFItems stay as they are, keeping last semester’s learning data"
+        ]
+      },
+      {
+        "id": "instructor",
+        "name": "Instructor",
+        "product": "LearnHubble AI",
+        "title": "Design a <span class=\"g\">supplementary quiz</span> where learners struggled",
+        "text": "Shows where learners paused, rewound, and answered incorrectly, along with the evidence. When AI suggests a supplementary explanation and a check quiz, the instructor edits and applies them.",
+        "points": [
+          "Sections that need attention, with evidence",
+          "Suggested supplementary explanation · check quiz",
+          "The instructor decides whether to apply them"
+        ]
+      },
+      {
+        "id": "learner",
+        "name": "Learner",
+        "product": "LearnHubble AI",
+        "title": "A <span class=\"g\">check quiz</span> appears automatically in the supplemented section",
+        "text": "The supplementary explanation and check quiz the instructor applied appear automatically when learners reach that section, so they can recheck the difficult part on the spot. If they get stuck, AI offers a hint and lecture evidence instead of the answer.",
+        "points": [
+          "Check quizzes that appear automatically in supplemented sections",
+          "Supplementary explanations applied by the instructor",
+          "AI hints and lecture evidence instead of answers"
+        ]
+      }
+    ]
+  },
+  "more": "Learn more about our products",
+  "page": {
+    "eyebrow": "Products",
+    "title": "Build up learning data, find signals, and connect them to <span class=\"g\">human judgment</span>",
+    "lead": "Lecognizer and Lecognizer AI store and analyze learning data, and LearnHubble AI delivers the results to the screens of administrators, instructors, and learners.",
+    "loopTitle": "Learning Loop",
+    "rolesTitle": "Screens by role"
+  },
+  "solutions": [
+    {
+      "id": "lecognizer",
+      "kicker": "Learning Data Repository · AI Anomaly Detection",
+      "names": [
+        "Lecognizer",
+        "Lecognizer AI"
+      ],
+      "text": "Collects and stores learning data from teaching, learning, and operations using global standards. Lecognizer AI then finds unusual patterns and where many learners struggled, and flags them with the evidence.",
+      "badges": [
+        "GS Grade 1 Certification",
+        "2 granted AI patents"
+      ],
+      "site": "https://lecognizer.ai/",
+      "siteLabel": "lecognizer.ai",
+      "siteAria": "lecognizer.ai, Lecognizer website (opens in a new window)",
+      "cls": "lec",
+      "more": "Learn more"
+    },
+    {
+      "id": "learnhubble",
+      "kicker": "Learning Experience Platform",
+      "names": [
+        "LearnHubble AI"
+      ],
+      "text": "A personalized teaching and learning platform with AI interaction. While learners work on lectures and assignments, AI offers explanations and hints when they need them, and instructors confirm interventions and what is applied.",
+      "badges": [
+        "Portfolio · Assignment hints · Competency Map · Classroom AI panel"
+      ],
+      "site": "https://learnhubble.ai/",
+      "siteLabel": "learnhubble.ai",
+      "siteAria": "learnhubble.ai, LearnHubble AI website (opens in a new window)",
+      "cls": "lhb",
+      "more": "Learn more"
+    }
+  ],
+  "operator": {
+    "product": "LearnHubble AI · Administrator",
+    "crumb": "CASE revision",
+    "signal": "Lecognizer AI anomaly signal · Comparing risk factors",
+    "levelLabel": "Issue level",
+    "levels": [
+      {
+        "t": "One-off",
+        "on": false
+      },
+      {
+        "t": "Instructional design",
+        "on": false
+      },
+      {
+        "t": "Curriculum",
+        "on": true
+      }
+    ],
+    "treeLabel": "CFDocument · Competency framework",
+    "tree": [
+      {
+        "lv": 1,
+        "k": "Competency",
+        "v": "Analytical judgment",
+        "s": "",
+        "tone": ""
+      },
+      {
+        "lv": 2,
+        "k": "Learning outcome",
+        "v": "Comparing risk factors",
+        "s": "Anomaly signal",
+        "tone": "hot"
+      },
+      {
+        "lv": 1,
+        "k": "Competency",
+        "v": "Foundational concepts",
+        "s": "",
+        "tone": ""
+      },
+      {
+        "lv": 2,
+        "k": "Learning outcome",
+        "v": "Interest rate basics",
+        "s": "Prerequisite",
+        "tone": "new"
+      }
+    ],
+    "ai": "AI suggestion",
+    "proposal": "Add CFAssociation: prerequisite link",
+    "assoc": {
+      "from": "Interest rate basics",
+      "type": "precedes",
+      "to": "Comparing risk factors"
+    },
+    "note": "Existing CFItems stay unchanged",
+    "edit": "Edit",
+    "apply": "Apply",
+    "owner": "The administrator decides whether to apply it"
+  }
 }

@@ -34,8 +34,8 @@
   },
   "history": {
     "eyebrow": "History",
-    "title": "<span class=\"yr gc\">2021 to 2026</span>: the path we built on standards",
-    "listLabel": "Wicked Storm history, 2021 to 2026",
+    "title": "<span class=\"yr gc\">2021–2026</span>: a path built on standards",
+    "listLabel": "Wicked Storm history, 2021–2026",
     "years": [
       {
         "year": "2021",
@@ -159,5 +159,47 @@
       }
     ],
     "more": "Show full history"
-  }
+  },
+  "milestones": {
+    "title": "Key milestones",
+    "items": [
+      {
+        "year": "2021",
+        "text": "Founded Wicked Storm Inc.; built the LRS for the Ministry of Personnel Management’s National HRD platform"
+      },
+      {
+        "year": "2023",
+        "text": "Launched Lecognizer; earned xAPI LRS certification from ADL (U.S.)"
+      },
+      {
+        "year": "2024",
+        "text": "Lecognizer earned GS Grade 1 Certification; built the Ministry of Education’s AI Digital Textbook learning data hub"
+      },
+      {
+        "year": "2024",
+        "text": "KOLAS AI model certification for the Learning Analytics Diagnosis and Recommendation Model"
+      },
+      {
+        "year": "2025",
+        "text": "2 AI patents granted: learning anomaly detection, LLM-based learner profiling"
+      },
+      {
+        "year": "2026",
+        "text": "Founding board member of 1EdTech Korea; 1EdTech Contributing Member"
+      }
+    ]
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "title": "We’re looking for <span class=\"g\">colleagues</span> to design education with learning data",
+    "lead": "Join us in using global standards and AI to shape the next step in education. Our job openings are posted on Saramin.",
+    "cta": "View job openings"
+  },
+  "location": {
+    "title": "Location",
+    "address": "Rooms 901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+    "tel": "02-2205-1470",
+    "email": "manager@wickedstorm.kr"
+  },
+  "more": "Learn more about us"
 }

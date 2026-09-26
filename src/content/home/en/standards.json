@@ -94,5 +94,154 @@
       "href": "https://www.1edtech.org/standards/qti",
       "ariaLabel": "QTI official specification (opens in a new window)"
     }
-  ]
+  ],
+  "map": {
+    "title": "Standards map",
+    "lead": "The 1EdTech CASE framework of curricula, achievement standards, and competencies stands on its own as the foundation. On top of it, we collect learning data, issue credentials for achievements, and connect with other systems.",
+    "legendLabel": "Status",
+    "base": {
+      "name": "Framework",
+      "desc": "A repository that manages curricula, achievement standards, and competencies as one framework. The learning data we collect and the credentials we issue point to items in this framework.",
+      "items": [
+        "CASE"
+      ]
+    },
+    "refLabel": "Points to CASE items",
+    "groups": [
+      {
+        "id": "collect",
+        "name": "Collection",
+        "desc": "Collects learning activity as standard statements and links each statement to an achievement item",
+        "items": [
+          "xAPI",
+          "Caliper"
+        ],
+        "ref": true
+      },
+      {
+        "id": "credential",
+        "name": "Credentials",
+        "desc": "Issues accumulated achievements as verifiable credentials",
+        "items": [
+          "Open Badges 3.0",
+          "CLR 2.0",
+          "Digital Credentials"
+        ],
+        "ref": true
+      },
+      {
+        "id": "connect",
+        "name": "Integration",
+        "desc": "Connects with roster, learning tool, and assessment systems",
+        "items": [
+          "EduAPI",
+          "OneRoster",
+          "LTI",
+          "QTI"
+        ],
+        "ref": false
+      }
+    ]
+  },
+  "more": "Learn more about standards",
+  "specLabel": "Official specification",
+  "activity": {
+    "title": "1EdTech activities",
+    "items": [
+      {
+        "date": "2026.07",
+        "text": "Tech note: Building a knowledge space on the CASE standard",
+        "href": "/news/2026-07-note-case-knowledge-space.html"
+      },
+      {
+        "date": "2026.07",
+        "text": "Tech note: A distribution model for AI Digital Textbook curriculum standards",
+        "href": "/news/2026-07-note-aidt-standards.html"
+      },
+      {
+        "date": "2026.06",
+        "text": "1EdTech Korea launched in Korea, with Wicked Storm on its founding board",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.04",
+        "text": "Joined 1EdTech as a Contributing Member",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.03",
+        "text": "KERIS, learning data standardization framework and utilization model based on global standards",
+        "href": "/news/2026-07-1edtech-korea.html"
+      }
+    ]
+  },
+  "cardsTitle": "Standards in detail",
+  "cardsLead": "For each standard, we list what it is for, its status, and the products that use it, with a link to the official specification.",
+  "mapping": {
+    "title": "xAPI ⇄ Caliper: the same learning data in two forms",
+    "lead": "Lecognizer accepts both xAPI and 1EdTech Caliper and converts between them. The example below shows where each field of one piece of learning data goes in each standard.",
+    "cols": [
+      "Meaning",
+      "xAPI 1.0.3",
+      "1EdTech Caliper 1.1"
+    ],
+    "rows": [
+      {
+        "k": "Who",
+        "x": "actor",
+        "c": "actor"
+      },
+      {
+        "k": "Did",
+        "x": "verb",
+        "c": "action (with the event type)"
+      },
+      {
+        "k": "What",
+        "x": "object",
+        "c": "object"
+      },
+      {
+        "k": "When",
+        "x": "timestamp",
+        "c": "eventTime"
+      },
+      {
+        "k": "Result",
+        "x": "result (score · success · completion · response · duration)",
+        "c": "generated (Score · Attempt, etc.)"
+      },
+      {
+        "k": "App & environment",
+        "x": "context.platform",
+        "c": "edApp"
+      },
+      {
+        "k": "Class & group",
+        "x": "context.contextActivities.grouping · context.team",
+        "c": "group · membership"
+      },
+      {
+        "k": "Session",
+        "x": "context.extensions (e.g., cmi5 sessionid)",
+        "c": "session"
+      },
+      {
+        "k": "Playback position",
+        "x": "result.extensions (e.g., Video Profile time)",
+        "c": "target (MediaLocation.currentTime)"
+      },
+      {
+        "k": "Curriculum context",
+        "x": "context.contextActivities.category · other",
+        "c": "object.learningObjectives"
+      },
+      {
+        "k": "Attributes not in the standard",
+        "x": "extensions",
+        "c": "extensions"
+      }
+    ],
+    "note": "This is an example mapping. The actual mapping depends on the profiles in use (xAPI Profiles, Caliper metric profiles) and the deployment environment."
+  }
 }

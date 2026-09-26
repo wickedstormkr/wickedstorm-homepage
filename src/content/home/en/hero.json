@@ -1,25 +1,34 @@
 {
-  "eyebrow": "<span>Wicked Storm · Learning Data &amp; AI</span>",
+  "eyebrow": "<span>Wicked Storm · <span class=\"nw\">Learning Data &amp; AI</span></span>",
   "lines": [
     "Every Learning Moment,",
     "Designed for",
     "<span class=\"g\">Growth.</span>"
   ],
-  "lead": "Wicked Storm collects and stores learning data using global standards, <br class=\"br-d\">and AI analysis informs what administrators, instructors, and learners do next.",
+  "lead": "We collect and store learning data using global standards, <br class=\"br-d\">then analyze it with AI to inform what administrators, instructors, and learners do next.",
   "ctaPrimary": "Contact us",
   "ctaSecondary": "View products",
   "trust": [
     {
       "html": "<b>1EdTech Korea</b>&nbsp;founding board member",
-      "href": "/news/2026-07-1edtech-korea.html"
+      "page": "trust",
+      "hash": "#1edtech"
     },
     {
-      "html": "GS Grade 1 Certification",
-      "href": "/news/2024-07-lecognizer-procurement.html"
+      "html": "GS Grade 1 Certification · Lecognizer",
+      "page": "trust",
+      "hash": "#gs"
     },
     {
-      "html": "2 granted AI patents",
-      "href": "/news/2025-11-patent-anomaly.html"
+      "html": "Patent No. 10-2883249",
+      "page": "trust",
+      "hash": "#patent-2883249"
+    },
+    {
+      "html": "Patent No. 10-2767110",
+      "page": "trust",
+      "hash": "#patent-2767110"
     }
-  ]
+  ],
+  "trustLabel": "Original certifications and patents"
 }

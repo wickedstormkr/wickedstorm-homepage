@@ -6,7 +6,7 @@
   "motion": {
     "pause": "Pause motion",
     "play": "Play motion",
-    "label": "Pause or play motion on this page"
+    "label": "Pause or play on-screen motion"
   },
   "langBanner": {
     "text": "This page is also available in English.",
@@ -16,27 +16,27 @@
   "newWindow": "(opens in a new window)",
   "notFound": {
     "title": "Page not found",
-    "text": "The address may have changed or the page no longer exists. Please choose where to go below.",
-    "home": "Home"
+    "text": "The address may have changed, or the page no longer exists. Please choose where to go below.",
+    "home": "Go to homepage"
   },
   "form": {
     "field": {
       "userName": "Please enter your name.",
       "userCompany": "Please enter your organization.",
       "userEmail": "Please enter your email.",
-      "userTraffic": "Please choose how you found us.",
-      "userTrafficEtc": "Please tell us how you found us.",
+      "userTraffic": "Please select how you heard about us.",
+      "userTrafficEtc": "Please tell us how you heard about us.",
       "userMemo": "Please enter your inquiry.",
       "checkPrivacy": "Please agree to the collection and use of personal information."
     },
     "emailFmt": "Please check the email format.",
     "required": "This field is required.",
-    "etcDirect": "How you found us *",
-    "etcOther": "Details *",
+    "etcDirect": "Tell us how you heard about us *",
+    "etcOther": "Other details *",
     "sending": "Sending…",
     "sent": "Your inquiry has been received. We will get back to you soon.",
-    "failed": "Sending failed. Please email manager@wickedstorm.kr."
+    "failed": "Your inquiry could not be sent. Please email manager@wickedstorm.kr."
   },
   "open": "Open",
-  "lhubScreens": "LearnHubble AI screen examples"
+  "lhubScreens": "LearnHubble AI example screens"
 }
