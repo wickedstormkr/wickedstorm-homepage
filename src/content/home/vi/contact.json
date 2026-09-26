@@ -17,7 +17,7 @@
     },
     "company": {
       "label": "Tổ chức *",
-      "placeholder": "Tên công ty, cơ quan"
+      "placeholder": "Tổ chức, cơ quan"
     },
     "email": {
       "label": "Email *",
@@ -81,5 +81,29 @@
     },
     "privacy": "Tôi đồng ý với việc <a href=\"/privacy.html\">thu thập và sử dụng thông tin cá nhân</a> để xử lý yêu cầu liên hệ.",
     "submit": "Gửi yêu cầu"
+  },
+  "purposes": {
+    "title": "Chúng tôi có thể hỗ trợ gì cho bạn?",
+    "hint": "Chọn mục đích để điền sẵn dòng đầu của nội dung yêu cầu.",
+    "items": [
+      {
+        "id": "consult",
+        "name": "Tư vấn triển khai",
+        "desc": "Hướng dẫn phạm vi triển khai, phương thức kết nối và thủ tục mua sắm của Lecognizer, LearnHubble AI.",
+        "topic": "Tôi muốn được tư vấn triển khai."
+      },
+      {
+        "id": "demo",
+        "name": "Yêu cầu trình diễn",
+        "desc": "Sắp xếp lịch trình diễn sản phẩm phù hợp với môi trường của tổ chức.",
+        "topic": "Tôi muốn yêu cầu trình diễn sản phẩm."
+      },
+      {
+        "id": "partner",
+        "name": "Đối tác và hợp tác quốc tế",
+        "desc": "Trao đổi về đối tác nước ngoài, hội chợ và dự án hợp tác.",
+        "topic": "Tôi muốn trao đổi về đối tác và hợp tác quốc tế."
+      }
+    ]
   }
 }

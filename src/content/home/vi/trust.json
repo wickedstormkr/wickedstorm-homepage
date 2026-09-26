@@ -1,0 +1,260 @@
+{
+  "eyebrow": "Trust",
+  "title": "<span class=\"g\">Chứng&nbsp;nhận và bằng&nbsp;sáng&nbsp;chế</span> có&nbsp;thể kiểm&nbsp;chứng",
+  "lead": "Tổng hợp tại một nơi các chứng nhận sản phẩm, bằng sáng chế và hoạt động về chuẩn của Wicked Storm. Mỗi mục đều có số hiệu, cơ quan cấp và liên kết đến bản gốc hoặc tin liên quan.",
+  "groups": [
+    {
+      "id": "certs",
+      "title": "Chứng nhận sản phẩm",
+      "items": [
+        {
+          "id": "gs",
+          "name": "Chứng nhận GS hạng 1",
+          "subject": "Lecognizer V1.0",
+          "detail": "Sản phẩm được chứng nhận: phần mềm lưu trữ và trực quan hóa dữ liệu trải nghiệm học tập dựa trên xAPI",
+          "meta": [
+            {
+              "k": "Số chứng nhận",
+              "v": "KTL-GS-24-0035"
+            },
+            {
+              "k": "Cơ quan cấp",
+              "v": "Viện Thử nghiệm Công nghệ Công nghiệp Hàn Quốc (KTL)"
+            },
+            {
+              "k": "Thời gian",
+              "v": "Tháng 4/2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan: niêm yết trên sàn dịch vụ số",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "adl",
+          "name": "Chứng nhận xAPI 1.0.3 LRS",
+          "subject": "Lecognizer LRS 1.0.0",
+          "detail": "Chứng nhận kho dữ liệu học tập (LRS) theo xAPI 1.0.3 của ADL (Hoa Kỳ)",
+          "meta": [
+            {
+              "k": "Cơ quan cấp",
+              "v": "ADL (Hoa Kỳ)"
+            },
+            {
+              "k": "Thời gian",
+              "v": "Tháng 8/2023"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "kolas",
+          "name": "Chứng nhận mô hình AI KOLAS",
+          "subject": "Mô hình chẩn đoán và đề xuất phân tích học tập v1.0",
+          "detail": "Xác nhận tính phù hợp về chức năng của việc chẩn đoán trình độ học tập và đề xuất câu hỏi dựa trên phần kiến thức còn yếu",
+          "meta": [
+            {
+              "k": "Số chứng nhận",
+              "v": "2024-122-VSW-K"
+            },
+            {
+              "k": "Thời gian",
+              "v": "Tháng 6/2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2024-06-ai-model-validation.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patents",
+      "title": "Bằng sáng chế",
+      "items": [
+        {
+          "id": "patent-2883249",
+          "name": "Bằng sáng chế số 10-2883249",
+          "subject": "Hệ thống phát hiện dấu hiệu bất thường trong học tập dựa trên dữ liệu hành vi học tập xAPI",
+          "detail": "Được áp dụng cho chức năng phát hiện dấu hiệu bất thường của Lecognizer AI.",
+          "meta": [
+            {
+              "k": "Ngày nộp đơn",
+              "v": "20/8/2024"
+            },
+            {
+              "k": "Ngày cấp",
+              "v": "4/11/2025"
+            },
+            {
+              "k": "Chủ sở hữu",
+              "v": "Wicked Storm Inc."
+            }
+          ],
+          "img": "patent-anomaly.webp",
+          "imgAlt": "Bằng sáng chế số 10-2883249: Hệ thống phát hiện dấu hiệu bất thường trong học tập dựa trên dữ liệu hành vi học tập xAPI, chủ sở hữu Wicked Storm Inc.",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        },
+        {
+          "id": "patent-2767110",
+          "name": "Bằng sáng chế số 10-2767110",
+          "subject": "Phương pháp lập hồ sơ người học bằng LLM để phân tích đặc điểm người học",
+          "detail": "Được áp dụng trong quy trình phân tích của Lecognizer, làm cơ sở cho chẩn đoán cá nhân hóa và đề xuất câu hỏi.",
+          "meta": [
+            {
+              "k": "Ngày nộp đơn",
+              "v": "20/8/2024"
+            },
+            {
+              "k": "Ngày cấp",
+              "v": "7/2/2025"
+            },
+            {
+              "k": "Chủ sở hữu",
+              "v": "Wicked Storm Inc."
+            }
+          ],
+          "img": "patent-profiling.webp",
+          "imgAlt": "Bằng sáng chế số 10-2767110: Phương pháp lập hồ sơ người học bằng LLM để phân tích đặc điểm người học, chủ sở hữu Wicked Storm Inc.",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2025-02-patent-profiling.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "Hoạt động về chuẩn",
+      "items": [
+        {
+          "id": "1edtech",
+          "name": "Thành viên hội đồng sáng lập 1EdTech Korea",
+          "subject": "1EdTech Contributing Member",
+          "detail": "Tham gia hội đồng sáng lập tổ chức tại Hàn Quốc của 1EdTech, liên minh chuẩn quốc tế về công nghệ giáo dục, và gia nhập 1EdTech với tư cách Contributing Member vào tháng 4/2026.",
+          "meta": [
+            {
+              "k": "Ra mắt tại Hàn Quốc",
+              "v": "22/6/2026 · Seoul"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2026-07-1edtech-korea.html"
+            },
+            {
+              "label": "Bản đồ chuẩn",
+              "page": "standards"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public",
+      "title": "Mua sắm công và chứng nhận doanh nghiệp",
+      "items": [
+        {
+          "id": "procurement",
+          "name": "Niêm yết trên sàn dịch vụ số của Cơ quan Mua sắm Công Hàn Quốc (PPS)",
+          "subject": "Lecognizer V1.0 · Phần mềm thương mại",
+          "detail": "Cơ quan nhà nước và cơ sở giáo dục có thể triển khai qua thủ tục mua sắm công.",
+          "meta": [
+            {
+              "k": "Thời gian",
+              "v": "Tháng 6/2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "innobiz",
+          "name": "Chứng nhận INNOBIZ (AA)",
+          "subject": "Doanh nghiệp nhỏ và vừa đổi mới công nghệ",
+          "detail": "",
+          "meta": [
+            {
+              "k": "Thời gian",
+              "v": "Tháng 5/2025"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Tin liên quan",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "Thông tin cá nhân và khả năng tiếp cận",
+      "items": [
+        {
+          "id": "privacy",
+          "name": "Chính sách bảo mật thông tin cá nhân",
+          "subject": "",
+          "detail": "Nêu rõ các mục thông tin cá nhân thu thập qua biểu mẫu liên hệ, mục đích sử dụng và thời gian lưu giữ.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Xem chính sách bảo mật thông tin cá nhân",
+              "href": "/privacy.html"
+            }
+          ]
+        },
+        {
+          "id": "a11y",
+          "name": "Khả năng tiếp cận web",
+          "subject": "KWCAG 2.2",
+          "detail": "Trang web này được xây dựng theo KWCAG 2.2 (tương đương WCAG 2.2 mức AA) và được kiểm tra tự động mỗi khi thay đổi. Có thể dừng chuyển động bất cứ lúc nào.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": []
+        }
+      ]
+    }
+  ],
+  "original": "Xem bản gốc",
+  "note": "Số chứng nhận và số bằng sáng chế trùng khớp với bản gốc của cơ quan cấp. Có thể kiểm tra tình trạng đăng ký hiện tại qua mã QR trên bằng sáng chế."
+}

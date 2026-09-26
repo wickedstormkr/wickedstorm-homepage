@@ -7,11 +7,11 @@
       "thumb": "thumb-catalog.webp",
       "thumbAlt": "Bìa catalogue Wicked Storm 2026",
       "wide": false,
-      "title": "Catalogue Wicked&nbsp;Storm 2026",
+      "title": "Catalogue Wicked&nbsp;Storm&nbsp;2026",
       "text": "Giới thiệu Lecognizer, LearnHubble AI và Learning Loop trong 8 trang.",
       "links": [
         {
-          "label": "PDF tiếng Hàn",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
           "lang": "ko",
           "id": "catalog_ko"
@@ -29,7 +29,7 @@
           "id": "catalog_ja"
         },
         {
-          "label": "Tiếng Việt",
+          "label": "PDF tiếng Việt",
           "file": "/files/WICKEDSTORM_Catalog_2026_VI.pdf",
           "lang": "vi",
           "id": "catalog_vi"
@@ -40,11 +40,11 @@
       "thumb": "thumb-profile.webp",
       "thumbAlt": "Bìa tài liệu giới thiệu công ty Wicked Storm 2026",
       "wide": true,
-      "title": "Giới&nbsp;thiệu công&nbsp;ty Wicked&nbsp;Storm 2026",
+      "title": "Giới&nbsp;thiệu công&nbsp;ty Wicked&nbsp;Storm&nbsp;2026",
       "text": "Giới thiệu lịch sử công ty, lĩnh vực kinh doanh, khách hàng tiêu biểu, chứng nhận và bằng sáng chế.",
       "links": [
         {
-          "label": "PDF tiếng Hàn",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
           "lang": "ko",
           "id": "profile_ko"
@@ -62,7 +62,7 @@
           "id": "profile_ja"
         },
         {
-          "label": "Tiếng Việt",
+          "label": "PDF tiếng Việt",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_VI.pdf",
           "lang": "vi",
           "id": "profile_vi"

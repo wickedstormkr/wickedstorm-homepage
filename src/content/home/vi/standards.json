@@ -1,6 +1,6 @@
 {
   "eyebrow": "Standards Leadership",
-  "title": "Không chỉ áp&nbsp;dụng chuẩn,<br><span class=\"gc\">mà còn cùng xây&nbsp;dựng chuẩn</span>",
+  "title": "Không chỉ áp&nbsp;dụng chuẩn,<br>mà còn <span class=\"gc\">cùng xây&nbsp;dựng chuẩn</span>",
   "lead": "Wicked Storm là thành viên hội đồng sáng lập <b class=\"nw\" style=\"color:#dfe3f7\">1EdTech Korea</b>, tổ chức tại Hàn Quốc của 1EdTech (liên minh chuẩn quốc tế về công nghệ giáo dục), đồng thời hoạt động với tư cách <span class=\"nw\">1EdTech Contributing Member</span>. Chúng tôi đã áp dụng xAPI, Caliper và 1EdTech CASE vào sản phẩm và các dự án.",
   "badge": "Thành viên hội đồng sáng lập 1EdTech Korea · <b>Contributing&nbsp;Member</b>",
   "cards": [
@@ -94,5 +94,154 @@
       "href": "https://www.1edtech.org/standards/qti",
       "ariaLabel": "Đặc tả chính thức QTI (cửa sổ mới)"
     }
-  ]
+  ],
+  "map": {
+    "title": "Bản đồ chuẩn",
+    "lead": "Tách riêng khung chương trình giáo dục, yêu cầu cần đạt và năng lực (1EdTech CASE) làm chuẩn tham chiếu, rồi trên đó thu thập dữ liệu học tập, chứng minh thành tích và kết nối với các hệ thống khác.",
+    "legendLabel": "Trạng thái",
+    "base": {
+      "name": "Khung chuẩn",
+      "desc": "Kho quản lý chương trình giáo dục, yêu cầu cần đạt và năng lực trong một khung thống nhất. Dữ liệu học tập thu thập được và các minh chứng phát hành đều trỏ đến các mục trong khung này.",
+      "items": [
+        "CASE"
+      ]
+    },
+    "refLabel": "Trỏ đến mục CASE",
+    "groups": [
+      {
+        "id": "collect",
+        "name": "Thu thập",
+        "desc": "Thu thập hoạt động học tập dưới dạng Statement chuẩn, mỗi Statement liên kết với một yêu cầu cần đạt",
+        "items": [
+          "xAPI",
+          "Caliper"
+        ],
+        "ref": true
+      },
+      {
+        "id": "credential",
+        "name": "Minh chứng",
+        "desc": "Phát hành thành tích tích lũy dưới dạng minh chứng có thể xác minh",
+        "items": [
+          "Open Badges 3.0",
+          "CLR 2.0",
+          "Digital Credentials"
+        ],
+        "ref": true
+      },
+      {
+        "id": "connect",
+        "name": "Kết nối",
+        "desc": "Kết nối với danh sách lớp, công cụ học tập và hệ thống đánh giá",
+        "items": [
+          "EduAPI",
+          "OneRoster",
+          "LTI",
+          "QTI"
+        ],
+        "ref": false
+      }
+    ]
+  },
+  "more": "Xem chi tiết về chuẩn",
+  "specLabel": "Đặc tả chính thức",
+  "activity": {
+    "title": "Hoạt động tại 1EdTech",
+    "items": [
+      {
+        "date": "2026.07",
+        "text": "Ghi chú kỹ thuật: xây dựng không gian tri thức theo chuẩn CASE",
+        "href": "/news/2026-07-note-case-knowledge-space.html"
+      },
+      {
+        "date": "2026.07",
+        "text": "Ghi chú kỹ thuật: mô hình phân phối khung chuẩn chương trình giáo dục cho Sách giáo khoa số AI",
+        "href": "/news/2026-07-note-aidt-standards.html"
+      },
+      {
+        "date": "2026.06",
+        "text": "1EdTech Korea ra mắt tại Hàn Quốc, tham gia hội đồng sáng lập",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.04",
+        "text": "Gia nhập 1EdTech với tư cách Contributing Member",
+        "href": "/news/2026-07-1edtech-korea.html"
+      },
+      {
+        "date": "2026.03",
+        "text": "KERIS, xây dựng hệ thống chuẩn hóa và mô hình khai thác dữ liệu học tập theo chuẩn quốc tế",
+        "href": "/news/2026-07-1edtech-korea.html"
+      }
+    ]
+  },
+  "cardsTitle": "Mô tả từng chuẩn",
+  "cardsLead": "Mỗi chuẩn đều ghi rõ công dụng, trạng thái, sản phẩm áp dụng và liên kết đến đặc tả chính thức.",
+  "mapping": {
+    "title": "xAPI ⇄ Caliper: cùng một dữ liệu học tập, hai cách biểu diễn",
+    "lead": "Lecognizer tiếp nhận cả xAPI và 1EdTech Caliper, đồng thời chuyển đổi qua lại giữa hai chuẩn. Dưới đây là ví dụ đối chiếu cho thấy mỗi trường của một bản ghi dữ liệu học tập nằm ở đâu trong hai chuẩn.",
+    "cols": [
+      "Ý nghĩa",
+      "xAPI 1.0.3",
+      "1EdTech Caliper 1.1"
+    ],
+    "rows": [
+      {
+        "k": "Ai",
+        "x": "actor",
+        "c": "actor"
+      },
+      {
+        "k": "Làm gì",
+        "x": "verb",
+        "c": "action (kèm type của sự kiện)"
+      },
+      {
+        "k": "Đối tượng",
+        "x": "object",
+        "c": "object"
+      },
+      {
+        "k": "Khi nào",
+        "x": "timestamp",
+        "c": "eventTime"
+      },
+      {
+        "k": "Kết quả",
+        "x": "result (score · success · completion · response · duration)",
+        "c": "generated (Score · Attempt, v.v.)"
+      },
+      {
+        "k": "Ứng dụng, môi trường",
+        "x": "context.platform",
+        "c": "edApp"
+      },
+      {
+        "k": "Lớp, nhóm",
+        "x": "context.contextActivities.grouping · context.team",
+        "c": "group · membership"
+      },
+      {
+        "k": "Phiên",
+        "x": "context.extensions (ví dụ: cmi5 sessionid)",
+        "c": "session"
+      },
+      {
+        "k": "Vị trí phát",
+        "x": "result.extensions (ví dụ: Video Profile time)",
+        "c": "target (MediaLocation.currentTime)"
+      },
+      {
+        "k": "Ngữ cảnh chương trình giáo dục",
+        "x": "context.contextActivities.category · other",
+        "c": "object.learningObjectives"
+      },
+      {
+        "k": "Thuộc tính ngoài chuẩn",
+        "x": "extensions",
+        "c": "extensions"
+      }
+    ],
+    "note": "Đây là ví dụ đối chiếu. Cách đối chiếu thực tế thay đổi tùy theo profile được sử dụng (xAPI Profile, Caliper Metric Profile) và môi trường triển khai."
+  }
 }

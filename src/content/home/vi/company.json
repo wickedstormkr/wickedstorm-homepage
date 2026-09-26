@@ -138,7 +138,7 @@
         "year": "2026",
         "highlights": [
           {
-            "html": "Tham gia hội đồng sáng lập 1EdTech Korea với tư cách hội viên đồng sáng lập",
+            "html": "Tham gia thành lập 1EdTech Korea với tư cách hội viên đồng sáng lập và thành viên hội đồng",
             "href": "#standards"
           },
           {
@@ -159,5 +159,47 @@
       }
     ],
     "more": "Xem toàn bộ lịch sử chi tiết"
-  }
+  },
+  "milestones": {
+    "title": "Cột mốc chính",
+    "items": [
+      {
+        "year": "2021",
+        "text": "Thành lập Wicked Storm Inc., xây dựng LRS cho nền tảng phát triển nhân lực quốc gia của Bộ Quản lý Nhân sự Hàn Quốc"
+      },
+      {
+        "year": "2023",
+        "text": "Ra mắt Lecognizer, đạt chứng nhận xAPI LRS từ ADL (Hoa Kỳ)"
+      },
+      {
+        "year": "2024",
+        "text": "Lecognizer đạt chứng nhận GS hạng 1, xây dựng trung tâm dữ liệu học tập cho Sách giáo khoa số AI của Bộ Giáo dục Hàn Quốc"
+      },
+      {
+        "year": "2024",
+        "text": "Mô hình chẩn đoán và đề xuất phân tích học tập đạt chứng nhận mô hình AI KOLAS"
+      },
+      {
+        "year": "2025",
+        "text": "Được cấp 2 bằng sáng chế AI: phát hiện dấu hiệu bất thường trong học tập, lập hồ sơ người học bằng LLM"
+      },
+      {
+        "year": "2026",
+        "text": "Thành viên hội đồng sáng lập 1EdTech Korea, 1EdTech Contributing Member"
+      }
+    ]
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "title": "Tìm <span class=\"g\">đồng đội</span> cùng thiết kế giáo dục bằng dữ liệu học tập",
+    "lead": "Chúng tôi chờ đón những ai muốn cùng tạo ra bước tiếp theo cho giáo dục bằng chuẩn quốc tế và AI. Xem tin tuyển dụng trên Saramin.",
+    "cta": "Xem tin tuyển dụng"
+  },
+  "location": {
+    "title": "Địa chỉ",
+    "address": "Phòng 901 đến 905, Tòa A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Hàn Quốc",
+    "tel": "02-2205-1470",
+    "email": "manager@wickedstorm.kr"
+  },
+  "more": "Xem chi tiết về công ty"
 }
