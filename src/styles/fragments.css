@@ -123,7 +123,9 @@
 .fx-tree li{line-height:22px}
 .fx-case-grid>.fx-ai{margin-top:calc(20px + 8px + 22px + 14px + 4px)}
 .fx-tree ul{list-style:none;display:grid;gap:4px}
-.fx-tree li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;font-size:13.5px}
+/* 칸: 종류 · 이름 · 표시. 칸이 좁으면(긴 번역) 표시가 다음 줄 오른쪽으로 내려가 이름이 눌리지 않게 */
+.fx-tree li{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px;row-gap:2px;padding:7px 10px;border-radius:7px;font-size:13.5px}
+.fx-tree li em{margin-left:auto}
 .fx-tree li.lv2{margin-left:16px;background:rgba(255,255,255,.03)}
 .fx-tree li small{font-size:11.5px;color:var(--fx-muted)}
 .fx-tree li b{font-weight:700;color:var(--fx-ink)}
@@ -139,7 +141,7 @@
    글자 크기는 추천 문장(.fx-ai p)보다 한 단계 작게: 넓은 데스크톱에서 한 줄에 들어가게 */
 .fx-assoc,.fx-ai .fx-assoc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;font-size:13px;line-height:1.5;font-weight:700;color:var(--fx-ink)}
 .fx-assoc span:not(.fx-rel){padding:3px 7px;border-radius:6px;background:rgba(255,255,255,.06)}
-.fx-rel{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fx-rel{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
 .fx-assoc code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent)}
 .fx-assoc code::after{content:" →"}
 

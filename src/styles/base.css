@@ -43,8 +43,8 @@ h1,h2,h3{text-wrap:balance}
 /* 짧은 설명의 문장 단위 줄바꿈(src/lib/sents.ts): 태블릿 이상에서 문장마다 한 덩어리.
    칸에 다 들어가면 한 줄, 모자라면 문장 사이에서, 한 문장이 칸보다 길 때만 그 안에서 어절 단위로 끊긴다. 폰은 자연 줄바꿈 */
 @media (min-width:700px){.snt{display:inline-block}}
-/* 일본어 폰: 한 덩어리로 묶은 구가 칸보다 길면 구 안에서도 줄을 바꾼다(가로 넘침 방지) */
-@media (max-width:699px){html:lang(ja) .nw{white-space:normal}}
+/* 일본어 폰: 한 덩어리로 묶은 구는 통째로 다음 줄로 넘기고, 구가 한 줄보다 길 때만 그 안에서 줄을 바꾼다(가로 넘침 방지) */
+@media (max-width:699px){html:lang(ja) .nw{white-space:normal;display:inline-block}}
 /* 넓은 화면(1280px 이상)에서만 의미 단위로 끊는 줄바꿈 */
 @media (max-width:1279px){.br-d{display:none}}
 

@@ -23,7 +23,7 @@ const ui = getUi(lang);
           <p class="kick">{c.kicker}</p>
           <h3 class="prod-names">{c.names.map((n) => <span>{n}</span>)}</h3>
           <p set:html={c.text} />
-          <ul class="prod-badges">{c.badges.map((b) => <li>{b}</li>)}</ul>
+          <ul class="prod-badges">{c.badges.flatMap((b) => b.split(' · ')).map((b) => <li>{b}</li>)}</ul>
           <div class="prod-links">
             <a class="btn s" href={c.site} target="_blank" rel="noopener">{c.more}<small lang="en">{c.siteLabel}</small><span class="sr-only"> {ui.newWindow}</span></a>
           </div>
