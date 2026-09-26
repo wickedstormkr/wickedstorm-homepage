@@ -3,8 +3,8 @@
  * - GSAP ScrollTrigger: 고정된 무대에서 스크롤 위치를 장면 값(0~5)으로 바꾸고, 장면 전환과 장면 안 움직임을 스크럽한다.
  * - Lenis: 데스크톱 부드러운 스크롤(CLAUDE.md '기술').
  * - 데이터 아트: 캔버스(주 그림) + 성능이 되는 기기는 WebGL 먼 별 층. 둘 다 안 되면 미리 그린 그림(SVG)이 그대로 남는다.
- * 한 전환(장면 값의 소수부 f) 안의 순서: 앞 장면 글·그림이 빠짐(f .30–.45) → 입자가 옮겨 감(.45–.90)
- *   → 다음 장면 그림(창·이름표)이 들어옴(.52) → 입자가 착지한 뒤 다음 장면 글(.72). 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 일찍.
+ * 한 전환(장면 값의 소수부 f) 안의 순서: 앞 장면 글·그림이 빠짐(f .30–.45)과 함께 입자가 옮겨 감(.26–.86)
+ *   → 다음 장면 그림(창·이름표)이 들어옴(.52) → 입자가 거의 착지한 뒤 다음 장면 글(.72). 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 일찍.
  * 움직임 멈춤을 누르면 떠다님이 멈추고, 장면 전환은 스크롤로만(사용자가 움직일 때만) 일어난다.
  */
 import { gsap } from 'gsap';
@@ -92,7 +92,7 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     const raf = (t: number) => lenis.raf(t * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
-    hooks.scrollTo = (y) => lenis.scrollTo(y, { duration: 1.1 });
+    hooks.scrollTo = (y, o) => lenis.scrollTo(y, o?.immediate ? { immediate: true } : { duration: 1.1 });
 
     /*
      * 장면 값 s(0~5)는 스크롤을 부드럽게 따라가는 빈 타임라인의 시각이다(ScrollTrigger scrub).
@@ -240,6 +240,10 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
   reveal('.scene-next .ring-labels li', 4.72, 0.04, 0.12, 6);
   reveal('.scene-next .ring-caption', 4.8, 0, 0.12, 0);
   scenes.forEach((sc) => { sc.style.opacity = '1'; });
+  // 움직이는 조각은 저마다 합성 층으로: 투명도·옮김을 다시 그리지 않고 층째로 바꾼다.
+  // 무대(고정된 큰 층)를 프레임마다 다시 그리면 Safari에서 지나간 글의 흔적이 남아 겹쳐 보이고, 느려진다.
+  // opacity만 적는다(transform을 적으면 안쪽 절대 위치 요소의 기준이 바뀐다).
+  for (const p of parts) p.el.style.willChange = 'opacity';
   return {
     apply(s: number) {
       // 먼 장면(지금 s에서 보일 일이 없는 장면)은 data-far: CSS가 그 장면의 글·그림을 잘라 아예 그리지 않는다(story.css).
@@ -251,16 +255,17 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
       for (const p of parts) {
         const pin = p.inAt === undefined ? 1 : easeOut(clamp01((s - p.inAt) / (p.inDur ?? 0.2)));
         const pout = p.outAt === undefined ? 0 : easeOut(clamp01((s - p.outAt) / (p.outDur ?? 0.15)));
-        const o = (pin * (1 - pout)).toFixed(3);
-        const y = (1 - pin) * p.dyIn + pout * p.dyOut;
-        const tr = Math.abs(y) < 0.05 ? '' : `0 ${y.toFixed(1)}px`;
+        // 브라우저가 읽어 돌려주는 모양 그대로 만든다('0.5', '0px 12.3px'): 같은 값을 프레임마다 다시 쓰지 않게
+        const o = String(+(pin * (1 - pout)).toFixed(3));
+        const y = +((1 - pin) * p.dyIn + pout * p.dyOut).toFixed(1);
+        const tr = y === 0 ? '' : `0px ${y}px`;
         // 지금 붙은 값과 비교한다(다른 곳에서 바뀌었어도 다시 맞춘다)
         if (p.el.style.opacity !== o) p.el.style.opacity = o;
         if (p.el.style.translate !== tr) p.el.style.translate = tr;
       }
     },
     clear() {
-      for (const p of parts) { p.el.style.opacity = ''; p.el.style.translate = ''; }
+      for (const p of parts) { p.el.style.opacity = ''; p.el.style.translate = ''; p.el.style.willChange = ''; }
       scenes.forEach((sc) => { sc.style.opacity = ''; sc.removeAttribute('data-far'); });
     },
   };

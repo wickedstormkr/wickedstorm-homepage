@@ -1,6 +1,6 @@
 ---
 /**
- * 역할별 제품 화면(모두 LearnHubble AI): 운영자(교육과정 개정 · 1EdTech CASE) · 교수자(보충 구간·확인 퀴즈 설계) · 학습자(강의실 AI 패널).
+ * 역할별 제품 화면(모두 LearnHubble AI): 운영자(교육과정 개정 · 1EdTech CASE) · 교수자(보충 설명·확인 퀴즈 설계) · 학습자(그 구간에서 자동으로 나오는 확인 퀴즈).
  * 셋 다 Lecognizer AI가 찾은 같은 이상 신호(‘위험요인 비교’, 3주차 13:25–14:40)에서 이어진다.
  * 제품 화면은 HTML로 다시 그린 조각이라 언어가 바뀌고 화면 낭독기가 읽는다. 창 안은 누를 수 없는 그림이다.
  * JS가 없으면 세 역할이 차례로 모두 보이고, JS가 있으면 탭(방향키로 이동)으로 바뀐다(src/scripts/site.ts).
@@ -35,7 +35,7 @@ const tone = (p: string) => (p.startsWith('LearnHubble') ? 'lhb' : 'lec');
       <div class="role-visual">
         {it.id === 'operator' && <OperatorCase t={t.operator} label={label(t.operator.product)} />}
         {it.id === 'instructor' && <InstructorDesign t={story.judge} label={label(story.judge.product)} full />}
-        {it.id === 'learner' && <LearnerAssist t={story.next} label={label(story.next.product)} />}
+        {it.id === 'learner' && <LearnerAssist t={story.next} quiz={story.judge.quiz[0]} label={label(story.next.product)} />}
       </div>
     </section>
   ))}

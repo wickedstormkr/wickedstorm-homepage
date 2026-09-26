@@ -1,5 +1,5 @@
 /**
- * 동작 점검: 움직임 멈춤(KWCAG 6.2.2), 오프닝 이야기(고정·세로 장면, 키보드), 언어 안내 띠(자동 이동 없음), 모바일 메뉴, 문의 폼(서버 계약 그대로).
+ * 동작 점검: 움직임 멈춤(KWCAG 6.2.2, 오프닝 이야기 조작 안), 오프닝 이야기(고정·세로 장면, 키보드, 아래로 · 건너뛰기), 맨 위로, 언어 안내 띠(자동 이동 없음), 모바일 메뉴, 문의 폼(서버 계약 그대로).
  * 문의 폼 전송은 실제 서버로 보내지 않고 가로채서 보내는 값만 확인한다.
  */
 import { test, expect } from '@playwright/test';
@@ -9,7 +9,7 @@ const ENDPOINT = 'https://v6pa5eyigfdkbuzm2rskahdf6y0xfsre.lambda-url.ap-northea
 test.describe('움직임 멈춤', () => {
   test('버튼이 데이터 아트의 떠다님을 멈추고, 선택을 기억한다', async ({ page }) => {
     await page.goto('');
-    const btn = page.locator('#motionBtn');
+    const btn = page.locator('.story-ctrl [data-motion-btn]');
     await expect(btn).toHaveAttribute('aria-pressed', 'false');
     const story = page.locator('#story');
     await expect(story).toHaveAttribute('data-ambient', 'on', { timeout: 15000 });
@@ -18,7 +18,13 @@ test.describe('움직임 멈춤', () => {
     await expect(page.locator('html')).toHaveClass(/motion-paused/);
     await expect(story).toHaveAttribute('data-ambient', 'off');
     await page.reload();
-    await expect(page.locator('#motionBtn')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.story-ctrl [data-motion-btn]')).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  test('움직임 멈춤은 헤더가 아니라 오프닝 이야기 조작에 있다(저절로 움직이는 것은 오프닝에만 있다)', async ({ page }) => {
+    await page.goto('');
+    await expect(page.locator('header [data-motion-btn]')).toHaveCount(0);
+    await expect(page.locator('.story-ctrl [data-motion-btn]')).toBeVisible();
   });
 
   test('움직임 줄이기 설정이면 멈춘 상태로 시작한다', async ({ browser }) => {
@@ -26,7 +32,7 @@ test.describe('움직임 멈춤', () => {
     const page = await ctx.newPage();
     await page.goto('');
     await expect(page.locator('html')).toHaveClass(/motion-paused/);
-    await expect(page.locator('#motionBtn')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.story-ctrl [data-motion-btn]')).toHaveAttribute('aria-pressed', 'true');
     await ctx.close();
   });
 
@@ -85,6 +91,32 @@ test.describe('오프닝 이야기', () => {
       await expect(page.locator(`#scene-${id}`)).toHaveAttribute('data-far', '');
       await expect(page.locator(`#scene-${id} .scene-copy`)).toHaveCSS('clip-path', 'inset(50%)');
     }
+  });
+
+  test('데스크톱: 아래로는 다음 장면으로, 이야기 건너뛰기는 이야기 뒤로 바로 가고 초점도 옮긴다', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('');
+    await expect(page.locator('html')).toHaveClass(/story-gsap/, { timeout: 8000 });
+    await page.locator('[data-story-next]').click();
+    await expect.poll(() => page.locator('#story').getAttribute('data-s'), { timeout: 8000 }).toBe('1.00');
+    await expect(page.locator('#scene-statement')).toHaveClass(/is-active/);
+    await page.locator('[data-story-skip]').click();
+    await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('after-story')!.getBoundingClientRect().top)), { timeout: 8000 }).toBeLessThan(2);
+    await expect(page.locator('#after-story')).toBeFocused();
+  });
+
+  test('맨 위로: 한 화면 넘게 내려가면 보이고, 고정된 이야기 안에서는 숨고, 누르면 맨 위로', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('');
+    const btn = page.locator('#toTop');
+    await expect(btn).toBeHidden();
+    await page.evaluate(() => { const st = document.getElementById('story')!; window.scrollTo(0, st.offsetTop + innerHeight * 2); });
+    await page.waitForTimeout(400);
+    await expect(btn).toBeHidden();
+    await page.evaluate(() => window.scrollTo(0, document.getElementById('after-story')!.getBoundingClientRect().top + scrollY + 200));
+    await expect(btn).toBeVisible();
+    await btn.click();
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY)), { timeout: 8000 }).toBe(0);
   });
 
   test('폰: 장면을 세로로 잇고, 화면에 들어오면 그 장면의 움직임을 재생한다', async ({ browser }) => {

@@ -36,23 +36,7 @@ nav.main a:hover,nav.main a[aria-current="page"]{color:#fff}
    웹 글꼴로 그리면 '한국어·日本語·Tiếng Việt' 몇 글자 때문에 페이지마다 다른 언어 글꼴 조각(각 25KB 안팎)을 더 받는다 */
 .lang-menu summary,.lang-menu a,.lang-row a,.res-links a[lang],.lang-banner [lang]{font-family:var(--font-system)}
 
-/* 움직임 멈춤 버튼: 오른쪽 위에 늘 보인다. 아이콘은 CSS(멈춤 = 두 막대, 재생 = 삼각형) */
-.motion-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;min-width:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line2);
-  font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
-.motion-btn:hover{border-color:var(--line3)}
-.motion-ico{position:relative;width:12px;height:12px;flex:none}
-.motion-ico::before,.motion-ico::after{content:"";position:absolute;top:0;bottom:0;width:4px;border-radius:1px;background:currentColor}
-.motion-ico::before{left:1px}.motion-ico::after{right:1px}
-.motion-btn[aria-pressed="true"] .motion-ico::before{left:2px;width:0;border-radius:0;background:none;
-  border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor}
-.motion-btn[aria-pressed="true"] .motion-ico::after{display:none}
-.motion-btn .motion-play{display:none}
-.motion-btn[aria-pressed="true"] .motion-pause{display:none}
-.motion-btn[aria-pressed="true"] .motion-play{display:inline}
-@media (max-width:1279px){
-  .motion-btn{padding:0;justify-content:center;width:var(--tap);height:var(--tap)}
-  .motion-btn .motion-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
-}
+
 
 /* 햄버거 / 메뉴 */
 .menu-btn{display:none;width:var(--tap);height:var(--tap);position:relative;border-radius:10px}
@@ -94,3 +78,16 @@ html.nav-open{overflow:hidden}
 .foot-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);min-width:var(--tap);color:var(--muted);transition:color .18s}
 .foot-nav a:hover{color:#fff}
 .site-footer .legal{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--faint);font-family:var(--en)}
+
+/* 맨 위로: 한 화면 넘게 내려가면 오른쪽 아래에 나타난다(site.ts가 .show). 데스크톱 고정 이야기 안에서는 숨긴다(장면 목차·조작이 있다).
+   언어 안내 띠가 떠 있으면 그 위로 비켜 선다(html.lb-open, --lb-h). 숨었을 때는 visibility로 초점·낭독에서도 빠진다 */
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:44;display:grid;place-items:center;
+  width:var(--tap);height:var(--tap);border-radius:50%;border:1px solid var(--line2);background:rgba(14,16,32,.82);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--ink-2);box-shadow:0 10px 30px rgba(0,0,0,.35);
+  visibility:hidden;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s,visibility 0s .25s,border-color .2s,color .2s}
+.to-top.show{visibility:visible;opacity:1;transform:none;transition:opacity .25s,transform .25s,visibility 0s,border-color .2s,color .2s}
+.to-top:hover,.to-top:focus-visible{border-color:var(--line3);color:#fff}
+.to-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html.lb-open .to-top{bottom:calc(var(--lb-h,64px) + 28px)}
+html.motion-paused .to-top{transition:none}
+

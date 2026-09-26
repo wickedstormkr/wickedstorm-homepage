@@ -5,6 +5,7 @@ import SecHead from '../components/SecHead.astro';
 import type { HomeContent, UiText } from '../lib/content';
 import { pagePath, type Lang, type Page } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
+import { sents } from '../lib/sents';
 import { url, withBase } from '../lib/url';
 import poster from '../assets/media/company-film-poster.webp';
 
@@ -35,7 +36,7 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
           {t.milestones.items.map((m) => <li><span class="miles-y tnum">{m.year}</span><span>{m.text}</span></li>)}
         </ol>
         <div class="careers-row">
-          <p><b>{t.careers.eyebrow}</b> <span set:html={t.careers.lead} /></p>
+          <p><b>{t.careers.eyebrow}</b> <span set:html={sents(t.careers.lead)} /></p>
           <div class="hero-cta">
             <a class="btn s" href={url(pagePath(lang, 'company'))}>{t.more}</a>
           </div>

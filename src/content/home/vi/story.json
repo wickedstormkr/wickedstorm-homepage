@@ -1,6 +1,8 @@
 {
   "label": "Learning Loop qua sáu cảnh",
   "skip": "Bỏ qua câu chuyện",
+  "down": "Cuộn xuống",
+  "downSr": "sang cảnh tiếp theo",
   "nav": "Chuyển cảnh",
   "demo": "Nhân vật, môn học và số liệu trên màn hình là dữ liệu minh họa.",
   "scenes": [

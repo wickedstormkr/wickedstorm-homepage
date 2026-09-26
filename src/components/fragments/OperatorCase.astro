@@ -3,6 +3,7 @@
  * LearnHubble AI 운영자 · 교육과정 개정(1EdTech CASE): Lecognizer AI 이상 신호가 어느 수준의 문제인지 가르고,
  * 교육과정 수준이면 AI가 CASE 체계 보완을 추천한다: 역량(CFItem) 아래 학습성과를 선수학습으로 잇는 CFAssociation(precedes).
  * 반영은 운영자가 정한다. 글은 CASE 용어(CFDocument · CFItem · CFAssociation) 중심으로 짧게.
+ * AI가 제안한 것(추천 상자와 체계 속 새 선수학습 칸)은 같은 AI 모양(.fx-ai · li.new)으로 이어 보이게 한다.
  * docs/source/mockups/lxp-case-revision.html · screens/cap-운영자-CASE개정.webp의 구성을 따른다.
  */
 import Window from './Window.astro';
@@ -27,9 +28,12 @@ const { t, label } = Astro.props;
         </ul>
       </div>
       <div class="fx-ai">
-        <p><span class="fx-tag">{t.ai}</span>{t.proposal}</p>
-        <p class="fx-assoc"><span>{t.assoc.from}</span><code lang="en">{t.assoc.type}</code><span>{t.assoc.to}</span></p>
-        <small>{t.note}</small>
+        <div class="fx-ai-main">
+          <span class="fx-ai-tag">{t.ai}</span>
+          <p>{t.proposal}</p>
+          <p class="fx-assoc"><span>{t.assoc.from}</span><span class="fx-rel"><code lang="en">{t.assoc.type}</code><span>{t.assoc.to}</span></span></p>
+          <small>{t.note}</small>
+        </div>
       </div>
     </div>
     <div class="fx-foot">

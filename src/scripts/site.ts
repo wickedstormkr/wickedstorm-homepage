@@ -4,7 +4,7 @@
  * 상시 rAF 루프 없음. 연출(GSAP·Lenis·WebGL)은 2단계에서 따로 불러온다.
  */
 import { initMotion } from './motion';
-import { initStory } from './story/boot';
+import { initStory, storyHooks } from './story/boot';
 import { SOCIAL } from '../config/client';
 
 const doc = document;
@@ -74,8 +74,33 @@ const root = doc.documentElement;
   });
 })();
 
-/* ---------- 움직임 멈춤 ---------- */
-initMotion(doc.getElementById('motionBtn'));
+/* ---------- 맨 위로: 한 화면 넘게 내려가면 보인다. 데스크톱 고정 이야기가 화면을 채우는 동안은 숨긴다(장면 목차·조작이 있다) ---------- */
+(() => {
+  const btn = doc.getElementById('toTop');
+  if (!btn) return;
+  const story = doc.querySelector<HTMLElement>('[data-story]');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    let show = window.scrollY > window.innerHeight * 0.9;
+    if (show && story && root.classList.contains('story-pin')) {
+      const r = story.getBoundingClientRect();
+      if (r.top <= 1 && r.bottom >= window.innerHeight - 1) show = false;
+    }
+    btn.classList.toggle('show', show);
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+  btn.addEventListener('click', () => {
+    // 여러 장면을 거꾸로 돌리지 않게 바로 올라간다(연출 층이 있으면 그 스크롤로)
+    if (storyHooks.scrollTo) storyHooks.scrollTo(0, { immediate: true });
+    else window.scrollTo({ top: 0, behavior: 'auto' });
+    doc.querySelector<HTMLElement>('.brand')?.focus({ preventScroll: true });
+  });
+})();
+
+/* ---------- 움직임 멈춤(오프닝 이야기 조작 안의 버튼) ---------- */
+initMotion([...doc.querySelectorAll<HTMLElement>('[data-motion-btn]')]);
 
 /* ---------- 언어 안내 띠 ---------- */
 (() => {
@@ -94,7 +119,11 @@ initMotion(doc.getElementById('motionBtn'));
   box.setAttribute('aria-label', box.querySelector('p')?.textContent ?? '');
   box.setAttribute('lang', first);
   box.hidden = false;
+  // 맨 위로 버튼이 띠 위로 비켜 서게(chrome.css html.lb-open)
+  root.style.setProperty('--lb-h', `${box.offsetHeight}px`);
+  root.classList.add('lb-open');
   box.querySelector('[data-close]')?.addEventListener('click', () => {
+    root.classList.remove('lb-open');
     box.hidden = true;
     try { localStorage.setItem(KEY, '1'); } catch { /* 무시 */ }
   });
@@ -130,6 +159,29 @@ initMotion(doc.getElementById('motionBtn'));
 
 /* ---------- 오프닝 여섯 장면: 폰·태블릿 장면 재생, 데스크톱 연출 층 불러오기 ---------- */
 initStory();
+
+/* ---------- 표준 지도: 폭이 줄어 한 칸이라도 상태가 이름 아래로 내려가면 모든 칸을 같은 두 줄 짜임으로(.std-stack, pages.css) ----------
+   언어마다 상태 글 길이가 달라 CSS 폭 기준으로는 정할 수 없어, 한 줄 짜임에서 실제로 내려갔는지 잰다. 폭이 바뀔 때만 다시 잰다 */
+doc.querySelectorAll<HTMLElement>('.std-map').forEach((map) => {
+  const chips = [...map.querySelectorAll<HTMLElement>('.std-chip')];
+  const fit = () => {
+    map.classList.remove('std-stack');
+    const wrapped = chips.some((c) => {
+      const name = c.querySelector('b');
+      const state = c.querySelector('span');
+      return !!name && !!state && state.getBoundingClientRect().top >= name.getBoundingClientRect().bottom - 1;
+    });
+    map.classList.toggle('std-stack', wrapped);
+  };
+  let lastW = -1;
+  new ResizeObserver(([en]) => {
+    const w = Math.round(en.contentRect.width);
+    if (w === lastW) return;
+    lastW = w;
+    fit();
+  }).observe(map);
+  doc.fonts?.ready.then(fit);
+});
 
 /* 탭(역할별 제품 화면): JS가 없으면 모두 보이고, 있으면 탭으로. 방향키·Home·End로 이동(WAI-ARIA 탭 패턴) */
 document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
