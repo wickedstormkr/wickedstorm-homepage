@@ -131,6 +131,29 @@ initMotion(doc.getElementById('motionBtn'));
 /* ---------- 오프닝 여섯 장면: 폰·태블릿 장면 재생, 데스크톱 연출 층 불러오기 ---------- */
 initStory();
 
+/* ---------- 표준 지도: 폭이 줄어 한 칸이라도 상태가 이름 아래로 내려가면 모든 칸을 같은 두 줄 짜임으로(.std-stack, pages.css) ----------
+   언어마다 상태 글 길이가 달라 CSS 폭 기준으로는 정할 수 없어, 한 줄 짜임에서 실제로 내려갔는지 잰다. 폭이 바뀔 때만 다시 잰다 */
+doc.querySelectorAll<HTMLElement>('.std-map').forEach((map) => {
+  const chips = [...map.querySelectorAll<HTMLElement>('.std-chip')];
+  const fit = () => {
+    map.classList.remove('std-stack');
+    const wrapped = chips.some((c) => {
+      const name = c.querySelector('b');
+      const state = c.querySelector('span');
+      return !!name && !!state && state.getBoundingClientRect().top >= name.getBoundingClientRect().bottom - 1;
+    });
+    map.classList.toggle('std-stack', wrapped);
+  };
+  let lastW = -1;
+  new ResizeObserver(([en]) => {
+    const w = Math.round(en.contentRect.width);
+    if (w === lastW) return;
+    lastW = w;
+    fit();
+  }).observe(map);
+  doc.fonts?.ready.then(fit);
+});
+
 /* 탭(역할별 제품 화면): JS가 없으면 모두 보이고, 있으면 탭으로. 방향키·Home·End로 이동(WAI-ARIA 탭 패턴) */
 document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
   const list = box.querySelector<HTMLElement>('[role=tablist]');

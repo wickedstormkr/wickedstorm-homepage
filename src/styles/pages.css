@@ -37,11 +37,13 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 
 /* 표준 지도: 위는 기준(CASE), 아래 세 묶음(수집·증명·연동). 수집·증명은 기준을 가리키는 연결선으로 잇는다 */
 .std-map{margin-top:44px}
-.std-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:24px 26px;border-radius:var(--radius-l);
+.std-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding:24px 22px;border-radius:var(--radius-l);
   background:radial-gradient(90% 160% at 0% 0%,rgba(124,77,255,.16),transparent 60%),var(--panel);border:1px solid rgba(163,177,255,.3)}
 .base-copy{flex:1 1 420px;min-width:0}
-.std-base .lane-desc{min-height:0;max-width:720px}
-.std-base .lane-items{flex:0 1 280px;margin:0}
+.std-base .lane-desc{min-height:0;max-width:60em}
+/* 기준 칸(CASE)은 아래 묶음의 칸과 같은 너비, 오른쪽 끝도 셋째 묶음의 칸과 맞춘다(기준 띠와 묶음의 안쪽 여백 22px · 테두리 1px가 같다).
+   묶음 칸 너비 = (지도 폭 − 사이 16px×2) / 3 − (여백 22px + 테두리 1px)×2, 기준 띠 안쪽 폭 = 지도 폭 − 46px */
+.std-base .lane-items{flex:0 0 calc((100% + 14px) / 3 - 46px);margin:0}
 .std-lanes{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:44px}
 .std-lane{position:relative;padding:24px 22px 22px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
 /* 기준(CASE)을 가리키는 연결선: 묶음 위쪽 가운데에서 기준 띠까지 */
@@ -53,12 +55,13 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .lane-head b{font-size:20px;letter-spacing:-.02em}
 .lane-desc{margin-top:8px;min-height:3.2em;color:var(--muted);font-size:14.5px;line-height:1.6}
 .lane-items{list-style:none;display:grid;gap:8px;margin-top:18px}
-/* 공식 스펙 링크(새 창): 테두리 칸 + ↗ + 올렸을 때 밝아짐.
-   모든 칸을 같은 짜임으로: 이름은 왼쪽 위, 상태(적용·적용 예정·설계 참조)는 오른쪽 아래. 한 줄에 놓인 칸은 높이를 맞춘다
-   (이름이 짧은 칸만 상태가 이름 옆에 붙어 칸마다 모양이 달라지지 않게) */
-.lane-items>li{display:flex}
-.std-chip{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:6px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
-.std-chip span{align-self:flex-end}
+/* 공식 스펙 링크(새 창): 테두리 칸 + ↗ + 올렸을 때 밝아짐 */
+.std-chip{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;min-height:48px;padding:10px 14px;border-radius:12px;border:1px solid var(--line2);background:rgba(255,255,255,.02);transition:border-color .2s,background .2s}
+/* 폭이 줄어 한 칸이라도 상태가 이름 아래로 내려가면(site.ts가 지도에 .std-stack을 붙인다) 모든 칸을 같은 짜임으로:
+   이름은 왼쪽 위, 상태는 오른쪽 아래, 한 줄에 놓인 칸은 같은 높이. 모두 한 줄에 들어가면 그대로 한 줄 */
+.std-stack .lane-items>li{display:flex}
+.std-stack .std-chip{flex:1 1 auto;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:6px}
+.std-stack .std-chip span{align-self:flex-end}
 .std-chip:hover{border-color:var(--line3);background:rgba(255,255,255,.05)}
 .std-chip b{white-space:nowrap;font-family:var(--en);font-size:15.5px;font-weight:800;letter-spacing:-.01em}
 .std-chip span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
@@ -84,6 +87,8 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
   .std-lane.ref::before,.std-lane.ref::after{display:none}
   .lane-ref{position:static;display:inline-block;margin-bottom:10px;padding:2px 8px;border-radius:5px;background:rgba(163,177,255,.12);font-size:13px}
   .lane-items{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
+  /* 기준 칸도 묶음과 같은 격자에(안쪽 폭이 같아 첫 칸 너비가 묶음의 칸과 같다) */
+  .std-base .lane-items{flex:1 1 100%}
 }
 @media (max-width:699px){
   .std-base{padding:20px 18px}
