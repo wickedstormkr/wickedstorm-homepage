@@ -64,6 +64,8 @@ function bindSpaces(nodes: TextNode[]) {
       if (isNb(u[j])) { if (inWord) return; continue; } // 이미 묶여 있음
       if (!isSp(u[j])) { inWord = true; continue; }
       if (!inWord) continue; // 끝의 공백
+      // 요소 사이의 공백만 있는 조각(메뉴 링크 사이 등)은 묶지 않는다: flex 칸 안에서는 줄바꿈 없는 공백이 빈 칸 하나가 된다
+      if (!decode(nodes[i].rawText).replace(/\u00a0/g, ' ').trim()) return;
       let k = j;
       while (k > 0 && isSp(u[k - 1])) k--;
       u.splice(k, j - k + 1, '&nbsp;');
