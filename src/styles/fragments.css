@@ -44,10 +44,12 @@
 .fx-ai-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 7px;border-radius:5px;font-size:12px;font-weight:800;line-height:1.35;white-space:nowrap;
   color:#ece6ff;background:rgba(124,77,255,.26)}
 .fx-ai-tag::before{content:"";flex:none;width:10px;height:10px;background:var(--grad);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
-/* 추천: 라벨은 문장 첫 줄과 같은 줄에(상자 높이를 늘리지 않게). 라벨 칸과 글 칸을 나눠,
-   문장이 둘째 줄로 넘어가도, 부가 정보(시간·문항 수·연결)도 라벨 아래가 아니라 글 칸에서 시작한다 */
-.fx-ai-main{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:start}
-.fx-ai-main>:not(.fx-ai-tag){grid-column:2}
+/* 추천: 라벨은 문장 첫 줄과 같은 줄에(상자 높이를 늘리지 않게). 라벨 칸과 글 칸(.fx-ai-body)을 나눠,
+   문장이 둘째 줄로 넘어가도, 부가 정보(시간·문항 수·연결)도 라벨 아래가 아니라 글 칸에서 시작한다.
+   글 칸이 190px보다 좁아지면(긴 번역 라벨·좁은 상자) 글 칸이 라벨 아래로 내려가 상자 폭을 다 쓴다 */
+.fx-ai-main{display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:10px;row-gap:8px}
+.fx-ai-main>.fx-ai-tag{flex:none}
+.fx-ai-body{flex:1 1 190px;min-width:0}
 .fx-ai p{font-size:14.5px;font-weight:700;line-height:1.55;color:var(--fx-ink)}
 .fx-ai small{display:block;margin-top:4px;font-size:13px;line-height:1.5;color:var(--fx-ink2)}
 .fx-ai .fx-h{font-size:12.5px;line-height:1.4;color:#b9b4de}
