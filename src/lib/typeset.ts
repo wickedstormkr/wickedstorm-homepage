@@ -3,6 +3,7 @@
  * 모든 페이지 HTML이 나가기 전에 한 번 거친다(src/middleware.ts). 콘텐츠 파일은 그대로 두고, 화면에 낼 때만 적용한다.
  *
  * - 한국어·영어·베트남어: 글 칸의 마지막 두 단어 사이 띄어쓰기를 줄바꿈 없는 공백(U+00A0)으로 바꾼다.
+ *   <br>로 나눈 조각도 조각마다 따로(줄바꿈 앞 조각의 끝도 글 끝이다: 제목 '학습의 새로운 시대를 / 여는'처럼 한 단어 줄이 생기지 않게).
  *   두 단어가 너무 길면(합쳐 LIMIT자 초과) 좁은 칸에서 넘칠 수 있어 묶지 않는다.
  * - 일본어: 띄어쓰기가 없으므로 BudouX로 구를 나눠, 마지막 구가 짧으면 그 글자들 사이에 WORD JOINER(U+2060)를 넣어 한 덩어리로 묶는다.
  *   요소(span)를 끼우지 않는다: 버튼·링크처럼 flex(gap)인 칸에서 글이 두 조각으로 나뉘어 사이가 벌어지지 않게.
@@ -29,14 +30,15 @@ function isContainer(el: HTMLElement): boolean {
   return cls.length > 0 && !cls.every((c) => INLINE_CLASS.has(c));
 }
 
-/** 글 칸 안의 글자 조각(안쪽 글 칸은 제외) */
-function textNodes(el: HTMLElement, out: TextNode[] = []): TextNode[] {
+/** 글 칸 안의 글자 조각(안쪽 글 칸은 제외)을 <br> 자리에서 나눈 묶음들 */
+function textSegments(el: HTMLElement, out: TextNode[][] = [[]]): TextNode[][] {
   for (const c of el.childNodes as Node[]) {
-    if (c instanceof TextNode) out.push(c);
+    if (c instanceof TextNode) out[out.length - 1].push(c);
     else if (c instanceof HTMLElement) {
       const tag = c.rawTagName?.toLowerCase();
+      if (tag === 'br') { out.push([]); continue; }
       if (!tag || SKIP.has(tag) || isContainer(c) || c.classList.contains('sr-only')) continue;
-      out.push(...textNodes(c));
+      textSegments(c, out);
     }
   }
   return out;
@@ -275,12 +277,13 @@ export function typeset(html: string): string {
       if (!tag || SKIP.has(tag)) continue;
       const l = (c.getAttribute('lang') ?? lang).slice(0, 2);
       if (isContainer(c) && !c.classList.contains('nw')) {
-        const nodes = textNodes(c);
+        const segs = textSegments(c);
+        const nodes = segs.flat();
         if (nodes.some((n) => n.rawText.trim())) {
           if (l === 'ja') bindJa(nodes);
           else {
             if (l === 'vi') bindVi(nodes);
-            bindSpaces(nodes);
+            for (const s of segs) bindSpaces(s);
           }
           for (const t of nodes) keepNumbers(t);
         }
