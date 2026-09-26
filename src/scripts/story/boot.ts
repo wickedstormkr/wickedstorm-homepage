@@ -4,14 +4,15 @@
  * - 데스크톱 고정(html.story-pin, head 인라인 스크립트가 첫 그리기 전에 붙임): GSAP 없이도 스크롤 위치로 장면을 바꾼다.
  *   첫 화면이 뜬 뒤 연출 층(enhance.ts: GSAP·Lenis·데이터 아트)을 불러와 이어받는다. 불러오지 못해도 이야기는 끝까지 넘어간다.
  * - 키보드: 장면 이동 목록(링크), 보이지 않는 장면 안으로 초점이 가면 그 장면으로 스크롤
+ * - 이야기 조작(.story-ctrl): 아래로 = 다음 장면(마지막 장면에서는 이야기 뒤로), 이야기 건너뛰기 = 이야기 뒤로 바로(초점도 옮긴다)
  */
 import { initLive } from './live';
 
 const PIN_MQ = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)';
 
 export interface StoryHooks {
-  /** 연출 층이 있으면 그쪽 스크롤(Lenis)을 쓴다 */
-  scrollTo?: (y: number) => void;
+  /** 연출 층이 있으면 그쪽 스크롤(Lenis)을 쓴다. immediate면 움직임 없이 바로(여러 장면을 건너뛸 때) */
+  scrollTo?: (y: number, opts?: { immediate?: boolean }) => void;
 }
 export const storyHooks: StoryHooks = {};
 
@@ -73,6 +74,32 @@ export function initStory() {
     if (!pinned()) return;
     const sc = (e.target as Element).closest<HTMLElement>('.scene[data-scene]');
     if (sc && !sc.classList.contains('is-active')) go(Number(sc.dataset.scene));
+  });
+
+  /* 이야기 조작: 아래로 · 이야기 건너뛰기(링크라 스크립트가 없어도 다음 장면 · 이야기 뒤로 간다) */
+  const after = document.getElementById('after-story');
+  const calm = () => root.classList.contains('motion-paused') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const toY = (y: number, immediate = false) => {
+    if (storyHooks.scrollTo) storyHooks.scrollTo(y, { immediate });
+    else scrollTo({ top: y, behavior: immediate || calm() ? 'auto' : 'smooth' });
+  };
+  const toAfter = (immediate: boolean) => {
+    if (!after) return;
+    toY(after.getBoundingClientRect().top + scrollY, immediate);
+    after.focus({ preventScroll: true });
+  };
+  story.querySelector('[data-story-skip]')?.addEventListener('click', (e) => { e.preventDefault(); toAfter(true); });
+  story.querySelector('[data-story-next]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (pinned()) {
+      if (active < last) go(active + 1);
+      else toAfter(false);
+      return;
+    }
+    // 세로 장면: 지금 화면 위쪽보다 아래에서 시작하는 첫 장면으로
+    const next = scenes.find((s) => s.getBoundingClientRect().top > 80);
+    if (next) toY(next.getBoundingClientRect().top + scrollY);
+    else toAfter(false);
   });
 
   /* #scene-signal 같은 주소로 들어오면 그 장면으로(고정 모드에서는 장면이 무대 안에 겹쳐 있어 브라우저가 찾아가지 못한다) */

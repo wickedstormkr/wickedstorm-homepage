@@ -1,6 +1,8 @@
 {
   "label": "The Learning Loop in six scenes",
   "skip": "Skip the story",
+  "down": "Scroll down",
+  "downSr": "to the next scene",
   "nav": "Go to scene",
   "demo": "People, subjects, and figures on screen are demo data.",
   "scenes": [

@@ -92,7 +92,7 @@ export function enhanceStory(story: HTMLElement, { setActive, hooks }: Opts) {
     const raf = (t: number) => lenis.raf(t * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
-    hooks.scrollTo = (y) => lenis.scrollTo(y, { duration: 1.1 });
+    hooks.scrollTo = (y, o) => lenis.scrollTo(y, o?.immediate ? { immediate: true } : { duration: 1.1 });
 
     /*
      * 장면 값 s(0~5)는 스크롤을 부드럽게 따라가는 빈 타임라인의 시각이다(ScrollTrigger scrub).

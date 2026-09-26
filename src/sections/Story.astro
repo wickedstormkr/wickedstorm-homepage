@@ -10,6 +10,7 @@
  * 제품 화면 창(.fx) 안은 누를 수 없는 그림이다. 누를 링크(특허 원본)는 장면 글에 둔다.
  */
 import Window from '../components/fragments/Window.astro';
+import MotionToggle from '../components/MotionToggle.astro';
 import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
 import InstructorDesign from '../components/fragments/InstructorDesign.astro';
 import type { HomeContent } from '../lib/content';
@@ -80,6 +81,14 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
         </div>
       </div>
     </article>
+
+    <!-- 이야기 조작: 움직임 멈춤 · 아래로(다음 장면) · 이야기 건너뛰기. 데스크톱 고정 무대에서는 오른쪽 아래에 늘 있고(장면 목차와 같은 줄),
+         세로 장면(폰·태블릿)에서는 첫 화면 바로 아래. 링크라 스크립트가 없어도 다음 장면·이야기 뒤로 간다(story/boot.ts가 고정 무대에서 장면 단위로 옮긴다) -->
+    <div class="story-ctrl">
+      <MotionToggle lang={lang} />
+      <a class="sc-btn" href={`#scene-${sc[1].id}`} data-story-next>{t.down}<span class="sr-only"> ({t.downSr})</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6" /></svg></a>
+      <a class="sc-btn" href="#after-story" data-story-skip>{t.skip}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 8 8l4.5-4.5M3.5 8.5 8 13l4.5-4.5" /></svg></a>
+    </div>
 
     <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉아 줄마다 알약이 끝까지 찬다 -->
     <article class="scene scene-statement" id={`scene-${sc[1].id}`} data-scene="1" aria-labelledby="scene-t-2">

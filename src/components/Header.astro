@@ -7,7 +7,6 @@ import { getHome, getUi } from '../lib/content';
 import { homePath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url } from '../lib/url';
 import LangSwitch from './LangSwitch.astro';
-import MotionToggle from './MotionToggle.astro';
 
 interface Props {
   lang: Lang;
@@ -41,7 +40,6 @@ const main = [
         {main.map((m) => <a href={m.href} aria-current={cur(m.k)}>{m.label}</a>)}
       </nav>
       <LangSwitch lang={lang} alternates={alternates} variant="menu" />
-      <MotionToggle lang={lang} />
       <a class="hcta" href={contactHref} aria-current={cur('contact')}>{c.cta}</a>
       <button class="menu-btn" id="menuBtn" type="button" aria-label={c.menuOpen} aria-expanded="false" aria-controls="drawer"
         data-open={ui.menuOpen} data-close={ui.menuClose}>

@@ -74,8 +74,8 @@ const root = doc.documentElement;
   });
 })();
 
-/* ---------- 움직임 멈춤 ---------- */
-initMotion(doc.getElementById('motionBtn'));
+/* ---------- 움직임 멈춤(오프닝 이야기 조작 안의 버튼) ---------- */
+initMotion([...doc.querySelectorAll<HTMLElement>('[data-motion-btn]')]);
 
 /* ---------- 언어 안내 띠 ---------- */
 (() => {

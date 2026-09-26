@@ -36,23 +36,7 @@ nav.main a:hover,nav.main a[aria-current="page"]{color:#fff}
    웹 글꼴로 그리면 '한국어·日本語·Tiếng Việt' 몇 글자 때문에 페이지마다 다른 언어 글꼴 조각(각 25KB 안팎)을 더 받는다 */
 .lang-menu summary,.lang-menu a,.lang-row a,.res-links a[lang],.lang-banner [lang]{font-family:var(--font-system)}
 
-/* 움직임 멈춤 버튼: 오른쪽 위에 늘 보인다. 아이콘은 CSS(멈춤 = 두 막대, 재생 = 삼각형) */
-.motion-btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;min-width:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line2);
-  font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
-.motion-btn:hover{border-color:var(--line3)}
-.motion-ico{position:relative;width:12px;height:12px;flex:none}
-.motion-ico::before,.motion-ico::after{content:"";position:absolute;top:0;bottom:0;width:4px;border-radius:1px;background:currentColor}
-.motion-ico::before{left:1px}.motion-ico::after{right:1px}
-.motion-btn[aria-pressed="true"] .motion-ico::before{left:2px;width:0;border-radius:0;background:none;
-  border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor}
-.motion-btn[aria-pressed="true"] .motion-ico::after{display:none}
-.motion-btn .motion-play{display:none}
-.motion-btn[aria-pressed="true"] .motion-pause{display:none}
-.motion-btn[aria-pressed="true"] .motion-play{display:inline}
-@media (max-width:1279px){
-  .motion-btn{padding:0;justify-content:center;width:var(--tap);height:var(--tap)}
-  .motion-btn .motion-txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
-}
+
 
 /* 햄버거 / 메뉴 */
 .menu-btn{display:none;width:var(--tap);height:var(--tap);position:relative;border-radius:10px}
