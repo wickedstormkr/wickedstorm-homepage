@@ -1,0 +1,134 @@
+{
+  "eyebrow": "Cases",
+  "title": "<span class=\"g\">Data expertise</span> proven in public and education settings",
+  "lead": "With experience collecting and analyzing learning data at the national level, we have worked with public agencies and educational institutions on data-driven innovation.",
+  "labels": {
+    "org": "Organization",
+    "year": "Year",
+    "did": "What we did",
+    "result": "Result"
+  },
+  "items": [
+    {
+      "id": "aidt-hub",
+      "org": "Ministry of Education&nbsp;· National level",
+      "year": "2024–2026",
+      "title": "AI Digital Textbook<br>learning data hub",
+      "summary": "We built a hub that collects AI Digital Textbook learning data using global standards, supporting national-level learning analytics indicators, curriculum standards, and learning maps.",
+      "did": "We built a hub that collects AI Digital Textbook learning data using global standards, and we maintain the hub’s LRS.",
+      "result": "The hub has supported national-level learning analytics indicators, curriculum standards, and learning maps.",
+      "tags": [
+        "AI Digital Textbook",
+        "Learning data hub",
+        "National level"
+      ]
+    },
+    {
+      "id": "keris-math",
+      "org": "KERIS&nbsp;· Toc Toc! Math Expedition",
+      "year": "2023–2025",
+      "title": "AI-based elementary math<br>class support system",
+      "summary": "We collected learning behavior data in a gamified class support system and applied level diagnosis and item recommendation models. It is a nationwide public service with 2.4 million cumulative users.",
+      "did": "We collected learning behavior data in a gamified class support system, then developed and applied level diagnosis and item recommendation models.",
+      "result": "A nationwide public service with 2.4 million cumulative users. The diagnosis and recommendation models received KOLAS AI model certification.",
+      "tags": [
+        "Learning diagnosis",
+        "Item recommendation",
+        "2.4M cumulative users"
+      ]
+    },
+    {
+      "id": "mpm-hrd",
+      "org": "Ministry of Personnel Management&nbsp;· HRD",
+      "year": "2021–2022",
+      "title": "HRD platform<br>social learning as data",
+      "summary": "We captured social learning experiences from the HRD platform’s social communities and large-scale live webinars as structured learning data.",
+      "did": "We built the LRS for the National HRD Intelligent Open Platform and collected activity from its social communities and large-scale live webinars with xAPI.",
+      "result": "Social learning experiences became structured learning data that can be analyzed.",
+      "tags": [
+        "Social learning",
+        "Community",
+        "Webinar"
+      ]
+    },
+    {
+      "id": "seoul-edu",
+      "org": "Seoul Metropolitan Government&nbsp;· Education platform",
+      "year": "2022",
+      "title": "Seoul Education Platform<br>video mentoring analysis",
+      "summary": "From video mentoring on the Seoul Education Platform, we collect interactions between mentors and mentees, along with emotional states and utterances, as learning data to support in-depth learning analytics.",
+      "did": "We built the LRS for the Seoul Education Platform and collected interactions between mentors and mentees, along with emotional states and utterances, from video mentoring as learning data.",
+      "result": "We laid a learning data foundation for in-depth analysis of video mentoring.",
+      "tags": [
+        "Video mentoring",
+        "Interaction",
+        "LRS build"
+      ]
+    }
+  ],
+  "homePick": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "others": {
+    "title": "Other projects",
+    "items": [
+      {
+        "year": "2026",
+        "text": "KERIS, learning data standardization framework and utilization model based on global standards"
+      },
+      {
+        "year": "2026",
+        "text": "Gyeonggi AI teacher competency integrated support system, LRS build"
+      },
+      {
+        "year": "2026",
+        "text": "Gyeonggi Provincial Office of Education, Hi-Learning AI platform operation"
+      },
+      {
+        "year": "2026",
+        "text": "Gangwon Office of Education, AI platform operation"
+      },
+      {
+        "year": "2025",
+        "text": "Gangwon i-ro AI platform build"
+      },
+      {
+        "year": "2025",
+        "text": "KERIS, learning data collection linkage system for provincial offices of education"
+      },
+      {
+        "year": "2025",
+        "text": "NICE D&R, next-generation system build"
+      },
+      {
+        "year": "2024",
+        "text": "KERIS, learning data dictionary development study"
+      },
+      {
+        "year": "2023",
+        "text": "Developed AI for process-based assessment and built a CASE knowledge space (Ministry of Trade, Industry and Energy)"
+      },
+      {
+        "year": "2023",
+        "text": "Dong-A Publishing, AIDT platform build"
+      },
+      {
+        "year": "2022",
+        "text": "KERIS, K-Edu Integrated Platform ISMP, learning analytics indicators and analytics standards"
+      },
+      {
+        "year": "2021",
+        "text": "KIRD, learning analytics consulting for the next-generation integrated education system"
+      }
+    ]
+  },
+  "logos": {
+    "img": "ref-logos.webp",
+    "alt": "Key reference institutions: Ministry of Education, Korea Education and Research Information Service (KERIS), Ministry of Personnel Management, Seoul Metropolitan Government, Gyeonggi Provincial Office of Education, Gangwon Office of Education"
+  },
+  "more": "View all cases",
+  "note": "Figures are shown together with the project name, organization, and year."
+}

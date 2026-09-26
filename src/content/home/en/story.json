@@ -1,94 +1,49 @@
 {
   "label": "The Learning Loop in six scenes",
-  "skip": "Skip the story",
+  "skip": "Skip story",
   "down": "Scroll down",
   "downSr": "to the next scene",
-  "nav": "Go to scene",
-  "demo": "People, subjects, and figures on screen are demo data.",
+  "nav": "Scenes",
   "scenes": [
     {
       "id": "moment",
-      "beat": "Moment"
+      "beat": "Real-time collection",
+      "title": "We collect learning activity in real time",
+      "text": "The moment a learner watches a lecture, answers a quiz, submits an assignment, or asks a question, Lecognizer collects it as learning data."
     },
     {
       "id": "statement",
-      "beat": "Statement",
-      "title": "One answer becomes a global-standard statement",
-      "text": "The moment a learner picks a quiz answer, it unfolds into an xAPI Statement: who did what, to which object, with what result, and in which curriculum context (1EdTech CASE), all in one sentence."
+      "beat": "Global standards",
+      "title": "Collected <span class=\"g\">using global standards</span>",
+      "text": ""
     },
     {
       "id": "store",
-      "beat": "Storage",
-      "title": "Every moment is stored in one place",
-      "text": "Countless statements flow into Lecognizer and settle on each achievement item of the competency framework (1EdTech CASE). Each dot is one Statement, and its color shows the type of activity."
+      "beat": "Profiling",
+      "title": "Learning data designed with <span class=\"g\">indicators and profiling</span>",
+      "text": "We set <b>indicators</b> for each achievement item (1EdTech CASE) <br class=\"br-d\">and <b>profile</b> learners with an LLM. <br class=\"br-d\">(<a href=\"{trust}#patent-2767110\">Patent No. 10-2767110</a>)"
     },
     {
       "id": "signal",
-      "beat": "Signal",
-      "title": "AI finds it first",
-      "text": "Grouping the statements for the item “Comparing risk factors” by week makes week 3 stand out. Lecognizer AI identifies a gap in the prerequisite concept “interest rate basics” as the likely cause and sends an alert with the evidence."
+      "beat": "Anomaly signal",
+      "title": "AI finds <span class=\"g\">anomaly signals</span> first",
+      "text": "Lecognizer AI finds where pauses, rewinds, and wrong answers cluster and flags a <b>gap in a prerequisite concept</b> as the likely cause, with&nbsp;evidence. <br class=\"br-d\">(<a href=\"{trust}#patent-2883249\">Patent No. 10-2883249</a>)"
     },
     {
       "id": "judge",
       "beat": "Human judgment",
-      "title": "People make the call",
-      "text": "The signal reaches the instructor screen in LearnHubble AI with 42 pieces of evidence. AI proposes a review section, and the instructor checks the evidence and decides whether to apply it."
+      "title": "<span class=\"g\">People</span> decide and apply",
+      "text": "LearnHubble AI suggests <b>what to supplement</b> from the evidence, <br class=\"br-d\">and the instructor decides whether and how to apply it."
     },
     {
       "id": "next",
       "beat": "Next semester",
-      "title": "This semester’s learning data designs next semester’s education",
-      "text": "Learners get past the hard part with the review section and AI hints, and that process is stored again as learning data. This is how the Learning Loop continues."
+      "title": "This semester’s learning data designs <span class=\"g\">next semester’s education</span>",
+      "text": "Learners find answers on their own with AI hints when needed, <br class=\"br-d\">and every one of these moments becomes learning data again. <br class=\"br-d\">Administrators use it to refine next semester’s <b>academic competency framework</b>."
     }
   ],
-  "quiz": {
-    "product": "LearnHubble AI · Classroom",
-    "course": "Personal Finance · Week 3 Interest Rates and Household Spending",
-    "title": "Ready for a quiz?",
-    "step": "3/3",
-    "tag": "Section quiz · Comparing risk factors",
-    "question": "When comparing two risks of a rate hike, what should you align first?",
-    "options": [
-      "Households with more loans bear the largest interest burden",
-      "Put both risks on the same basis (size and timing)",
-      "When rates rise, all household spending falls by the same amount",
-      "Copy the numbers from the news article as they are"
-    ],
-    "prev": "Back",
-    "submit": "Check answer",
-    "wrong": "Incorrect · Try again"
-  },
-  "statement": {
-    "caption": "xAPI Statement",
-    "rows": [
-      {
-        "k": "actor",
-        "v": "Seoyeon Park"
-      },
-      {
-        "k": "verb",
-        "v": "answered"
-      },
-      {
-        "k": "object",
-        "v": "Section quiz 3"
-      },
-      {
-        "k": "result",
-        "v": "Incorrect · 2nd try"
-      },
-      {
-        "k": "context",
-        "v": "1EdTech CASE · Comparing risk factors"
-      }
-    ],
-    "stored": "Stored in Lecognizer · just now"
-  },
   "store": {
-    "tag": "Lecognizer",
-    "countLabel": "Collected today · demo",
-    "count": "1,374",
-    "unit": "",
+    "tag": "1EdTech CASE · Achievement items and indicators",
     "verbs": {
       "watched": "Watched",
       "answered": "Answered",
@@ -96,68 +51,226 @@
       "asked": "Asked"
     },
     "nodes": {
-      "root": "University competency framework",
+      "root": "University · Academic competencies",
       "major": "Economics · Responsible financial decisions",
       "c1": "Analytical judgment",
       "o1": "Identifying risk factors",
       "o2": "Comparing risk factors",
       "c2": "Interpreting financial information",
       "o3": "Interest rates and spending",
-      "o4": "Reading product information",
+      "o4": "Reading financial product information",
       "c3": "Foundational concepts",
       "o5": "Interest rate basics",
       "o6": "Compounding and discounting"
     },
-    "listLabel": "Collected today by achievement item (demo)"
+    "listLabel": "1EdTech CASE achievement items"
   },
   "signal": {
     "title": "Lecognizer AI · Anomaly detection",
-    "patent": "Patent No. 10-2883249",
-    "tag": "Signal",
-    "week": "W{n}",
     "item": "Achievement item · Comparing risk factors",
-    "chart": "Pauses and rewinds per week · vs. last semester",
+    "tag": "Anomaly signal",
+    "flag": "Week 3, 13:25–14:40",
+    "week": "Week {n}",
+    "chart": "Pauses, rewinds, and wrong answers over time",
+    "now": "This semester",
+    "prev": "Last semester",
     "headline": "Week 3, 13:25–14:40: pauses, rewinds, and wrong answers cluster",
-    "body": "The likely cause is <mark>a gap in “interest rate basics,”</mark> a prerequisite concept. This signal did not appear last semester, and it comes with wrong answers on the section quiz for the same part.",
-    "evidence": "42 evidence events · View raw Statements",
-    "send": "Send to administrators with evidence",
-    "save": "Save as report"
+    "body": "The likely cause is <mark>a gap in “Interest rate basics”</mark> (a prerequisite concept). Signals not seen last semester are concentrated in one section.",
+    "evidence": "42 evidence items",
+    "send": "Send to instructor",
+    "save": "Save report"
   },
   "judge": {
-    "alert": "Lecognizer AI signal · arrived with 42 pieces of evidence",
+    "alert": "Lecognizer AI anomaly signal · 42 evidence items",
     "product": "LearnHubble AI · Instructor",
-    "crumb": "Personal Finance · Learning support",
-    "ai": "AI proposal",
-    "proposal": "Add an “interest rate basics” review before the 13:25 section in week 3",
-    "detail": "One 5-minute review video and 2 check questions · Evidence: 31 pauses and rewinds, 11 wrong answers",
-    "learners": "3 learners to support",
-    "people": [
+    "crumb": "Personal Finance · Lesson design",
+    "segLabel": "Sections that need attention",
+    "segments": [
       {
-        "name": "Seoyeon Park",
-        "note": "Quiz 3 wrong twice · rewound the 13:25 section 4 times"
+        "time": "03:30",
+        "title": "Where rate changes begin",
+        "note": "1 event",
+        "hot": false
       },
       {
-        "name": "Minjun Kim",
-        "note": "Skipped the rate basics video · wrong on the section quiz"
+        "time": "13:25–14:40",
+        "title": "Comparing risk factors",
+        "note": "Pauses & rewinds 31 · Incorrect 11",
+        "hot": true
       },
       {
-        "name": "Junho Lee",
-        "note": "Paused 6 times between 13:25 and 14:40"
+        "time": "28:15",
+        "title": "Household impact",
+        "note": "1 event",
+        "hot": false
       }
     ],
+    "ai": "AI suggestion",
+    "proposal": "Suggests a supplementary explanation of “Interest rate basics” before 13:25",
+    "detail": "5 min · 2 check quiz questions",
+    "quizLabel": "Check quiz draft",
+    "quiz": [
+      "When rates rise, what happens to interest on a variable-rate loan?",
+      "What common basis should you use to compare the two risk factors?"
+    ],
     "edit": "Edit",
-    "apply": "Review and apply",
+    "apply": "Apply",
     "owner": "The instructor decides whether to apply it"
   },
   "next": {
-    "product": "LearnHubble AI · Learner",
-    "chip": "Review · Interest rate basics, 5 min",
-    "panel": "AI hint",
-    "hint": "Before choosing, write the two risks side by side on the same basis: how large the interest burden is and when it hits.",
-    "source": "From the lecture · Week 3, 13:40",
-    "done": "Finishing the review is stored again as learning data",
+    "product": "LearnHubble AI · Classroom",
+    "course": "Personal Finance · Week 3",
+    "lecture": "When rates rise, what happens to my wallet?",
+    "time": "13:25 / 32:00",
+    "marksLabel": "Sections that need attention",
+    "marks": [
+      {
+        "at": 0.11,
+        "label": "03:30",
+        "title": "Where rate changes begin",
+        "hot": false
+      },
+      {
+        "at": 0.42,
+        "label": "13:25–14:40",
+        "title": "Comparing risk factors",
+        "hot": true
+      },
+      {
+        "at": 0.88,
+        "label": "28:15",
+        "title": "Household impact",
+        "hot": false
+      }
+    ],
+    "quizHead": "Check quiz 1/2",
+    "quizNote": "Applied by the instructor · Shown automatically here",
+    "choices": [
+      "It rises",
+      "It falls",
+      "No change"
+    ],
+    "hintLabel": "AI hint",
+    "aiHint": "Before choosing, think about what a variable-rate loan’s interest is tied to.",
+    "aiSource": "Lecture evidence · Supplementary explanation “Interest rate basics”",
+    "input": "Ask AI",
     "contact": "Contact us",
     "demo": "Request a demo"
   },
-  "screen": "screen example"
+  "screen": "(example screen)",
+  "ring": {
+    "label": "Learning Loop",
+    "roles": [
+      "",
+      "",
+      "Administrator",
+      "Instructor",
+      "Learner"
+    ]
+  },
+  "live": {
+    "title": "Lecognizer · Real-time collection",
+    "state": "Collecting",
+    "today": "{n} collected today",
+    "label": "xAPI statements collected in real time (demo)",
+    "rows": [
+      {
+        "a": "Learner",
+        "v": "watched",
+        "o": "Interest rate basics",
+        "r": "Rewound 4×",
+        "verb": 0
+      },
+      {
+        "a": "Learner",
+        "v": "answered",
+        "o": "Section quiz Q3",
+        "r": "Incorrect",
+        "verb": 1
+      },
+      {
+        "a": "Learner",
+        "v": "submitted",
+        "o": "Assignment 2",
+        "r": "On time",
+        "verb": 2
+      },
+      {
+        "a": "Learner",
+        "v": "asked",
+        "o": "AI panel",
+        "r": "1 reply",
+        "verb": 3
+      },
+      {
+        "a": "Learner",
+        "v": "watched",
+        "o": "Concept lecture 04",
+        "r": "Replayed 2×",
+        "verb": 0
+      },
+      {
+        "a": "Learner",
+        "v": "answered",
+        "o": "Check quiz",
+        "r": "Correct",
+        "verb": 1
+      },
+      {
+        "a": "Learner",
+        "v": "asked",
+        "o": "Lecture Q&A",
+        "r": "3 replies",
+        "verb": 3
+      },
+      {
+        "a": "Learner",
+        "v": "submitted",
+        "o": "Essay task",
+        "r": "On time",
+        "verb": 2
+      }
+    ]
+  },
+  "ledger": {
+    "label": "Six rows of learning data built on global standards. Each row shows who (actor) · did (xAPI verb, Caliper action) · what (object) · additional info",
+    "std": {
+      "xapi": "xAPI",
+      "caliper": "1EdTech Caliper",
+      "note": "The same learning data, exchanged in both standards"
+    },
+    "cols": [
+      {
+        "ko": "Who",
+        "xapi": "actor",
+        "caliper": "actor"
+      },
+      {
+        "ko": "Did",
+        "xapi": "verb",
+        "caliper": "action"
+      },
+      {
+        "ko": "What",
+        "xapi": "object",
+        "caliper": "object"
+      },
+      {
+        "ko": "Additional info",
+        "xapi": "context · result",
+        "caliper": "edApp · group · session"
+      }
+    ],
+    "extraItems": [
+      "Timestamp",
+      "Device & environment",
+      "Session",
+      "Class & group",
+      "Playback position",
+      "Attempts",
+      "Time spent",
+      "Curriculum context"
+    ],
+    "rest": "Even for the same wrong answer, you need additional info to narrow down the cause."
+  }
 }

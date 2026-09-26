@@ -1,0 +1,260 @@
+{
+  "eyebrow": "Trust",
+  "title": "確認できる<span class=\"g\">認証と特許</span>",
+  "lead": "Wicked Stormの製品認証、特許、標準化活動を一か所にまとめました。項目ごとに、番号と発行機関、原本または関連ニュースへのリンクを掲載しています。",
+  "groups": [
+    {
+      "id": "certs",
+      "title": "製品認証",
+      "items": [
+        {
+          "id": "gs",
+          "name": "GS 1等級認証",
+          "subject": "Lecognizer V1.0",
+          "detail": "認証品目：xAPIに基づく学習経験データの保存・可視化ソフトウェア",
+          "meta": [
+            {
+              "k": "認証番号",
+              "v": "KTL-GS-24-0035"
+            },
+            {
+              "k": "発行機関",
+              "v": "韓国産業技術試験院（KTL）"
+            },
+            {
+              "k": "時期",
+              "v": "2024年4月"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース：デジタルサービスモールへの登録",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "adl",
+          "name": "xAPI 1.0.3 LRS認証",
+          "subject": "Lecognizer LRS 1.0.0",
+          "detail": "米国ADLによるxAPI 1.0.3学習データリポジトリ（LRS）の認証",
+          "meta": [
+            {
+              "k": "発行機関",
+              "v": "米国ADL"
+            },
+            {
+              "k": "時期",
+              "v": "2023年8月"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "kolas",
+          "name": "KOLAS AIモデル認証",
+          "subject": "学習分析の診断・推薦モデル v1.0",
+          "detail": "学習レベルの診断と、苦手分野に基づく問題推薦の機能適合性を確認",
+          "meta": [
+            {
+              "k": "認証番号",
+              "v": "2024-122-VSW-K"
+            },
+            {
+              "k": "時期",
+              "v": "2024年6月"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2024-06-ai-model-validation.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patents",
+      "title": "特許",
+      "items": [
+        {
+          "id": "patent-2883249",
+          "name": "特許 第10-2883249号",
+          "subject": "xAPI学習行動データを用いた学習異常検知システム",
+          "detail": "Lecognizer AIの異常検知に適用しています。",
+          "meta": [
+            {
+              "k": "出願日",
+              "v": "2024年8月20日"
+            },
+            {
+              "k": "登録日",
+              "v": "2025年11月4日"
+            },
+            {
+              "k": "特許権者",
+              "v": "株式会社Wicked Storm"
+            }
+          ],
+          "img": "patent-anomaly.webp",
+          "imgAlt": "特許証 第10-2883249号：xAPI学習行動データを用いた学習異常検知システム、特許権者 株式会社Wicked Storm",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        },
+        {
+          "id": "patent-2767110",
+          "name": "特許 第10-2767110号",
+          "subject": "学習者の傾向を分析するLLM活用の学習者プロファイリング手法",
+          "detail": "Lecognizerの分析パイプラインに適用し、パーソナライズされた診断と問題推薦の根拠として活用しています。",
+          "meta": [
+            {
+              "k": "出願日",
+              "v": "2024年8月20日"
+            },
+            {
+              "k": "登録日",
+              "v": "2025年2月7日"
+            },
+            {
+              "k": "特許権者",
+              "v": "株式会社Wicked Storm"
+            }
+          ],
+          "img": "patent-profiling.webp",
+          "imgAlt": "特許証 第10-2767110号：学習者の傾向を分析するLLM活用の学習者プロファイリング手法、特許権者 株式会社Wicked Storm",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2025-02-patent-profiling.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "標準化活動",
+      "items": [
+        {
+          "id": "1edtech",
+          "name": "1EdTech Korea設立理事会",
+          "subject": "1EdTech Contributing Member",
+          "detail": "国際的な教育技術標準コンソーシアム1EdTechの韓国組織の設立に理事会として参画し、2026年4月に1EdTech Contributing Memberに加入しました。",
+          "meta": [
+            {
+              "k": "韓国での発足",
+              "v": "2026年6月22日 · ソウル"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2026-07-1edtech-korea.html"
+            },
+            {
+              "label": "標準マップ",
+              "page": "standards"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public",
+      "title": "公共調達・企業認証",
+      "items": [
+        {
+          "id": "procurement",
+          "name": "調達庁デジタルサービスモール登録",
+          "subject": "Lecognizer V1.0 · 商用ソフトウェア",
+          "detail": "公共機関・教育機関が調達手続きを通じて導入できます。",
+          "meta": [
+            {
+              "k": "時期",
+              "v": "2024年6月"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "innobiz",
+          "name": "INNOBIZ認証（AA）",
+          "subject": "技術革新型中小企業",
+          "detail": "",
+          "meta": [
+            {
+              "k": "時期",
+              "v": "2025年5月"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "関連ニュース",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "個人情報・アクセシビリティ",
+      "items": [
+        {
+          "id": "privacy",
+          "name": "プライバシーポリシー",
+          "subject": "",
+          "detail": "お問い合わせフォームで取得する個人情報の項目、利用目的、保管期間を明記しています。",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "プライバシーポリシーを見る",
+              "href": "/privacy.html"
+            }
+          ]
+        },
+        {
+          "id": "a11y",
+          "name": "ウェブアクセシビリティ",
+          "subject": "KWCAG 2.2",
+          "detail": "本サイトはKWCAG 2.2（WCAG 2.2 AA相当）に基づいて制作し、更新のたびに自動で点検しています。動きはいつでも停止できます。",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": []
+        }
+      ]
+    }
+  ],
+  "original": "原本を見る",
+  "note": "認証番号と特許番号は、発行機関の原本と同じです。特許証のQRコードから、現在の登録事項を確認できます。"
+}

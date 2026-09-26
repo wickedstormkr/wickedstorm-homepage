@@ -45,6 +45,7 @@
   /* 대체 글꼴: 글꼴이 오기 전·글꼴에 없는 글자(일본어)용. 한글 시스템 글꼴 이름을 명시해야 브라우저가 글자마다 글꼴을 찾지 않는다 */
   --font:"Pretendard Variable","Pretendard Fallback","Pretendard KR Fallback",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans CJK KR","Noto Sans KR","Hiragino Sans","Noto Sans CJK JP",sans-serif;
   --en:"Sora","Sora Fallback",var(--font);
+  --en-caps:"Sora","Sora Caps Fallback",var(--font);
   --mono:ui-monospace,Menlo,monospace;
   --font-system:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Hiragino Sans","Noto Sans CJK KR","Noto Sans",sans-serif;
 

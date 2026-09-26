@@ -1,0 +1,260 @@
+{
+  "eyebrow": "Trust",
+  "title": "<span class=\"g\">Certifications and patents</span> you can verify",
+  "lead": "We have gathered Wicked Storm’s product certifications, patents, and standards activities in one place. Each item lists its number and issuing body, with a link to the original or to related news.",
+  "groups": [
+    {
+      "id": "certs",
+      "title": "Product certifications",
+      "items": [
+        {
+          "id": "gs",
+          "name": "GS Grade 1 Certification",
+          "subject": "Lecognizer V1.0",
+          "detail": "Certified product: xAPI-based software for storing and visualizing learning experience data",
+          "meta": [
+            {
+              "k": "Certificate No.",
+              "v": "KTL-GS-24-0035"
+            },
+            {
+              "k": "Issued by",
+              "v": "Korea Testing Laboratory (KTL)"
+            },
+            {
+              "k": "Date",
+              "v": "April 2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news: Digital Service Mall listing",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "adl",
+          "name": "xAPI 1.0.3 LRS certification",
+          "subject": "Lecognizer LRS 1.0.0",
+          "detail": "Certification from ADL (U.S.) as an xAPI 1.0.3 learning data repository (LRS)",
+          "meta": [
+            {
+              "k": "Issued by",
+              "v": "ADL (U.S.)"
+            },
+            {
+              "k": "Date",
+              "v": "August 2023"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "kolas",
+          "name": "KOLAS AI model certification",
+          "subject": "Learning Analytics Diagnosis and Recommendation Model v1.0",
+          "detail": "Verified the functional suitability of learning level diagnosis and item recommendation based on weak areas",
+          "meta": [
+            {
+              "k": "Certificate No.",
+              "v": "2024-122-VSW-K"
+            },
+            {
+              "k": "Date",
+              "v": "June 2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2024-06-ai-model-validation.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "patents",
+      "title": "Patents",
+      "items": [
+        {
+          "id": "patent-2883249",
+          "name": "Patent No. 10-2883249",
+          "subject": "Learning anomaly detection system based on xAPI learning behavior data",
+          "detail": "Applied to anomaly detection in Lecognizer AI.",
+          "meta": [
+            {
+              "k": "Filed",
+              "v": "August 20, 2024"
+            },
+            {
+              "k": "Granted",
+              "v": "November 4, 2025"
+            },
+            {
+              "k": "Patent holder",
+              "v": "Wicked Storm Inc."
+            }
+          ],
+          "img": "patent-anomaly.webp",
+          "imgAlt": "Patent certificate No. 10-2883249: learning anomaly detection system based on xAPI learning behavior data, patent holder Wicked Storm Inc.",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        },
+        {
+          "id": "patent-2767110",
+          "name": "Patent No. 10-2767110",
+          "subject": "LLM-based learner profiling method to analyze learner tendencies",
+          "detail": "Applied to Lecognizer’s analytics pipeline as the basis for personalized diagnosis and item recommendations.",
+          "meta": [
+            {
+              "k": "Filed",
+              "v": "August 20, 2024"
+            },
+            {
+              "k": "Granted",
+              "v": "February 7, 2025"
+            },
+            {
+              "k": "Patent holder",
+              "v": "Wicked Storm Inc."
+            }
+          ],
+          "img": "patent-profiling.webp",
+          "imgAlt": "Patent certificate No. 10-2767110: LLM-based learner profiling method to analyze learner tendencies, patent holder Wicked Storm Inc.",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2025-02-patent-profiling.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "standards",
+      "title": "Standards activities",
+      "items": [
+        {
+          "id": "1edtech",
+          "name": "1EdTech Korea founding board member",
+          "subject": "1EdTech Contributing Member",
+          "detail": "We joined the founding board of 1EdTech Korea, the Korean organization of the global EdTech standards consortium 1EdTech, and became a 1EdTech Contributing Member in April 2026.",
+          "meta": [
+            {
+              "k": "Launched in Korea",
+              "v": "June 22, 2026 · Seoul"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2026-07-1edtech-korea.html"
+            },
+            {
+              "label": "Standards map",
+              "page": "standards"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "public",
+      "title": "Procurement and certifications",
+      "items": [
+        {
+          "id": "procurement",
+          "name": "Listed on the Public Procurement Service’s Digital Service Mall",
+          "subject": "Lecognizer V1.0 · Commercial software",
+          "detail": "Public and educational institutions can adopt it through the procurement process.",
+          "meta": [
+            {
+              "k": "Date",
+              "v": "June 2024"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2024-07-lecognizer-procurement.html"
+            }
+          ]
+        },
+        {
+          "id": "innobiz",
+          "name": "INNOBIZ certification (AA)",
+          "subject": "Technology-innovative SME",
+          "detail": "",
+          "meta": [
+            {
+              "k": "Date",
+              "v": "May 2025"
+            }
+          ],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "Related news",
+              "href": "/news/2025-11-patent-anomaly.html"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "policy",
+      "title": "Privacy and accessibility",
+      "items": [
+        {
+          "id": "privacy",
+          "name": "Privacy Policy",
+          "subject": "",
+          "detail": "Explains what personal information we collect through the inquiry form, why we use it, and how long we keep it.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": [
+            {
+              "label": "View the Privacy Policy",
+              "href": "/privacy.html"
+            }
+          ]
+        },
+        {
+          "id": "a11y",
+          "name": "Web accessibility",
+          "subject": "KWCAG 2.2",
+          "detail": "This site is built to KWCAG 2.2 (equivalent to WCAG 2.2 AA) and is checked automatically with every change. You can pause motion at any time.",
+          "meta": [],
+          "img": "",
+          "imgAlt": "",
+          "links": []
+        }
+      ]
+    }
+  ],
+  "original": "View original",
+  "note": "Certificate and patent numbers match the originals from the issuing bodies. You can check the current registration details with the QR code on each patent certificate."
+}

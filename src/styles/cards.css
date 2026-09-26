@@ -32,7 +32,7 @@ a.ncard:hover .nmore i{transform:translateX(3px)}
 .ch-links{display:flex;gap:12px;flex-wrap:wrap}
 .ch-link{display:flex;flex-direction:column;gap:2px;min-width:180px;padding:14px 20px;border-radius:14px;border:1px solid var(--line2)}
 .ch-link:hover{border-color:#fff}
-.ch-k{font-family:var(--en);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.ch-k{font-family:var(--en-caps);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .ch-k::after{content:" ↗";letter-spacing:0}
 .ch-v{font-weight:700;color:#fff}
 

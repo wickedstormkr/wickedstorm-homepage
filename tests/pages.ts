@@ -11,8 +11,14 @@ export const HOMES: PageDef[] = [
   { id: 'home-ja', path: 'ja/index.html', lang: 'ja' },
   { id: 'home-vi', path: 'vi/index.html', lang: 'vi' },
 ];
-/** 언어별 페이지(번역 단계 전까지 국문만) */
-export const PAGES: PageDef[] = ['product', 'standards', 'cases', 'trust', 'company', 'contact'].map((p) => ({ id: p, path: `${p}.html`, lang: 'ko' as const }));
+/** 언어별 페이지(네 언어). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
+export const PAGES: PageDef[] = (['ko', 'en', 'ja', 'vi'] as const).flatMap((lang) =>
+  ['product', 'standards', 'cases', 'trust', 'company', 'contact'].map((p) => ({
+    id: lang === 'ko' ? p : `${p}-${lang}`,
+    path: lang === 'ko' ? `${p}.html` : `${lang}/${p}.html`,
+    lang,
+  })),
+);
 /** 그 밖의 페이지(국문) */
 export const OTHERS: PageDef[] = [
   { id: 'news', path: 'news.html', lang: 'ko' },

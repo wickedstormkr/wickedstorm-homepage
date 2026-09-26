@@ -159,5 +159,47 @@
       }
     ],
     "more": "詳しい沿革をすべて見る"
-  }
+  },
+  "milestones": {
+    "title": "主なマイルストーン",
+    "items": [
+      {
+        "year": "2021",
+        "text": "株式会社Wicked Stormを設立、人事革新処 国家人材開発プラットフォームのLRS構築"
+      },
+      {
+        "year": "2023",
+        "text": "Lecognizerをリリース、米国ADLのxAPI LRS認証を取得"
+      },
+      {
+        "year": "2024",
+        "text": "LecognizerがGS 1等級認証を取得、教育部 AIデジタル教科書学習データハブ構築"
+      },
+      {
+        "year": "2024",
+        "text": "学習分析の診断・推薦モデルがKOLASのAIモデル認証を取得"
+      },
+      {
+        "year": "2025",
+        "text": "AI特許2件取得：学習異常検知、LLM活用の学習者プロファイリング"
+      },
+      {
+        "year": "2026",
+        "text": "1EdTech Korea設立理事会に参画、1EdTech Contributing Memberに加入"
+      }
+    ]
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "title": "学習データで教育を設計する<span class=\"g\">仲間</span>を募集しています",
+    "lead": "国際標準とAIで教育現場の次の行動をつくる仕事を、ともに担う方をお待ちしています。採用情報は求人サイトのサラミン（Saramin）でご確認いただけます。",
+    "cta": "求人情報を見る"
+  },
+  "location": {
+    "title": "アクセス",
+    "address": "韓国ソウル特別市江西区麻谷中央路161-8 A棟901〜905号",
+    "tel": "02-2205-1470",
+    "email": "manager@wickedstorm.kr"
+  },
+  "more": "会社情報を詳しく見る"
 }

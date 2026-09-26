@@ -2,24 +2,33 @@
   "eyebrow": "<span>Every Learning Moment, <span class=\"nw\">Designed for Growth.</span></span>",
   "lines": [
     "Biến mỗi khoảnh khắc",
-    "học tập thành <span class=\"g\">dữ liệu</span>",
-    "<span class=\"g\">cho sự phát triển</span>"
+    "học tập thành",
+    "<span class=\"g\">dữ&nbsp;liệu cho sự phát&nbsp;triển</span>"
   ],
-  "lead": "Wicked&nbsp;Storm thu&nbsp;thập và lưu&nbsp;trữ dữ&nbsp;liệu học&nbsp;tập theo chuẩn quốc&nbsp;tế, <br class=\"br-d\">dùng AI phân&nbsp;tích và kết&nbsp;nối với bước tiếp theo của quản&nbsp;trị&nbsp;viên, giảng&nbsp;viên và người&nbsp;học.",
+  "lead": "Wicked&nbsp;Storm thu&nbsp;thập và lưu&nbsp;trữ dữ&nbsp;liệu học&nbsp;tập theo chuẩn quốc&nbsp;tế, dùng AI phân&nbsp;tích và kết&nbsp;nối với bước tiếp theo của quản&nbsp;trị&nbsp;viên, giảng&nbsp;viên và người&nbsp;học.",
   "ctaPrimary": "Liên hệ",
   "ctaSecondary": "Xem sản phẩm",
   "trust": [
     {
-      "html": "<b>1EdTech Korea</b>&nbsp;(thành viên hội&nbsp;đồng&nbsp;sáng&nbsp;lập)",
-      "href": "/news/2026-07-1edtech-korea.html"
+      "html": "Đồng sáng&nbsp;lập <b>1EdTech&nbsp;Korea</b>",
+      "page": "trust",
+      "hash": "#1edtech"
     },
     {
-      "html": "Chứng&nbsp;nhận GS hạng 1",
-      "href": "/news/2024-07-lecognizer-procurement.html"
+      "html": "GS hạng 1 · Lecognizer",
+      "page": "trust",
+      "hash": "#gs"
     },
     {
-      "html": "2 bằng&nbsp;sáng&nbsp;chế AI được&nbsp;cấp",
-      "href": "/news/2025-11-patent-anomaly.html"
+      "html": "Bằng sáng chế 10-2883249",
+      "page": "trust",
+      "hash": "#patent-2883249"
+    },
+    {
+      "html": "Bằng sáng chế 10-2767110",
+      "page": "trust",
+      "hash": "#patent-2767110"
     }
-  ]
+  ],
+  "trustLabel": "Bản gốc chứng nhận và bằng sáng chế"
 }

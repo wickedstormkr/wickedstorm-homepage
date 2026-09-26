@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "WICKED STORM · ウィキッドストーム | 学びのすべての瞬間を、成長のデータとして設計します",
-    "description": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、AIが分析して教育の次の行動へとつなげます。Lecognizer · LearnHubble AI · 1EdTech Korea設立理事会。",
+    "description": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、AIで分析して教育の次の行動へとつなげます。Lecognizer · LearnHubble AI · 1EdTech Korea設立理事会。",
     "ogTitle": "WICKED STORM · 学びのすべての瞬間を、成長のデータとして設計します",
     "ogDescription": "国際標準の学習データリポジトリLecognizerと、AI学習体験プラットフォームLearnHubble AI。学習データとAIで学びの新時代を切り拓きます。",
     "twitterTitle": "WICKED STORM · ウィキッドストーム",
@@ -14,13 +14,14 @@
   "menuOpen": "メニューを開く",
   "langLabel": "言語選択",
   "nav": {
-    "product": "Product",
-    "learnhubble": "LearnHubble AI",
-    "standards": "Standards",
-    "news": "News",
-    "resources": "Resources",
-    "company": "Company",
-    "recruit": "Recruit",
+    "product": "製品",
+    "standards": "国際標準",
+    "cases": "導入事例",
+    "news": "ニュース",
+    "company": "会社情報",
+    "trust": "認証・特許",
+    "resources": "資料ダウンロード",
+    "recruit": "採用情報",
     "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
     "recruitLabel": "採用情報（新しいウィンドウ）"
   },
@@ -33,5 +34,39 @@
     "navLabel": "フッターメニュー",
     "privacy": "プライバシーポリシー",
     "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  },
+  "pages": {
+    "product": {
+      "title": "WICKED STORM | 製品：Lecognizer · Lecognizer AI · LearnHubble AI",
+      "description": "国際標準の学習データリポジトリLecognizer、学習データから異常の兆候を見つけるLecognizer AI、AIと対話するパーソナライズ型の教育・学習プラットフォームLearnHubble AIを、管理者・教員・学習者の画面でご紹介します。"
+    },
+    "standards": {
+      "title": "WICKED STORM | 国際標準：xAPI · Caliper · 1EdTech CASE",
+      "description": "Wicked Stormが適用している国際的な教育技術標準と、適用予定・設計参照の標準を、収集・体系・証明・連携に整理した標準マップと、1EdTechでの活動をご紹介します。"
+    },
+    "cases": {
+      "title": "WICKED STORM | 導入事例",
+      "description": "教育部、KERIS、人事革新処、ソウル特別市など、公共・教育の現場で学習データを収集・分析した事例を、機関・年度・取り組み・成果ごとにまとめました。"
+    },
+    "trust": {
+      "title": "WICKED STORM | 認証・特許・標準化活動",
+      "description": "GS 1等級認証、xAPI LRS認証、KOLAS AIモデル認証、AI特許2件、1EdTech Korea設立理事会としての活動を、原本とあわせてご確認いただけます。"
+    },
+    "company": {
+      "title": "WICKED STORM | 会社情報",
+      "description": "学習データとAIで学びの新時代を切り拓くグローバルエドテック企業、Wicked Stormのビジョン、沿革、採用情報、アクセスをご紹介します。"
+    },
+    "contact": {
+      "title": "WICKED STORM | 導入のご相談",
+      "description": "導入のご相談、デモのご依頼、パートナーシップ・海外での協業について、目的別にお問い合わせいただけます。製品カタログと会社案内もダウンロードできます。"
+    }
+  },
+  "more": "詳しく見る",
+  "breadcrumbHome": "ホーム",
+  "ctaBand": {
+    "title": "機関のご環境に合わせて、ともに検討します",
+    "text": "導入のご相談、デモのご依頼、パートナーシップ・海外での協業について、目的別にお問い合わせいただけます。",
+    "primary": "導入のご相談",
+    "secondary": "資料ダウンロード"
   }
 }

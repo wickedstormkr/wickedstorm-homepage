@@ -44,10 +44,12 @@
 .fx-ai-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 7px;border-radius:5px;font-size:12px;font-weight:800;line-height:1.35;white-space:nowrap;
   color:#ece6ff;background:rgba(124,77,255,.26)}
 .fx-ai-tag::before{content:"";flex:none;width:10px;height:10px;background:var(--grad);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
-/* 추천: 라벨은 문장 첫 줄과 같은 줄에(상자 높이를 늘리지 않게). 라벨 칸과 글 칸을 나눠,
-   문장이 둘째 줄로 넘어가도, 부가 정보(시간·문항 수·연결)도 라벨 아래가 아니라 글 칸에서 시작한다 */
-.fx-ai-main{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:start}
-.fx-ai-main>:not(.fx-ai-tag){grid-column:2}
+/* 추천: 라벨은 문장 첫 줄과 같은 줄에(상자 높이를 늘리지 않게). 라벨 칸과 글 칸(.fx-ai-body)을 나눠,
+   문장이 둘째 줄로 넘어가도, 부가 정보(시간·문항 수·연결)도 라벨 아래가 아니라 글 칸에서 시작한다.
+   글 칸이 190px보다 좁아지면(긴 번역 라벨·좁은 상자) 글 칸이 라벨 아래로 내려가 상자 폭을 다 쓴다 */
+.fx-ai-main{display:flex;flex-wrap:wrap;align-items:flex-start;column-gap:10px;row-gap:8px}
+.fx-ai-main>.fx-ai-tag{flex:none}
+.fx-ai-body{flex:1 1 190px;min-width:0}
 .fx-ai p{font-size:14.5px;font-weight:700;line-height:1.55;color:var(--fx-ink)}
 .fx-ai small{display:block;margin-top:4px;font-size:13px;line-height:1.5;color:var(--fx-ink2)}
 .fx-ai .fx-h{font-size:12.5px;line-height:1.4;color:#b9b4de}
@@ -123,7 +125,9 @@
 .fx-tree li{line-height:22px}
 .fx-case-grid>.fx-ai{margin-top:calc(20px + 8px + 22px + 14px + 4px)}
 .fx-tree ul{list-style:none;display:grid;gap:4px}
-.fx-tree li{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;font-size:13.5px}
+/* 칸: 종류 · 이름 · 표시. 칸이 좁으면(긴 번역) 표시가 다음 줄 오른쪽으로 내려가 이름이 눌리지 않게 */
+.fx-tree li{display:flex;flex-wrap:wrap;align-items:center;column-gap:8px;row-gap:2px;padding:7px 10px;border-radius:7px;font-size:13.5px}
+.fx-tree li em{margin-left:auto}
 .fx-tree li.lv2{margin-left:16px;background:rgba(255,255,255,.03)}
 .fx-tree li small{font-size:11.5px;color:var(--fx-muted)}
 .fx-tree li b{font-weight:700;color:var(--fx-ink)}
@@ -139,7 +143,7 @@
    글자 크기는 추천 문장(.fx-ai p)보다 한 단계 작게: 넓은 데스크톱에서 한 줄에 들어가게 */
 .fx-assoc,.fx-ai .fx-assoc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px;font-size:13px;line-height:1.5;font-weight:700;color:var(--fx-ink)}
 .fx-assoc span:not(.fx-rel){padding:3px 7px;border-radius:6px;background:rgba(255,255,255,.06)}
-.fx-rel{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fx-rel{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
 .fx-assoc code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--accent)}
 .fx-assoc code::after{content:" →"}
 

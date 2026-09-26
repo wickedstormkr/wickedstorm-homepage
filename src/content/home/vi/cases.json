@@ -1,0 +1,134 @@
+{
+  "eyebrow": "Cases",
+  "title": "<span class=\"g\">Năng&nbsp;lực dữ&nbsp;liệu</span> đã được kiểm&nbsp;chứng tại khu&nbsp;vực công và giáo&nbsp;dục",
+  "lead": "Với kinh nghiệm thu thập và phân tích dữ liệu học tập ở cấp quốc gia, chúng tôi đã cùng các cơ quan nhà nước và cơ sở giáo dục tạo nên đổi mới dựa trên dữ liệu.",
+  "labels": {
+    "org": "Cơ quan",
+    "year": "Năm",
+    "did": "Công việc",
+    "result": "Kết quả"
+  },
+  "items": [
+    {
+      "id": "aidt-hub",
+      "org": "Bộ&nbsp;Giáo&nbsp;dục&nbsp;Hàn&nbsp;Quốc&nbsp;· Cấp&nbsp;quốc&nbsp;gia",
+      "year": "2024~2026",
+      "title": "Xây&nbsp;dựng trung&nbsp;tâm dữ&nbsp;liệu học&nbsp;tập<br>cho Sách&nbsp;giáo&nbsp;khoa số AI",
+      "summary": "Xây dựng trung tâm thu thập dữ liệu học tập của Sách giáo khoa số AI theo chuẩn quốc tế, hỗ trợ chỉ số phân tích học tập cấp quốc gia, khung chuẩn chương trình giáo dục và bản đồ học tập.",
+      "did": "Xây dựng trung tâm thu thập dữ liệu học tập của Sách giáo khoa số AI theo chuẩn quốc tế và bảo trì LRS của trung tâm dữ liệu học tập.",
+      "result": "Hỗ trợ chỉ số phân tích học tập cấp quốc gia, khung chuẩn chương trình giáo dục và bản đồ học tập.",
+      "tags": [
+        "Sách giáo khoa số AI",
+        "Trung tâm dữ liệu học tập",
+        "Cấp quốc gia"
+      ]
+    },
+    {
+      "id": "keris-math",
+      "org": "KERIS&nbsp;· Toc&nbsp;Toc! Math&nbsp;Expedition",
+      "year": "2023~2025",
+      "title": "Hệ&nbsp;thống hỗ&nbsp;trợ lớp&nbsp;học<br>toán tiểu&nbsp;học ứng&nbsp;dụng AI",
+      "summary": "Thu thập dữ liệu hành vi học tập trên hệ thống hỗ trợ lớp học ứng dụng gamification và áp dụng mô hình chẩn đoán trình độ, đề xuất câu hỏi. Đây là dịch vụ công phục vụ người dân cả nước, với 2,4 triệu người dùng tích lũy.",
+      "did": "Thu thập dữ liệu hành vi học tập trên hệ thống hỗ trợ lớp học ứng dụng gamification, đồng thời phát triển và áp dụng mô hình chẩn đoán trình độ, đề xuất câu hỏi.",
+      "result": "Dịch vụ công phục vụ người dân cả nước với 2,4 triệu người dùng tích lũy. Mô hình chẩn đoán và đề xuất đạt chứng nhận mô hình AI KOLAS.",
+      "tags": [
+        "Chẩn đoán học tập",
+        "Đề xuất câu hỏi",
+        "2,4 triệu người dùng tích lũy"
+      ]
+    },
+    {
+      "id": "mpm-hrd",
+      "org": "Bộ&nbsp;Quản&nbsp;lý&nbsp;Nhân&nbsp;sự&nbsp;Hàn&nbsp;Quốc&nbsp;· Phát&nbsp;triển&nbsp;nhân&nbsp;lực",
+      "year": "2021~2022",
+      "title": "Dữ&nbsp;liệu hóa học&nbsp;tập xã&nbsp;hội<br>trên nền&nbsp;tảng phát&nbsp;triển nhân&nbsp;lực",
+      "summary": "Những trải nghiệm học tập xã hội diễn ra trong cộng đồng trực tuyến và các webinar trực tiếp quy mô lớn của nền tảng phát triển nhân lực đã được cụ thể hóa và thu thập thành dữ liệu học tập.",
+      "did": "Xây dựng LRS cho Nền tảng mở thông minh phát triển nhân lực quốc gia, thu thập bằng xAPI các hoạt động trong cộng đồng trực tuyến và webinar trực tiếp quy mô lớn.",
+      "result": "Cụ thể hóa trải nghiệm học tập xã hội thành dữ liệu học tập để có thể phân tích.",
+      "tags": [
+        "Học tập xã hội",
+        "Cộng đồng",
+        "Webinar"
+      ]
+    },
+    {
+      "id": "seoul-edu",
+      "org": "Chính&nbsp;quyền&nbsp;Thành&nbsp;phố&nbsp;Seoul&nbsp;· Nền&nbsp;tảng&nbsp;giáo&nbsp;dục",
+      "year": "2022",
+      "title": "Phân&nbsp;tích mentoring qua video<br>trên Nền&nbsp;tảng giáo&nbsp;dục Seoul",
+      "summary": "Thu thập tương tác giữa mentor và mentee, trạng thái cảm xúc và phát ngôn trong các buổi mentoring qua video trên Nền tảng giáo dục Seoul thành dữ liệu học tập, hỗ trợ phân tích học tập chuyên sâu.",
+      "did": "Xây dựng LRS cho Nền tảng giáo dục Seoul, thu thập tương tác giữa mentor và mentee, trạng thái cảm xúc và phát ngôn trong mentoring qua video thành dữ liệu học tập.",
+      "result": "Tạo nền tảng dữ liệu học tập để phân tích chuyên sâu mentoring qua video.",
+      "tags": [
+        "Mentoring qua video",
+        "Tương tác",
+        "Xây dựng LRS"
+      ]
+    }
+  ],
+  "homePick": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "others": {
+    "title": "Các dự án khác",
+    "items": [
+      {
+        "year": "2026",
+        "text": "KERIS, xây dựng hệ thống chuẩn hóa và mô hình khai thác dữ liệu học tập theo chuẩn quốc tế"
+      },
+      {
+        "year": "2026",
+        "text": "Xây dựng LRS cho hệ thống hỗ trợ tích hợp năng lực giáo viên ứng dụng AI tỉnh Gyeonggi"
+      },
+      {
+        "year": "2026",
+        "text": "Sở Giáo dục tỉnh Gyeonggi, vận hành nền tảng AI Hi-Learning"
+      },
+      {
+        "year": "2026",
+        "text": "Sở Giáo dục tỉnh Gangwon, vận hành nền tảng AI"
+      },
+      {
+        "year": "2025",
+        "text": "Xây dựng nền tảng AI Gangwon i-ro"
+      },
+      {
+        "year": "2025",
+        "text": "KERIS, hệ thống liên kết thu thập dữ liệu học tập với sở giáo dục các tỉnh, thành phố"
+      },
+      {
+        "year": "2025",
+        "text": "NICE D&R, xây dựng hệ thống thế hệ mới"
+      },
+      {
+        "year": "2024",
+        "text": "KERIS, nghiên cứu phát triển từ điển dữ liệu học tập"
+      },
+      {
+        "year": "2023",
+        "text": "Phát triển công nghệ AI cho đánh giá theo quá trình, xây dựng không gian tri thức theo chuẩn CASE (Bộ Thương mại, Công nghiệp và Năng lượng Hàn Quốc)"
+      },
+      {
+        "year": "2023",
+        "text": "Nhà xuất bản Dong-A, xây dựng nền tảng AIDT"
+      },
+      {
+        "year": "2022",
+        "text": "KERIS, ISMP Nền tảng tích hợp K-Edu: thiết lập chỉ số và chuẩn phân tích học tập"
+      },
+      {
+        "year": "2021",
+        "text": "KIRD, tư vấn phân tích học tập cho hệ thống giáo dục tích hợp thế hệ mới"
+      }
+    ]
+  },
+  "logos": {
+    "img": "ref-logos.webp",
+    "alt": "Khách hàng tiêu biểu: Bộ Giáo dục Hàn Quốc, Cơ quan Thông tin Giáo dục và Nghiên cứu Hàn Quốc (KERIS), Bộ Quản lý Nhân sự Hàn Quốc, Chính quyền Thành phố Seoul, Sở Giáo dục tỉnh Gyeonggi, Sở Giáo dục tỉnh Gangwon"
+  },
+  "more": "Xem tất cả dự án",
+  "note": "Các con số thành tích được ghi kèm tên dự án, cơ quan và năm."
+}

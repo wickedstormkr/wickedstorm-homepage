@@ -30,9 +30,9 @@ const label = { all: '전체', ...CATEGORY_KO };
         <h2 class="sr-only">소식 목록</h2>
         <p class="sr-only" role="status" aria-live="polite" data-board-status></p>
         <ul class="news-grid" data-board>
-          {posts.map((p) => (
+          {posts.map((p, i) => (
             <li data-cat={p.category}>
-              <NewsCard post={p} more="기사 보기" go={ui.open} newWindow={ui.newWindow} />
+              <NewsCard post={p} more="기사 보기" go={ui.open} newWindow={ui.newWindow} priority={i === 0} />
             </li>
           ))}
         </ul>

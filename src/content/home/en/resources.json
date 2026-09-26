@@ -2,6 +2,7 @@
   "eyebrow": "Resources",
   "title": "Downloads",
   "lead": "Download the catalog and company profile we handed out at trade fairs as PDFs.",
+  "alsoLabel": "Other languages",
   "cards": [
     {
       "thumb": "thumb-catalog.webp",
@@ -11,13 +12,13 @@
       "text": "Lecognizer, LearnHubble AI, and the Learning Loop in 8 pages.",
       "links": [
         {
-          "label": "Korean PDF",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
           "lang": "ko",
           "id": "catalog_ko"
         },
         {
-          "label": "English",
+          "label": "English PDF",
           "file": "/files/WICKEDSTORM_Catalog_2026_EN.pdf",
           "lang": "en",
           "id": "catalog_en"
@@ -44,13 +45,13 @@
       "text": "Our history, business areas, key references, certifications, and patents.",
       "links": [
         {
-          "label": "Korean PDF",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
           "lang": "ko",
           "id": "profile_ko"
         },
         {
-          "label": "English",
+          "label": "English PDF",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_EN.pdf",
           "lang": "en",
           "id": "profile_en"

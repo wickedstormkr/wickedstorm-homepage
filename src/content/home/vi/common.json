@@ -14,13 +14,14 @@
   "menuOpen": "Mở menu",
   "langLabel": "Chọn ngôn ngữ",
   "nav": {
-    "product": "Product",
-    "learnhubble": "LearnHubble AI",
-    "standards": "Standards",
-    "news": "News",
-    "resources": "Resources",
-    "company": "Company",
-    "recruit": "Recruit",
+    "product": "Sản phẩm",
+    "standards": "Chuẩn",
+    "cases": "Dự án tiêu biểu",
+    "news": "Tin tức",
+    "company": "Công ty",
+    "trust": "Chứng nhận",
+    "resources": "Tải tài liệu",
+    "recruit": "Tuyển dụng",
     "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
     "recruitLabel": "Thông tin tuyển dụng (cửa sổ mới)"
   },
@@ -33,5 +34,39 @@
     "navLabel": "Menu chân trang",
     "privacy": "Chính sách bảo mật thông tin cá nhân",
     "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  },
+  "pages": {
+    "product": {
+      "title": "WICKED STORM | Sản phẩm: Lecognizer · Lecognizer AI · LearnHubble AI",
+      "description": "Lecognizer, kho dữ liệu học tập theo chuẩn quốc tế; Lecognizer AI, tìm ra dấu hiệu bất thường trong dữ liệu học tập; LearnHubble AI, nền tảng giảng dạy và học tập cá nhân hóa, tương tác với AI. Giới thiệu qua màn hình của quản trị viên, giảng viên và người học."
+    },
+    "standards": {
+      "title": "WICKED STORM | Chuẩn: xAPI · Caliper · 1EdTech CASE",
+      "description": "Bản đồ chuẩn nhóm các chuẩn công nghệ giáo dục quốc tế mà Wicked Storm đã áp dụng, dự kiến áp dụng và tham chiếu thiết kế theo thu thập, khung chuẩn, minh chứng và kết nối, cùng các hoạt động tại 1EdTech."
+    },
+    "cases": {
+      "title": "WICKED STORM | Dự án tiêu biểu",
+      "description": "Các dự án thu thập và phân tích dữ liệu học tập tại khu vực công và giáo dục, như Bộ Giáo dục Hàn Quốc, KERIS, Bộ Quản lý Nhân sự Hàn Quốc, Chính quyền Thành phố Seoul, được trình bày theo cơ quan, năm, công việc và kết quả."
+    },
+    "trust": {
+      "title": "WICKED STORM | Chứng nhận · Bằng sáng chế · Hoạt động về chuẩn",
+      "description": "Xem kèm bản gốc: Chứng nhận GS hạng 1, chứng nhận xAPI LRS, chứng nhận mô hình AI KOLAS, 2 bằng sáng chế AI và hoạt động trong hội đồng sáng lập 1EdTech Korea."
+    },
+    "company": {
+      "title": "WICKED STORM | Công ty",
+      "description": "Tầm nhìn, lịch sử phát triển, tuyển dụng và địa chỉ của Wicked Storm, công ty EdTech toàn cầu mở ra kỷ nguyên học tập mới với dữ liệu học tập và AI."
+    },
+    "contact": {
+      "title": "WICKED STORM | Liên hệ",
+      "description": "Liên hệ theo mục đích: tư vấn triển khai, yêu cầu trình diễn, đối tác và hợp tác quốc tế. Tải catalogue và tài liệu giới thiệu công ty."
+    }
+  },
+  "more": "Xem chi tiết",
+  "breadcrumbHome": "Trang chủ",
+  "ctaBand": {
+    "title": "Cùng xem xét việc triển khai phù hợp với môi trường của từng tổ chức",
+    "text": "Có thể liên hệ theo mục đích: tư vấn triển khai, yêu cầu trình diễn, đối tác và hợp tác quốc tế.",
+    "primary": "Liên hệ",
+    "secondary": "Tải tài liệu"
   }
 }

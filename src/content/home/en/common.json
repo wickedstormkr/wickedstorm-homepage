@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "WICKED STORM | Every Learning Moment, Designed for Growth.",
-    "description": "Wicked Storm collects and stores learning activities as learning data using global standards. AI analyzes this data to inform the next steps in education. Lecognizer · LearnHubble AI · Founding board member of 1EdTech Korea.",
+    "description": "Wicked Storm collects and stores learning activity as learning data built on global standards, then analyzes it with AI to inform the next steps in education. Lecognizer · LearnHubble AI · Founding board member of 1EdTech Korea.",
     "ogTitle": "WICKED STORM · Every Learning Moment, Designed for Growth.",
     "ogDescription": "Lecognizer, a learning data repository built on global standards, and LearnHubble AI, an AI-powered learning experience platform. Shaping a new era of learning through data and AI.",
     "twitterTitle": "WICKED STORM",
@@ -14,24 +14,59 @@
   "menuOpen": "Open menu",
   "langLabel": "Select language",
   "nav": {
-    "product": "Product",
-    "learnhubble": "LearnHubble AI",
+    "product": "Products",
     "standards": "Standards",
+    "cases": "Cases",
     "news": "News",
-    "resources": "Resources",
     "company": "Company",
-    "recruit": "Recruit",
+    "trust": "Trust",
+    "resources": "Downloads",
+    "recruit": "Careers",
     "recruitHref": "https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=dVFVWDFVV1Rab2VlaHo1NFV1Z1RsZz09",
-    "recruitLabel": "Recruit (opens in a new window)"
+    "recruitLabel": "Careers (opens in a new window)"
   },
   "cta": "Contact us",
   "ctaDrawer": "Contact us →",
   "footer": {
     "company": "Wicked Storm Inc.&nbsp;· CEO Jeongjun Lee&nbsp;· Business Registration No. <span style=\"white-space:nowrap\">135-88-02020</span>",
-    "address": "901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+    "address": "Rooms 901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
     "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
     "navLabel": "Footer menu",
     "privacy": "Privacy Policy",
     "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+  },
+  "pages": {
+    "product": {
+      "title": "WICKED STORM | Products: Lecognizer · Lecognizer AI · LearnHubble AI",
+      "description": "Meet Lecognizer, a learning data repository built on global standards; Lecognizer AI, which finds anomaly signals in learning data; and LearnHubble AI, a personalized teaching and learning platform with AI interaction, through administrator, instructor, and learner screens."
+    },
+    "standards": {
+      "title": "WICKED STORM | Standards: xAPI · Caliper · 1EdTech CASE",
+      "description": "A standards map of the global EdTech standards Wicked Storm has applied, plans to apply, or uses as design references, grouped into collection, framework, credentials, and integration, plus our 1EdTech activities."
+    },
+    "cases": {
+      "title": "WICKED STORM | Cases",
+      "description": "Cases of collecting and analyzing learning data in public and education settings, including the Ministry of Education, KERIS, the Ministry of Personnel Management, and the Seoul Metropolitan Government, organized by organization, year, work, and results."
+    },
+    "trust": {
+      "title": "WICKED STORM | Trust: Certifications · Patents · Standards Activities",
+      "description": "Verify GS Grade 1 Certification, xAPI LRS certification, KOLAS AI model certification, 2 granted AI patents, and our role as a founding board member of 1EdTech Korea, with the originals."
+    },
+    "company": {
+      "title": "WICKED STORM | Company",
+      "description": "The vision, history, careers, and location of Wicked Storm, a global EdTech company shaping a new era of learning through data and AI."
+    },
+    "contact": {
+      "title": "WICKED STORM | Contact Us",
+      "description": "Contact us by purpose about adoption, demos, partnerships, or international collaboration, and download our catalog and company profile."
+    }
+  },
+  "more": "Learn more",
+  "breadcrumbHome": "Home",
+  "ctaBand": {
+    "title": "Let’s review what fits your institution",
+    "text": "Contact us by purpose: adoption consultation, a demo, or partnerships and international collaboration.",
+    "primary": "Contact us",
+    "secondary": "Download materials"
   }
 }

@@ -16,7 +16,11 @@ const nav = h.common.nav;
 ---
 <Page lang={lang} page="company">
   <section class="band page-top page-head-band" aria-labelledby="page-title">
-    <div class="wrap"><PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead} /></div>
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
+        <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
+      </PageHead>
+    </div>
   </section>
   <Company lang={lang} t={t} ui={getUi(lang)} full />
   <section class="band careers" id="careers" aria-labelledby="careers-title">
@@ -27,7 +31,7 @@ const nav = h.common.nav;
           <h2 id="careers-title" set:html={phrase(t.careers.title, lang)} />
           <p set:html={t.careers.lead} />
         </div>
-        <div class="hero-cta"><a class="btn p" href={nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={nav.recruitLabel}>{t.careers.cta}</a></div>
+        <div class="hero-cta"><a class="btn p" href={nav.recruitHref} target="_blank" rel="noopener noreferrer">{t.careers.cta}<span class="sr-only"> {getUi(lang).newWindow}</span></a></div>
       </div>
     </div>
   </section>

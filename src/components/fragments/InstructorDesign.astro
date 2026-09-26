@@ -23,8 +23,10 @@ const segs = full ? t.segments : t.segments.filter((s) => s.hot);
     <div class="fx-ai">
       <div class="fx-ai-main">
         <span class="fx-ai-tag">{t.ai}</span>
-        <p>{t.proposal}</p>
-        <small>{t.detail}</small>
+        <div class="fx-ai-body">
+          <p>{t.proposal}</p>
+          <small>{t.detail}</small>
+        </div>
       </div>
       {full && (
         <div class="fx-draft">

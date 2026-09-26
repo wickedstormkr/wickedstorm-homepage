@@ -6,8 +6,8 @@
     "telLabel": "Tel",
     "emailLabel": "Email",
     "addressLabel": "Address",
-    "address": "901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
-    "note": "We will review your inquiry and reply to the email address you entered."
+    "address": "Rooms 901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+    "note": "We will review your inquiry and reply to the email address you provide."
   },
   "form": {
     "noscript": "The inquiry form requires JavaScript. Please enable JavaScript in your browser or email <a href=\"mailto:manager@wickedstorm.kr\">manager@wickedstorm.kr</a>.",
@@ -17,7 +17,7 @@
     },
     "company": {
       "label": "Organization *",
-      "placeholder": "Organization/Institution"
+      "placeholder": "Organization or institution"
     },
     "email": {
       "label": "Email *",
@@ -72,7 +72,7 @@
       ]
     },
     "trafficEtc": {
-      "label": "How you found us *",
+      "label": "Tell us how you heard about us *",
       "placeholder": "Please specify"
     },
     "memo": {
@@ -81,5 +81,29 @@
     },
     "privacy": "I agree to the <a href=\"/privacy.html\">collection and use of personal information</a> for handling my inquiry.",
     "submit": "Send inquiry"
+  },
+  "purposes": {
+    "title": "How can we help?",
+    "hint": "Choose a purpose to fill in the first line of your inquiry.",
+    "items": [
+      {
+        "id": "consult",
+        "name": "Adoption consultation",
+        "desc": "We walk you through the scope of adopting Lecognizer and LearnHubble AI, integration options, and procurement procedures.",
+        "topic": "We would like to request an adoption consultation."
+      },
+      {
+        "id": "demo",
+        "name": "Request a demo",
+        "desc": "We schedule a product demo tailored to your institution’s environment.",
+        "topic": "We would like to request a product demo."
+      },
+      {
+        "id": "partner",
+        "name": "Partnerships and international",
+        "desc": "Let’s discuss overseas partnerships, trade fairs, and joint projects.",
+        "topic": "We would like to discuss a partnership or international collaboration."
+      }
+    ]
   }
 }

@@ -172,8 +172,10 @@ export function audit(opts: { touch: boolean }): AuditResult {
     // 번역 전 국문 대체 글(일본어 페이지에 남은 한글 문장)은 일본어 줄바꿈 규칙으로 글자마다 끊겨 판단할 수 없다.
     // 번역 단계(마지막)에서 사라지며, 남은 대체 글은 콘텐츠 점검(test:content)이 '모양 다름'으로 알린다
     if (bja && /[가-힣]/.test(text) && !/[぀-ヿ一-鿿]/.test(text)) continue;
-    // 두 단어뿐인 글(제품·표준 이름)이 한 단어씩 두 줄이 되는 것은 고른 나눔이라 보지 않는다
-    const orphan = bja ? lastLine.reduce((a, w) => a + w.text.length, 0) <= 3 : lastLine.length === 1 && words.length >= 3;
+    // 두 단어뿐인 글(제품·표준 이름)이 한 단어씩 두 줄이 되는 것은 고른 나눔이라 보지 않는다(<br> 뒤 조각은 따로 센다: 그림 이름표 '대학 / 교과역량 체계')
+    let segStart = 0;
+    words.forEach((w, i) => { if (w.br) segStart = i; });
+    const orphan = bja ? lastLine.reduce((a, w) => a + w.text.length, 0) <= 3 : lastLine.length === 1 && words.length - segStart >= 3;
     if (orphan) {
       const prev = lines[lines.length - 2].map((w) => w.text).join(bja ? '' : ' ');
       out.orphan.push(`${name(b)}: …${prev.slice(-14)} / ${lastLine.map((w) => w.text).join(' ')}`);

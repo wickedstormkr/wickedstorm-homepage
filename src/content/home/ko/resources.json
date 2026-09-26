@@ -2,6 +2,7 @@
   "eyebrow": "Resources",
   "title": "자료 받기",
   "lead": "박람회에서 나눠 드린 카탈로그와 회사소개서를 PDF로 받아 보실 수 있습니다.",
+  "alsoLabel": "다른 언어",
   "cards": [
     {
       "thumb": "thumb-catalog.webp",

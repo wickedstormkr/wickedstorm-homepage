@@ -9,6 +9,11 @@ import { SOCIAL } from '../config/client';
 
 const doc = document;
 const root = doc.documentElement;
+/** 글꼴이 들어온 뒤 다시(글자 폭이 바뀐다). 언어별 글꼴 조각은 나중에 들어올 수 있어 ready 뒤에도 받을 때마다 */
+const onFonts = (fn: () => void) => {
+  doc.fonts?.ready.then(fn);
+  doc.fonts?.addEventListener?.('loadingdone', fn);
+};
 
 /* ---------- 헤더: 20px 넘으면 불투명 배경, 아래로 스크롤하면 숨기고 위로 올리면 보인다 ---------- */
 (() => {
@@ -83,11 +88,16 @@ const root = doc.documentElement;
   const update = () => {
     ticking = false;
     let show = window.scrollY > window.innerHeight * 0.9;
-    if (show && story && root.classList.contains('story-pin')) {
+    let deep = false;
+    if (story && root.classList.contains('story-pin')) {
       const r = story.getBoundingClientRect();
-      if (r.top <= 1 && r.bottom >= window.innerHeight - 1) show = false;
+      const inStory = r.top <= 1 && r.bottom >= window.innerHeight - 1;
+      if (inStory) show = false;
+      // 첫 장면을 지나 장면을 넘기는 동안: 언어 안내 띠를 숨긴다(story.css)
+      deep = inStory && r.top < -window.innerHeight * 0.3;
     }
     btn.classList.toggle('show', show);
+    root.classList.toggle('story-deep', deep);
   };
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();
@@ -180,7 +190,63 @@ doc.querySelectorAll<HTMLElement>('.std-map').forEach((map) => {
     lastW = w;
     fit();
   }).observe(map);
-  doc.fonts?.ready.then(fit);
+  onFonts(fit);
+});
+
+/* ---------- CASE 그림 이름표(데스크톱): 가지 이름표가 이웃과 겹치면(10px 미만) 넓은 쪽부터 좁혀 여러 줄로(.art-tight, story.css) ----------
+   한국어는 한 줄씩 들어가 그대로이고 긴 번역만 좁힌다. 낱말·구보다 좁힐 수 없으면 이웃을 좁힌다. 폭·글꼴이 바뀔 때 다시 잰다 */
+doc.querySelectorAll<HTMLElement>('.art-box').forEach((box) => {
+  const labels = [...box.querySelectorAll<HTMLElement>('.art-labels li.branch')];
+  if (!labels.length) return;
+  const range = doc.createRange();
+  /** 글자가 실제로 차지하는 사각형(칸보다 넘친 글자까지) */
+  const ext = (el: HTMLElement) => { range.selectNodeContents(el); return range.getBoundingClientRect(); };
+  const clashes = () => {
+    const shown = labels.filter((l) => l.getClientRects().length);
+    const R = shown.map(ext);
+    const out: [HTMLElement, HTMLElement, number][] = [];
+    R.forEach((a, i) => R.forEach((c, j) => {
+      if (j <= i) return;
+      const gx = Math.max(a.left - c.right, c.left - a.right);
+      if (gx < 10 && Math.max(a.top - c.bottom, c.top - a.bottom) < 2) out.push([shown[i], shown[j], 10 - gx]);
+    }));
+    return out;
+  };
+  /** 글 폭을 by만큼(가운데 정렬이라 이웃과의 간격은 by/2 는다), 가장 긴 낱말·구 폭까지만 줄인다. 더 줄일 수 없으면 false */
+  const shrink = (el: HTMLElement, by: number) => {
+    const before = el.style.maxWidth;
+    const w = ext(el).width;
+    el.style.maxWidth = '0px';
+    const min = ext(el).width;
+    const target = Math.ceil(Math.max(w - by, min));
+    if (target >= w - 1) { el.style.maxWidth = before; return false; }
+    el.style.maxWidth = `${target}px`;
+    return true;
+  };
+  const fit = () => {
+    box.classList.remove('art-tight');
+    labels.forEach((l) => { l.style.maxWidth = ''; });
+    if (!clashes().length) return;
+    box.classList.add('art-tight');
+    for (let k = 0; k < 16; k++) {
+      const cs = clashes();
+      if (!cs.length) break;
+      let moved = false;
+      for (const [a, b, over] of cs) {
+        const [x, y] = ext(a).width >= ext(b).width ? [a, b] : [b, a];
+        if (shrink(x, over * 2) || shrink(y, over * 2)) moved = true;
+      }
+      if (!moved) break;
+    }
+  };
+  let lastW = -1;
+  new ResizeObserver(([en]) => {
+    const w = Math.round(en.contentRect.width);
+    if (w === lastW) return;
+    lastW = w;
+    fit();
+  }).observe(box);
+  onFonts(fit);
 });
 
 /* 탭(역할별 제품 화면): JS가 없으면 모두 보이고, 있으면 탭으로. 방향키·Home·End로 이동(WAI-ARIA 탭 패턴) */

@@ -11,6 +11,10 @@ import { url } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = getHome(lang).standards;
+/** 긴 표준 속성 이름(context.contextActivities.grouping)은 점 뒤에서 줄을 바꿀 수 있게: 낱말 가운데서 끊기지 않는다.
+    한 줄에 들어가는 짧은 이름(MediaLocation.currentTime)과 약어(v.v.)는 그대로 둔다 */
+const ident = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  .replace(/\S{29,}/g, (w) => w.replace(/(?<=[A-Za-z0-9])\.(?=[a-z][A-Za-z]+)/g, '.<wbr>'));
 ---
 <Page lang={lang} page="standards">
   <section class="band page-top std" aria-labelledby="page-title">
@@ -20,7 +24,7 @@ const t = getHome(lang).standards;
       </PageHead>
       <h2 class="sub-title">{t.map.title}</h2>
       <p class="sub-lead">{t.map.lead}</p>
-      <StdMap t={t} />
+      <StdMap t={t} lang={lang} />
     </div>
   </section>
   <section class="band" aria-labelledby="std-mapping-title">
@@ -30,7 +34,7 @@ const t = getHome(lang).standards;
       <table class="map-table">
         <thead><tr>{t.mapping.cols.map((c, i) => <th scope="col" lang={i ? 'en' : undefined}>{c}</th>)}</tr></thead>
         <tbody>
-          {t.mapping.rows.map((r) => <tr><th scope="row">{r.k}</th><td data-k="xAPI">{r.x}</td><td data-k="Caliper">{r.c}</td></tr>)}
+          {t.mapping.rows.map((r) => <tr><th scope="row">{r.k}</th><td data-k="xAPI" set:html={ident(r.x)} /><td data-k="Caliper" set:html={ident(r.c)} /></tr>)}
         </tbody>
       </table>
       <p class="map-note">{t.mapping.note}</p>
