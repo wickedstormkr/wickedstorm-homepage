@@ -11,7 +11,7 @@
       "text": "Lecognizer、LearnHubble AI、そしてLearning Loopを8ページにまとめました。",
       "links": [
         {
-          "label": "韓国語 PDF",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
           "lang": "ko",
           "id": "catalog_ko"
@@ -23,7 +23,7 @@
           "id": "catalog_en"
         },
         {
-          "label": "日本語",
+          "label": "日本語 PDF",
           "file": "/files/WICKEDSTORM_Catalog_2026_JA.pdf",
           "lang": "ja",
           "id": "catalog_ja"
@@ -44,7 +44,7 @@
       "text": "沿革、事業領域、主な導入実績、認証と特許をまとめました。",
       "links": [
         {
-          "label": "韓国語 PDF",
+          "label": "한국어",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
           "lang": "ko",
           "id": "profile_ko"
@@ -56,7 +56,7 @@
           "id": "profile_en"
         },
         {
-          "label": "日本語",
+          "label": "日本語 PDF",
           "file": "/files/WICKEDSTORM_Company_Profile_2026_JA.pdf",
           "lang": "ja",
           "id": "profile_ja"

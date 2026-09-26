@@ -1,7 +1,7 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "3つのソリューションと3つの役割が<br><span class=\"g\">Learning Loop</span>を完成させます",
-  "lead": "Lecognizerが学習データを蓄積して兆候を見つけ出すと、<span class=\"nw\">LearnHubble AI</span>がその兆候を管理者・教員・学習者の判断と行動へとつなげます。",
+  "title": "収集から分析、授業への適用まで<br><span class=\"g\">Learning Loop</span>でつなぎます",
+  "lead": "Lecognizerが学習データを蓄積して異常の兆候を見つけ出すと、<span class=\"nw\">LearnHubble AI</span>がその兆候を管理者・教員・学習者の判断と行動へとつなげます。",
   "loop": {
     "img": "learning-loop.webp",
     "alt": "Learning Loop（学びの好循環）：学習者の活動がLecognizerに蓄積され、Lecognizer AIが兆候を見つけると、カリキュラム管理者と教員がLearnHubble AIで判断して適用し、その結果が再び学習者へとつながる循環構造",
@@ -18,7 +18,7 @@
         "style": "--x:85.5%;--y:26.5%;--w:13.5%",
         "pill": "Lecognizer AI",
         "product": "lec",
-        "desc": "学習データから多くの学習者がつまずいた箇所を特定し、次学期の設計に活かします。"
+        "desc": "Lecognizer AIは学習データから多くの学習者がつまずいた箇所を特定し、次学期の学習設計に活かします。"
       },
       {
         "kind": "role",
@@ -73,9 +73,156 @@
       ],
       "badge": "AI特許2件取得 · 学習異常検知 · 学習者プロファイリング",
       "img": "lecognizer-ai-detect.webp",
-      "alt": "Lecognizer AIの異常検知画面の例：リアルタイムに蓄積されるStatement一覧と、3週目の一区間に一時停止・巻き戻し・誤答が集中した異常の兆候、およびその原因の候補",
+      "alt": "Lecognizer AIの異常検知の画面例：リアルタイムに蓄積されるStatement一覧と、第3週の一区間に一時停止・巻き戻し・不正解が集中した異常の兆候、およびその原因の候補",
       "reverse": true
     }
   ],
-  "note": "※ 画面は韓国語UIです。画面内の教科・人物・数値は、製品説明のためのデモ用データです。"
+  "note": "※ 画面は韓国語UIです。画面内の教科・人物・数値は、製品説明のためのデモ用データです。",
+  "roles": {
+    "label": "役割別に見る",
+    "items": [
+      {
+        "id": "operator",
+        "name": "管理者",
+        "product": "LearnHubble AI",
+        "title": "根拠をもとに<span class=\"g\">教育課程</span>を改善します",
+        "text": "Lecognizer AIが見つけた異常の兆候が教育課程レベルの問題であれば、AIが1EdTech CASE体系に前提学習の関連付け（CFAssociation）を追加するよう推奨します。管理者が検討し、次学期に反映します。",
+        "points": [
+          "異常の兆候がどのレベルの問題かを判断",
+          "CFAssociationで前提学習の関連付けを推奨（precedes）",
+          "既存のCFItemはそのまま残し、前学期の学習データを維持"
+        ]
+      },
+      {
+        "id": "instructor",
+        "name": "教員",
+        "product": "LearnHubble AI",
+        "title": "つまずいた区間に<span class=\"g\">補足クイズ</span>を設計します",
+        "text": "学習者が一時停止し、巻き戻し、間違えた区間を根拠とともに示します。AIが補足説明と確認クイズを推奨すると、教員が手を加えて適用します。",
+        "points": [
+          "確認が必要な区間と根拠",
+          "補足説明 · 確認クイズの推奨",
+          "適用の可否は教員が決定"
+        ]
+      },
+      {
+        "id": "learner",
+        "name": "学習者",
+        "product": "LearnHubble AI",
+        "title": "補足を加えた区間で<span class=\"g\">確認クイズ</span>が自動で出題されます",
+        "text": "教員が適用した補足説明と確認クイズは、学習者がその区間に差しかかると自動で表示され、つまずいた部分をその場で確認し直せます。行き詰まったときは、AIが正解ではなくヒントと講義の根拠を提供します。",
+        "points": [
+          "補足を加えた区間で自動出題される確認クイズ",
+          "教員が適用した補足説明",
+          "正解ではなく、AIヒントと講義の根拠"
+        ]
+      }
+    ]
+  },
+  "more": "製品を詳しく見る",
+  "page": {
+    "eyebrow": "Products",
+    "title": "学習データを蓄積し、兆候を見つけ、<span class=\"g\">人の判断</span>へとつなげます",
+    "lead": "LecognizerとLecognizer AIが学習データを蓄積・分析すると、LearnHubble AIがその結果を管理者・教員・学習者の画面に届けます。",
+    "loopTitle": "Learning Loop",
+    "rolesTitle": "役割別の画面"
+  },
+  "solutions": [
+    {
+      "id": "lecognizer",
+      "kicker": "Learning Data Repository · AI Anomaly Detection",
+      "names": [
+        "Lecognizer",
+        "Lecognizer AI"
+      ],
+      "text": "教育・学習・運営で生まれた学習データを国際標準で収集・保存し、Lecognizer AIが通常と異なる兆候や多くの学習者がつまずいた箇所を、根拠とともに見つけて知らせます。",
+      "badges": [
+        "GS 1等級認証",
+        "AI特許2件取得"
+      ],
+      "site": "https://lecognizer.ai/",
+      "siteLabel": "lecognizer.ai",
+      "siteAria": "lecognizer.ai、Lecognizerのサイト（新しいウィンドウ）",
+      "cls": "lec",
+      "more": "詳しく見る"
+    },
+    {
+      "id": "learnhubble",
+      "kicker": "Learning Experience Platform",
+      "names": [
+        "LearnHubble AI"
+      ],
+      "text": "AIと対話するパーソナライズ型の教育・学習プラットフォームです。学習者が講義や課題に取り組む中、必要なときにAIが説明とヒントを提供し、支援と適用は教員が確認します。",
+      "badges": [
+        "ポートフォリオ · 課題のヒント · コンピテンシーマップ · 講義室AIパネル"
+      ],
+      "site": "https://learnhubble.ai/",
+      "siteLabel": "learnhubble.ai",
+      "siteAria": "learnhubble.ai、LearnHubble AIのサイト（新しいウィンドウ）",
+      "cls": "lhb",
+      "more": "詳しく見る"
+    }
+  ],
+  "operator": {
+    "product": "LearnHubble AI · 管理者",
+    "crumb": "CASE改訂",
+    "signal": "Lecognizer AI 異常の兆候 · リスク要因の比較",
+    "levelLabel": "問題のレベル",
+    "levels": [
+      {
+        "t": "一時的な現象",
+        "on": false
+      },
+      {
+        "t": "授業設計",
+        "on": false
+      },
+      {
+        "t": "教育課程",
+        "on": true
+      }
+    ],
+    "treeLabel": "CFDocument · 科目コンピテンシー体系",
+    "tree": [
+      {
+        "lv": 1,
+        "k": "コンピテンシー",
+        "v": "分析的判断",
+        "s": "",
+        "tone": ""
+      },
+      {
+        "lv": 2,
+        "k": "学習成果",
+        "v": "リスク要因の比較",
+        "s": "異常の兆候",
+        "tone": "hot"
+      },
+      {
+        "lv": 1,
+        "k": "コンピテンシー",
+        "v": "基礎概念",
+        "s": "",
+        "tone": ""
+      },
+      {
+        "lv": 2,
+        "k": "学習成果",
+        "v": "金利の基礎",
+        "s": "前提学習",
+        "tone": "new"
+      }
+    ],
+    "ai": "AI推奨",
+    "proposal": "CFAssociationを追加：前提学習の関連付け",
+    "assoc": {
+      "from": "金利の基礎",
+      "type": "precedes",
+      "to": "リスク要因の比較"
+    },
+    "note": "既存のCFItemはそのまま残します",
+    "edit": "修正",
+    "apply": "反映",
+    "owner": "反映は管理者が決めます"
+  }
 }

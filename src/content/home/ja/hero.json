@@ -5,21 +5,30 @@
     "<span class=\"g\">成長のデータ</span>として",
     "設計します"
   ],
-  "lead": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、<br class=\"br-d\">AIが分析して、管理者・教員・学習者の次の行動へとつなげます。",
+  "lead": "Wicked Stormは、学習活動を国際標準の学習データとして収集・保存し、AIで分析して、管理者・教員・学習者の次の行動へとつなげます。",
   "ctaPrimary": "導入のご相談",
   "ctaSecondary": "製品を見る",
   "trust": [
     {
       "html": "<b>1EdTech Korea</b>&nbsp;設立理事会",
-      "href": "/news/2026-07-1edtech-korea.html"
+      "page": "trust",
+      "hash": "#1edtech"
     },
     {
-      "html": "GS 1等級認証",
-      "href": "/news/2024-07-lecognizer-procurement.html"
+      "html": "GS 1等級認証 · Lecognizer",
+      "page": "trust",
+      "hash": "#gs"
     },
     {
-      "html": "AI特許2件取得",
-      "href": "/news/2025-11-patent-anomaly.html"
+      "html": "特許 第10-2883249号",
+      "page": "trust",
+      "hash": "#patent-2883249"
+    },
+    {
+      "html": "特許 第10-2767110号",
+      "page": "trust",
+      "hash": "#patent-2767110"
     }
-  ]
+  ],
+  "trustLabel": "認証・特許の原本"
 }
