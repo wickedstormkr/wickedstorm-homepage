@@ -3,11 +3,15 @@
 
 /* 글꼴은 첫 그리기 뒤에 비동기로 온다(public/fonts/fonts.css → 배포본은 scripts/fonts/subset.mjs가 자른 파일).
    그 사이 쓰는 대체 글꼴의 글자 폭을 Pretendard·Sora에 맞춰, 바뀔 때 줄이 달라져 화면이 밀리는 것(CLS)을 줄인다.
-   비율은 실측(Pretendard 500 ≒ Arial ×1.02, Sora 700 ≒ Arial Bold ×1.09). 한글은 시스템 한글 글꼴로 넘어간다(라틴 범위만) */
+   비율은 실측(Pretendard 500 ≒ Arial ×1.02: 영어는 ×1.03, 베트남어는 ×0.99라 그 사이. Sora 700 ≒ Arial Bold ×1.09).
+   한글은 시스템 한글 글꼴로 넘어간다(라틴 범위만) */
 @font-face{font-family:"Pretendard Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans"),local("Roboto");size-adjust:102%;unicode-range:U+0000-024F,U+1E00-1EFF,U+2000-206F}
 /* 한글: Pretendard 한글 폭 ≒ Noto Sans CJK KR ×0.92(실측). 안드로이드·리눅스의 한글 글꼴에 맞춘다 */
 @font-face{font-family:"Pretendard KR Fallback";src:local("Noto Sans CJK KR"),local("NotoSansCJKkr-Regular"),local("Noto Sans KR");size-adjust:92%;unicode-range:U+1100-11FF,U+3000-303F,U+3130-318F,U+AC00-D7AF}
 @font-face{font-family:"Sora Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans"),local("Roboto");size-adjust:109%;unicode-range:U+0000-024F,U+2000-206F}
+/* 대문자 · 자간 라벨(아이브로우 · 키커, --en-caps): Sora 대문자는 Arial 대문자에 견줘 좁아 따로 맞춘다(실측 ×1.055).
+   109%로 두면 대체 글꼴이 2% 넓어, 412px 폰에서 'WICKED STORM · LEARNING DATA & AI'가 두 줄 → 한 줄로 바뀌며 첫 화면이 밀렸다 */
+@font-face{font-family:"Sora Caps Fallback";src:local("Arial"),local("Helvetica"),local("Liberation Sans"),local("Roboto");size-adjust:105.5%;unicode-range:U+0000-024F,U+2000-206F}
 
 *{margin:0;padding:0;box-sizing:border-box}
 [hidden]{display:none!important}
@@ -57,7 +61,7 @@ h1,h2,h3{text-wrap:balance}
 
 /* ---- 글자 체계 ---- */
 .en{font-family:var(--en)}
-.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--en);font-size:12.5px;
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--en-caps);font-size:12.5px;
   font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .sym{height:16px;width:auto;flex:none;display:inline-block;vertical-align:middle}
 h1,h2,h3{letter-spacing:-.035em;line-height:1.12;font-weight:800}
