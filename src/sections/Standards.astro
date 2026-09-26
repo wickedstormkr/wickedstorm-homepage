@@ -14,7 +14,7 @@ const { lang, t } = Astro.props;
     <SecHead lang={lang} id="std-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
       <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.badge} /></span></p>
     </SecHead>
-    <StdMap t={t} />
+    <StdMap t={t} lang={lang} />
     <p class="more-row"><a class="btn s" href={url(pagePath(lang, 'standards'))}>{t.more}</a></p>
   </div>
 </section>

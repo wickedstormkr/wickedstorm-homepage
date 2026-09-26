@@ -5,9 +5,11 @@
  * 상태(적용·적용 예정·설계 참조)를 표시하고, 표준마다 공식 스펙으로 가는 링크(새 창)를 둔다(주장은 확인할 수 있게).
  */
 import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
 import { sents } from '../lib/sents';
-interface Props { t: HomeContent['standards'] }
-const { t } = Astro.props;
+interface Props { t: HomeContent['standards']; lang: Lang }
+const { t, lang } = Astro.props;
 const byName = new Map(t.cards.map((c) => [c.name, c]));
 const legend = [...new Map(t.cards.map((c) => [c.status, c.statusLabel])).entries()];
 const chip = (n: string) => byName.get(n)!;
@@ -16,7 +18,7 @@ const chip = (n: string) => byName.get(n)!;
   <div class="std-base">
     <div class="base-copy">
       <p class="lane-head"><b>{t.map.base.name}</b></p>
-      <p class="lane-desc" set:html={sents(t.map.base.desc)} />
+      <p class="lane-desc" set:html={phrase(sents(t.map.base.desc), lang)} />
     </div>
     <ul class="lane-items">
       {t.map.base.items.map((n) => {
@@ -30,7 +32,7 @@ const chip = (n: string) => byName.get(n)!;
       <li class:list={['std-lane', { ref: g.ref }]}>
         {g.ref && <p class="lane-ref">{t.map.refLabel}</p>}
         <p class="lane-head"><span class="lane-n" aria-hidden="true">{String(gi + 1).padStart(2, '0')}</span><b>{g.name}</b></p>
-        <p class="lane-desc" set:html={sents(g.desc)} />
+        <p class="lane-desc" set:html={phrase(sents(g.desc), lang)} />
         <ul class="lane-items">
           {g.items.map((n) => {
             const c = chip(n);

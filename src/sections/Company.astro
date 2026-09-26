@@ -36,7 +36,7 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
           {t.milestones.items.map((m) => <li><span class="miles-y tnum">{m.year}</span><span>{m.text}</span></li>)}
         </ol>
         <div class="careers-row">
-          <p><b>{t.careers.eyebrow}</b> <span set:html={sents(t.careers.lead)} /></p>
+          <p><b>{t.careers.eyebrow}</b> <span set:html={phrase(sents(t.careers.lead), lang)} /></p>
           <div class="hero-cta">
             <a class="btn s" href={url(pagePath(lang, 'company'))}>{t.more}</a>
           </div>

@@ -31,8 +31,7 @@ html:lang(ko) body,html:lang(en) body,html:lang(vi) body{word-break:keep-all}
 html:lang(ja) body{word-break:normal;line-break:strict}
 html:lang(ja) :is(p,li,h1,h2,h3,h4,dt,dd,figcaption,label,td,th){overflow-wrap:anywhere}
 .bx{word-break:keep-all;overflow-wrap:anywhere}
-/* 일본어 글 끝 묶음(여덟 글자 안팎): 괄호 앞에서도 끊기지 않게 nowrap */
-.jt{white-space:nowrap}
+/* 일본어 글 끝 묶음(여덟 글자 안팎)은 조판(typeset.ts)이 글자 사이에 WORD JOINER를 넣어 한 덩어리로 둔다(요소를 끼우지 않는다) */
 /* 일본어 폰: 제목 한 구(열두 글자 안팎)가 한 줄에 들어가게 */
 @media (max-width:699px){html:lang(ja) .h-lg{font-size:clamp(24px,6.6vw,30px)}}
 html:lang(vi) body{line-height:1.72}

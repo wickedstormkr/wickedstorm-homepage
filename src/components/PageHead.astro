@@ -11,6 +11,6 @@ const { lang, eyebrow, title, lead } = Astro.props;
 <div class="sec-head page-head">
   <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={eyebrow} /></p>
   <h1 class="h-lg" id="page-title" set:html={phrase(title, lang)} />
-  {lead && <p class="sec-lead" set:html={sents(lead)} />}
+  {lead && <p class="sec-lead" set:html={phrase(sents(lead), lang)} />}
   <slot />
 </div>

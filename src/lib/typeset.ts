@@ -4,7 +4,10 @@
  *
  * - 한국어·영어·베트남어: 글 칸의 마지막 두 단어 사이 띄어쓰기를 줄바꿈 없는 공백(U+00A0)으로 바꾼다.
  *   두 단어가 너무 길면(합쳐 LIMIT자 초과) 좁은 칸에서 넘칠 수 있어 묶지 않는다.
- * - 일본어: 띄어쓰기가 없으므로 BudouX로 구를 나눠, 마지막 구가 짧으면 앞 구와 한 덩어리(.jt, keep-all)로 묶는다.
+ * - 일본어: 띄어쓰기가 없으므로 BudouX로 구를 나눠, 마지막 구가 짧으면 그 글자들 사이에 WORD JOINER(U+2060)를 넣어 한 덩어리로 묶는다.
+ *   요소(span)를 끼우지 않는다: 버튼·링크처럼 flex(gap)인 칸에서 글이 두 조각으로 나뉘어 사이가 벌어지지 않게.
+ * - 베트남어: 음절 사이가 띄어쓰기라 두세 음절 낱말이 줄 끝에서 갈라진다. 사이트에 자주 쓰는 낱말(VI_WORDS)은 음절 사이를
+ *   줄바꿈 없는 공백으로 묶는다(제목·설명·본문 모두). 새 낱말을 자주 쓰게 되면 목록에 더한다.
  * - 숫자-숫자(특허·전화번호)는 하이픈에서 끊기지 않게 묶는다(.nb).
  * 글 칸 = 블록 태그(p, li, h1…) 또는 클래스가 있는 요소(대부분 블록·플렉스 항목). 글자 모양용 인라인 클래스는 제외.
  */
@@ -67,6 +70,157 @@ function bindSpaces(nodes: TextNode[]) {
   }
 }
 
+/** 베트남어 낱말(두세 음절). 긴 것부터 맞춘다 */
+const VI_WORDS = [
+  'trí tuệ nhân tạo',
+  'sách giáo khoa',
+  'quản trị viên',
+  'bằng sáng chế',
+  'chương trình',
+  'doanh nghiệp',
+  'khoảnh khắc',
+  'phương pháp',
+  'hộ gia đình',
+  'nguyên nhân',
+  'chặng đường',
+  'cá nhân hóa',
+  'hiện trường',
+  'kiểm chứng',
+  'môi trường',
+  'giải thích',
+  'chuyển đổi',
+  'thành tích',
+  'chứng nhận',
+  'phát triển',
+  'trình diễn',
+  'liên thông',
+  'triển khai',
+  'bất thường',
+  'chất lượng',
+  'người dùng',
+  'tiên quyết',
+  'giảng viên',
+  'tiêu chuẩn',
+  'minh chứng',
+  'câu chuyện',
+  'giới thiệu',
+  'chính sách',
+  'quyết định',
+  'giải pháp',
+  'tiếp theo',
+  'phân tích',
+  'danh sách',
+  'toàn diện',
+  'biến động',
+  'học thuật',
+  'trung tâm',
+  'thông tin',
+  'người học',
+  'con người',
+  'khởi điểm',
+  'kỷ nguyên',
+  'phát hiện',
+  'bài giảng',
+  'tiêu biểu',
+  'tương tác',
+  'khái niệm',
+  'thông báo',
+  'thời gian',
+  'hoạt động',
+  'vận hành',
+  'đồng đội',
+  'đánh giá',
+  'tác động',
+  'nội dung',
+  'quốc gia',
+  'ứng dụng',
+  'kiểm tra',
+  'tích lũy',
+  'xác minh',
+  'trình độ',
+  'gia đình',
+  'hệ thống',
+  'mục tiêu',
+  'huy hiệu',
+  'tiểu học',
+  'hiệu quả',
+  'tài liệu',
+  'sản phẩm',
+  'tích hợp',
+  'nhân lực',
+  'sáng chế',
+  'toàn cầu',
+  'phản hồi',
+  'thu thập',
+  'năng lực',
+  'lộ trình',
+  'kế hoạch',
+  'tiếp cận',
+  'xây dựng',
+  'giáo dục',
+  'dấu hiệu',
+  'nền tảng',
+  'lãi suất',
+  'thiết kế',
+  'đối tác',
+  'liên hệ',
+  'yêu cầu',
+  'biểu đồ',
+  'quản lý',
+  'mua sắm',
+  'áp dụng',
+  'kết nối',
+  'dạy học',
+  'cá nhân',
+  'báo cáo',
+  'khu vực',
+  'dữ liệu',
+  'điểm số',
+  'tin tức',
+  'học tập',
+  'lớp học',
+  'bài tập',
+  'công cụ',
+  'quốc tế',
+  'đổi mới',
+  'cần đạt',
+  'lỗ hổng',
+  'xem xét',
+  'trả lời',
+  'câu hỏi',
+  'sự kiện',
+  'tổ chức',
+  'đào tạo',
+  'bổ sung',
+  'bảo mật',
+  'tua lại',
+  'hợp tác',
+  'công ty',
+  'lưu trữ',
+  'tự động',
+  'tư vấn',
+  'học kỳ',
+  'căn cứ',
+  'xã hội',
+  'hỗ trợ',
+  'chỉ số',
+  'rủi ro',
+  'có thể',
+  'yếu tố',
+  'thế hệ',
+  'cơ sở',
+  'dự án',
+  'hồ sơ',
+  'gợi ý',
+];
+const VI_RE = new RegExp(`(?<![\\p{L}])(${VI_WORDS.join('|')})(?![\\p{L}])`, 'giu');
+function bindVi(nodes: TextNode[]) {
+  for (const n of nodes) {
+    if (!n.rawText.includes(' ')) continue;
+    n.rawText = n.rawText.normalize('NFC').replace(VI_RE, (m) => m.replace(/ /g, '&nbsp;'));
+  }
+}
+
 const hasJa = (s: string) => /[\u3040-\u30ff\u3400-\u9fff]/.test(s);
 
 const letters = (x: string) => (x.match(/[\p{L}\p{N}]/gu) ?? []).length;
@@ -92,7 +246,7 @@ function bindJa(nodes: TextNode[]) {
   const total = letters(nodes.map((n) => n.rawText).join(''));
   if (total < 8) return;
   // 묶을 끝부분: 마지막 구(여덟 글자 이하일 때)와 '끝에서 다섯 글자' 중 긴 쪽.
-  // 묶음(.jt)은 keep-all이라 그 안에서는 줄을 바꾸지 않고, 칸보다 길면 overflow-wrap:anywhere로 비상 줄바꿈된다
+  // 글자 사이마다 WORD JOINER를 넣어 그 안에서는 줄을 바꾸지 않는다(끝부분 앞에서는 바꿀 수 있다)
   const chars = [...raw];
   let start = chars.length;
   let n = 0;
@@ -101,7 +255,7 @@ function bindJa(nodes: TextNode[]) {
   const lp = phrases[phrases.length - 1] ?? '';
   if (letters(lp) <= 8) start = Math.min(start, chars.length - [...lp].length);
   if (start <= 0) return;
-  last.rawText = chars.slice(0, start).join('') + `<span class="jt">${chars.slice(start).join('')}</span>`;
+  last.rawText = chars.slice(0, start).join('') + chars.slice(start).join('\u2060');
 }
 
 /** 특허·전화번호처럼 숫자-숫자는 하이픈에서 끊기지 않게. 바로 앞에 붙은 괄호와 한글·영문 낱말까지 한 덩어리로 */
@@ -124,7 +278,10 @@ export function typeset(html: string): string {
         const nodes = textNodes(c);
         if (nodes.some((n) => n.rawText.trim())) {
           if (l === 'ja') bindJa(nodes);
-          else bindSpaces(nodes);
+          else {
+            if (l === 'vi') bindVi(nodes);
+            bindSpaces(nodes);
+          }
           for (const t of nodes) keepNumbers(t);
         }
       }
