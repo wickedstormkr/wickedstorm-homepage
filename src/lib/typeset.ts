@@ -10,6 +10,7 @@
  * - 베트남어: 음절 사이가 띄어쓰기라 두세 음절 낱말이 줄 끝에서 갈라진다. 사이트에 자주 쓰는 낱말(VI_WORDS)은 음절 사이를
  *   줄바꿈 없는 공백으로 묶는다(제목·설명·본문 모두). 새 낱말을 자주 쓰게 되면 목록에 더한다.
  * - 숫자-숫자(특허·전화번호)는 하이픈에서 끊기지 않게 묶는다(.nb).
+ * - 가운뎃점으로 이은 이름(A · B)은 점을 앞 낱말에 붙인다: 줄은 점 뒤에서만 바뀌어 줄 머리에 ·가 오지 않는다(모든 언어).
  * 글 칸 = 블록 태그(p, li, h1…) 또는 클래스가 있는 요소(대부분 블록·플렉스 항목). 글자 모양용 인라인 클래스는 제외.
  */
 import { parse, HTMLElement, TextNode, type Node } from 'node-html-parser';
@@ -260,6 +261,11 @@ function bindJa(nodes: TextNode[]) {
   last.rawText = chars.slice(0, start).join('') + chars.slice(start).join('\u2060');
 }
 
+/** 'A · B'의 점 앞 띄어쓰기를 줄바꿈 없는 공백(문자 U+00A0: 일본어 묶음 검사가 &엔티티를 피하므로)으로 */
+function bindDots(n: TextNode) {
+  if (n.rawText.includes(' · ')) n.rawText = n.rawText.replace(/(?<=\S) · /g, '\u00a0· ');
+}
+
 /** 특허·전화번호처럼 숫자-숫자는 하이픈에서 끊기지 않게. 바로 앞에 붙은 괄호와 한글·영문 낱말까지 한 덩어리로 */
 function keepNumbers(n: TextNode) {
   if (!/\d-\d/.test(n.rawText)) return;
@@ -280,6 +286,7 @@ export function typeset(html: string): string {
         const segs = textSegments(c);
         const nodes = segs.flat();
         if (nodes.some((n) => n.rawText.trim())) {
+          for (const t of nodes) bindDots(t);
           if (l === 'ja') bindJa(nodes);
           else {
             if (l === 'vi') bindVi(nodes);
