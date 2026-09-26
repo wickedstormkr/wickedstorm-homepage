@@ -17,7 +17,7 @@ const segs = full ? t.segments : t.segments.filter((s) => s.hot);
     <p class="fx-h">{t.segLabel}</p>
     <ul class="fx-segs">
       {segs.map((s) => (
-        <li class:list={{ hot: s.hot }}><span class="fx-time tnum">{s.time}</span><b>{s.title}</b><small>{s.note}</small></li>
+        <li class:list={{ hot: s.hot }}><span class="fx-time tnum">{s.time}</span><span class="fx-seg-t"><b>{s.title}</b><small>{s.note}</small></span></li>
       ))}
     </ul>
     <div class="fx-ai">
