@@ -20,7 +20,7 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
 ---
 <section class:list={['band company', { 'page-top-less': full }]} id={full ? 'vision' : 'company'} aria-labelledby={full ? undefined : 'co-title'} aria-label={full ? t.history.eyebrow : undefined}>
   <div class="wrap">
-    {full ? <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p> : (
+    {!full && (
       <SecHead lang={lang} id="co-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
         <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
       </SecHead>
