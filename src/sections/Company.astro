@@ -1,8 +1,8 @@
 ---
-/** ⑨ 회사: 비전, 수치, 기업 홍보 영상(자동 재생 안 함), 연혁 */
+/** ⑨ 회사: 비전, 수치, 기업 홍보 영상(자동 재생 안 함), 연혁. 홈은 채용 한 줄(채용 공고로 가는 버튼) 뒤에 회사 페이지로 가는 버튼 */
 import { getImage } from 'astro:assets';
 import SecHead from '../components/SecHead.astro';
-import type { HomeContent, UiText } from '../lib/content';
+import { getHome, type HomeContent, type UiText } from '../lib/content';
 import { pagePath, type Lang, type Page } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { sents } from '../lib/sents';
@@ -12,6 +12,7 @@ import poster from '../assets/media/company-film-poster.webp';
 interface Props { lang: Lang; t: HomeContent['company']; ui: UiText; full?: boolean }
 /** full: 회사 페이지(영상·전체 연혁·채용·오시는 길). 아니면 홈(수치·주요 이정표·채용 한 줄) */
 const { lang, t, ui, full = false } = Astro.props;
+const nav = getHome(lang).common.nav;
 const posterImg = await getImage({ src: poster, format: 'webp', width: Math.min(1280, poster.width) });
 /** 연혁 링크: 옛 홈 앵커(#product·#references·#standards)는 새 페이지로, 사이트 주소는 base를 붙인다 */
 const ANCHOR: Record<string, Page> = { '#product': 'product', '#references': 'cases', '#standards': 'standards' };
@@ -38,9 +39,10 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
         <div class="careers-row">
           <p><b>{t.careers.eyebrow}</b> <span set:html={phrase(sents(t.careers.lead), lang)} /></p>
           <div class="hero-cta">
-            <a class="btn s" href={url(pagePath(lang, 'company'))}>{t.more}</a>
+            <a class="btn s" href={nav.recruitHref} target="_blank" rel="noopener noreferrer">{t.careers.cta}<span class="sr-only"> {ui.newWindow}</span></a>
           </div>
         </div>
+        <p class="more-row"><a class="btn s" href={url(pagePath(lang, 'company'))}>{t.more}</a></p>
       </>
     )}
     {full && (

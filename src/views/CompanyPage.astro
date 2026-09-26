@@ -27,7 +27,7 @@ const nav = h.common.nav;
           <h2 id="careers-title" set:html={phrase(t.careers.title, lang)} />
           <p set:html={t.careers.lead} />
         </div>
-        <div class="hero-cta"><a class="btn p" href={nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={nav.recruitLabel}>{t.careers.cta}</a></div>
+        <div class="hero-cta"><a class="btn p" href={nav.recruitHref} target="_blank" rel="noopener noreferrer">{t.careers.cta}<span class="sr-only"> {getUi(lang).newWindow}</span></a></div>
       </div>
     </div>
   </section>
