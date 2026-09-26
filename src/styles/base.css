@@ -97,6 +97,9 @@ section{position:relative;z-index:2}
 .btn.s{border:1px solid var(--line3);background:rgba(255,255,255,.04);color:#fff}
 .btn.s:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 .btn small{font-family:var(--en);font-size:13px;font-weight:600;color:var(--muted)}
+/* 버튼 묶음(주 버튼 + 보조 버튼): 모든 페이지 공통. 좁으면 다음 줄로, 폰에서는 줄을 채워 폭을 맞춘다 */
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px}
+@media (max-width:699px){.hero-cta .btn{flex:1 1 auto}}
 /* 제품 이름(누를 수 없음): 글자 그라디언트. Lecognizer 계열은 마젠타 쪽, LearnHubble AI는 파랑 쪽 */
 .pname{width:fit-content;font-family:var(--en);font-weight:800;letter-spacing:-.01em;white-space:nowrap;
   background-image:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}

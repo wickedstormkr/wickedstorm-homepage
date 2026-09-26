@@ -33,7 +33,8 @@
 @media (max-width:699px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(26px,calc((100vw - 48px) / 11.3),30px)}}
 @media (min-width:1024px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(28px,3.3vw,44px)}}
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
-.hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+/* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
+.scene .hero-cta{margin-top:36px}
 .hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,max-content);column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
 .hero-trust li{display:flex;align-items:center;gap:9px}
 .hero-trust li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.8}
@@ -197,7 +198,6 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 @media (max-width:699px){
   .scene{padding:56px 0}
   .scene-moment{padding-top:calc(var(--header-h) + 28px)}
-  .hero-cta .btn{flex:1 1 auto}
   .hero-trust{grid-template-columns:1fr}
   .live .fx-bar{gap:8px}
   .live-view{margin:12px 10px 0}
