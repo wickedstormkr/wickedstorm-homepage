@@ -35,8 +35,11 @@
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
 /* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
 .scene .hero-cta{margin-top:36px}
-.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,max-content);column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
+/* 증빙 두 열은 글 칸 안에서만 자란다(긴 번역은 칸 안에서 두 줄로: 옆 실시간 수집 창을 침범하지 않게) */
+.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,max-content));column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
 .hero-trust li{display:flex;align-items:center;gap:9px}
+/* 좁은 데스크톱(글 칸 400px 안팎): 긴 번역(영어·베트남어)도 항목마다 한 줄에 들어가게 한 단계 작게 */
+@media (min-width:1024px) and (max-width:1279px){.hero-trust{column-gap:18px;font-size:13px}}
 .hero-trust li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.8}
 .hero-trust a{display:inline-block;padding:11px 0;line-height:22px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px;transition:color .2s}
 .hero-trust a:hover{color:#fff;text-decoration-color:var(--accent)}
