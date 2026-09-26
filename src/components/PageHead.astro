@@ -2,6 +2,7 @@
 /** 페이지 머리: 아이브로우, 제목(h1), 리드. 홈 섹션 머리(SecHead)와 같은 모양 */
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
+import { sents } from '../lib/sents';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang; eyebrow: string; title: string; lead?: string }
@@ -10,6 +11,6 @@ const { lang, eyebrow, title, lead } = Astro.props;
 <div class="sec-head page-head">
   <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={eyebrow} /></p>
   <h1 class="h-lg" id="page-title" set:html={phrase(title, lang)} />
-  {lead && <p class="sec-lead" set:html={lead} />}
+  {lead && <p class="sec-lead" set:html={sents(lead)} />}
   <slot />
 </div>

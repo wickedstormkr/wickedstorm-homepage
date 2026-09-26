@@ -192,7 +192,9 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 @media (max-width:1023px){.miles{grid-template-columns:1fr 1fr}}
 @media (max-width:699px){.miles{grid-template-columns:1fr}}
 .careers-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:32px;padding:24px 26px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
-.careers-row p{max-width:760px;color:var(--ink-3);font-size:15.5px;line-height:1.7}
+.careers-row p{max-width:60em;color:var(--ink-3);font-size:15.5px;line-height:1.7}
+/* 버튼 묶음(.hero-cta)의 위 여백은 히어로용: 이 줄에서는 글과 세로 가운데를 맞춘다 */
+.careers-row .hero-cta{margin-top:0}
 .careers-row b{margin-right:8px;font-family:var(--en);letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--accent)}
 .loc-dl{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--line)}
 .loc-dl div{display:grid;grid-template-columns:7em 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px}
