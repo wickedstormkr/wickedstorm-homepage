@@ -127,7 +127,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
           <ul class="art-labels" aria-hidden="true">
             {CASE_NODES.map((n) => (
-              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id)}</li>
+              <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{nodeName(n.id).split(' · ').map((part, k) => (k ? [<br />, part] : part))}</li>
             ))}
           </ul>
         </div>
