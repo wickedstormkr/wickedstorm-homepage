@@ -120,9 +120,9 @@
 
 /* ================= ⑧ 자료 받기 ================= */
 .res-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.res-card{height:100%;display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:start;padding:28px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
+/* 표지 썸네일은 글 묶음(제목 · 설명 · 받기 버튼)의 세로 가운데에(세로 표지 · 가로 표지 모두) */
+.res-card{height:100%;display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center;padding:28px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
 .res-thumb{width:120px;height:auto;border-radius:8px;border:1px solid var(--line)}
-.res-thumb.wide{margin-top:4px}
 .res-card h3{font-size:20px;letter-spacing:-.03em;line-height:1.3}
 .res-card p{margin-top:8px;color:var(--muted);font-size:15px;line-height:1.6}
 .res-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
