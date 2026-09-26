@@ -18,7 +18,9 @@ const { post } = Astro.props;
 const description = describe(post.summary, post.body);
 const thumbName = post.thumb?.replace(/^\.\/img\//, '') ?? null;
 const thumb = thumbName && hasImg(thumbName) ? thumbName : null;
-const thumbHtml = thumb ? await pictureHtml(thumb, post.title, '(min-width: 808px) 728px, calc(100vw - 80px)', true) : '';
+// 썸네일이 본문에 이미 있는 그림이면 맨 위에 다시 보이지 않는다(목록 썸네일·공유 이미지로만 쓴다)
+const thumbInBody = !!thumb && JSON.stringify(post.body).includes(thumb);
+const thumbHtml = thumb && !thumbInBody ? await pictureHtml(thumb, post.title, '(min-width: 808px) 728px, calc(100vw - 80px)', true) : '';
 const body = (await renderBody(post.body)) || `<p>${description}</p>`;
 const published = post.date.replace(/\./g, '-');
 const ogImage = thumb ? new URL(img(thumb).src, absUrl('/')).href : '/img/og-image.png';
@@ -47,7 +49,7 @@ const back = url('/news.html');
           <p class="detail-back detail-top"><a href={back}><span aria-hidden="true">←</span> 소식 목록으로</a></p>
           <div class="detail-eyebrow"><span class="ntag">{CATEGORY_KO[post.category]}</span> <time datetime={published}>{post.date}</time></div>
           <h1 id="article-title">{post.title}</h1>
-          {thumb && <figure class="detail-thumb" set:html={thumbHtml} />}
+          {thumbHtml && <figure class="detail-thumb" set:html={thumbHtml} />}
           <div class="detail-body" set:html={body} />
           <p class="detail-back"><a href={back}><span aria-hidden="true">←</span> 소식 목록으로</a></p>
         </article>
