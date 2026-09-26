@@ -15,8 +15,10 @@ interface Props {
   newWindow: string;
   tag?: string;
   titleLang?: string;
+  /** 첫 화면의 첫 카드(소식 목록): 사진을 먼저 받는다(가장 큰 그림 LCP) */
+  priority?: boolean;
 }
-const { post, title = post.title, alt = post.title, more, go, newWindow, tag = CATEGORY_TAG[post.category], titleLang } = Astro.props;
+const { post, title = post.title, alt = post.title, more, go, newWindow, tag = CATEGORY_TAG[post.category], titleLang, priority = false } = Astro.props;
 const ext = !!post.externalUrl;
 const thumb = post.thumb && hasImg(post.thumb) ? post.thumb.replace(/^\.\/img\//, '') : null;
 ---
@@ -28,7 +30,7 @@ const thumb = post.thumb && hasImg(post.thumb) ? post.thumb.replace(/^\.\/img\//
   rel={ext ? 'noopener noreferrer' : undefined}
 >
   {thumb ? (
-    <div class="nimg"><Img name={thumb} alt={alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" /></div>
+    <div class="nimg"><Img name={thumb} alt={alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} /></div>
   ) : (
     <div class="nimg ncover" data-cover={post.category} aria-hidden="true"><span class="cover-cat">{CATEGORY_TAG[post.category].toLowerCase()}</span></div>
   )}
