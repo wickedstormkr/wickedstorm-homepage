@@ -4,7 +4,7 @@
  * 상시 rAF 루프 없음. 연출(GSAP·Lenis·WebGL)은 2단계에서 따로 불러온다.
  */
 import { initMotion } from './motion';
-import { initStory } from './story/boot';
+import { initStory, storyHooks } from './story/boot';
 import { SOCIAL } from '../config/client';
 
 const doc = document;
@@ -74,6 +74,31 @@ const root = doc.documentElement;
   });
 })();
 
+/* ---------- 맨 위로: 한 화면 넘게 내려가면 보인다. 데스크톱 고정 이야기가 화면을 채우는 동안은 숨긴다(장면 목차·조작이 있다) ---------- */
+(() => {
+  const btn = doc.getElementById('toTop');
+  if (!btn) return;
+  const story = doc.querySelector<HTMLElement>('[data-story]');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    let show = window.scrollY > window.innerHeight * 0.9;
+    if (show && story && root.classList.contains('story-pin')) {
+      const r = story.getBoundingClientRect();
+      if (r.top <= 1 && r.bottom >= window.innerHeight - 1) show = false;
+    }
+    btn.classList.toggle('show', show);
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+  btn.addEventListener('click', () => {
+    // 여러 장면을 거꾸로 돌리지 않게 바로 올라간다(연출 층이 있으면 그 스크롤로)
+    if (storyHooks.scrollTo) storyHooks.scrollTo(0, { immediate: true });
+    else window.scrollTo({ top: 0, behavior: 'auto' });
+    doc.querySelector<HTMLElement>('.brand')?.focus({ preventScroll: true });
+  });
+})();
+
 /* ---------- 움직임 멈춤(오프닝 이야기 조작 안의 버튼) ---------- */
 initMotion([...doc.querySelectorAll<HTMLElement>('[data-motion-btn]')]);
 
@@ -94,7 +119,11 @@ initMotion([...doc.querySelectorAll<HTMLElement>('[data-motion-btn]')]);
   box.setAttribute('aria-label', box.querySelector('p')?.textContent ?? '');
   box.setAttribute('lang', first);
   box.hidden = false;
+  // 맨 위로 버튼이 띠 위로 비켜 서게(chrome.css html.lb-open)
+  root.style.setProperty('--lb-h', `${box.offsetHeight}px`);
+  root.classList.add('lb-open');
   box.querySelector('[data-close]')?.addEventListener('click', () => {
+    root.classList.remove('lb-open');
     box.hidden = true;
     try { localStorage.setItem(KEY, '1'); } catch { /* 무시 */ }
   });

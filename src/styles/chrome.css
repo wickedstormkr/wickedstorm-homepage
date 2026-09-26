@@ -78,3 +78,16 @@ html.nav-open{overflow:hidden}
 .foot-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);min-width:var(--tap);color:var(--muted);transition:color .18s}
 .foot-nav a:hover{color:#fff}
 .site-footer .legal{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--faint);font-family:var(--en)}
+
+/* 맨 위로: 한 화면 넘게 내려가면 오른쪽 아래에 나타난다(site.ts가 .show). 데스크톱 고정 이야기 안에서는 숨긴다(장면 목차·조작이 있다).
+   언어 안내 띠가 떠 있으면 그 위로 비켜 선다(html.lb-open, --lb-h). 숨었을 때는 visibility로 초점·낭독에서도 빠진다 */
+.to-top{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:44;display:grid;place-items:center;
+  width:var(--tap);height:var(--tap);border-radius:50%;border:1px solid var(--line2);background:rgba(14,16,32,.82);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:var(--ink-2);box-shadow:0 10px 30px rgba(0,0,0,.35);
+  visibility:hidden;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s,visibility 0s .25s,border-color .2s,color .2s}
+.to-top.show{visibility:visible;opacity:1;transform:none;transition:opacity .25s,transform .25s,visibility 0s,border-color .2s,color .2s}
+.to-top:hover,.to-top:focus-visible{border-color:var(--line3);color:#fff}
+.to-top svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html.lb-open .to-top{bottom:calc(var(--lb-h,64px) + 28px)}
+html.motion-paused .to-top{transition:none}
+

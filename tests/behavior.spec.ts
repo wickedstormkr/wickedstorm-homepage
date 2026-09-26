@@ -1,5 +1,5 @@
 /**
- * 동작 점검: 움직임 멈춤(KWCAG 6.2.2, 오프닝 이야기 조작 안), 오프닝 이야기(고정·세로 장면, 키보드, 아래로 · 건너뛰기), 언어 안내 띠(자동 이동 없음), 모바일 메뉴, 문의 폼(서버 계약 그대로).
+ * 동작 점검: 움직임 멈춤(KWCAG 6.2.2, 오프닝 이야기 조작 안), 오프닝 이야기(고정·세로 장면, 키보드, 아래로 · 건너뛰기), 맨 위로, 언어 안내 띠(자동 이동 없음), 모바일 메뉴, 문의 폼(서버 계약 그대로).
  * 문의 폼 전송은 실제 서버로 보내지 않고 가로채서 보내는 값만 확인한다.
  */
 import { test, expect } from '@playwright/test';
@@ -103,6 +103,20 @@ test.describe('오프닝 이야기', () => {
     await page.locator('[data-story-skip]').click();
     await expect.poll(() => page.evaluate(() => Math.round(document.getElementById('after-story')!.getBoundingClientRect().top)), { timeout: 8000 }).toBeLessThan(2);
     await expect(page.locator('#after-story')).toBeFocused();
+  });
+
+  test('맨 위로: 한 화면 넘게 내려가면 보이고, 고정된 이야기 안에서는 숨고, 누르면 맨 위로', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('');
+    const btn = page.locator('#toTop');
+    await expect(btn).toBeHidden();
+    await page.evaluate(() => { const st = document.getElementById('story')!; window.scrollTo(0, st.offsetTop + innerHeight * 2); });
+    await page.waitForTimeout(400);
+    await expect(btn).toBeHidden();
+    await page.evaluate(() => window.scrollTo(0, document.getElementById('after-story')!.getBoundingClientRect().top + scrollY + 200));
+    await expect(btn).toBeVisible();
+    await btn.click();
+    await expect.poll(() => page.evaluate(() => Math.round(scrollY)), { timeout: 8000 }).toBe(0);
   });
 
   test('폰: 장면을 세로로 잇고, 화면에 들어오면 그 장면의 움직임을 재생한다', async ({ browser }) => {
