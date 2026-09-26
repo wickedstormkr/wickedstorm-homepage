@@ -33,6 +33,11 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .prod-card p{color:var(--ink-3);font-size:15px;line-height:1.65}
 .prod-card p{margin-bottom:20px}
 .prod-card .feat-badge{margin-top:auto}
+/* 솔루션 사이트 버튼: '자세히 보기'와 사이트 주소는 각각 한 덩어리(글자 사이에서 끊지 않는다). 칸이 모자라면 주소가 다음 줄로.
+   폰은 카드 폭을 다 쓰는 버튼 */
+.prod-links .btn{flex-wrap:wrap;row-gap:0}
+.prod-links .btn>span:not(.sr-only),.prod-links .btn small{white-space:nowrap}
+@media (max-width:699px){.prod-links{align-self:stretch}.prod-links .btn{width:100%;padding:0 20px}}
 @media (max-width:1023px){.prod-cards{grid-template-columns:1fr}}
 
 /* 표준 지도: 위는 기준(CASE), 아래 세 묶음(수집·증명·연동). 수집·증명은 기준을 가리키는 연결선으로 잇는다 */
