@@ -2,6 +2,7 @@
   "eyebrow": "Resources",
   "title": "資料ダウンロード",
   "lead": "展示会でお配りしたカタログと会社案内を、PDFでダウンロードいただけます。",
+  "alsoLabel": "他の言語",
   "cards": [
     {
       "thumb": "thumb-catalog.webp",

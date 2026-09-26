@@ -1,5 +1,5 @@
 ---
-/** ⑧ 자료 받기: 카탈로그·회사소개서 PDF(네 언어). 보고 있는 언어의 파일을 맨 앞에 */
+/** ⑧ 자료 받기: 카탈로그·회사소개서 PDF(네 언어). 보고 있는 언어의 파일이 주 버튼, 다른 언어는 그 아래 한 줄의 보조 링크 */
 import Img from '../components/Img.astro';
 import SecHead from '../components/SecHead.astro';
 import type { HomeContent } from '../lib/content';
@@ -22,9 +22,17 @@ const { lang, t } = Astro.props;
               <h3 set:html={phrase(c.title, lang)} />
               <p set:html={c.text} />
               <div class="res-links">
-                {c.links.map((l) => (
-                  <a href={url(l.file)} target="_blank" rel="noopener" lang={l.lang} hreflang={l.lang} type="application/pdf" data-dl={l.id} class:list={{ cur: l.lang === lang }}>{l.label}</a>
+                {c.links.filter((l) => l.lang === lang).map((l) => (
+                  <a class="res-main" href={url(l.file)} target="_blank" rel="noopener" lang={l.lang} hreflang={l.lang} type="application/pdf" data-dl={l.id}>{l.label}</a>
                 ))}
+                <p class="res-alt">
+                  <span class="res-alt-l">{t.alsoLabel}</span>
+                  <span class="res-alt-links">
+                    {c.links.filter((l) => l.lang !== lang).map((l) => (
+                      <a href={url(l.file)} target="_blank" rel="noopener" lang={l.lang} hreflang={l.lang} type="application/pdf" data-dl={l.id}>{l.label}</a>
+                    ))}
+                  </span>
+                </p>
               </div>
             </div>
           </article>
