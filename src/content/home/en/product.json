@@ -154,7 +154,10 @@
       ],
       "text": "A personalized teaching and learning platform with AI interaction. While learners work on lectures and assignments, AI offers explanations and hints when they need them, and instructors confirm interventions and what is applied.",
       "badges": [
-        "Portfolio · Assignment hints · Competency Map · Classroom AI panel"
+        "Portfolio",
+        "Assignment hints",
+        "Competency Map",
+        "Classroom AI panel"
       ],
       "site": "https://learnhubble.ai/",
       "siteLabel": "learnhubble.ai",

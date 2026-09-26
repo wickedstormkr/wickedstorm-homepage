@@ -154,7 +154,10 @@
       ],
       "text": "Nền tảng giảng dạy và học tập cá nhân hóa, tương tác với AI. Khi người học xem bài giảng và làm bài tập, AI giải thích và gợi ý đúng lúc cần, còn giảng viên xem xét việc can thiệp và áp dụng.",
       "badges": [
-        "Portfolio · Gợi ý bài tập · Bản đồ năng lực · Bảng AI trong lớp học"
+        "Portfolio",
+        "Gợi ý bài tập",
+        "Bản đồ năng lực",
+        "Bảng AI trong lớp học"
       ],
       "site": "https://learnhubble.ai/",
       "siteLabel": "learnhubble.ai",
