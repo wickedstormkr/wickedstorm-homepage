@@ -83,7 +83,7 @@
   "judge": {
     "alert": "Dấu hiệu bất thường từ Lecognizer AI · 42 căn cứ",
     "product": "LearnHubble AI · Giảng viên",
-    "crumb": "Kinh tế đời sống và tài chính · Thiết kế bài giảng",
+    "crumb": "Tài chính cá nhân · Thiết kế bài giảng",
     "segLabel": "Các phần cần chú ý",
     "segments": [
       {
@@ -119,7 +119,7 @@
   },
   "next": {
     "product": "LearnHubble AI · Lớp học",
-    "course": "Kinh tế đời sống và tài chính · Tuần 3",
+    "course": "Tài chính cá nhân · Tuần 3",
     "lecture": "Lãi suất tăng thì ví tiền của tôi sẽ ra sao?",
     "time": "13:25 / 32:00",
     "marksLabel": "Các phần cần chú ý",
