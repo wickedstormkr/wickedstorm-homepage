@@ -84,25 +84,25 @@
   },
   "purposes": {
     "title": "How can we help?",
-    "hint": "Choose a purpose to fill in the first line of your inquiry.",
+    "hint": "Choose a purpose and we’ll suggest what to include in your inquiry.",
     "items": [
       {
         "id": "consult",
         "name": "Adoption consultation",
         "desc": "We walk you through the scope of adopting Lecognizer and LearnHubble AI, integration options, and procurement procedures.",
-        "topic": "We would like to request an adoption consultation."
+        "placeholder": "Your institution and number of users, systems to connect, preferred timeline, etc."
       },
       {
         "id": "demo",
         "name": "Request a demo",
         "desc": "We schedule a product demo tailored to your institution’s environment.",
-        "topic": "We would like to request a product demo."
+        "placeholder": "Preferred dates, number of attendees, products of interest, etc."
       },
       {
         "id": "partner",
         "name": "Partnerships and international",
         "desc": "Let’s discuss overseas partnerships, trade fairs, and joint projects.",
-        "topic": "We would like to discuss a partnership or international collaboration."
+        "placeholder": "Country and company, type of collaboration (distribution, joint projects, trade fairs), etc."
       }
     ]
   }

@@ -22,8 +22,8 @@ import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, RING_NODES, RING_R, ringXY, LEDG
 /** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
 const RING_ORDER = [0, 1, 2, 3, 4];
 
-interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop']; demoTopic: string }
-const { lang, t, hero, loop, demoTopic } = Astro.props;
+interface Props { lang: Lang; t: HomeContent['story']; hero: HomeContent['hero']; loop: HomeContent['product']['loop'] }
+const { lang, t, hero, loop } = Astro.props;
 const sc = t.scenes;
 const num = (i: number) => String(i + 1).padStart(2, '0');
 const nodeName = (id: string) => (t.store.nodes as Record<string, string>)[id];
@@ -182,7 +182,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
         {sc[5].text && <p class="scene-text" set:html={phrase(body(sc[5].text), lang)} />}
         <div class="hero-cta">
           <a class="btn p" href="#contact">{t.next.contact}</a>
-          <a class="btn s" href="#contact" data-topic={demoTopic}>{t.next.demo}</a>
+          <a class="btn s" href="#contact" data-purpose="demo">{t.next.demo}</a>
         </div>
       </div>
       <div class="scene-visual">

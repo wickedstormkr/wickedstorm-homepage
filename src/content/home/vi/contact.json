@@ -84,25 +84,25 @@
   },
   "purposes": {
     "title": "Chúng tôi có thể hỗ trợ gì cho bạn?",
-    "hint": "Chọn mục đích để điền sẵn dòng đầu của nội dung yêu cầu.",
+    "hint": "Chọn mục đích để xem gợi ý nội dung cần ghi.",
     "items": [
       {
         "id": "consult",
         "name": "Tư vấn triển khai",
         "desc": "Hướng dẫn phạm vi triển khai, phương thức kết nối và thủ tục mua sắm của Lecognizer, LearnHubble AI.",
-        "topic": "Tôi muốn được tư vấn triển khai."
+        "placeholder": "Tổ chức và quy mô người dùng, hệ thống cần liên kết, thời gian dự kiến triển khai, v.v."
       },
       {
         "id": "demo",
         "name": "Yêu cầu trình diễn",
         "desc": "Sắp xếp lịch trình diễn sản phẩm phù hợp với môi trường của tổ chức.",
-        "topic": "Tôi muốn yêu cầu trình diễn sản phẩm."
+        "placeholder": "Thời gian mong muốn, số người tham dự, sản phẩm quan tâm, v.v."
       },
       {
         "id": "partner",
         "name": "Đối tác và hợp tác quốc tế",
         "desc": "Trao đổi về đối tác nước ngoài, hội chợ và dự án hợp tác.",
-        "topic": "Tôi muốn trao đổi về đối tác và hợp tác quốc tế."
+        "placeholder": "Quốc gia và công ty, hình thức hợp tác (phân phối, dự án chung, hội chợ), v.v."
       }
     ]
   }
