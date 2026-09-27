@@ -265,6 +265,7 @@ export interface PlaceEnv {
   stage?: BoxMap;
   ledger?: BoxMap;
   chart?: BoxMap;
+  ring?: BoxMap;
   time?: number;
 }
 
@@ -358,8 +359,11 @@ export function place(p: Particle, s: number, out: Float32Array | number[] = [0,
         return p.leaf === ANOMALY_LEAF ? [ch.x0 + p.B[0] * ch.sx, ch.y0 + p.B[1] * ch.sy] : p.T;
       case 'D':
         return p.evidence && env.shift ? [p.D[0] + env.shift[0], p.D[1] + env.shift[1]] : p.D;
-      case 'L':
-        return ringXY(p.La[0] + time * 0.035, p.La[1]);
+      case 'L': {
+        const [x, y] = ringXY(p.La[0] + time * 0.035, p.La[1]);
+        const ring = env.ring ?? IDENTITY;
+        return [ring.x0 + x * ring.sx, ring.y0 + y * ring.sy];
+      }
       default:
         return p[k];
     }

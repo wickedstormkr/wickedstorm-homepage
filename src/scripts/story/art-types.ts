@@ -7,6 +7,8 @@ export interface ArtAnchors {
   ledger?: ArtBox;
   /** 장면 4 이상 탐지 화면의 그래프 칸(무대 px) */
   chart?: ArtBox;
+  /** Scene 6 has its own frame, independent of the CASE tree's layout. */
+  ring?: ArtBox;
 }
 export interface Art {
   /** 무대 크기와 그림 칸(무대 기준 px), 화면에 맞춘 자리 */

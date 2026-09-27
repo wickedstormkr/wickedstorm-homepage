@@ -49,6 +49,10 @@ export class CanvasArt implements Art {
   private rate: Float32Array;
   private primed = false;
   private lastT = 0;
+  private drawCost = 0;
+  private samples = 0;
+  private frameInterval = 0;
+  private lastPaint = 0;
 
   constructor(private canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d');
@@ -58,7 +62,7 @@ export class CanvasArt implements Art {
     this.curves = signalCurves(this.ps);
     this.cur = new Float32Array(this.ps.length * 2);
     // 가까운(밝은) 별일수록 조금 더 빨리 따라온다: 뒤쪽 별이 늦게 흘러와 깊이가 생긴다.
-    // 장면 값 자체가 이미 스크롤을 부드럽게 따라가므로(Lenis·scrub), 여기서는 짧게(시간 상수 0.06~0.11초):
+    // 장면 값은 기본 스크롤을 따르고, 입자만 짧게 보간한다(시간 상수 0.06~0.11초):
     // 더 길면 장면 글·그림보다 입자가 0.3~0.8초 늦게 도착해 굼떠 보인다.
     this.rate = Float32Array.from(this.ps, (p) => 9 + p.z * 5 + p.phase * 0.5);
     // 색: 활동 종류(시청·응답·제출·질문). 기록 칸 색(누가 파랑 · ~하다 보라 · 무엇을 마젠타 · 부가 정보 강조색)도 같은 넷
@@ -67,10 +71,14 @@ export class CanvasArt implements Art {
   }
 
   resize(w: number, h: number, box: ArtBox, a: ArtAnchors = {}) {
+    this.primed = false;
     this.W = w;
     this.H = h;
-    this.canvas.width = Math.round(w * this.dpr);
-    this.canvas.height = Math.round(h * this.dpr);
+    // Moving a tall scene changes anchors, not the canvas backing store.
+    const width = Math.round(w * this.dpr);
+    const height = Math.round(h * this.dpr);
+    if (this.canvas.width !== width) this.canvas.width = width;
+    if (this.canvas.height !== height) this.canvas.height = height;
     this.box = box;
     this.ledger = a.ledger ?? null;
     this.chart = a.chart ?? null;
@@ -81,14 +89,16 @@ export class CanvasArt implements Art {
       stage,
       ledger: this.ledger ? toBox(this.ledger) : undefined,
       chart: this.chart ? toBox(this.chart) : undefined,
+      ring: a.ring ? toBox(a.ring) : undefined,
       shift: a.shift,
     };
     this.draw();
   }
 
   setScene(s: number) {
+    const changed = s !== this.s;
     this.s = s;
-    if (!this.raf) this.draw();
+    if (!this.raf || (this.frameInterval > 0 && changed)) this.draw();
   }
 
   setAmbient(on: boolean) {
@@ -97,8 +107,9 @@ export class CanvasArt implements Art {
       this.t0 = performance.now() - this.clock * 1000;
       const loop = () => {
         if (!this.ambient) { this.raf = 0; return; }
-        this.clock = (performance.now() - this.t0) / 1000;
-        this.draw();
+        const now = performance.now();
+        this.clock = (now - this.t0) / 1000;
+        if (now - this.lastPaint >= this.frameInterval) { this.draw(); this.lastPaint = now; }
         this.raf = requestAnimationFrame(loop);
       };
       this.raf = requestAnimationFrame(loop);
@@ -116,11 +127,12 @@ export class CanvasArt implements Art {
   }
 
   private draw() {
+    const started = performance.now();
     const { ctx, box, dpr, s } = this;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, this.W, this.H);
     this.env.time = this.clock;
-    const base = Math.max(4.5, box.w * 0.0095);
+    const base = Math.max(2.5, box.w * 0.0095);
 
     // 1) 기록 행(칸·채움·눈금·기록 헤드·줄 머리 점·확인 점)과 저장 완료의 빛
     this.drawLedger();
@@ -201,6 +213,24 @@ export class CanvasArt implements Art {
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
+    // Preserve every data point and scroll transition. If drawing itself is
+    // expensive, lower only backing resolution and idle animation frequency.
+    if (!this.frameInterval) {
+      this.drawCost += performance.now() - started;
+      if (++this.samples === 120) {
+        if (this.drawCost / this.samples > 8) {
+          this.dpr = 1;
+          this.frameInterval = 1000 / 30;
+          this.canvas.width = Math.round(this.W);
+          this.canvas.height = Math.round(this.H);
+          this.canvas.dataset.quality = 'economy';
+          this.canvas.dispatchEvent(new Event('story:quality'));
+          this.draw(); // Resizing clears pixels, including when motion is paused.
+        }
+        this.drawCost = 0;
+        this.samples = 0;
+      }
+    }
   }
 
   /** 입자 색: 성운·체계 이후는 활동 종류 색, 기록 칸에 앉는 동안은 그 칸(누가·~하다·무엇을·부가 정보) 색 */

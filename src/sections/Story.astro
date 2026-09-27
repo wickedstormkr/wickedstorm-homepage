@@ -3,10 +3,10 @@
  * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 01 실시간 수집 · 02 국제 표준 · 03 프로파일링 · 04 이상 신호 · 05 사람의 판단 · 06 다음 학기.
  *
  * 기본 층(이 마크업만으로 완결): 장면을 세로로 이어 붙이고, 장면마다 글 설명·HTML 제품 화면·미리 그린 그림(SVG)을 둔다.
- *   폰·태블릿·움직임 줄이기·JS 없음은 이 층으로 본다. 폰에서는 장면이 화면에 들어올 때 그 안의 짧은 움직임만 재생(.play).
- * 연출 층(src/scripts/story/*): 데스크톱에서 화면을 고정하고 스크롤로 장면을 넘긴다(GSAP ScrollTrigger).
+ *   움직임 줄이기·JS 없음은 이 층으로 본다. 같은 그림·설명을 일반 문서로 읽는다.
+ * 연출 층(src/scripts/story/*): 모든 화면에서 같은 진행값으로 장면을 넘긴다. 긴 장면에는 읽을 스크롤 공간을 먼저 둔다.
  *   입자(학습데이터 한 건)가 성운 → 기록 행 → CASE 체계 → 이상 탐지 그래프 → 근거 줄기 → 선순환 고리로 옮겨 간다.
- * 글자는 모두 HTML. 그림 속 이름표는 데스크톱(1024px 이상)에서만, 폰·태블릿은 그림 아래 목록으로.
+ * 글자는 모두 HTML. 그림 칸의 너비에 따라 이름표 또는 번호로 연결된 설명을 배치한다.
  * 제품 화면 창(.fx) 안은 누를 수 없는 그림이다. 누를 링크(특허 원본)는 장면 글에 둔다.
  */
 import Window from '../components/fragments/Window.astro';
@@ -41,13 +41,6 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
   <a class="story-skip" href="#after-story">{t.skip}</a>
   <div class="story-stage">
     <canvas class="story-art" aria-hidden="true"></canvas>
-    <nav class="story-nav" aria-label={t.nav}>
-      <ol>
-        {sc.map((s, i) => (
-          <li><a href={`#scene-${s.id}`} data-go={i} aria-current={i === 0 ? 'step' : undefined}><span class="n" aria-hidden="true">{num(i)}</span><span class="t">{s.beat}</span></a></li>
-        ))}
-      </ol>
-    </nav>
 
     <!-- 장면 1 · 실시간 수집 -->
     <article class="scene scene-moment is-active" id={`scene-${sc[0].id}`} data-scene="0" aria-labelledby="hero-title">
@@ -59,9 +52,6 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <a class="btn p" href="#contact">{hero.ctaPrimary}</a>
           <a class="btn s" href="#product">{hero.ctaSecondary}</a>
         </div>
-        <ul class="hero-trust" aria-label={hero.trustLabel}>
-          {hero.trust.map((i) => <li><a href={url(pagePath(lang, i.page as Page)) + i.hash} set:html={i.html} /></li>)}
-        </ul>
       </div>
       <div class="scene-visual">
         <p class="beat live-beat"><span aria-hidden="true">{num(0)} · </span>{sc[0].beat}</p>
@@ -80,14 +70,26 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           </Window>
         </div>
       </div>
+      <ul class="hero-trust" aria-label={hero.trustLabel}>
+        {hero.trust.map((i) => <li><a href={url(pagePath(lang, i.page as Page)) + i.hash} set:html={i.html} /></li>)}
+      </ul>
     </article>
 
-    <!-- 이야기 조작: 움직임 멈춤 · 아래로(다음 장면) · 이야기 건너뛰기. 데스크톱 고정 무대에서는 오른쪽 아래에 늘 있고(장면 목차와 같은 줄),
-         세로 장면(폰·태블릿)에서는 첫 화면 바로 아래. 링크라 스크립트가 없어도 다음 장면·이야기 뒤로 간다(story/boot.ts가 고정 무대에서 장면 단위로 옮긴다) -->
-    <div class="story-ctrl">
-      <MotionToggle lang={lang} />
-      <a class="sc-btn" href={`#scene-${sc[1].id}`} data-story-next>{t.down}<span class="sr-only"> ({t.downSr})</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6" /></svg></a>
-      <a class="sc-btn" href="#after-story" data-story-skip>{t.skip}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 8 8l4.5-4.5M3.5 8.5 8 13l4.5-4.5" /></svg></a>
+    <!-- 공통 조작: 고정 장면에서는 화면 아래, 일반 문서에서는 첫 장면 뒤에 둔다. -->
+    <div class="story-ui">
+      <span class="story-progress" aria-hidden="true"></span>
+      <nav class="story-nav" aria-label={t.nav}>
+        <ol>
+          {sc.map((s, i) => (
+            <li><a href={`#scene-${s.id}`} data-go={i} aria-label={`${num(i)} ${s.beat}`} aria-current={i === 0 ? 'step' : undefined}><span class="n" aria-hidden="true">{num(i)}</span><span class="t">{s.beat}</span></a></li>
+          ))}
+        </ol>
+      </nav>
+      <div class="story-ctrl">
+        <MotionToggle lang={lang} />
+        <a class="sc-btn" href={`#scene-${sc[1].id}`} data-story-next>{t.down}<span class="sr-only"> ({t.downSr})</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 6 8 10.5 12.5 6" /></svg></a>
+        <a class="sc-btn" href="#after-story" data-story-skip>{t.skip}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5 8 8l4.5-4.5M3.5 8.5 8 13l4.5-4.5" /></svg></a>
+      </div>
     </div>
 
     <!-- 장면 2 · 국제 표준: 흩어진 별이 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 앉아 줄마다 알약이 끝까지 찬다 -->
@@ -134,6 +136,9 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <img class="art-base" src={url('/art/case-tree.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <img class="art-lines" src={url('/art/case-lines.svg')} alt="" width="1600" height="1000" loading="lazy" decoding="async" />
           <p class="art-tag" aria-hidden="true">{t.store.tag}</p>
+          <ol class="case-pins" aria-hidden="true">
+            {LEAVES.map((n, i) => <li class:list={{ hot: n.anomaly }} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{num(i)}</li>)}
+          </ol>
           <ul class="art-labels" aria-hidden="true">
             {CASE_NODES.map((n) => (
               <li class:list={[n.count ? 'leaf' : 'branch', { hot: n.anomaly, root: !n.parent }]} style={`left:${pct(n.x)};top:${pct(n.y)}`} set:html={nodeName(n.id).split(' · ').map((part) => phrase(part, lang)).join('<br>')} />
