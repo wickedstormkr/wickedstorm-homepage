@@ -1,0 +1,18 @@
+# 임시: 리눅스에서만 나는 두 실패의 원인 찾기(병합 전에 지운다)
+name: 임시 진단
+on:
+  push:
+    branches: [fix/ci-after-unified-hero]
+jobs:
+  diag:
+    runs-on: ubuntu-24.04
+    env: { SITE_URL: 'https://wickedstorm.kr', BASE_PATH: / }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npx playwright test tests/behavior.spec.ts tests/responsive.spec.ts -g "폰: 공통|home-en @360" --reporter=line --repeat-each=2

@@ -25,7 +25,7 @@ for (const pg of ALL) {
         const problems = { overflow: r.overflow, outside: r.outside, small: r.small, body: r.body, tap: r.tap, orphan: r.orphan };
         const found = Object.entries(problems).filter(([, v]) => v.length);
         expect(found, JSON.stringify(Object.fromEntries(found), null, 1)).toEqual([]);
-        expect(r.docW, '문서 폭이 화면보다 넓음').toBeLessThanOrEqual(r.vw);
+        expect(r.docW, `문서 폭이 화면보다 넓음: ${r.wide.join(' | ')}`).toBeLessThanOrEqual(r.vw);
       });
     }
   });
