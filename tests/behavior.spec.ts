@@ -1,10 +1,36 @@
 /**
- * 동작 점검: 움직임 멈춤(KWCAG 6.2.2, 오프닝 이야기 조작 안), 오프닝 이야기(고정·세로 장면, 키보드, 아래로 · 건너뛰기), 맨 위로, 언어 안내 띠(자동 이동 없음), 모바일 메뉴, 문의 폼(서버 계약 그대로).
+ * 동작 점검: 움직임 멈춤(KWCAG 6.2.2, 오프닝 이야기 조작 안), 오프닝 이야기(고정·세로 장면, 키보드, 아래로 · 건너뛰기), 맨 위로, 언어 안내 띠(자동 이동 없음), 모바일 메뉴,
+ * 문의 폼(서버 계약 그대로, 목적 · 유입 기록 · GA4 이벤트).
  * 문의 폼 전송은 실제 서버로 보내지 않고 가로채서 보내는 값만 확인한다.
  */
-import { test, expect } from '@playwright/test';
+import { test, expect, type Locator, type Page } from '@playwright/test';
 
 const ENDPOINT = 'https://v6pa5eyigfdkbuzm2rskahdf6y0xfsre.lambda-url.ap-northeast-2.on.aws';
+
+/** 문의 전송을 가로채 보낸 값을 돌려준다(실제 서버로 보내지 않는다) */
+function catchSubmit(page: Page): Promise<Record<string, string>> {
+  return new Promise((resolve) => {
+    page.route(ENDPOINT, async (route) => {
+      resolve(JSON.parse(route.request().postData() ?? '{}'));
+      await route.fulfill({ status: 200, body: '{}', headers: { 'access-control-allow-origin': '*' } });
+    });
+  });
+}
+/** GA4 자리: gtag 호출을 window.__ga에 모은다(점검 빌드에는 GA가 실리지 않는다) */
+async function stubGa(page: Page) {
+  await page.addInitScript(() => {
+    const w = window as unknown as { __ga: unknown[][]; gtag: (...a: unknown[]) => void };
+    w.__ga = [];
+    w.gtag = (...a: unknown[]) => { w.__ga.push(a); };
+  });
+}
+async function fillForm(f: Locator, v: { name: string; company: string; email: string; memo: string }) {
+  await f.locator('[name=userName]').fill(v.name);
+  await f.locator('[name=userCompany]').fill(v.company);
+  await f.locator('[name=userEmail]').fill(v.email);
+  await f.locator('[name=userMemo]').fill(v.memo);
+  await f.locator('[name=checkPrivacy]').check();
+}
 
 test.describe('움직임 멈춤', () => {
   test('버튼이 데이터 아트의 떠다님을 멈추고, 선택을 기억한다', async ({ page }) => {
@@ -202,39 +228,100 @@ test.describe('문의 폼', () => {
     await expect(page.locator('#cform [data-etc]')).toBeHidden();
   });
 
-  test('지금 서버와 같은 값을 보낸다(영문 페이지, 직접 입력)', async ({ page }) => {
-    let body: Record<string, string> | null = null;
-    await page.route(ENDPOINT, async (route) => {
-      body = JSON.parse(route.request().postData() ?? '{}');
-      await route.fulfill({ status: 200, body: '{}', headers: { 'access-control-allow-origin': '*' } });
-    });
+  test('지금 서버와 같은 값 이름으로 보내고, 제목은 [웹 문의 · 언어] 소속 · 이름(영문 페이지, 직접 입력)', async ({ page }) => {
+    const sent = catchSubmit(page);
     await page.goto('en/index.html#contact');
     const f = page.locator('#cform');
-    await f.locator('[name=userName]').fill('Kim');
-    await f.locator('[name=userCompany]').fill('Hanoi Univ');
-    await f.locator('[name=userEmail]').fill('kim@example.com');
+    await fillForm(f, { name: 'Kim', company: 'Hanoi Univ', email: 'kim@example.com', memo: 'Demo please' });
     await f.locator('[name=userTraffic]').selectOption('direct');
     await expect(f.locator('[data-etc]')).toBeVisible();
     await f.locator('[name=userTrafficEtc]').fill('VIETEDU booth');
-    await f.locator('[name=userMemo]').fill('Demo please');
-    await f.locator('[name=checkPrivacy]').check();
     await f.locator('[data-submit]').click();
     await expect(f.locator('[data-status]')).toHaveText('Your inquiry has been received. We will get back to you soon.');
-    expect(body).toEqual({
-      name: 'Kim', affiliation: 'Hanoi Univ', email: 'kim@example.com', inquiry: 'Demo please',
-      userTraffic: 'direct', userTrafficEtc: 'VIETEDU booth',
-      subject: 'Contact Us 문의 접수 [EN]: Kim님 (소속: Hanoi Univ)',
-    });
+    const body = await sent;
+    expect(Object.keys(body).sort()).toEqual(['affiliation', 'email', 'inquiry', 'name', 'subject', 'userTraffic', 'userTrafficEtc']);
+    expect(body).toMatchObject({ name: 'Kim', affiliation: 'Hanoi Univ', email: 'kim@example.com', userTraffic: 'direct', userTrafficEtc: 'VIETEDU booth', subject: '[웹 문의 · EN] Hanoi Univ · Kim' });
+    expect(body.inquiry).toMatch(/^Demo please\n\n-{40}\n\[접수 정보\] 홈페이지가 자동으로 붙인 정보입니다\.\n접수 번호: WS-\d{6}-[A-HJ-NP-Z2-9]{4}\n문의 목적: 고르지 않음\n/);
+    expect(body.inquiry).toContain('문의 언어: 영어 (/en/index.html)');
+    expect(body.inquiry).toContain('유입 경로(응답): 직접 입력: VIETEDU booth');
   });
 
-  test('문의 목적을 고르면 문의사항 첫 줄을 채우고, 다른 목적을 고르면 첫 줄만 바꾼다', async ({ page }) => {
+  test('목적 카드는 라디오: 고르면 안내 글이 바뀌고, 제목 · 접수 정보 · GA4 이벤트에 목적이 실린다(개인정보는 GA4로 가지 않는다)', async ({ page }) => {
+    await stubGa(page);
+    const sent = catchSubmit(page);
     await page.goto('contact.html');
     const memo = page.locator('#cform [name=userMemo]');
-    await page.locator('.purpose[data-topic]').nth(1).click();
-    await expect(memo).toHaveValue('제품 시연을 요청합니다.\n');
-    await memo.press('End');
-    await memo.pressSequentially('10월 둘째 주');
-    await page.locator('.purpose[data-topic]').nth(0).click();
-    await expect(memo).toHaveValue('도입 상담을 요청합니다.\n10월 둘째 주');
+    const demo = page.locator('input[name=purpose][value=demo]');
+    await page.locator('.purpose').nth(1).click();
+    await expect(demo).toBeChecked();
+    await expect(memo).toHaveAttribute('placeholder', '희망 일시, 참석 인원, 관심 제품 등');
+    await demo.press('ArrowRight');
+    await expect(page.locator('input[name=purpose][value=partner]')).toBeChecked();
+    await page.locator('.purpose').nth(1).click();
+    const f = page.locator('#cform');
+    await fillForm(f, { name: '홍길동', company: '서울시교육청', email: 'hong@example.com', memo: '10월 둘째 주 시연 희망' });
+    await f.locator('[name=userTraffic]').selectOption('portal');
+    await f.locator('[data-submit]').click();
+    await expect(f.locator('[data-status]')).toHaveText('문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.');
+    const body = await sent;
+    expect(body.subject).toBe('[웹 문의 · 시연 요청] 서울시교육청 · 홍길동');
+    expect(body.inquiry).toMatch(/^10월 둘째 주 시연 희망\n\n/);
+    expect(body.inquiry).toContain('문의 목적: 시연 요청');
+    expect(body.inquiry).toContain('문의한 곳: 문의 페이지 · 문의 칸에서 바로 (contact#form)');
+    expect(body.inquiry).toMatch(/\n유입 경로\(응답\): 포털 검색$/);
+    const id = /접수 번호: (WS-\d{6}-[A-HJ-NP-Z2-9]{4})/.exec(body.inquiry)?.[1];
+    const ga = await page.evaluate(() => (window as unknown as { __ga: unknown[][] }).__ga);
+    const events = ga.filter((c) => c[0] === 'event');
+    expect(events.map((c) => c[1])).toEqual(['contact_start', 'generate_lead']);
+    expect(events[1][2]).toEqual({ lead_id: id, purpose: 'demo', entry: 'contact#form', form_lang: 'ko', traffic: 'portal' });
+    expect(JSON.stringify(ga)).not.toMatch(/홍길동|hong@example\.com|서울시교육청/);
+    // 접수 뒤: 목적과 안내 글이 처음으로
+    await expect(demo).not.toBeChecked();
+    await expect(memo).toHaveAttribute('placeholder', '도입 목적, 연계 대상, 일정 등');
+  });
+
+  test('다른 페이지의 시연 요청 버튼에서 오면 목적 · 제품 · 누른 곳 · 캠페인을 이어받는다(영문, 박람회 QR)', async ({ page }) => {
+    const sent = catchSubmit(page);
+    await page.goto('en/product.html?utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=booth');
+    await page.locator('#learnhubble a[data-purpose=demo]').click();
+    await page.waitForURL(/\/en\/contact\.html/);
+    await expect(page.locator('input[name=purpose][value=demo]')).toBeChecked();
+    const sel = page.locator('#cform select[name=userTraffic]');
+    expect(await sel.evaluate((s: HTMLSelectElement) => s.options[s.selectedIndex].dataset.auto)).toBe('박람회·행사');
+    const f = page.locator('#cform');
+    await fillForm(f, { name: 'Kim', company: 'Hanoi Univ', email: 'kim@example.com', memo: 'Next week' });
+    await f.locator('[data-submit]').click();
+    const body = await sent;
+    expect(body.subject).toBe('[웹 문의 · 시연 요청 · LearnHubble AI · EN] Hanoi Univ · Kim');
+    expect(body.inquiry).toContain('관심 제품: LearnHubble AI');
+    expect(body.inquiry).toContain('문의한 곳: 제품 · LearnHubble AI 시연 요청 (product#learnhubble)');
+    expect(body.inquiry).toMatch(/이번 유입: fair \/ print \/ vietedu-2026 · booth \(\d{4}-\d{2}-\d{2}, 첫 페이지 \/en\/product\.html\)/);
+    expect(body.inquiry).toContain('유입 경로(응답): 박람회·행사 (방문 경로로 미리 선택됨)');
+    expect(body).toMatchObject({ userTraffic: 'etc', userTrafficEtc: '박람회·행사' });
+  });
+
+  test('주소의 ?purpose=partner로 오면 파트너십이 골라지고 안내 글이 그 언어로 바뀐다(베트남어)', async ({ page }) => {
+    await page.goto('vi/contact.html?purpose=partner');
+    await expect(page.locator('input[name=purpose][value=partner]')).toBeChecked();
+    await expect(page.locator('#cform [name=userMemo]')).toHaveAttribute('placeholder', 'Quốc gia và công ty, hình thức hợp tác (phân phối, dự án chung, hội chợ), v.v.');
+  });
+
+  test('홈의 오프닝 마지막 장면 시연 요청은 같은 페이지 문의의 목적을 고른다', async ({ browser }) => {
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
+    const page = await ctx.newPage();
+    await page.goto('');
+    await page.locator('#scene-next a[data-purpose=demo]').click();
+    await expect(page.locator('#contact input[name=purpose][value=demo]')).toBeChecked();
+    const entry = await page.evaluate(() => JSON.parse(sessionStorage.getItem('ws-entry') ?? '{}'));
+    expect(entry).toMatchObject({ page: 'home', area: 'scene-next', purpose: 'demo' });
+    await ctx.close();
+  });
+
+  test('거쳐 온 사이트로 유입을 나눈다(인스타그램 앱 링크 → 유입 경로 미리 선택)', async ({ page }) => {
+    await page.goto('#contact', { referer: 'https://l.instagram.com/' });
+    const visit = await page.evaluate(() => JSON.parse(sessionStorage.getItem('ws-visit') ?? '{}'));
+    expect(visit).toMatchObject({ src: 'instagram', med: 'social', ref: 'l.instagram.com', land: '/' });
+    const sel = page.locator('#cform select[name=userTraffic]');
+    expect(await sel.evaluate((s: HTMLSelectElement) => s.options[s.selectedIndex].dataset.auto)).toBe('인스타그램');
   });
 });

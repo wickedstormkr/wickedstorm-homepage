@@ -1,7 +1,8 @@
 ---
 /**
  * 헤더 메뉴: 제품 · 표준 · 사례 · 소식 · 회사 · 도입 문의(CLAUDE.md, 설계 '페이지 구성').
- * 메뉴는 언어별 페이지로 간다. 소식은 국문만 있다. 도입 문의는 홈에서는 홈 안 문의로, 다른 페이지에서는 문의 페이지로.
+ * 메뉴는 언어별 페이지로 간다. 도입 문의는 홈에서는 홈 안 문의로, 다른 페이지에서는 문의 페이지로.
+ * data-entry: 문의로 간 버튼이 어디 있었는지(src/scripts/attribution.ts).
  */
 import { getHome, getUi } from '../lib/content';
 import { homePath, newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
@@ -30,7 +31,7 @@ const main = [
   { k: 'company', href: pg('company'), label: c.nav.company },
 ];
 ---
-<header class="site-header" id="hdr">
+<header class="site-header" id="hdr" data-entry="header">
   <div class="hwrap">
     <a class="brand" href={isHome ? '#main' : url(homePath(lang))} aria-label={c.homeLabel}>
       <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" />
@@ -48,7 +49,7 @@ const main = [
     </div>
   </div>
 </header>
-<nav class="drawer" id="drawer" aria-label={c.drawerLabel} hidden>
+<nav class="drawer" id="drawer" aria-label={c.drawerLabel} data-entry="menu" hidden>
   {main.map((m) => <a href={m.href} aria-current={cur(m.k)}>{m.label}</a>)}
   <a href={pg('trust')} aria-current={cur('trust')}>{c.nav.trust}</a>
   <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>

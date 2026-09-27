@@ -207,16 +207,22 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .loc-dl a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px}
 .loc-dl a:hover{text-decoration-color:var(--accent)}
 
-/* 문의 목적 */
-.purposes{margin-bottom:28px}
-.purposes-title{font-size:18px;font-weight:700}
-.purposes-title span{display:block;margin-top:4px;font-size:14.5px;font-weight:400;color:var(--muted)}
-.purpose-grid{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
-.purpose{display:flex;flex-direction:column;gap:6px;height:100%;padding:18px 20px;border-radius:var(--radius-m);background:var(--panel);border:1px solid var(--line);transition:border-color .2s,background .2s}
+/* 문의 목적: 카드 전체가 라디오의 이름표. 오른쪽 위 동그라미가 고름 표시(색만으로 알리지 않게), 키보드 초점은 카드 둘레에 */
+.purposes{margin:0 0 28px;padding:0;border:0;min-width:0}
+.purposes-title{float:left;width:100%;padding:0;font-size:18px;font-weight:700}
+.purposes-hint{clear:both;margin-top:4px;font-size:15px;color:var(--muted)}
+.purpose-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.purpose{position:relative;display:flex;flex-direction:column;gap:6px;height:100%;padding:18px 52px 18px 20px;border-radius:var(--radius-m);background:var(--panel);border:1px solid var(--line);cursor:pointer;transition:border-color .2s,background .2s}
 .purpose:hover{border-color:var(--line3)}
-.purpose.is-on{border-color:rgba(163,177,255,.7);background:rgba(124,77,255,.12)}
+.purpose input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.purpose-mark{position:absolute;top:18px;right:18px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line3);transition:border-color .2s}
+.purpose-mark::after{content:"";position:absolute;inset:3.5px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .2s}
+.purpose input:checked~.purpose-mark{border-color:var(--accent)}
+.purpose input:checked~.purpose-mark::after{transform:scale(1)}
+.purpose:has(input:checked){border-color:rgba(163,177,255,.7);background:rgba(124,77,255,.12)}
+.purpose:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .purpose b{font-size:16.5px}
-.purpose span{font-size:15px;line-height:1.6;color:var(--ink-3)}
+.purpose-desc{font-size:15px;line-height:1.6;color:var(--ink-3)}
 @media (max-width:1023px){.purpose-grid{grid-template-columns:1fr}}
 
 /* 페이지는 홈보다 섹션 간격을 좁게(한 주제 안의 이어지는 구획) */

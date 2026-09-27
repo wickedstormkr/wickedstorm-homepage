@@ -1,8 +1,9 @@
 /**
  * 모든 페이지 공통 스크립트(첫 로드 JS 예산 90KB gzip 안에서 아주 작게 유지).
- * 헤더 숨김/배경, 모바일 메뉴, 움직임 멈춤, 언어 안내 띠, 채널 링크, 연혁 펼치기, 파이프라인 루프 정지.
+ * 헤더 숨김/배경, 모바일 메뉴, 움직임 멈춤, 언어 안내 띠, 채널 링크, 연혁 펼치기, 파이프라인 루프 정지, 유입 기억(attribution.ts).
  * 상시 rAF 루프 없음. 연출(GSAP·Lenis·WebGL)은 2단계에서 따로 불러온다.
  */
+import './attribution';
 import { initMotion } from './motion';
 import { initStory, storyHooks } from './story/boot';
 import { SOCIAL } from '../config/client';
