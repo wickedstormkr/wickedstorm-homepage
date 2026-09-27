@@ -38,7 +38,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .prod-links .btn{flex-wrap:wrap;row-gap:0}
 .prod-links .btn>span:not(.sr-only),.prod-links .btn small{white-space:nowrap}
 @media (max-width:699px){.prod-links{align-self:stretch}.prod-links .btn{width:100%;padding:0 20px}}
-@media (max-width:1023px){.prod-cards{grid-template-columns:1fr}}
+@media (max-width:1023px){.prod-cards{grid-template-columns:minmax(0,1fr)}}
 
 /* 표준 지도: 위는 기준(CASE), 아래 세 묶음(수집·증명·연동). 수집·증명은 기준을 가리키는 연결선으로 잇는다 */
 .std-map{margin-top:44px}
@@ -87,7 +87,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .std-legend .dot{display:inline-block}
 /* 태블릿·폰: 묶음을 세로로 쌓으면 연결선이 기준 띠에 닿지 않으므로, 선 대신 묶음 안의 이름표로 알린다 */
 @media (max-width:1023px){
-  .std-lanes{grid-template-columns:1fr;gap:12px;margin-top:12px}
+  .std-lanes{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
   .lane-desc,.std-lane .lane-desc{min-height:0;font-size:15px}
   .std-lane.ref::before,.std-lane.ref::after{display:none}
   .lane-ref{position:static;display:inline-block;margin-bottom:10px;padding:2px 8px;border-radius:5px;background:rgba(163,177,255,.12);font-size:13px}
@@ -98,7 +98,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 @media (max-width:699px){
   .std-base{padding:20px 18px}
   .std-lane{padding:20px 18px}
-  .lane-items{grid-template-columns:1fr}
+  .lane-items{grid-template-columns:minmax(0,1fr)}
 }
 
 /* xAPI ⇄ Caliper 대응표 */
@@ -135,7 +135,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .case-dl dt{font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:.02em}
 .case-dl dd{margin:0;color:var(--muted);font-size:15px;line-height:1.65}
 .case-card .rtags{margin-top:auto;padding-top:20px}
-@media (max-width:1023px){.case-grid{grid-template-columns:1fr}}
+@media (max-width:1023px){.case-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* 페이지 공통 */
 .page-head-band{padding-bottom:0}
@@ -150,10 +150,10 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .act-date{font-family:var(--en);font-size:13.5px;font-weight:700;color:var(--muted)}
 .act-list a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px}
 .act-list a:hover{color:#fff;text-decoration-color:var(--accent)}
-@media (max-width:699px){.act-list li{grid-template-columns:1fr;gap:2px}}
+@media (max-width:699px){.act-list li{grid-template-columns:minmax(0,1fr);gap:2px}}
 .case-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px}
 .case-card.full{scroll-margin-top:calc(var(--header-h) + 20px)}
-@media (max-width:699px){.case-grid.two{grid-template-columns:1fr}.case-card .case-h{font-size:19px}}
+@media (max-width:699px){.case-grid.two{grid-template-columns:minmax(0,1fr)}.case-card .case-h{font-size:19px}}
 
 /* 문의 띠 */
 .cta-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;padding:clamp(28px,4vw,48px);border-radius:var(--radius-l);
@@ -186,7 +186,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .trust-meta dd{margin:0;color:var(--ink-2);font-weight:600}
 .trust-links{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:auto;padding-top:14px}
 .trust-links a{display:inline-flex;align-items:center;min-height:44px;font-size:14.5px;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:4px}
-@media (max-width:1023px){.trust-grid,.trust-grid.docs{grid-template-columns:1fr}}
+@media (max-width:1023px){.trust-grid,.trust-grid.docs{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:699px){.trust-card{flex-direction:column}.trust-doc{width:min(220px,70%)}}
 
 /* 회사 */
@@ -194,7 +194,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .miles li{display:grid;align-content:start;gap:6px;padding:20px 20px 20px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--ink-3)}
 .miles-y{font-family:var(--en);font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;width:fit-content}
 @media (max-width:1023px){.miles{grid-template-columns:1fr 1fr}}
-@media (max-width:699px){.miles{grid-template-columns:1fr}}
+@media (max-width:699px){.miles{grid-template-columns:minmax(0,1fr)}}
 .careers-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 32px;margin-top:32px;padding:24px 26px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
 .careers-row p{max-width:60em;color:var(--ink-3);font-size:15.5px;line-height:1.7}
 .careers-row b{margin-right:8px;font-family:var(--en-caps);letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--accent)}
@@ -221,7 +221,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .purpose:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .purpose b{font-size:16.5px}
 .purpose-desc{font-size:15px;line-height:1.6;color:var(--ink-3)}
-@media (max-width:1023px){.purpose-grid{grid-template-columns:1fr}}
+@media (max-width:1023px){.purpose-grid{grid-template-columns:minmax(0,1fr)}}
 
 /* 페이지는 홈보다 섹션 간격을 좁게(한 주제 안의 이어지는 구획) */
 .page .band{padding:clamp(48px,6vw,88px) 0}

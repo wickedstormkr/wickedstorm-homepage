@@ -166,14 +166,21 @@ test.describe('오프닝 이야기', () => {
       addEventListener('scroll', (e) => w.__scrolls!.push(`${(e.target as Element).nodeName ?? 'doc'}:${Math.round(scrollY)}`), { capture: true, passive: true });
     });
     const cdp = await ctx.newCDPSession(page);
-    await cdp.send('Input.synthesizeScrollGesture', { x: 200, y: 350, yDistance: 250, speed: 600, gestureSourceType: 'touch' });
+    // 손가락으로 끌어 올리기: 실제 터치 이벤트(시작 · 이동 · 끝). synthesizeScrollGesture는 리눅스 헤드리스에서 스크롤을 만들지 않았다
+    const point = (y: number) => [{ x: 200, y }];
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point(300) });
+    for (let i = 1; i <= 10; i++) {
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: point(300 + i * 25) });
+      await page.waitForTimeout(16);
+    }
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
     // 실패하면 손가락 아래 요소와 그 조상의 touch-action · 스크롤 상태를 함께 적는다(리눅스 CI에서만 나던 실패의 원인 찾기)
     const why = () => page.evaluate(() => {
       const chain: string[] = [];
-      for (let el = document.elementFromPoint(200, 350); el; el = el.parentElement) {
+      for (let el = document.elementFromPoint(200, 300); el; el = el.parentElement) {
         const cs = getComputedStyle(el);
         const scrolls = el.scrollHeight > el.clientHeight + 1 && /auto|scroll/.test(cs.overflowY);
-        if (cs.touchAction !== 'auto' || scrolls || el === document.elementFromPoint(200, 350)) chain.push(`${el.nodeName.toLowerCase()}${el.id ? '#' + el.id : ''}.${[...el.classList].join('.')} ta=${cs.touchAction} oy=${cs.overflowY}${scrolls ? ' scrolls' : ''}`);
+        if (cs.touchAction !== 'auto' || scrolls || el === document.elementFromPoint(200, 300)) chain.push(`${el.nodeName.toLowerCase()}${el.id ? '#' + el.id : ''}.${[...el.classList].join('.')} ta=${cs.touchAction} oy=${cs.overflowY}${scrolls ? ' scrolls' : ''}`);
       }
       const w = window as Window & { __scrolls?: string[] };
       return `scrollY=${scrollY} max=${document.documentElement.scrollHeight - innerHeight} vv=${visualViewport?.scale} events=${w.__scrolls?.slice(0, 8).join(',')} | ${chain.join(' < ')}`;

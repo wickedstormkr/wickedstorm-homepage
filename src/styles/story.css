@@ -164,9 +164,9 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 .scene-signal .fx-anom{width:min(100%,680px);margin-left:auto}
 
 /* ---- 장면 5: 신호 도착 → 교수자 화면(장면의 한 부분이라 글과 균형 맞게 작게) ---- */
-.judge-stack{display:grid;gap:12px;width:100%;max-width:520px;margin-left:auto}
+.judge-stack{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%;max-width:520px;margin-left:auto}
 .signal-notice{justify-self:start;display:flex;align-items:center;gap:10px;max-width:100%}
-.signal-alert{position:relative;display:flex;align-items:baseline;gap:10px;min-width:0;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:rgba(255,255,255,.035);font-size:13px;font-weight:600;line-height:1.5;color:var(--ink);white-space:nowrap}
+.signal-alert{position:relative;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;min-width:0;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:rgba(255,255,255,.035);font-size:13px;font-weight:600;line-height:1.5;color:var(--ink);white-space:nowrap}
 .signal-alert .pname{font-size:inherit;line-height:inherit}
 .signal-evidence{color:var(--muted)}
 .notification-icon{position:relative;display:block;flex:none;width:32px;aspect-ratio:1}
@@ -191,7 +191,7 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 
 /* Composition responds to the available container, never disables the renderer. */
 @container story (width < 960px){
-  .scene{grid-template-columns:1fr;gap:32px;max-width:720px}
+  .scene{grid-template-columns:minmax(0,1fr);gap:32px;max-width:720px}
   .scene-moment{min-height:auto}
   .scene-moment .scene-copy,.scene-moment .scene-visual,.scene-moment .hero-trust{grid-area:auto;order:0}
   .scene-copy{display:block}
@@ -200,10 +200,10 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 @container story (width < 600px){
   .scene{padding:56px 0}
   .scene-moment{padding-top:calc(var(--header-h) + 28px)}
-  .hero-trust{display:grid;grid-template-columns:1fr;justify-content:start}
+  .hero-trust{display:grid;grid-template-columns:minmax(0,1fr);justify-content:start}
   .scene .hero-cta{margin-top:24px}
   .signal-notice{gap:8px}
-  .signal-alert{gap:7px;padding:9px 10px;font-size:12.5px}
+  .signal-alert{gap:2px 7px;padding:9px 10px;font-size:12.5px}
 }
 .case-pins{display:none;list-style:none}
 @container visual (width < 560px){
@@ -252,7 +252,7 @@ html.story-pin .scene-visual{display:block;min-width:0}
 html.story-pin .scene-moment .eyebrow{margin-bottom:20px}
 html.story-pin .hero-lead{margin-top:22px}
 html.story-pin .hero-trust{margin-top:20px}
-.scene-statement{grid-template-columns:1fr;align-content:center;justify-items:center;gap:28px;text-align:center}
+.scene-statement{grid-template-columns:minmax(0,1fr);align-content:center;justify-items:center;gap:28px;text-align:center}
 .scene-statement .scene-visual{width:100%}
 .scene-statement .scene-copy{max-width:1040px}
 .scene-statement .ledger{width:min(100%,1040px);margin-inline:auto;text-align:left}
@@ -262,7 +262,7 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   .scene-statement .ledger-std{justify-content:flex-start}
 }
 @container stage (width < 960px){
-  html.story-pin .scene{grid-template-columns:1fr;align-content:center;gap:28px;padding-inline:max(24px,calc((100% - 672px) / 2))}
+  html.story-pin .scene{grid-template-columns:minmax(0,1fr);align-content:center;gap:28px;padding-inline:max(24px,calc((100% - 672px) / 2))}
   html.story-pin .scene-statement{text-align:left}
   html.story-pin .scene-statement .scene-visual{order:0}
   html.story-pin .scene-statement .ledger-std{justify-content:flex-start}
