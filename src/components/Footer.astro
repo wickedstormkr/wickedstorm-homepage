@@ -1,6 +1,6 @@
 ---
 import { getHome } from '../lib/content';
-import { pagePath, type Lang, type Page } from '../lib/i18n';
+import { newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url, withBase } from '../lib/url';
 
 interface Props { lang: Lang; homeHref?: string }
@@ -21,7 +21,7 @@ const pg = (p: Page) => url(pagePath(lang, p));
         <a href={pg('product')}>{c.nav.product}</a>
         <a href={pg('standards')}>{c.nav.standards}</a>
         <a href={pg('cases')}>{c.nav.cases}</a>
-        <a href={url('/news.html')}>{c.nav.news}</a>
+        <a href={url(newsPath(lang))}>{c.nav.news}</a>
         <a href={pg('company')}>{c.nav.company}</a>
         <a href={pg('trust')}>{c.nav.trust}</a>
         <a href={`${pg('contact')}#resources`}>{c.nav.resources}</a>

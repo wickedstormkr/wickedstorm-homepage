@@ -5,7 +5,7 @@ import PageHead from '../components/PageHead.astro';
 import StdMap from '../components/StdMap.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { getHome } from '../lib/content';
-import type { Lang } from '../lib/i18n';
+import { localHref, type Lang } from '../lib/i18n';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang }
@@ -65,7 +65,7 @@ const ident = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
       <h2 class="sub-title" id="std-act-title">{t.activity.title}</h2>
       <ol class="act-list">
         {t.activity.items.map((a) => (
-          <li><span class="act-date tnum">{a.date}</span><a href={url(a.href)}>{a.text}</a></li>
+          <li><span class="act-date tnum">{a.date}</span><a href={url(localHref(lang, a.href))}>{a.text}</a></li>
         ))}
       </ol>
     </div>

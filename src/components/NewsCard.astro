@@ -1,42 +1,41 @@
 ---
-/** 소식 카드(홈 '최근 소식'과 소식 목록 공용). 썸네일이 없으면 카테고리 커버 */
+/** 소식 카드(홈 '최근 소식'과 소식 목록 공용). 썸네일이 없으면 카테고리 커버. 번역이 없는 글은 제목에 lang="ko" */
 import Img from './Img.astro';
-import { CATEGORY_TAG, postPath, type Post } from '../lib/posts';
+import { CATEGORY_TAG, postPath, type LocalPost } from '../lib/posts';
 import { hasImg } from '../lib/images';
+import type { Lang } from '../lib/i18n';
 import { url } from '../lib/url';
 
 interface Props {
-  post: Post;
-  /** 언어별 제목·대체 글·버튼 글(없으면 국문) */
-  title?: string;
-  alt?: string;
+  post: LocalPost;
+  /** 이 카드가 놓인 페이지의 언어(기사 주소를 고른다) */
+  lang: Lang;
   more: string;
   go: string;
   newWindow: string;
-  tag?: string;
-  titleLang?: string;
   /** 첫 화면의 첫 카드(소식 목록): 사진을 먼저 받는다(가장 큰 그림 LCP) */
   priority?: boolean;
 }
-const { post, title = post.title, alt = post.title, more, go, newWindow, tag = CATEGORY_TAG[post.category], titleLang, priority = false } = Astro.props;
+const { post, lang, more, go, newWindow, priority = false } = Astro.props;
 const ext = !!post.externalUrl;
 const thumb = post.thumb && hasImg(post.thumb) ? post.thumb.replace(/^\.\/img\//, '') : null;
+const titleLang = post.contentLang !== lang ? post.contentLang : undefined;
 ---
 <a
   class="ncard"
-  href={ext ? post.externalUrl! : url(postPath(post))}
+  href={ext ? post.externalUrl! : url(postPath(post, lang))}
   data-cat={post.category}
   target={ext ? '_blank' : undefined}
   rel={ext ? 'noopener noreferrer' : undefined}
 >
   {thumb ? (
-    <div class="nimg"><Img name={thumb} alt={alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} /></div>
+    <div class="nimg"><Img name={thumb} alt={post.alt} sizes="(min-width: 1024px) 360px, (min-width: 700px) 30vw, 82vw" loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : undefined} /></div>
   ) : (
     <div class="nimg ncover" data-cover={post.category} aria-hidden="true"><span class="cover-cat">{CATEGORY_TAG[post.category].toLowerCase()}</span></div>
   )}
   <div class="nbody">
-    <div class="nmeta"><span class="ntag">{tag}</span> <time datetime={post.date.replace(/\./g, '-')}>{post.date}</time></div>
-    <h3 lang={titleLang} set:html={title} />
+    <div class="nmeta"><span class="ntag">{CATEGORY_TAG[post.category]}</span> <time datetime={post.date.replace(/\./g, '-')}>{post.date}</time></div>
+    <h3 lang={titleLang} set:html={post.title} />
     <span class="nmore">{ext ? go : more} <i aria-hidden="true">{ext ? '↗' : '→'}</i>{ext && <span class="sr-only">{newWindow}</span>}</span>
   </div>
 </a>
