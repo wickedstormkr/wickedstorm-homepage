@@ -20,6 +20,8 @@ export interface AuditResult {
   body: string[];
   tap: string[];
   orphan: string[];
+  /** 문서가 화면보다 넓을 때만: 오른쪽 끝이 화면 밖인 요소(보이지 않는 요소 포함, 넘침 판정의 1px 여유 없이) */
+  wide: string[];
 }
 
 export function audit(opts: { touch: boolean }): AuditResult {
@@ -59,13 +61,22 @@ export function audit(opts: { touch: boolean }): AuditResult {
     }
     return false;
   };
-  const out: AuditResult = { vw, docW: document.documentElement.scrollWidth, overflow: [], outside: [], small: [], body: [], tap: [], orphan: [] };
+  const out: AuditResult = { vw, docW: document.documentElement.scrollWidth, overflow: [], outside: [], small: [], body: [], tap: [], orphan: [], wide: [] };
 
   /* 1) 가로 넘침 */
   for (const el of document.querySelectorAll('body *')) {
     if (!vis(el)) continue;
     const r = el.getBoundingClientRect();
     if ((r.right > vw + 1 || r.left < -1) && !inScroller(el)) out.overflow.push(`${name(el)} L${Math.round(r.left)} R${Math.round(r.right)}`);
+  }
+
+  // 1px 여유 안에서 넘치거나 숨은 요소가 문서를 넓히면 위 목록에 안 나온다. 원인을 찾을 수 있게 따로 적는다
+  if (out.docW > vw) {
+    for (const el of document.querySelectorAll('body *')) {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.right > vw && !inScroller(el)) out.wide.push(`${name(el)} R${r.right.toFixed(2)} W${r.width.toFixed(2)}`);
+    }
+    out.wide = out.wide.slice(0, 12);
   }
 
   /* 글 칸(leaf block): 글자를 직접 가진 블록 요소. 안쪽 블록 요소의 글자는 그 요소가 따로 본다 */

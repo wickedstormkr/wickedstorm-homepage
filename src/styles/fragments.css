@@ -90,7 +90,7 @@
 .fx-segs b{font-size:14px;line-height:1.4;text-wrap:balance;color:var(--fx-ink)}
 .fx-segs small{font-size:12.5px;line-height:1.4;color:var(--fx-muted)}
 /* 이야기 장면 5: 신호가 온 구간 하나만, 한 줄로(근거는 오른쪽 끝) */
-.fx-design.compact .fx-segs{grid-template-columns:1fr}
+.fx-design.compact .fx-segs{grid-template-columns:minmax(0,1fr)}
 .fx-design.compact .fx-seg-t{flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:8px}
 .fx-design.compact .fx-segs small{margin-left:auto}
 @media (min-width:700px){.fx-design.compact .fx-segs li,.fx-design.compact .fx-seg-t{flex-wrap:nowrap}.fx-design.compact .fx-segs small{white-space:nowrap}}
@@ -183,9 +183,9 @@
   .fx-bar{flex-wrap:wrap;row-gap:2px}
   .fx-crumb{flex-basis:100%;order:3;padding-left:59px;white-space:normal;overflow:visible}
   .fx-body{padding:14px}
-  .fx-case-grid,.fx-learn-grid,.fx-design:not(.compact) .fx-ai{grid-template-columns:1fr}
+  .fx-case-grid,.fx-learn-grid,.fx-design:not(.compact) .fx-ai{grid-template-columns:minmax(0,1fr)}
   .fx-case-grid>.fx-ai{margin-top:0}
-  .fx-segs:not(.mini){grid-template-columns:1fr}
+  .fx-segs:not(.mini){grid-template-columns:minmax(0,1fr)}
   .fx-lecture{border-right:0;border-bottom:1px solid var(--fx-line)}
   .fx-chart{aspect-ratio:1.9}
   .fx-legend{display:none}

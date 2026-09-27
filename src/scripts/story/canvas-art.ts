@@ -52,6 +52,8 @@ export class CanvasArt implements Art {
   private lastT = 0;
   private drawCost = 0;
   private samples = 0;
+  /** 첫 판정은 빨리(12프레임): 느린 기기가 2초 동안 무거운 프레임을 그리지 않게. 그 뒤는 120프레임마다 */
+  private checked = false;
   private frameInterval = 0;
   private lastPaint = 0;
 
@@ -233,7 +235,8 @@ export class CanvasArt implements Art {
     // expensive, lower only backing resolution and idle animation frequency.
     if (!this.frameInterval) {
       this.drawCost += performance.now() - started;
-      if (++this.samples === 120) {
+      if (++this.samples === (this.checked ? 120 : 12)) {
+        this.checked = true;
         if (this.drawCost / this.samples > 8) {
           this.dpr = 1;
           this.frameInterval = 1000 / 30;

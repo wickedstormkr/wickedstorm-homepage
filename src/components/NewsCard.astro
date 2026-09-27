@@ -4,6 +4,7 @@ import Img from './Img.astro';
 import { CATEGORY_TAG, postPath, type LocalPost } from '../lib/posts';
 import { hasImg } from '../lib/images';
 import type { Lang } from '../lib/i18n';
+import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 
 interface Props {
@@ -35,7 +36,7 @@ const titleLang = post.contentLang !== lang ? post.contentLang : undefined;
   )}
   <div class="nbody">
     <div class="nmeta"><span class="ntag">{CATEGORY_TAG[post.category]}</span> <time datetime={post.date.replace(/\./g, '-')}>{post.date}</time></div>
-    <h3 lang={titleLang} set:html={post.title} />
+    <h3 lang={titleLang} set:html={phrase(post.title, post.contentLang)} />
     <span class="nmore">{ext ? go : more} <i aria-hidden="true">{ext ? '↗' : '→'}</i>{ext && <span class="sr-only">{newWindow}</span>}</span>
   </div>
 </a>

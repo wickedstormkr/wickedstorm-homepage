@@ -10,6 +10,7 @@ import LecognizerInsight from '../components/LecognizerInsight.astro';
 import { getHome, getUi } from '../lib/content';
 import { pagePath, type Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
+import { sents } from '../lib/sents';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang }
@@ -32,7 +33,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
       <div class="sec-head">
         <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={p.eyebrow} /></p>
         <h2 class="h-lg" id="loop-title" set:html={phrase(p.title, lang)} />
-        <p class="sec-lead" set:html={p.lead} />
+        <p class="sec-lead" set:html={phrase(sents(p.lead), lang)} />
       </div>
       <ul class="loop-cards">
         {p.loop.notes.map((n) => (
@@ -43,7 +44,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
           </li>
         ))}
       </ul>
-      <p class="note" set:html={p.loop.caption} />
+      <p class="note" set:html={phrase(sents(p.loop.caption), lang)} />
       {p.features.map((f, i) => (
         <div class:list={['feature', { reverse: f.reverse }]} id={ids[i]}>
           <div class="feat-copy">
@@ -59,7 +60,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
             : <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>}
         </div>
       ))}
-      <p class="note" set:html={p.note} />
+      <p class="note" set:html={phrase(sents(p.note), lang)} />
     </div>
   </section>
 

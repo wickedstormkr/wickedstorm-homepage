@@ -178,7 +178,7 @@
   "cardsTitle": "Mô tả từng chuẩn",
   "cardsLead": "Mỗi chuẩn đều ghi rõ công dụng, trạng thái, sản phẩm áp dụng và liên kết đến đặc tả chính thức.",
   "mapping": {
-    "title": "xAPI ⇄ Caliper: cùng một dữ liệu học tập, hai cách biểu diễn",
+    "title": "xAPI ↔ Caliper: cùng một dữ liệu học tập, hai cách biểu diễn",
     "lead": "Lecognizer tiếp nhận cả xAPI và 1EdTech Caliper, đồng thời chuyển đổi qua lại giữa hai chuẩn. Dưới đây là ví dụ đối chiếu cho thấy mỗi trường của một bản ghi dữ liệu học tập nằm ở đâu trong hai chuẩn.",
     "cols": [
       "Ý nghĩa",

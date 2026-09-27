@@ -18,7 +18,7 @@ const nav = h.common.nav;
   <section class="band page-top page-head-band" aria-labelledby="page-title">
     <div class="wrap">
       <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-        <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
+        <p class="co-slogan"><span>{t.slogan.label}</span><Fragment set:html={phrase(t.slogan.text, lang)} /></p>
       </PageHead>
     </div>
   </section>

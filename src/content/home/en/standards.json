@@ -178,7 +178,7 @@
   "cardsTitle": "Standards in detail",
   "cardsLead": "For each standard, we list what it is for, its status, and the products that use it, with a link to the official specification.",
   "mapping": {
-    "title": "xAPI ⇄ Caliper: the same learning data in two forms",
+    "title": "xAPI ↔ Caliper: the same learning data in two forms",
     "lead": "Lecognizer accepts both xAPI and 1EdTech Caliper and converts between them. The example below shows where each field of one piece of learning data goes in each standard.",
     "cols": [
       "Meaning",

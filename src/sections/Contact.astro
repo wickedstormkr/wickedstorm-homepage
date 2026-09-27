@@ -3,6 +3,8 @@
 import SecHead from '../components/SecHead.astro';
 import type { HomeContent, UiText } from '../lib/content';
 import type { Lang } from '../lib/i18n';
+import { phrase, phraseText } from '../lib/phrase';
+import { sents } from '../lib/sents';
 import { withBase } from '../lib/url';
 
 interface Props { lang: Lang; t: HomeContent['contact']; ui: UiText; page?: boolean }
@@ -16,7 +18,7 @@ const f = t.form;
     {/* 문의 목적: 폼의 라디오(form="cform"). 고르면 문의사항 안내 글이 바뀌고, 메일 제목과 분석에 목적이 실린다 */}
     <fieldset class="purposes" aria-describedby="purpose-hint">
       <legend class="purposes-title">{t.purposes.title}</legend>
-      <p class="purposes-hint" id="purpose-hint">{t.purposes.hint}</p>
+      <p class="purposes-hint" id="purpose-hint" set:html={phraseText(t.purposes.hint, lang)} />
       <div class="purpose-grid">
         {t.purposes.items.map((p) => (
           <label class="purpose">
@@ -33,7 +35,7 @@ const f = t.form;
         <span class="lab">{t.info.telLabel}</span><a href="tel:0222051470">02-2205-1470</a>
         <span class="lab">{t.info.emailLabel}</span><a href="mailto:manager@wickedstorm.kr">manager@wickedstorm.kr</a>
         <span class="lab">{t.info.addressLabel}</span><p set:html={t.info.address} />
-        <p class="ci-note" set:html={t.info.note} />
+        <p class="ci-note" set:html={phrase(sents(t.info.note), lang)} />
       </div>
       <form class="cform" id="cform" novalidate data-msg={JSON.stringify(ui.form)}>
         <noscript><p set:html={f.noscript} /></noscript>

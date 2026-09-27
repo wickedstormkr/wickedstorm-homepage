@@ -11,6 +11,7 @@ import CtaBand from '../components/CtaBand.astro';
 import { getHome } from '../lib/content';
 import { img } from '../lib/images';
 import { localHref, pagePath, type Lang, type Page as P } from '../lib/i18n';
+import { phraseText } from '../lib/phrase';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang }
@@ -64,7 +65,7 @@ const href = (l: { href?: string; page?: string }) => (l.page ? url(pagePath(lan
     </section>
   ))}
   <section class="band" aria-label={t.eyebrow}>
-    <div class="wrap"><p class="note">{t.note}</p></div>
+    <div class="wrap"><p class="note" set:html={phraseText(t.note, lang)} /></div>
   </section>
   <CtaBand lang={lang} />
 </Page>

@@ -106,9 +106,10 @@ export function initStory() {
     }
   });
   const ready = () => {
-    layout.refresh();
+    // 글꼴이 load 때 적용되어 크기가 바뀌면 ResizeObserver · fonts.ready가 다음 프레임에 다시 잰다.
+    // 여기서 바로 재면 그 전에 레이아웃을 한 번 더 강제해 폰에서 긴 작업(TBT)이 된다. 장면 주소로 들어올 때만 바로 잰다
     const deep = scenes.findIndex((s) => `#${s.id}` === location.hash);
-    if (deep > 0 && layout.enabled) go(deep, 0, true);
+    if (deep > 0 && layout.enabled) { layout.refresh(); go(deep, 0, true); }
     // Load the common renderer after the first paint, on phones as well as desktops.
     requestAnimationFrame(() => { void loadEnhance(); });
   };
