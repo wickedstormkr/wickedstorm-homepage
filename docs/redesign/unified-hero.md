@@ -10,7 +10,7 @@
 
 ResizeObserver는 무대, 장면, 조작 영역을 관찰한다. 크기가 바뀌면 현재 장면의 진행률과 읽기 비율을 새 스크롤 구간에 대응시킨다. 이야기 아래에 있는 사용자는 이야기 높이 변화만큼 보정해 같은 본문 위치를 유지한다.
 
-`story/enhance.ts`는 같은 진행값을 받아 글과 그림을 표시한다. DOM의 최종 배치를 측정하고 읽기 이동량을 반영해 Canvas 입자가 기록 행·CASE·그래프·고리의 실제 위치에 맞춰 도착한다. 고리는 CASE 그림과 별도의 좌표 매핑을 갖는다. 창 너비에 따른 연출 엔진 재생성은 없다.
+`story/enhance.ts`는 같은 진행값을 받아 글과 그림을 표시한다. DOM의 최종 배치를 측정하고 읽기 이동량을 반영해 Canvas 입자가 기록 행·CASE·그래프·알림 종·고리의 실제 위치에 맞춰 도착한다. 알림 종은 정사각형, 고리는 별도의 그림 칸을 기준으로 매핑한다. 창 너비에 따른 연출 엔진 재생성은 없다.
 
 기존 GSAP의 빈 진행 타임라인과 Lenis 보간은 브라우저 기본 스크롤 및 한 번의 requestAnimationFrame 갱신으로 대체했다. 독립적인 진행 막대에만 CSS Scroll-driven Animations를 점진적으로 적용한다. 지원하지 않는 브라우저는 동일한 막대를 JS 진행값으로 표시한다.
 
@@ -30,7 +30,7 @@ ResizeObserver는 무대, 장면, 조작 영역을 관찰한다. 크기가 바�
 
 실제 iOS 기기의 주소창 변화, 저전력 모드, 핀치 확대 성능은 데스크톱 Chromium 검증만으로 보장할 수 없으며 실기기 확인 대상이다.
 
-### 2026-09-27 결과
+### 2026-09-27 초기 구현 검증
 
 - 빌드, Astro/TypeScript 검사, 콘텐츠 규칙 통과. 기존 `tests/audit/metrics.ts`의 deprecated `clip` 힌트 1건만 남는다.
 - 내부 링크: 71페이지, 깨진 링크 0개.
@@ -44,3 +44,23 @@ ResizeObserver는 무대, 장면, 조작 영역을 관찰한다. 크기가 바�
 | 베트남어 | 2.18초 | 0.0001 미만 | 0ms | 21.2KB |
 
 화면 확인: [폰 01](unified-hero-shots/phone-01.png), [폰 03](unified-hero-shots/phone-03.png), [폰 04](unified-hero-shots/phone-04.png), [폰 06](unified-hero-shots/phone-06.png), [태블릿 04](unified-hero-shots/tablet-04.png), [데스크톱 04](unified-hero-shots/desktop-04.png). 폰 01·03은 장면 시작 위치이며, 아래쪽 내용에는 별도의 읽기 스크롤 구간이 있다.
+
+## 후속 화면 검토 반영
+
+- 첫 화면·01–06·아래 주요 섹션과 상세 페이지의 큰 제목을 공통 26~44px 크기로 맞췄다. 한국어 첫 문구는 두 줄이며, 번역 데이터의 배열 길이도 맞춰 언어별 문구가 유지된다.
+- 제품·표준·회사·문의 제목과 레퍼런스 카드 네 개의 제목은 네 언어 모두 고정 줄바꿈을 제거했다. 글자 크기를 유지하면서 넓으면 한 줄로 표시하고, 좁으면 기존 balance 규칙으로 자연스럽게 줄바꿈한다.
+- 사례 상세 카드는 홈의 `.ref-card` 스타일을 공유한다. 기관명 그라데이션·글꼴·여백·제목 크기를 맞추고 상세 정보인 연도·한 일·결과는 유지했다. 회사의 오시는 길은 주소·전화·이메일 값과 라벨의 기준선을 맞추되 링크의 44px 클릭 영역을 유지한다.
+- 인증·특허는 첫 화면의 왼쪽 문구 아래 두 줄에 배치한다. 실시간 수집 그림 영역으로 펼치지 않는다.
+- 02의 제목과 설명은 그림 위에 둔다. 네 번째 칸 아래 오른쪽에 연결선으로 묶인 부가 정보 항목만 한 줄로 표시한다. 반복된 제목과 설명 문장은 제거했다. 좁은 화면에서는 실제 글자 폭을 측정해 온전히 들어가는 항목만 표시하며, 스크립트가 없을 때는 두 항목을 표시한다.
+- 05의 근거 입자는 알림 종을 그린다. 32px 정사각 영역을 사용하고 알림 상자 밖에 둔다. 별 입자 자체의 밝기와 크기만 조금씩 달리해 반짝이며, 움직임 멈춤과 시스템의 움직임 줄이기 설정을 따른다. 원형 파동과 별도 장식은 제거했다. 발신 제품, 짧은 도착 문구, 근거 건수는 한 줄로 배치한다.
+- 최종 레이아웃에서 빌드·엄격한 번역 형태 검사·내부 링크 검사 및 관련 Chromium 검사 79개가 통과했다. `tests/hero-refinements.spec.ts`는 제목 크기, 첫 문구 두 줄, 증빙 두 줄, 부가 정보의 오른쪽 한 줄 배치, 작은 외부 알림 아이콘 및 네 언어의 알림 한 줄 배치를 확인한다.
+
+후속 캡처: [폰 02](unified-hero-shots/phone-02.png), [폰 05](unified-hero-shots/phone-05.png), [태블릿 02](unified-hero-shots/tablet-02.png), [데스크톱 01](unified-hero-shots/desktop-01.png), [데스크톱 02](unified-hero-shots/desktop-02.png), [데스크톱 05](unified-hero-shots/desktop-05.png).
+
+상세 페이지까지 공통 제목·카드 스타일을 적용한 뒤 전체 반응형·히어로 검사 429개와 사례 페이지 접근성 검사 8개를 통과했다. 표준 제목은 메인과 상세 모두 1440px에서 44px, 390px에서 28px로 일치한다. 오시는 길은 링크의 클릭 영역을 유지하면서 라벨과 값의 기준선을 맞췄다.
+
+상세 화면 확인: [표준 데스크톱](unified-hero-shots/desktop-standards.png), [표준 폰](unified-hero-shots/phone-standards.png), [사례 데스크톱](unified-hero-shots/desktop-cases.png), [사례 태블릿](unified-hero-shots/tablet-cases.png), [사례 폰](unified-hero-shots/phone-cases.png), [오시는 길 데스크톱](unified-hero-shots/desktop-location.png), [오시는 길 폰](unified-hero-shots/phone-location.png).
+
+제품 상세의 Lecognizer AI 이미지는 HTML·SVG로 구성한 어두운 제품 설명 화면으로 교체했다. 수집된 학습 활동, 같은 이야기 데이터 모델로 그린 이상 구간, 근거와 원인 후보, 사람의 판단 순서로 연결한다. 문구는 네 언어로 번역하고 실제 텍스트로 표시하며, 좁은 화면에서는 배치를 바꾼다. 제품 페이지의 네 언어 × 아홉 폭 반응형 검사와 접근성 검사 총 44개가 통과했고, 최종 빌드와 Astro 검사도 통과했다.
+
+제품 화면 확인: [데스크톱](unified-hero-shots/desktop-lecognizer-insight.png), [태블릿](unified-hero-shots/tablet-lecognizer-insight.png), [폰](unified-hero-shots/phone-lecognizer-insight.png).

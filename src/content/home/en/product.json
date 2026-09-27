@@ -1,6 +1,6 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "From collection and analysis to the classroom,<br>connected in the <span class=\"g\">Learning&nbsp;Loop</span>",
+  "title": "From collection and analysis to the classroom, connected in the <span class=\"g\">Learning&nbsp;Loop</span>",
   "lead": "When Lecognizer builds up learning data and finds anomaly signals, <span class=\"nw\">LearnHubble AI</span> carries those signals into the decisions and actions of administrators, instructors, and learners.",
   "loop": {
     "img": "learning-loop.webp",
@@ -227,5 +227,16 @@
     "edit": "Edit",
     "apply": "Apply",
     "owner": "The administrator decides whether to apply it"
+  },
+  "insight": {
+    "label": "Example Lecognizer AI screen: identify an unusual segment in collected learning activity, then review its evidence and possible cause.",
+    "collection": "Collected learning activity",
+    "analysis": "Unusual activity detected",
+    "evidence": "Supporting learning data",
+    "course": "Personal Finance",
+    "conceptLabel": "Prerequisite concept",
+    "concept": "Interest Basics",
+    "hypothesis": "Possible cause",
+    "review": "Operators and instructors review the evidence and decide."
   }
 }

@@ -1,6 +1,6 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "Từ thu&nbsp;thập, phân&nbsp;tích đến áp&nbsp;dụng trên lớp,<br>kết&nbsp;nối thành <span class=\"g\">Learning&nbsp;Loop</span>",
+  "title": "Từ thu&nbsp;thập, phân&nbsp;tích đến áp&nbsp;dụng trên lớp, kết&nbsp;nối thành <span class=\"g\">Learning&nbsp;Loop</span>",
   "lead": "Khi Lecognizer tích lũy dữ liệu học tập và tìm ra dấu hiệu bất thường, <span class=\"nw\">LearnHubble AI</span> kết nối các dấu hiệu đó với quyết định và hành động của quản trị viên, giảng viên và người học.",
   "loop": {
     "img": "learning-loop.webp",
@@ -227,5 +227,16 @@
     "edit": "Chỉnh sửa",
     "apply": "Áp dụng",
     "owner": "Quản trị viên quyết định việc áp dụng"
+  },
+  "insight": {
+    "label": "Ví dụ màn hình Lecognizer AI: tìm phần bất thường trong hoạt động học tập, rồi xem căn cứ và nguyên nhân khả dĩ.",
+    "collection": "Hoạt động đã thu thập",
+    "analysis": "Phần học bất thường",
+    "evidence": "Dữ liệu làm căn cứ",
+    "course": "Tài chính cá nhân",
+    "conceptLabel": "Khái niệm tiên quyết",
+    "concept": "Cơ bản về lãi suất",
+    "hypothesis": "Nguyên nhân khả dĩ",
+    "review": "Quản trị viên và giảng viên xem căn cứ rồi quyết định."
   }
 }

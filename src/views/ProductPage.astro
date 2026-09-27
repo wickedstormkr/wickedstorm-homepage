@@ -6,6 +6,7 @@ import RoleTabs from '../components/RoleTabs.astro';
 import Img from '../components/Img.astro';
 import CtaBand from '../components/CtaBand.astro';
 import LearnHubble from '../sections/LearnHubble.astro';
+import LecognizerInsight from '../components/LecognizerInsight.astro';
 import { getHome, getUi } from '../lib/content';
 import { pagePath, type Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
@@ -53,7 +54,9 @@ const ids = ['lecognizer', 'lecognizer-ai'];
             <a class="feat-badge" href={url(pagePath(lang, 'trust')) + (i === 0 ? '#gs' : '#patents')}><span set:html={phrase(f.badge, lang)} /></a>
             {i === 1 && <p><a class="prod-site" href={p.solutions[0].site} target="_blank" rel="noopener" aria-label={p.solutions[0].siteAria}>{p.solutions[0].siteLabel}<span aria-hidden="true"> ↗</span></a></p>}
           </div>
-          <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>
+          {i === 1
+            ? <LecognizerInsight lang={lang} t={p.insight} signal={t.story.signal} live={t.story.live} />
+            : <figure class="frame"><Img name={f.img} alt={f.alt} sizes="(min-width: 1024px) 590px, calc(100vw - 48px)" /></figure>}
         </div>
       ))}
       <p class="note" set:html={p.note} />

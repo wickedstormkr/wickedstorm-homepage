@@ -1,6 +1,7 @@
 /** Shared story navigation and native scrolling. Layout and reading distance are
  * independent of the optional renderer, so every scene works if it fails to load. */
 import { initLive } from './live';
+import { initLedger } from './ledger';
 import { StoryLayout } from './layout';
 
 export function initStory() {
@@ -13,6 +14,7 @@ export function initStory() {
   const last = scenes.length - 1;
   const mq = matchMedia('(prefers-reduced-motion: no-preference)');
   initLive(story);
+  initLedger(story);
   const layout = new StoryLayout(story, stage, scenes);
   let active = 0;
   const setActive = (i: number) => {

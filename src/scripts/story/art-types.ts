@@ -1,12 +1,13 @@
 /** 데이터 아트 렌더러 공통 모양(캔버스·WebGL) */
 export interface ArtBox { x: number; y: number; w: number; h: number }
-/** 화면(HTML)에 맞춰 입자가 설 자리: 근거 묶음 옮김(그림 칸 비율), 주인공 자리(무대 기준 0~1) */
+/** 화면(HTML)에 맞춰 입자가 설 자리(무대 px) */
 export interface ArtAnchors {
-  shift?: [number, number];
   /** 장면 2 기록 칸(무대 px) */
   ledger?: ArtBox;
   /** 장면 4 이상 탐지 화면의 그래프 칸(무대 px) */
   chart?: ArtBox;
+  /** 장면 5 근거 문장이 모이는 정사각 알림 아이콘 */
+  notification?: ArtBox;
   /** Scene 6 has its own frame, independent of the CASE tree's layout. */
   ring?: ArtBox;
 }

@@ -81,7 +81,7 @@
     "save": "レポートを保存"
   },
   "judge": {
-    "alert": "Lecognizer AI 異常の兆候 · 根拠42件",
+    "alert": "異常を検知",
     "product": "LearnHubble AI · 教員",
     "crumb": "生活経済と金融 · 授業設計",
     "segLabel": "確認が必要な区間",

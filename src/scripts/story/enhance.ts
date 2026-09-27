@@ -4,7 +4,6 @@ import { motionAllowed, onMotionChange } from '../motion';
 import { CanvasArt } from './canvas-art';
 import type { Art, ArtBox } from './art-types';
 import type { StoryFrame, StoryLayout } from './layout';
-import { D_CENTER } from '../../lib/story-data';
 
 /** Ignore animated transforms when measuring the resting position. */
 function boxIn(el: HTMLElement, stage: HTMLElement): ArtBox {
@@ -77,7 +76,7 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
     story.querySelector<HTMLElement>('.scene-store [data-art-box]')!,
     story.querySelector<HTMLElement>('.scene-statement [data-ledger]')!,
     story.querySelector<HTMLElement>('.scene-signal [data-chart-slot]')!,
-    story.querySelector<HTMLElement>('.scene-judge .signal-alert')!,
+    story.querySelector<HTMLElement>('.scene-judge [data-notification-icon]')!,
     story.querySelector<HTMLElement>('.scene-next .ring-box')!,
   ];
   let anchors = anchorElements.map((el) => boxIn(el, stage));
@@ -89,11 +88,10 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
     previousPans = key;
     const moved = (index: number, scene: number) => ({ ...anchors[index], y: anchors[index].y - (pans[scene] ?? 0) });
     const box = moved(0, 2);
-    const alert = moved(3, 4);
     art.resize(stage.clientWidth, stage.clientHeight, box, {
-      shift: [(alert.x - 24 - box.x) / box.w - D_CENTER[0], (alert.y + alert.h / 2 - box.y) / box.h - D_CENTER[1]],
       ledger: moved(1, 1),
       chart: moved(2, 3),
+      notification: moved(3, 4),
       ring: moved(4, 5),
     });
   };
@@ -183,7 +181,7 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
   reveal('.scene-store :is(.art-labels li,.art-tag)', 1.74, 0.015, 0.14, 0);
   reveal('.scene-signal .fx-flag', 2.8, 0, 0.12, -6);
   reveal('.scene-signal .fx-finding > *', 2.82, 0.04, 0.14, 8);
-  reveal('.scene-judge .signal-alert', 3.55, 0, 0.15, -12);
+  reveal('.scene-judge .signal-notice', 3.55, 0, 0.15, -12);
   reveal('.scene-judge .judge-stack > .fx', 3.64, 0, 0.2, 20);
   reveal('.scene-next .ring-labels li', 4.72, 0.04, 0.12, 6);
   reveal('.scene-next .ring-caption', 4.8, 0, 0.12, 0);

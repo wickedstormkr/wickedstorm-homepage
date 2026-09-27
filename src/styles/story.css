@@ -22,27 +22,21 @@
 .scene-visual{container:visual / inline-size;position:relative;z-index:1;min-width:0;width:100%}
 .beat{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
 .beat span{color:var(--faint)}
-.scene-title{margin-top:12px;font-size:clamp(28px,3.2cqi,44px);line-height:1.2}
+.scene-title{margin-top:12px}
 .scene-text{margin-top:16px;color:var(--lead);font-size:clamp(15.5px,1.2vw,17.5px);font-weight:500;line-height:1.72}
 /* 장면 글 속 강조: 핵심 낱말은 밝게, 링크(특허 원본 등)는 밑줄(누를 수 있음) */
 .scene-text b{color:var(--ink);font-weight:700;white-space:nowrap}
 .scene-text a{padding:3px 0;color:var(--ink-2);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px;text-decoration-thickness:1px;white-space:nowrap}
 .scene-text a:hover{color:#fff;text-decoration-thickness:2px}
 .scene-moment .eyebrow{margin-bottom:26px}
-.scene-moment h1{font-size:clamp(30px,4.2cqi,56px);line-height:1.14}
 .scene-moment h1 .line{display:block}
-/* 영어·베트남어 제목은 줄이 한국어보다 길다(가장 긴 줄 ≈ 글자 크기의 11배): 줄마다 한 줄에 들어가게 폰·데스크톱에서 한 단계 작게.
-   태블릿은 제목 칸이 넓어 그대로. 고정 이야기는 아래 html.story-pin 규칙 */
-@media (max-width:699px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(26px,calc((100vw - 48px) / 11.3),30px)}}
-@media (min-width:1024px){.scene-moment:is(:lang(en),:lang(vi)) h1{font-size:clamp(28px,3.3vw,44px)}}
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
 /* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
 .scene .hero-cta{margin-top:36px}
-/* 증빙 두 열은 글 칸 안에서만 자란다(긴 번역은 칸 안에서 두 줄로: 옆 실시간 수집 창을 침범하지 않게) */
-.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,max-content));column-gap:28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
+/* Evidence stays with the opening copy, in two rows beside the live panel. */
+.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:0 28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
 .hero-trust li{display:flex;align-items:center;gap:9px}
-/* 좁은 데스크톱(글 칸 400px 안팎): 긴 번역(영어·베트남어)도 항목마다 한 줄에 들어가게 한 단계 작게 */
-@media (min-width:1024px) and (max-width:1279px){.hero-trust{column-gap:18px;font-size:13px}}
+@media (min-width:960px) and (max-width:1279px){.hero-trust{column-gap:18px;font-size:13px}}
 .hero-trust li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.8}
 .hero-trust a{display:inline-block;padding:11px 0;line-height:22px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px;transition:color .2s}
 .hero-trust a:hover{color:#fff;text-decoration-color:var(--accent)}
@@ -113,7 +107,7 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 .ledger{position:relative;width:100%}
 /* 제목 아래 한 줄: 두 표준을 모두 지원하고 서로 바꾼다 */
 .ledger-std{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-top:14px;font-size:15.5px;color:var(--lead)}
-html.story-pin .scene-statement .ledger-std{justify-content:center}
+.scene-statement .ledger-std{justify-content:center}
 .ledger-std b{font-family:var(--en);font-size:16px;font-weight:700;color:var(--ink)}
 .ledger-std .swap{color:var(--accent);font-weight:700}
 .ledger-note{margin-left:6px}
@@ -125,15 +119,18 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 .ledger-cols dd .swap{color:var(--faint)}
 .ledger-cols .c0 dt{color:#a8c3ff}.ledger-cols .c1 dt{color:#c3b0ff}.ledger-cols .c2 dt{color:#ffa6e2}
 .ledger-cols .c3 dt{color:var(--accent);font-size:15px}
+.ledger-cols .c3 dt::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:rgba(163,177,255,.14);font:700 14px var(--en);vertical-align:1px}
 .ledger-cols .c3 dd{color:var(--ink-3)}
 .ledger-box{position:relative;aspect-ratio:3.1}
 .ledger-box .art-base{position:absolute;inset:0;width:100%;height:100%}
-/* 바닥: 설명 왼쪽, 부가 정보 항목은 오른쪽에 한 줄로 */
-.ledger-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;margin-top:14px;padding-inline:3% 4.5%}
-.ledger-rest{padding-left:2px;font-size:15px;color:var(--ink-3)}
-.ledger-items{list-style:none;display:flex;flex-wrap:wrap;gap:5px}
-/* 부가 정보 이름표는 칸이 모자라면 다음 줄로(언어마다 길이가 다르다: 베트남어는 한 줄이면 칸 밖으로 나간다). 이름표 하나는 한 줄 */
-.ledger-items li{white-space:nowrap}
+/* Only examples remain in the connected box. The connector stays under field 4. */
+.ledger{container:ledger / inline-size}
+.ledger-foot{position:relative;width:max-content;max-width:calc(95.5% - 24px);margin:22px 4.5% 0 auto;padding:10px 12px;border-radius:12px;background:rgba(163,177,255,.045);border:1px solid var(--line)}
+.ledger-foot::before{content:"";position:absolute;right:var(--ledger-extra-half);bottom:100%;height:23px;border-left:1px solid rgba(163,177,255,.5)}
+.ledger-items{list-style:none;display:flex;flex-wrap:nowrap;gap:5px}
+.ledger-items li{flex:none;white-space:nowrap}
+/* A conservative single row before JS or when scripting is unavailable. */
+@container ledger (width < 900px){.ledger-items:not([data-fit]) li:nth-child(n+3){display:none}}
 /* 부가 정보 항목: 누를 수 없는 이름표(테두리 없이 옅은 바탕) */
 .ledger-items li{padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600;color:var(--accent);background:rgba(163,177,255,.1)}
 
@@ -168,9 +165,11 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 
 /* ---- 장면 5: 신호 도착 → 교수자 화면(장면의 한 부분이라 글과 균형 맞게 작게) ---- */
 .judge-stack{display:grid;gap:12px;width:100%;max-width:520px;margin-left:auto}
-.signal-alert{justify-self:start;position:relative;display:inline-block;padding:8px 14px 8px 32px;border-radius:8px;background:rgba(233,48,176,.1);
-  box-shadow:inset 0 0 0 1px rgba(255,124,207,.28);font-size:14px;font-weight:600;color:var(--ink)}
-.signal-alert::before{content:"";position:absolute;left:14px;top:calc(8px + .75em - 4.5px);width:9px;height:9px;border-radius:50%;background:var(--magenta);box-shadow:0 0 10px var(--magenta)}
+.signal-notice{justify-self:start;display:flex;align-items:center;gap:10px;max-width:100%}
+.signal-alert{position:relative;display:flex;align-items:baseline;gap:10px;min-width:0;padding:10px 12px;border:1px solid var(--line2);border-radius:10px;background:rgba(255,255,255,.035);font-size:13px;font-weight:600;line-height:1.5;color:var(--ink);white-space:nowrap}
+.signal-alert .pname{font-size:inherit;line-height:inherit}
+.signal-evidence{color:var(--muted)}
+.notification-icon{position:relative;display:block;flex:none;width:32px;aspect-ratio:1}
 
 /* ---- 장면 6: 선순환 고리. 이름표는 누를 수 없는 글(제품 이름은 글자 그라디언트, 버튼 모양 금지) ---- */
 .ring-box{overflow:visible}
@@ -197,13 +196,14 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   .scene-moment .scene-copy,.scene-moment .scene-visual,.scene-moment .hero-trust{grid-area:auto;order:0}
   .scene-copy{display:block}
   .live,.scene-signal .fx-anom,.judge-stack{width:100%;max-width:none;margin-left:0}
-  .signal-alert{font-size:15px}
 }
 @container story (width < 600px){
   .scene{padding:56px 0}
   .scene-moment{padding-top:calc(var(--header-h) + 28px)}
-  .hero-trust{grid-template-columns:1fr}
+  .hero-trust{display:grid;grid-template-columns:1fr;justify-content:start}
   .scene .hero-cta{margin-top:24px}
+  .signal-notice{gap:8px}
+  .signal-alert{gap:7px;padding:9px 10px;font-size:12.5px}
 }
 .case-pins{display:none;list-style:none}
 @container visual (width < 560px){
@@ -217,7 +217,8 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   .ledger-cols{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 18px!important;padding-inline:0!important;margin-bottom:18px}
   .ledger-cols dt,.ledger-cols .c3 dt{font-size:15px}
   .ledger-cols dd{font-size:12.5px}
-  .ledger-foot{padding-inline:0}
+  .ledger-foot{max-width:calc(100% - 24px);margin-right:0}
+  .ledger-foot::before{right:calc(var(--ledger-extra-half) + 4.5cqw)}
   .art-labels,.art-tag{display:none}
   .case-cap,.case-list{display:block}
   .case-pins{display:block}
@@ -251,11 +252,15 @@ html.story-pin .scene-visual{display:block;min-width:0}
 html.story-pin .scene-moment .eyebrow{margin-bottom:20px}
 html.story-pin .hero-lead{margin-top:22px}
 html.story-pin .hero-trust{margin-top:20px}
-html.story-pin .scene-statement{grid-template-columns:1fr;align-content:center;justify-items:center;gap:28px;text-align:center}
-html.story-pin .scene-statement .scene-visual{order:-1;width:100%}
-html.story-pin .scene-statement .scene-copy{max-width:780px}
-html.story-pin .scene-statement .ledger{width:min(100%,1040px);margin-inline:auto;text-align:left}
+.scene-statement{grid-template-columns:1fr;align-content:center;justify-items:center;gap:28px;text-align:center}
+.scene-statement .scene-visual{width:100%}
+.scene-statement .scene-copy{max-width:1040px}
+.scene-statement .ledger{width:min(100%,1040px);margin-inline:auto;text-align:left}
 html.story-pin .scene-statement .ledger-std{justify-content:center}
+@container story (width < 960px){
+  .scene-statement{text-align:left}
+  .scene-statement .ledger-std{justify-content:flex-start}
+}
 @container stage (width < 960px){
   html.story-pin .scene{grid-template-columns:1fr;align-content:center;gap:28px;padding-inline:max(24px,calc((100% - 672px) / 2))}
   html.story-pin .scene-statement{text-align:left}

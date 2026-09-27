@@ -54,6 +54,9 @@
   --fs-small:13.5px;
   --fs-min:11px;
   --lh-body:1.62;
+  /* 홈 장면·섹션과 상세 페이지의 주요 제목은 같은 크기를 쓴다. */
+  --fs-title:clamp(28px,3.2vw,44px);
+  --lh-title:1.2;
 
   /* 레이아웃 */
   --wrap:1240px;
@@ -67,6 +70,9 @@
   /* 반응형 기준(미디어 쿼리에는 변수를 못 쓰므로 값만 기록):
      폰 ≤699px · 태블릿 700~1023px · 데스크톱 ≥1024px */
 }
+:root:lang(vi){--lh-title:1.28}
+/* 좁은 폰에서도 한국어 첫 문구의 지정된 두 줄을 유지한다. */
+@media (max-width:390px){:root{--fs-title:clamp(26px,calc(6.6667vw + 2px),28px)}}
 /* 노트북 폭부터는 좌우 여백을 넓히고, 큰 화면에서는 본문 폭을 넓혀 그림이 작아 보이지 않게 */
 @media (min-width:1200px){:root{--gutter:48px}}
 @media (min-width:1600px){:root{--wrap:1400px}}
