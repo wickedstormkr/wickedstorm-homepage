@@ -1,5 +1,5 @@
 ---
-/** 개인정보처리방침(/privacy.html). 지금 사이트 privacy.html의 문안을 그대로 옮겼다(국문만). */
+/** 개인정보처리방침(/privacy.html). 지금 사이트 privacy.html의 문안을 옮기고(국문만), 2026.10 문의의 방문 경로 정보(src/scripts/attribution.ts)를 더했다. */
 import Base from '../layouts/Base.astro';
 // 페이지 스타일은 공통 스타일(Base: 토큰·기본) 뒤에 온다
 import '../styles/article.css';
@@ -12,7 +12,7 @@ import { url } from '../lib/url';
       <div class="wrap legal-doc">
       <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> Privacy</p>
       <h1>개인정보처리방침</h1>
-      <p class="updated">시행일: 2026년 7월 15일</p>
+      <p class="updated">시행일: 2026년 10월 13일</p>
 
       <p class="mt">주식회사 위키드스톰(대표 이정준, 사업자등록번호 135-88-02020, 이하 "회사")은 「개인정보 보호법」 등 관계 법령을 준수하며, 정보주체의 개인정보를 보호하기 위해 다음과 같은 처리방침을 두고 있습니다.</p>
 
@@ -22,8 +22,8 @@ import { url } from '../lib/url';
       <tr><th>구분</th><th>수집 항목</th><th>수집 방법</th></tr>
       <tr>
       <td>문의하기</td>
-      <td>이름, 소속(기관/회사), 이메일 주소, 문의 내용, 유입 경로</td>
-      <td>정보주체가 홈페이지 문의 양식에 직접 입력</td>
+      <td>이름, 소속(기관/회사), 이메일 주소, 문의 내용, 유입 경로, 방문 경로 정보(광고·캠페인 식별값, 거쳐 온 사이트, 처음 방문한 페이지와 날짜, 문의 버튼 위치)</td>
+      <td>정보주체가 홈페이지 문의 양식에 직접 입력(방문 경로 정보는 문의를 제출할 때 자동으로 함께 전송)</td>
       </tr>
       <tr>
       <td>이용 통계</td>
@@ -35,7 +35,7 @@ import { url } from '../lib/url';
 
       <h2>2. 수집·이용 목적</h2>
       <ul>
-      <li><strong>문의하기</strong>: 제품·서비스 도입 문의에 대한 확인 및 회신, 상담 진행, 문의 이력 관리</li>
+      <li><strong>문의하기</strong>: 제품·서비스 도입 문의에 대한 확인 및 회신, 상담 진행, 문의 이력 관리, 문의가 들어온 경로 분석(홍보 효과 확인)</li>
       <li><strong>이용 통계</strong>: 홈페이지 이용 현황 분석을 통한 서비스 개선</li>
       </ul>
 
@@ -77,8 +77,9 @@ import { url } from '../lib/url';
       <tr><th>거부 방법</th><td>아래 7항의 방법으로 쿠키 저장을 거부하거나 Google Analytics 차단 부가기능을 설치하면 국외 이전을 거부할 수 있습니다. 거부하더라도 홈페이지 이용에는 제한이 없습니다.</td></tr>
       </table></div>
 
-      <h2>7. 쿠키의 운용 및 거부 방법</h2>
+      <h2>7. 쿠키 등 자동 수집 장치의 운용 및 거부 방법</h2>
       <p>회사는 홈페이지 이용 통계 분석을 위해 쿠키를 사용합니다. 정보주체는 쿠키 저장을 거부할 수 있으며, 거부하더라도 홈페이지 이용에는 제한이 없습니다.</p>
+      <p class="mt-s">또한 문의를 보낼 때 함께 전달하기 위해 방문 경로 정보(광고·캠페인 식별값, 거쳐 온 사이트, 처음 방문한 페이지와 날짜)를 정보주체의 브라우저 저장소에 최대 6개월 보관합니다. 개인을 알아볼 수 있는 정보는 담지 않으며, 문의를 제출하지 않으면 회사로 전송되지 않습니다. 브라우저 설정에서 이 사이트의 데이터를 삭제하면 지워집니다.</p>
       <ul>
       <li><strong>브라우저 설정</strong>: 브라우저의 개인정보·보안 설정에서 쿠키 허용 여부를 직접 지정할 수 있습니다.</li>
       <li><strong>Google Analytics 차단</strong>: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout<span class="sr-only"> (새 창)</span></a>에서 차단 부가기능을 설치할 수 있습니다.</li>
@@ -119,6 +120,7 @@ import { url } from '../lib/url';
 
       <h2>13. 개인정보처리방침의 변경</h2>
       <p>이 방침은 시행일부터 적용되며, 법령·정책 또는 회사 내부 방침의 변경에 따라 내용이 추가·삭제·수정될 경우 시행 7일 전부터 홈페이지를 통해 공지합니다.</p>
+      <p class="mt-s">이전 방침은 2026년 7월 15일부터 시행되었습니다. 이번 변경에서는 문의하기의 수집 항목에 방문 경로 정보를, 이용 목적에 문의 경로 분석을 더하고, 브라우저 저장소 사용을 7항에 안내했습니다.</p>
       <p class="mt"><a class="btn s back" href={url('/')}>← 홈으로 돌아가기</a></p>
       </div>
     </section>
