@@ -6,6 +6,7 @@ import StdMap from '../components/StdMap.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { getHome } from '../lib/content';
 import { localHref, type Lang } from '../lib/i18n';
+import { phraseText } from '../lib/phrase';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang }
@@ -23,27 +24,27 @@ const ident = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;')
         <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={t.badge} /></span></p>
       </PageHead>
       <h2 class="sub-title">{t.map.title}</h2>
-      <p class="sub-lead">{t.map.lead}</p>
+      <p class="sub-lead" set:html={phraseText(t.map.lead, lang)} />
       <StdMap t={t} lang={lang} />
     </div>
   </section>
   <section class="band" aria-labelledby="std-mapping-title">
     <div class="wrap">
       <h2 class="sub-title" id="std-mapping-title">{t.mapping.title}</h2>
-      <p class="sub-lead">{t.mapping.lead}</p>
+      <p class="sub-lead" set:html={phraseText(t.mapping.lead, lang)} />
       <table class="map-table">
         <thead><tr>{t.mapping.cols.map((c, i) => <th scope="col" lang={i ? 'en' : undefined}>{c}</th>)}</tr></thead>
         <tbody>
           {t.mapping.rows.map((r) => <tr><th scope="row">{r.k}</th><td data-k="xAPI" set:html={ident(r.x)} /><td data-k="Caliper" set:html={ident(r.c)} /></tr>)}
         </tbody>
       </table>
-      <p class="map-note">{t.mapping.note}</p>
+      <p class="map-note" set:html={phraseText(t.mapping.note, lang)} />
     </div>
   </section>
   <section class="band" aria-labelledby="std-cards-title">
     <div class="wrap">
       <h2 class="sub-title" id="std-cards-title">{t.cardsTitle}</h2>
-      <p class="sub-lead">{t.cardsLead}</p>
+      <p class="sub-lead" set:html={phraseText(t.cardsLead, lang)} />
       <ul class="std-grid">
         {t.cards.map((c) => (
           <li>

@@ -1,6 +1,10 @@
 /* 홈 섹션. 지금 사이트 css/style.css에서 옮겼다.
    반응형 기준은 CLAUDE.md: 폰 ≤699 · 태블릿 700~1023 · 데스크톱 ≥1024. */
 
+/* 이야기 아래 섹션은 화면 가까이 올 때 배치한다. 첫 화면에서 글꼴이 들어와 다시 배치할 때 폰의 긴 작업(TBT)을 줄인다.
+   높이는 한 번 그린 뒤 기억한다(auto). 처음 추정값은 폰 기준 섹션 높이 안팎 */
+.home-page>.band{content-visibility:auto;contain-intrinsic-size:auto 1400px}
+
 /* ================= ③ 제품 ================= */
 /* 세 솔루션과 세 역할(학습의 선순환 그림은 오프닝 여섯째 장면으로 옮겼다) */
 .loop-cards{list-style:none;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-bottom:clamp(20px,3vw,36px)}
@@ -149,8 +153,8 @@
 
 /* ================= ⑨ 회사 ================= */
 .company{background:linear-gradient(180deg,var(--bg),var(--bg3))}
-.co-slogan{margin-top:22px;font-size:15px;font-weight:600;color:var(--ink-2)}
-.co-slogan span{display:block;margin-bottom:6px;font-family:var(--en-caps);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.co-slogan{margin-top:22px;font-size:15px;font-weight:600;color:var(--ink-2);text-wrap:balance}
+.co-slogan>span:first-child{display:block;margin-bottom:6px;font-family:var(--en-caps);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
 .co-stats{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .co-stat{padding:26px 24px;border-radius:18px;background:var(--panel);border:1px solid var(--line)}
 .co-stat b{display:block;width:fit-content;font-family:var(--en);font-size:36px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;

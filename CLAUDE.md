@@ -49,6 +49,9 @@
   - 기본 스크롤 + 공통 장면 진행값(`story/layout.ts`). 글·Canvas는 같은 진행값을 따르고, 독립적인 진행 막대는 지원 브라우저에서 CSS Scroll-driven Animations를 사용합니다. 장면 배치는 Container Queries, 좌표 갱신은 ResizeObserver로 처리합니다.
   - 데이터 아트는 3층: OGL(WebGL2) → 캔버스 → 미리 그린 그림. 맨 아래 층만으로도 이야기가 완결되어야 합니다.
   - 히어로에 영상 자동 재생을 쓰지 않습니다. iOS 저전력 모드가 막습니다.
+- **글꼴**: 모든 글자를 사이트가 싣는 글꼴로 그립니다. 시스템 글꼴에 맡기면 맥과 리눅스·안드로이드의 글자 폭이 달라 줄바꿈이 바뀝니다.
+  - Pretendard: 한글·라틴·베트남어. Pretendard JP: 가나·한자(일본어 페이지는 목록 맨 앞). Sora: 영문 표시(베트남어 페이지는 성조 글자가 없어 Pretendard). JetBrains Mono: 코드·시각.
+  - 빌드가 언어별로 쓰인 글자만 잘라 싣고(`scripts/fonts/subset.mjs`), 글꼴에 없는 글자가 나오면 빌드를 멈춥니다. `tests/glyphs.spec.ts`가 실제로 그린 글꼴을 확인합니다.
 - **성능 예산**:
   - 폰 LCP 2.5초 이하, CLS 0.1 이하, INP 200ms 이하.
   - 첫 로드 JS 90KB(gzip) 이하.

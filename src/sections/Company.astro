@@ -22,7 +22,7 @@ const href = (h: string) => (ANCHOR[h] ? url(pagePath(lang, ANCHOR[h])) : h.star
   <div class="wrap">
     {!full && (
       <SecHead lang={lang} id="co-title" eyebrow={t.eyebrow} title={t.title} lead={t.lead}>
-        <p class="co-slogan"><span>{t.slogan.label}</span>{t.slogan.text}</p>
+        <p class="co-slogan"><span>{t.slogan.label}</span><Fragment set:html={phrase(t.slogan.text, lang)} /></p>
       </SecHead>
     )}
     <ul class="co-stats">

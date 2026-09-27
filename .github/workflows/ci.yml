@@ -101,6 +101,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 점검-결과
+          # .lighthouseci(점으로 시작)도 올린다. 기본값은 숨은 폴더를 빼서 Lighthouse 보고서가 빠졌다
+          include-hidden-files: true
           path: |
             test-results/
             playwright-report/

@@ -2,6 +2,7 @@
 /** 페이지 끝 문의 띠: 도입 문의·자료 받기 */
 import { getHome } from '../lib/content';
 import { pagePath, type Lang } from '../lib/i18n';
+import { phraseText } from '../lib/phrase';
 import { url } from '../lib/url';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -12,7 +13,7 @@ const contact = url(pagePath(lang, 'contact'));
   <div class="wrap">
     <div class="cta-box">
       <div>
-        <h2 id="cta-band-title">{c.title}</h2>
+        <h2 id="cta-band-title" set:html={phraseText(c.title, lang)} />
         <p>{c.text}</p>
       </div>
       <div class="hero-cta">

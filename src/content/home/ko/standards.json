@@ -178,7 +178,7 @@
   "cardsTitle": "표준별 설명",
   "cardsLead": "표준마다 쓰임, 상태, 적용 제품을 적고 공식 스펙으로 연결했습니다.",
   "mapping": {
-    "title": "xAPI ⇄ Caliper: 같은 학습데이터, 두 가지 표현",
+    "title": "xAPI ↔ Caliper: 같은 학습데이터, 두 가지 표현",
     "lead": "Lecognizer는 xAPI와 1EdTech Caliper를 모두 받고, 서로 변환합니다. 아래는 학습데이터 한 건의 칸이 두 표준에서 어디에 담기는지 보여 주는 대응 예입니다.",
     "cols": [
       "뜻",

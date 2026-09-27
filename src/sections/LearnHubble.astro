@@ -4,6 +4,7 @@ import Img from '../components/Img.astro';
 import type { HomeContent, UiText } from '../lib/content';
 import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
+import { sents } from '../lib/sents';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText; contactHref?: string; site?: HomeContent['product']['solutions'][number] }
@@ -15,7 +16,7 @@ const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
       <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.eyebrow} /></p>
       <p class="lhub-name">{t.name}</p>
       <h2 class="h-lg" id="lhub-title" set:html={phrase(t.title, lang)} />
-      <p class="sec-lead" set:html={t.lead} />
+      <p class="sec-lead" set:html={phrase(sents(t.lead), lang)} />
     </div>
     <div class="lhub-top">
       <div class="lhub-copy">
@@ -24,7 +25,7 @@ const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
             <li><i aria-hidden="true">{p.num}</i><b set:html={p.title} /><span set:html={p.text} /></li>
           ))}
         </ol>
-        <p class="lhub-principle" set:html={t.principle} />
+        <p class="lhub-principle" set:html={phrase(sents(t.principle), lang)} />
         <div class="lhub-cta"><a class="btn p" href={contactHref} data-purpose="demo" data-product="learnhubble">{t.cta.label}</a>{site && <a class="prod-site" href={site.site} target="_blank" rel="noopener" aria-label={site.siteAria}>{site.siteLabel}<span aria-hidden="true"> ↗</span></a>}</div>
       </div>
       <figure class="frame lhub-main">
@@ -43,6 +44,6 @@ const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
         </li>
       ))}
     </ul>
-    <p class="note" set:html={t.note} />
+    <p class="note" set:html={phrase(sents(t.note), lang)} />
   </div>
 </section>

@@ -7,6 +7,7 @@ import Img from '../components/Img.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { getHome } from '../lib/content';
 import type { Lang } from '../lib/i18n';
+import { phraseText } from '../lib/phrase';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -20,7 +21,7 @@ const t = getHome(lang).cases;
       <ul class="case-grid two">
         {t.items.map((c) => <li><CaseCard lang={lang} c={c} labels={t.labels} full /></li>)}
       </ul>
-      <p class="note">{t.note}</p>
+      <p class="note" set:html={phraseText(t.note, lang)} />
     </div>
   </section>
   <section class="band" aria-labelledby="others-title">
