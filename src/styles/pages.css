@@ -193,7 +193,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 
 /* 회사 */
 .miles{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:22px;border-top:1px solid var(--line)}
-.miles li{display:grid;gap:6px;padding:20px 20px 20px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--ink-3)}
+.miles li{display:grid;align-content:start;gap:6px;padding:20px 20px 20px 0;border-bottom:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--ink-3)}
 .miles-y{font-family:var(--en);font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;width:fit-content}
 @media (max-width:1023px){.miles{grid-template-columns:1fr 1fr}}
 @media (max-width:699px){.miles{grid-template-columns:1fr}}
