@@ -1,0 +1,13 @@
+---
+/** 언어별 소식 기사: /en/news/<id>.html … (국문은 src/pages/news/[id].astro). 바깥 링크 글(externalUrl)은 만들지 않는다 */
+import ArticlePage from '../../../views/ArticlePage.astro';
+import { allPosts, type Post } from '../../../lib/posts';
+import { DEFAULT_LANG, LANGS, type Lang } from '../../../lib/i18n';
+
+export async function getStaticPaths() {
+  const posts = (await allPosts()).filter((p) => !p.externalUrl);
+  return LANGS.filter((l) => l !== DEFAULT_LANG).flatMap((lang) => posts.map((post) => ({ params: { lang, id: post.id }, props: { post } })));
+}
+interface Props { post: Post }
+---
+<ArticlePage lang={Astro.params.lang as Lang} post={Astro.props.post} />

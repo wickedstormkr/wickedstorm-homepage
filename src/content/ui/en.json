@@ -38,5 +38,24 @@
     "failed": "Your inquiry could not be sent. Please email manager@wickedstorm.kr."
   },
   "open": "Open",
-  "lhubScreens": "LearnHubble AI example screens"
+  "lhubScreens": "LearnHubble AI example screens",
+  "news": {
+    "title": "News",
+    "metaTitle": "WICKED STORM | News",
+    "lead": "Patent and product news, insights on standards and technology, and stories from the field at Wicked Storm.",
+    "categories": {
+      "all": "All",
+      "news": "News",
+      "story": "Stories",
+      "insight": "Insights"
+    },
+    "tabsLabel": "News categories",
+    "listHeading": "News list",
+    "count": "{n} articles",
+    "back": "Back to news",
+    "original": "Open the original image in a new window",
+    "koOnly": "This article is available in Korean only.",
+    "publisher": "Wicked Storm Inc.",
+    "siteName": "Wicked Storm"
+  }
 }

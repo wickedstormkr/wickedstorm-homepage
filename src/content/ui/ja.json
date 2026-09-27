@@ -38,5 +38,24 @@
     "failed": "送信に失敗しました。お手数ですが、manager@wickedstorm.kr までメールでお送りください。"
   },
   "open": "開く",
-  "lhubScreens": "LearnHubble AI 画面例"
+  "lhubScreens": "LearnHubble AI 画面例",
+  "news": {
+    "title": "ニュース",
+    "metaTitle": "WICKED STORM | ニュース",
+    "lead": "Wicked Stormの特許・製品ニュース、標準・技術のインサイト、現場のストーリーをお届けします。",
+    "categories": {
+      "all": "すべて",
+      "news": "ニュース",
+      "story": "ストーリー",
+      "insight": "インサイト"
+    },
+    "tabsLabel": "ニュースの分類",
+    "listHeading": "ニュース一覧",
+    "count": "{n}件",
+    "back": "ニュース一覧へ",
+    "original": "元の画像を新しいウィンドウで開く",
+    "koOnly": "この記事は韓国語のみでご覧いただけます。",
+    "publisher": "Wicked Storm Inc.",
+    "siteName": "Wicked Storm"
+  }
 }

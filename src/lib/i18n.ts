@@ -19,7 +19,26 @@ export const isLang = (s: unknown): s is Lang => typeof s === 'string' && (LANGS
 /** 언어마다 따로 있는 페이지(제품·표준·사례·신뢰·회사·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
 export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'contact'] as const;
 export type Page = (typeof PAGES)[number];
-/** 페이지를 만든 언어(네 언어 모두). 소식 · 개인정보처리방침 · 링크 모음은 국문만 있다 */
+/** 페이지를 만든 언어(네 언어 모두). 개인정보처리방침 · 링크 모음은 국문만 있다 */
 export const PAGE_LANGS: readonly Lang[] = LANGS;
 export const pagePath = (lang: Lang, page: Page) =>
   lang === 'ko' || !PAGE_LANGS.includes(lang) ? `/${page}.html` : `/${lang}/${page}.html`;
+
+/** 소식 목록·기사 주소. 국문은 /news.html, /news/<id>.html, 다른 언어는 /<lang>/ 아래 */
+const langDir = (lang: Lang) => (lang === 'ko' ? '' : `/${lang}`);
+export const newsPath = (lang: Lang) => `${langDir(lang)}/news.html`;
+export const articlePath = (lang: Lang, id: string) => `${langDir(lang)}/news/${id}.html`;
+
+/**
+ * 콘텐츠 파일·소식 본문 안의 국문 주소(사이트 루트 기준)를 그 언어의 주소로: 홈('/', '/#contact'),
+ * 언어별 페이지('/trust.html#gs'), 소식('/news.html', '/news/<id>.html'). 그 밖의 주소(개인정보처리방침 등)는 그대로
+ */
+export function localHref(lang: Lang, href: string): string {
+  const m = /^\/(?:(index\.html)?|([a-z]+)\.html|news\/([a-z0-9-]+)\.html)(#.*)?$/.exec(href);
+  if (!m) return href;
+  const [, , page, id, hash = ''] = m;
+  if (id) return articlePath(lang, id) + hash;
+  if (page === 'news') return newsPath(lang) + hash;
+  if (page) return (PAGES as readonly string[]).includes(page) ? pagePath(lang, page as Page) + hash : href;
+  return lang === 'ko' ? href : homePath(lang) + hash;
+}

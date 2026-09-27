@@ -10,7 +10,7 @@ import Img from '../components/Img.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { getHome } from '../lib/content';
 import { img } from '../lib/images';
-import { pagePath, type Lang, type Page as P } from '../lib/i18n';
+import { localHref, pagePath, type Lang, type Page as P } from '../lib/i18n';
 import { url } from '../lib/url';
 
 interface Props { lang: Lang }
@@ -20,7 +20,7 @@ const t = getHome(lang).trust;
 const full = async (name: string) => (await getImage({ src: img(name), format: 'webp' })).src;
 const originals: Record<string, string> = {};
 for (const g of t.groups) for (const it of g.items) if (it.img) originals[it.id] = await full(it.img);
-const href = (l: { href?: string; page?: string }) => (l.page ? url(pagePath(lang, l.page as P)) : url(l.href!));
+const href = (l: { href?: string; page?: string }) => (l.page ? url(pagePath(lang, l.page as P)) : url(localHref(lang, l.href!)));
 ---
 <Page lang={lang} page="trust">
   <section class="band page-top" aria-labelledby="page-title">

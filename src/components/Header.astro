@@ -4,7 +4,7 @@
  * 메뉴는 언어별 페이지로 간다. 소식은 국문만 있다. 도입 문의는 홈에서는 홈 안 문의로, 다른 페이지에서는 문의 페이지로.
  */
 import { getHome, getUi } from '../lib/content';
-import { homePath, pagePath, type Lang, type Page } from '../lib/i18n';
+import { homePath, newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url } from '../lib/url';
 import LangSwitch from './LangSwitch.astro';
 
@@ -26,7 +26,7 @@ const main = [
   { k: 'product', href: pg('product'), label: c.nav.product },
   { k: 'standards', href: pg('standards'), label: c.nav.standards },
   { k: 'cases', href: pg('cases'), label: c.nav.cases },
-  { k: 'news', href: url('/news.html'), label: c.nav.news },
+  { k: 'news', href: url(newsPath(lang)), label: c.nav.news },
   { k: 'company', href: pg('company'), label: c.nav.company },
 ];
 ---

@@ -6,6 +6,8 @@
  *  3) '(개발 중)' 같은 표기, GROWA·LXP를 제품명처럼 쓴 곳이 없는지
  *  4) 청록(teal·cyan 계열) 색을 쓰지 않는지(스타일)
  *  5) 누적 사용자 240만 명은 레퍼런스(사업명과 함께)에서만, 히어로에는 쓰지 않는지
+ *  6) 소식 번역(src/content/posts/i18n/<lang>.json): 글마다 번역이 있는지(없으면 알림만, 국문으로 보임),
+ *     번역 본문의 태그 차례·링크·그림 주소가 국문과 같은지
  * 대상: src/content 아래 JSON, src의 스타일·컴포넌트, dist의 HTML(최종 화면 글자)
  */
 import { readFileSync, readdirSync } from 'node:fs';
@@ -43,6 +45,25 @@ if (pending.length) console.log(`번역 대기 ${pending.length}건(국문 문�
 {
   const ko = JSON.stringify(shape(JSON.parse(readFileSync('src/content/ui/ko.json', 'utf8'))));
   for (const l of ['en', 'ja', 'vi']) if (JSON.stringify(shape(JSON.parse(readFileSync(`src/content/ui/${l}.json`, 'utf8')))) !== ko) errors.push(`모양 다름: src/content/ui/${l}.json`);
+}
+
+/* 6) 소식 번역 */
+{
+  const posts = JSON.parse(readFileSync('src/content/posts/posts.json', 'utf8')).posts.filter((p) => !p.externalUrl);
+  const tags = (h) => [...h.matchAll(/<\/?([a-z0-9]+)/gi)].map((m) => m[0].toLowerCase()).join(' ');
+  const refs = (h) => [...h.matchAll(/\b(?:href|src)\s*=\s*"([^"]*)"/gi)].map((m) => m[1]).join(' ');
+  const missing = [];
+  for (const l of ['en', 'ja', 'vi']) {
+    let tr = {};
+    try { tr = JSON.parse(readFileSync(`src/content/posts/i18n/${l}.json`, 'utf8')); } catch { /* 파일 없음 */ }
+    for (const p of posts) {
+      const t = tr[p.id];
+      if (!t?.title || !t.body) { missing.push(`${l}: ${p.id}`); continue; }
+      if (tags(t.body) !== tags(p.body)) errors.push(`소식 번역 태그 차례가 국문과 다름: ${l} ${p.id}`);
+      if (refs(t.body) !== refs(p.body)) errors.push(`소식 번역 링크·그림 주소가 국문과 다름: ${l} ${p.id}`);
+    }
+  }
+  if (missing.length) console.log(`소식 번역 대기 ${missing.length}건(국문 기사로 보임):\n  ` + missing.join('\n  '));
 }
 
 /* 2)·3)·5) 최종 화면 글자(dist) */

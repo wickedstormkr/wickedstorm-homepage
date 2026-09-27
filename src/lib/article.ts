@@ -2,10 +2,12 @@
  * 소식 본문 HTML 처리. 본문은 관리 화면에서 들어오므로 지금 사이트의 생성기
  * (homepage_renewal lambda/admin-api/news-artifacts.mjs sanitizeArticleBody)와 같은 허용 목록만 살린다.
  * - 태그: p strong em b i ul ol li h2 h3 blockquote figure figcaption br
- * - 링크: http(s)만. 지금 사이트 주소(https://wickedstorm.kr/...)는 사이트 안 주소로 바꿔 같은 창에서 연다
+ * - 링크: http(s)만. 지금 사이트 주소(https://wickedstorm.kr/...)는 사이트 안 주소로 바꿔 같은 창에서 연다(소식 주소는 그 언어의 주소로)
  * - 이미지: ./img/ 아래 파일만. Astro 자산 처리(AVIF·WebP, srcset)를 거치고 원본 링크로 감싼다
  */
 import { getImage } from 'astro:assets';
+import { getUi } from './content';
+import { localHref, type Lang } from './i18n';
 import { hasImg, img } from './images';
 import { url } from './url';
 
@@ -25,7 +27,7 @@ const localImg = (v: string) =>
   v.startsWith('./img/') && !v.includes('\\') && !v.includes('//') && !v.split('/').includes('..') ? v.slice('./img/'.length) : null;
 
 /** 이미지 하나를 <picture>로(원본 새 창 링크로 감쌈) */
-export async function pictureHtml(name: string, alt: string, sizes: string, eager = false): Promise<string> {
+export async function pictureHtml(name: string, alt: string, sizes: string, lang: Lang, eager = false): Promise<string> {
   const src = img(name);
   const widths = [480, 800, 1200, 1600].filter((w) => w < src.width).concat(src.width);
   const [avif, webp] = await Promise.all([
@@ -34,13 +36,14 @@ export async function pictureHtml(name: string, alt: string, sizes: string, eage
   ]);
   const load = eager ? 'eager' : 'lazy';
   return (
-    `<a class="img-orig" href="${esc(src.src)}" target="_blank" rel="noopener noreferrer" aria-label="원본 이미지 새 창에서 보기">` +
+    `<a class="img-orig" href="${esc(src.src)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(getUi(lang).news.original)}">` +
     `<picture><source type="image/avif" srcset="${esc(avif.srcSet.attribute)}" sizes="${sizes}">` +
     `<img src="${esc(webp.src)}" srcset="${esc(webp.srcSet.attribute)}" sizes="${sizes}" alt="${esc(alt)}" width="${src.width}" height="${src.height}" loading="${load}" decoding="async"></picture></a>`
   );
 }
 
-export async function renderBody(html: string): Promise<string> {
+export async function renderBody(html: string, lang: Lang): Promise<string> {
+  const ui = getUi(lang);
   let out = esc(html);
   out = out.replace(/&lt;br\s*\/?\s*&gt;/gi, '<br>');
   for (const t of SIMPLE) {
@@ -52,8 +55,8 @@ export async function renderBody(html: string): Promise<string> {
     const href = unesc(m[1]).trim();
     if (!isHttp(href)) return full;
     const own = /^https:\/\/wickedstorm\.kr\//.exec(href);
-    if (own) return `<a href="${esc(url('/' + href.slice(own[0].length)))}">${inner}</a>`;
-    return `<a href="${esc(href)}" rel="noopener noreferrer" target="_blank">${inner}<span class="sr-only"> (새 창)</span></a>`;
+    if (own) return `<a href="${esc(url(localHref(lang, '/' + href.slice(own[0].length))))}">${inner}</a>`;
+    return `<a href="${esc(href)}" rel="noopener noreferrer" target="_blank">${inner}<span class="sr-only"> ${esc(ui.newWindow)}</span></a>`;
   });
   // 이미지: 자리표시 후 비동기 처리
   const jobs: Promise<string>[] = [];
@@ -63,7 +66,7 @@ export async function renderBody(html: string): Promise<string> {
     const name = localImg(unesc(s[1]).trim());
     if (!name || !hasImg(name)) return full;
     const a = /alt\s*=\s*&quot;((?:(?!&quot;)[\s\S])*?)&quot;/i.exec(attrs);
-    jobs.push(pictureHtml(name, a ? unesc(a[1]) : '', '(min-width: 808px) 760px, calc(100vw - 48px)'));
+    jobs.push(pictureHtml(name, a ? unesc(a[1]) : '', '(min-width: 808px) 760px, calc(100vw - 48px)', lang));
     return `\u0000IMG${jobs.length - 1}\u0000`;
   });
   const done = await Promise.all(jobs);

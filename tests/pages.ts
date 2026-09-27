@@ -19,17 +19,23 @@ export const PAGES: PageDef[] = (['ko', 'en', 'ja', 'vi'] as const).flatMap((lan
     lang,
   })),
 );
+/** 소식 목록과 기사(네 언어). 기사는 사진 기사 · 특허 · 긴 인사이트 */
+const ARTICLES = { fair: '2026-09-edtech-korea-fair', patent: '2025-11-patent-anomaly', insight: '2026-07-note-aidt-standards' };
+export const NEWS: PageDef[] = (['ko', 'en', 'ja', 'vi'] as const).flatMap((lang) => {
+  const dir = lang === 'ko' ? '' : `${lang}/`;
+  const sfx = lang === 'ko' ? '' : `-${lang}`;
+  return [
+    { id: `news${sfx}`, path: `${dir}news.html`, lang },
+    ...Object.entries(ARTICLES).map(([k, id]) => ({ id: `article-${k}${sfx}`, path: `${dir}news/${id}.html`, lang })),
+  ];
+});
 /** 그 밖의 페이지(국문) */
 export const OTHERS: PageDef[] = [
-  { id: 'news', path: 'news.html', lang: 'ko' },
-  { id: 'article-fair', path: 'news/2026-09-edtech-korea-fair.html', lang: 'ko' },
-  { id: 'article-patent', path: 'news/2025-11-patent-anomaly.html', lang: 'ko' },
-  { id: 'article-insight', path: 'news/2026-07-note-aidt-standards.html', lang: 'ko' },
   { id: 'privacy', path: 'privacy.html', lang: 'ko' },
   { id: 'links', path: 'links.html', lang: 'ko' },
   { id: '404', path: '404.html', lang: 'ko' },
 ];
-export const ALL = [...HOMES, ...PAGES, ...OTHERS];
+export const ALL = [...HOMES, ...PAGES, ...NEWS, ...OTHERS];
 
 export const LOCALE = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', vi: 'vi-VN' } as const;
 export const viewportHeight = (w: number) => (w < 700 ? 844 : w < 1024 ? 1100 : 900);

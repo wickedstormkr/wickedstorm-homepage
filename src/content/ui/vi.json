@@ -38,5 +38,24 @@
     "failed": "Gửi không thành công. Vui lòng gửi email tới manager@wickedstorm.kr."
   },
   "open": "Truy cập",
-  "lhubScreens": "Ví dụ màn hình LearnHubble AI"
+  "lhubScreens": "Ví dụ màn hình LearnHubble AI",
+  "news": {
+    "title": "Tin tức",
+    "metaTitle": "WICKED STORM | Tin tức",
+    "lead": "Tin tức về bằng sáng chế và sản phẩm, insight về chuẩn và công nghệ, cùng câu chuyện từ thực tế tại Wicked Storm.",
+    "categories": {
+      "all": "Tất cả",
+      "news": "Tin tức",
+      "story": "Câu chuyện",
+      "insight": "Insight"
+    },
+    "tabsLabel": "Phân loại tin tức",
+    "listHeading": "Danh sách tin tức",
+    "count": "{n} bài viết",
+    "back": "Quay lại tin tức",
+    "original": "Mở ảnh gốc trong cửa sổ mới",
+    "koOnly": "Bài viết này chỉ có bằng tiếng Hàn.",
+    "publisher": "Wicked Storm Inc.",
+    "siteName": "Wicked Storm"
+  }
 }
