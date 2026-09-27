@@ -75,3 +75,12 @@
 3. **data-auto**: 빌드 스크립트가 이제 번역하지 않으므로 서버에는 국문 값이 간다. utm_source 자동 선택도 VI 페이지에서 그대로 동작한다. 해결된 항목이다.
 4. **한국어로 남는 것**: 제품 화면 캡처(파이프라인 단계 화면 포함), 레퍼런스 로고 이미지, 기업 홍보 영상, 뉴스 카드(board.js가 국문 posts.json으로 다시 그린다), 연결된 기사·개인정보처리방침 페이지. 베트남어 문구는 이것들이 베트남어라고 말하지 않는다. "Xem bài viết"(기사 보기)와 화면 주석에 "(tiếng Hàn)"을 붙일지는 선택 사항이다. 국문에 없는 말이라 넣지 않았다.
 5. **히어로 h1 `.line{overflow:hidden}`**: 베트남어는 윗부호가 두 겹이다(ế, ổ). 렌더링에서는 잘리지 않았다. 다른 글꼴로 대체되는 환경(4-1)에서는 한 번 더 확인해야 한다.
+
+## 소식 기사 번역(2026-09-27, `src/content/posts/i18n/vi.json`, 9건)
+
+검증: JSON 파싱, 글마다 국문과 태그 차례·href·src 일치(콘텐츠 점검이 CI에서 다시 확인), em dash · &nbsp; · U+00A0 0. 홈 카드 세 건의 제목·대체 글은 기존 `news.json` 카드 문구(&nbsp;는 공백으로).
+
+1. **추정한 이름**: 조용상 `Cho Yong-sang`, 공동 설립사 Recos · DataDriven · Edint · LearningSpark, OCU 강남학습관 `Trung tâm học tập Gangnam của OCU`, 전자신문 `Electronic Times`, 아시아경제 `Asia Economy`. 공식 표기 확인이 필요하다.
+2. **새로 쓴 사업·기관 이름**: 2023·2024 AI 디지털교과서 사업 제목, KERIS AI 디지털교과서 통합지원센터(`Trung tâm hỗ trợ tích hợp Sách giáo khoa số AI`)와 교육과정 표준 관리 시스템, 산업부 과제 전체 이름, 특허청 `Cơ quan Sở hữu trí tuệ Hàn Quốc`.
+3. **교육과정**: CASE·국가 교육과정은 `chương trình giáo dục`, 학과가 다음 학기에 보완하는 교육과정은 `chương trình đào tạo`(용어집 구분).
+4. **(사)1EdTech Korea**: 용어집대로 `1EdTech Korea`. 국문의 읽기 '원에듀테크 코리아'가 있는 한 곳만 `(One EdTech Korea)`.

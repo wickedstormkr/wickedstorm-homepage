@@ -67,3 +67,12 @@
 18. **학습자 설명(delta2로 갱신)**: 카탈로그 p.6 국문은 "필요한 순간 AI와 교수자가 개입해, 학습이 끊기지 않고 효과적으로 이어집니다"이고 영문은 "Learners receive timely support from AI and instructors to keep learning effectively."이다. 새 사이트 국문은 "필요한 순간 AI와 상호작용하며, ..."로 교수자 개입이 빠져 있어, 카탈로그 영문을 그대로 쓰면 국문에 없는 "instructors"가 들어간다. **사이트 사용**: `Learners interact with AI when they need it, to keep learning effectively.` 국문과 카탈로그 중 어느 쪽에 맞출지 결정이 필요하다.
 19. **Lecognizer 라벨 문장(delta2)**: 국문 "모든 학습 활동이 국제 표준 규격으로 수집되어 1EdTech CASE 체계로 쌓입니다"는 카탈로그 p.7 국문과 같다. 카탈로그 영문은 "CASE 체계로 쌓는다"를 "links the data to competency frameworks based on 1EdTech CASE"로 옮겨서, 국문(체계에 쌓임)보다 범위가 좁다(역량 체계로 한정). **사이트 사용**: 카탈로그 영문(주어만 뺌).
 20. **운영자 문장에서 "다음 학기"가 빠짐**: 카탈로그 p.7 국문은 "...운영자가 다음 학기 교과·직무역량 체계(CASE 기반)를 보완합니다."인데, 영문 "Administrators review AI alerts and raw data. They refine CASE-based academic and job-related competency frameworks."에는 "next semester"가 없다. 사이트 국문에도 "다음 학기"가 있다. **사이트 사용**: 지시대로 카탈로그 영문 그대로. 카탈로그 재인쇄 때 "for the next semester"를 넣을지 결정이 필요하다(카탈로그 p.5 운영자 설명에는 "for the next semester"가 있다).
+
+## 소식 기사 번역(2026-09-27, `src/content/posts/i18n/en.json`, 9건)
+
+검증: JSON 파싱, 글마다 국문과 태그 차례·href·src 일치(콘텐츠 점검이 CI에서 다시 확인), em/en dash 0. 홈 카드 세 건의 제목·대체 글은 기존 `news.json` 카드 문구 그대로.
+
+1. **원문에 영문 표기가 없어 추정한 이름**: 1EdTech Korea 공동 설립사 Recos(레코스) · DataDriven(데이터드리븐) · Edint(에딘트) · Learning Spark(러닝스파크), 의장 Yong-Sang Cho(조용상), OCU Gangnam Learning Center(OCU 강남학습관), 언론사 Electronic Times(전자신문) · Asia Economy(아시아경제). 관련 기사 두 건의 영문 제목도 새로 옮겼다. 공식 표기 확인이 필요하다.
+2. **운영자**: 용어집과 사이트 영문을 따라 `administrators`.
+3. **날짜**: 국문이 날만 적은 곳("25일 밝혔다")은 기사 날짜의 달을 붙였다(`announced on September 25`).
+4. **새로 쓴 문구**: 기사 끝 문의 줄 `Adoption and demo inquiries: … · Contact us online`, 기술 노트 'LLM Wiki' 제목(`Our in-house LLM Wiki and AI workflows`), KOLAS 기사 제목.
