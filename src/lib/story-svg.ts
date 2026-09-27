@@ -91,6 +91,18 @@ export function signalSvg() {
     + '</svg>';
 }
 
+/** 장면 5: 동일한 근거 문장이 정사각 알림 종의 윤곽에 모인다. */
+export function notificationSvg() {
+  const size = 128;
+  const ps = buildParticles().filter((p) => p.evidence);
+  const cs = VERBS.map((v, vi) => {
+    const points = ps.filter((p) => p.verb === vi)
+      .map((p) => `<circle cx="${f(p.D[0] * size)}" cy="${f(p.D[1] * size)}" r="2.2"/>`).join('');
+    return `<g fill="${VERB_COLOR[v]}" filter="url(#glow)">${points}</g>`;
+  }).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">${DEFS}${cs}</svg>`;
+}
+
 /**
  * 장면 2: 다 쓴 기록 행(지금 사이트의 기록 레저와 같은 모양). 줄마다 네 칸 알약이 줄을 끝까지 채우고,
  * 칸 안에는 데이터 눈금과 앉은 학습데이터(점), 줄 머리 점(브랜드 그라디언트)과 줄 끝 확인 점.

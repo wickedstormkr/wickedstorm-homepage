@@ -1,6 +1,6 @@
 /**
  * 장면 1 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(시연 문장을 돌려 쓴다).
- * 다섯 줄이 차면 맨 위 줄이 올라가며 사라지고, 그 줄의 점(활동 종류 색)이 별이 되어 날아가 장면의 하늘에 자리 잡는다(쌓인다).
+ * 표시 줄이 차면 맨 위 줄이 올라가며 사라지고, 그 줄의 점(활동 종류 색)이 별이 되어 날아가 장면의 하늘에 자리 잡는다(쌓인다).
  * 그때마다 창 아래 '오늘 수집' 수가 하나 는다. 날아가는 움직임은 HTML 층(창 위), 자리 잡은 별은
  * 데스크톱 그림 층이 있으면 성운과 같은 스프라이트로(story:land → canvas-art land), 없으면(폰) 같은 모양의 CSS 별로 남는다.
  * 움직임 멈춤·탭 숨김·장면 1이 보이지 않을 때는 멈춘다(KWCAG 6.2.2).
@@ -23,6 +23,8 @@ export function initLive(story: HTMLElement) {
   const root = document.documentElement;
   let k = list.children.length % pool.length;
   let timer = 0;
+  let removal = 0;
+  let visibleRows = 5;
   let inView = false;
   const GAP = 9;
   const counts = [...story.querySelectorAll<HTMLElement>('[data-live-count]')];
@@ -117,7 +119,7 @@ export function initLive(story: HTMLElement) {
     const r = pool[k++ % pool.length];
     list.append(make(r));
     place(); // 새 줄은 맨 아래 자리(보기 창 밖)에
-    if (list.children.length > 5) {
+    if (list.children.length > visibleRows) {
       const first = list.children[0] as HTMLElement;
       const dot = first.querySelector<HTMLElement>('.dot');
       if (dot) spark(dot, Number(first.dataset.verb) || 0);
@@ -126,7 +128,8 @@ export function initLive(story: HTMLElement) {
       const h = first.offsetHeight + GAP;
       first.classList.add('leaving');
       requestAnimationFrame(() => place(h, true)); // 모두 한 칸 위로
-      window.setTimeout(() => {
+      removal = window.setTimeout(() => {
+        removal = 0;
         first.remove();
         place();
       }, 600);
@@ -161,13 +164,17 @@ export function initLive(story: HTMLElement) {
     return ok;
   };
   // 한 줄에 다 들어가지 않는 문장이 하나라도 있으면 모든 줄을 같은 두 줄 짜임으로(.live.two, story.css: 줄 높이가 고르게).
-  // 그다음 보기 창 높이를 다섯 줄에 맞춰 둔다(줄이 오갈 때 창 높이가 흔들리지 않게)
+  // 그다음 보기 창 높이를 표시 줄 수에 맞춰 둔다(줄이 오갈 때 창 높이가 흔들리지 않게)
   /** 폰의 영어 · 베트남어는 CSS가 처음부터 두 줄(story.css --two): 그때는 재지 않는다 */
   const cssTwo = () => getComputedStyle(box).getPropertyValue('--two').trim() === '1';
   const fix = () => {
+    if (removal) { clearTimeout(removal); removal = 0; list.querySelector('.leaving')?.remove(); }
+    visibleRows = Math.max(3, Math.min(5, Number(getComputedStyle(box).getPropertyValue('--live-rows')) || 5));
+    while (list.children.length > visibleRows) list.lastElementChild?.remove();
+    while (list.children.length < visibleRows) list.append(make(pool[k++ % pool.length]));
     box.classList.remove('two');
     if (!cssTwo()) box.classList.toggle('two', !oneLineFits());
-    const rows = [...list.children].slice(0, 5) as HTMLElement[];
+    const rows = [...list.children].slice(0, visibleRows) as HTMLElement[];
     const h = rows.reduce((a, r) => a + r.offsetHeight, 0) + GAP * (rows.length - 1);
     if (h > 0) view.style.height = `${h}px`;
     if (list.classList.contains('abs')) place();
@@ -175,7 +182,10 @@ export function initLive(story: HTMLElement) {
   fix();
   list.classList.add('abs');
   place();
-  addEventListener('resize', fix);
+  let lastWidth = box.clientWidth;
+  new ResizeObserver(() => {
+    if (box.clientWidth !== lastWidth) { lastWidth = box.clientWidth; fix(); }
+  }).observe(box);
   document.fonts?.ready.then(fix);
   new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(box);
   new MutationObserver(sync).observe(scene, { attributes: true, attributeFilter: ['class'] });

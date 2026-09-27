@@ -96,7 +96,7 @@ test.describe('오프닝 이야기', () => {
   test('데스크톱: 내려갔다가 처음으로 돌아오면 앞 장면 글이 남지 않는다', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('');
-    await expect(page.locator('html')).toHaveClass(/story-gsap/, { timeout: 8000 });
+    await expect(page.locator('html')).toHaveClass(/story-enhanced/, { timeout: 8000 });
     const op = (sel: string) => page.locator(sel).evaluate((el) => Number(getComputedStyle(el).opacity));
     // 장면 2 글이 반쯤 들어온 자리(s ≈ 0.62)와 장면 3 한가운데를 거쳐 맨 위로
     for (const s of [0.62, 2.1, 0]) {
@@ -122,7 +122,7 @@ test.describe('오프닝 이야기', () => {
   test('데스크톱: 아래로는 다음 장면으로, 이야기 건너뛰기는 이야기 뒤로 바로 가고 초점도 옮긴다', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('');
-    await expect(page.locator('html')).toHaveClass(/story-gsap/, { timeout: 8000 });
+    await expect(page.locator('html')).toHaveClass(/story-enhanced/, { timeout: 8000 });
     await page.locator('[data-story-next]').click();
     await expect.poll(() => page.locator('#story').getAttribute('data-s'), { timeout: 8000 }).toBe('1.00');
     await expect(page.locator('#scene-statement')).toHaveClass(/is-active/);
@@ -145,17 +145,24 @@ test.describe('오프닝 이야기', () => {
     await expect.poll(() => page.evaluate(() => Math.round(scrollY)), { timeout: 8000 }).toBe(0);
   });
 
-  test('폰: 장면을 세로로 잇고, 화면에 들어오면 그 장면의 움직임을 재생한다', async ({ browser }) => {
+  test('폰: 공통 Canvas와 장면 이동을 사용하고 터치 스크롤은 기본 동작을 유지한다', async ({ browser }) => {
     const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
     const page = await ctx.newPage();
     await page.goto('');
-    await expect(page.locator('html')).not.toHaveClass(/story-pin/);
-    const sc = page.locator('#scene-statement');
-    await expect(sc).not.toHaveClass(/play/);
-    await sc.scrollIntoViewIfNeeded();
-    await expect(sc).toHaveClass(/play/);
+    await expect(page.locator('html')).toHaveClass(/story-pin/);
+    await expect(page.locator('html')).toHaveClass(/art-live/, { timeout: 15000 });
+    await expect(page.locator('html')).not.toHaveClass(/lenis/);
+    await page.locator('.story-nav a[data-go="2"]').click();
+    await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('2.00');
+    await expect(page.locator('#scene-store .case-pins li').first()).toBeVisible();
     await expect(page.locator('#scene-store .case-list')).toBeVisible();
-    await expect(page.locator('#scene-store .art-labels')).toBeHidden();
+    await page.locator('.story-nav a[data-go="5"]').click();
+    await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('5.00');
+    await expect(page.locator('#scene-next .ring-labels li').first()).toBeVisible();
+    const before = await page.evaluate(() => scrollY);
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send('Input.synthesizeScrollGesture', { x: 200, y: 350, yDistance: 250, speed: 600, gestureSourceType: 'touch' });
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(before - 100);
     await ctx.close();
   });
 });

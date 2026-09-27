@@ -36,8 +36,6 @@ html:lang(ja) body{word-break:normal;line-break:strict}
 html:lang(ja) :is(p,li,h1,h2,h3,h4,dt,dd,figcaption,label,td,th){overflow-wrap:anywhere}
 .bx{word-break:keep-all;overflow-wrap:anywhere}
 /* 일본어 글 끝 묶음(여덟 글자 안팎)은 조판(typeset.ts)이 글자 사이에 WORD JOINER를 넣어 한 덩어리로 둔다(요소를 끼우지 않는다) */
-/* 일본어 폰: 제목 한 구(열두 글자 안팎)가 한 줄에 들어가게 */
-@media (max-width:699px){html:lang(ja) .h-lg{font-size:clamp(24px,6.6vw,30px)}}
 html:lang(vi) body{line-height:1.72}
 html:lang(vi) :is(h1,h2,h3,.h-lg){line-height:1.28}
 /* 줄 모양: 문단은 마지막 줄 한 단어를 피하고(pretty), 제목은 줄 길이를 고르게(balance) */
@@ -65,7 +63,7 @@ h1,h2,h3{text-wrap:balance}
   font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .sym{height:16px;width:auto;flex:none;display:inline-block;vertical-align:middle}
 h1,h2,h3{letter-spacing:-.035em;line-height:1.12;font-weight:800}
-.h-lg{font-size:clamp(30px,4.4vw,56px)}
+.h-lg,.scene-title,#hero-title{font-size:var(--fs-title);line-height:var(--lh-title)}
 .sec-head .h-lg{margin-top:16px}
 /* 글자 그라디언트는 브랜드 그라디언트 하나(.g). .gc는 옛 이름(번역 문구 안 클래스라 유지) */
 .g,.gc{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}

@@ -81,7 +81,7 @@
     "save": "리포트 저장"
   },
   "judge": {
-    "alert": "Lecognizer AI 이상 신호 · 근거 42건",
+    "alert": "이상 신호 도착",
     "product": "LearnHubble AI · 교수자",
     "crumb": "생활경제와 금융 · 수업 설계",
     "segLabel": "확인이 필요한 구간",

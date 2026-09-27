@@ -1,6 +1,6 @@
 {
   "eyebrow": "Product · Learning Loop",
-  "title": "収集から分析、授業への適用まで<br><span class=\"g\">Learning Loop</span>でつなぎます",
+  "title": "収集から分析、授業への適用まで<span class=\"g\">Learning Loop</span>でつなぎます",
   "lead": "Lecognizerが学習データを蓄積して異常の兆候を見つけ出すと、<span class=\"nw\">LearnHubble AI</span>がその兆候を管理者・教員・学習者の判断と行動へとつなげます。",
   "loop": {
     "img": "learning-loop.webp",
@@ -227,5 +227,16 @@
     "edit": "修正",
     "apply": "反映",
     "owner": "反映は管理者が決めます"
+  },
+  "insight": {
+    "label": "Lecognizer AIの画面例：収集した学習活動から異常な区間を発見し、根拠と原因の候補を確認します。",
+    "collection": "収集した学習活動",
+    "analysis": "異常な区間を発見",
+    "evidence": "根拠となる学習データ",
+    "course": "生活経済と金融",
+    "conceptLabel": "前提概念",
+    "concept": "金利の基礎",
+    "hypothesis": "原因の候補",
+    "review": "根拠を確認し、管理者と教員が判断します。"
   }
 }

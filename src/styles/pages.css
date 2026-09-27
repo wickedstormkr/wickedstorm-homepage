@@ -121,25 +121,23 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
   .map-note{font-size:15px}
 }
 
-/* 사례 */
-.case-grid{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
-.case-card{height:100%;display:flex;flex-direction:column;padding:28px 26px;border-radius:var(--radius-l);background:var(--panel);border:1px solid var(--line)}
+/* 사례: 표면·여백·기관명은 홈의 .ref-card를 공유하고, 상세 정보만 확장한다. */
+.case-grid{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.case-card{display:flex;flex-direction:column}
 .case-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
-.case-meta .rorg{font-size:13px;font-weight:700;color:var(--accent)}
 .case-year{font-family:var(--en);font-size:13px;font-weight:700;color:var(--muted)}
-.case-card .case-h{margin:12px 0 16px;font-size:20px;letter-spacing:-.03em;line-height:1.35}
+.case-card .case-h{margin:12px 0 14px;font-size:22px;letter-spacing:-.03em;line-height:1.3}
 .case-card .case-h a{display:inline-block;padding:2px 0}
 .case-card .case-h a::after{content:" →";font-family:var(--en);color:var(--accent);transition:margin .2s}
 .case-card .case-h a:hover{text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--accent)}
 .case-dl{display:grid;gap:12px;margin:0}
 .case-dl div{display:grid;gap:4px}
-.case-dl dt{font-size:12.5px;font-weight:700;color:var(--faint);letter-spacing:.02em}
-.case-dl dd{margin:0;color:var(--ink-3);font-size:15px;line-height:1.65}
+.case-dl dt{font-size:13px;font-weight:700;color:var(--ink-3);letter-spacing:.02em}
+.case-dl dd{margin:0;color:var(--muted);font-size:15px;line-height:1.65}
 .case-card .rtags{margin-top:auto;padding-top:20px}
 @media (max-width:1023px){.case-grid{grid-template-columns:1fr}}
 
 /* 페이지 공통 */
-.page-head .h-lg{font-size:clamp(34px,4.6vw,60px)}
 .page-head-band{padding-bottom:0}
 .page-top-less{padding-top:clamp(24px,3vw,40px)}
 .sub-title{margin-top:clamp(44px,5vw,64px);font-size:clamp(22px,2.2vw,28px);letter-spacing:-.03em}
@@ -155,7 +153,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 @media (max-width:699px){.act-list li{grid-template-columns:1fr;gap:2px}}
 .case-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:20px}
 .case-card.full{scroll-margin-top:calc(var(--header-h) + 20px)}
-@media (max-width:1023px){.case-grid.two{grid-template-columns:1fr}}
+@media (max-width:699px){.case-grid.two{grid-template-columns:1fr}.case-card .case-h{font-size:19px}}
 
 /* 문의 띠 */
 .cta-box{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px 40px;padding:clamp(28px,4vw,48px);border-radius:var(--radius-l);
@@ -201,7 +199,7 @@ html.js .roles.is-tabs .role-panel+.role-panel{margin-top:0}
 .careers-row p{max-width:60em;color:var(--ink-3);font-size:15.5px;line-height:1.7}
 .careers-row b{margin-right:8px;font-family:var(--en-caps);letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:var(--accent)}
 .loc-dl{display:grid;gap:0;margin-top:22px;border-top:1px solid var(--line)}
-.loc-dl div{display:grid;grid-template-columns:7em 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px}
+.loc-dl div{display:grid;grid-template-columns:7em 1fr;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px}
 .loc-dl dt{font-family:var(--en);font-size:13.5px;font-weight:700;color:var(--muted)}
 .loc-dl dd{margin:0;color:var(--ink-2)}
 .loc-dl a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px}

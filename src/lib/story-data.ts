@@ -8,7 +8,7 @@
  * 같은 씨앗값으로 언제나 같은 모양을 만든다. 빌드 때 미리 그린 그림(SVG, src/pages/art/*),
  * 캔버스, WebGL이 모두 이 모듈을 쓰므로 세 층이 같은 그림을 그린다.
  * 좌표: 장면 1 성운(G)은 무대 전체 기준(0~1), 장면 2 기록 행(R)은 기록 칸 기준(0~1),
- * 장면 4 분포(B)는 이상 탐지 화면의 그래프 칸 기준(0~1), 장면 3·5·6은 16:10 그림 칸 기준.
+ * 장면 4 분포(B)는 그래프 칸, 장면 5 근거(D)는 정사각 알림 아이콘 기준(0~1), 장면 3·6은 16:10 그림 칸 기준.
  * 그릴 때 place()가 모두 그림 칸 기준으로 바꾼다.
  */
 
@@ -24,8 +24,6 @@ export const VERB_COLOR: Record<Verb, string> = {
 export const ART_ASPECT = 1.6;
 /** 성취 항목에 모인 입자 무리의 가로 반지름(그림 칸 비율). 이름표는 이만큼 오른쪽에 둔다 */
 export const LEAF_R = 0.06;
-/** 근거 묶음(장면 5)의 기준 중심. 화면에서는 신호 알림 옆으로 옮겨 그린다(place의 shift) */
-export const D_CENTER: [number, number] = [0.12, 0.08];
 
 export interface CaseNode {
   id: string;
@@ -131,7 +129,7 @@ export interface Particle {
   R: [number, number]; // 장면 2 기록 칸 자리(기록 칸 기준)
   T: [number, number]; // 성취 항목 자리(장면 3)
   B: [number, number]; // 분포 그래프 자리(장면 4, 이상 항목만, 그래프 칸 기준)
-  D: [number, number]; // 근거 묶음(장면 5)
+  D: [number, number]; // 알림 종에 모인 근거 문장(장면 5, 정사각 아이콘 기준)
   L: [number, number]; // 선순환 고리(장면 6, 회전 0)
   La: [number, number]; // 선순환 고리의 각도·반지름(그릴 때 돌린다)
 }
@@ -187,6 +185,39 @@ const sampleCurve = (c: Float32Array, weeks: number) => {
   return c[i] + (c[j] - c[i]) * t;
 };
 
+/** 근거 문장이 알림 종의 윤곽에 고르게 앉는다. 화면 너비와 무관한 정사각 좌표. */
+function notificationPoints(count: number): [number, number][] {
+  const dome: [number, number][] = Array.from({ length: 25 }, (_, i) => {
+    const a = Math.PI + (i / 24) * Math.PI;
+    return [0.5 + Math.cos(a) * 0.23, 0.39 + Math.sin(a) * 0.22];
+  });
+  const body: [number, number][] = [
+    [0.24, 0.7], [0.18, 0.67], [0.26, 0.55], ...dome,
+    [0.74, 0.55], [0.82, 0.67], [0.76, 0.7], [0.24, 0.7],
+  ];
+  const distances = body.slice(1).map((p, i) => Math.hypot(p[0] - body[i][0], p[1] - body[i][1]));
+  const length = distances.reduce((sum, d) => sum + d, 0);
+  const handleCount = Math.min(count, Math.max(2, Math.round(count * 0.05)));
+  const clapperCount = Math.min(count - handleCount, Math.max(3, Math.round(count * 0.15)));
+  const bodyCount = count - handleCount - clapperCount;
+  const points: [number, number][] = [];
+  for (let i = 0; i < bodyCount; i++) {
+    let distance = (i / bodyCount) * length;
+    let segment = 0;
+    while (segment < distances.length - 1 && distance > distances[segment]) distance -= distances[segment++];
+    const a = body[segment];
+    const b = body[segment + 1];
+    const t = distance / distances[segment];
+    points.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]);
+  }
+  for (let i = 0; i < clapperCount; i++) {
+    const a = (i / Math.max(1, clapperCount - 1)) * Math.PI;
+    points.push([0.5 + Math.cos(a) * 0.1, 0.75 + Math.sin(a) * 0.09]);
+  }
+  for (let i = 0; i < handleCount; i++) points.push([0.5, 0.1 + (i / Math.max(1, handleCount - 1)) * 0.07]);
+  return points;
+}
+
 /** n개 입자(문장)를 만든다. 성취 항목별 개수는 오늘 수집 비율(CASE_NODES.count)을 따른다 */
 export function buildParticles(n: number = TODAY_TOTAL, seed = 7): Particle[] {
   const r = rng(seed);
@@ -238,9 +269,11 @@ export function buildParticles(n: number = TODAY_TOTAL, seed = 7): Particle[] {
     const h = sampleCurve(now, p.tt);
     p.B = [chartX(p.tt) + (r() - 0.5) * 0.004, CHART.base - Math.pow(r(), 0.7) * (CHART.base - CHART.top) * h];
   });
-  // 근거: 교수자 화면의 이상 신호 알림 왼쪽으로 한 줄기로 흘러든다. 나머지는 체계 자리에서 흐리게
+  // 근거: 탐지된 실제 문장만 교수자 화면의 알림 종으로 모인다. 나머지는 체계 자리에서 흐리게.
+  const notification = notificationPoints(out.filter((p) => p.evidence).length);
+  let evidenceIndex = 0;
   out.forEach((p) => {
-    if (p.evidence) p.D = [D_CENTER[0] - 0.14 * Math.pow(r(), 0.7), D_CENTER[1] + (r() - 0.5) * 0.018 * ART_ASPECT];
+    if (p.evidence) p.D = notification[evidenceIndex++];
     else p.D = p.T;
   });
   // 선순환 고리: 그림 칸 가운데를 고르게 두르는 원(이름표 자리는 HTML 점으로 표시)
@@ -259,12 +292,13 @@ export type LayoutKey = (typeof LAYOUT_BY_SCENE)[number];
 /** 다른 기준의 좌표를 그림 칸 기준으로: 칸 좌표 = x0 + 좌표 × sx */
 export interface BoxMap { x0: number; y0: number; sx: number; sy: number }
 export const IDENTITY: BoxMap = { x0: 0, y0: 0, sx: 1, sy: 1 };
-/** 그릴 때의 조건: 근거 묶음 옮김, 무대·기록 칸 좌표, 흐른 시간(움직임 멈춤이면 멈춘다) */
+/** 그릴 때의 조건: 장면별 HTML 칸 좌표, 흐른 시간(움직임 멈춤이면 멈춘다) */
 export interface PlaceEnv {
-  shift?: readonly [number, number];
   stage?: BoxMap;
   ledger?: BoxMap;
   chart?: BoxMap;
+  notification?: BoxMap;
+  ring?: BoxMap;
   time?: number;
 }
 
@@ -356,10 +390,15 @@ export function place(p: Particle, s: number, out: Float32Array | number[] = [0,
       }
       case 'B':
         return p.leaf === ANOMALY_LEAF ? [ch.x0 + p.B[0] * ch.sx, ch.y0 + p.B[1] * ch.sy] : p.T;
-      case 'D':
-        return p.evidence && env.shift ? [p.D[0] + env.shift[0], p.D[1] + env.shift[1]] : p.D;
-      case 'L':
-        return ringXY(p.La[0] + time * 0.035, p.La[1]);
+      case 'D': {
+        const notification = env.notification ?? IDENTITY;
+        return p.evidence ? [notification.x0 + p.D[0] * notification.sx, notification.y0 + p.D[1] * notification.sy] : p.D;
+      }
+      case 'L': {
+        const [x, y] = ringXY(p.La[0] + time * 0.035, p.La[1]);
+        const ring = env.ring ?? IDENTITY;
+        return [ring.x0 + x * ring.sx, ring.y0 + y * ring.sy];
+      }
       default:
         return p[k];
     }

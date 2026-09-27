@@ -8,7 +8,7 @@
  * 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 입자가 착지하며 줄마다 알약이 왼쪽부터 끝까지 차오른다(지금 사이트의 기록 레저)
  * 장면 3: CASE 성취 항목(지표)마다 모인다
  * 장면 4: 이상 탐지 화면의 그래프 칸에 시간축 분포로 착지(직전 학기 점선과 비교, 3주차 구간이 솟는다)
- * 장면 5·6: 근거 줄기 → 선순환 고리(story-data.ts place)
+ * 장면 5·6: 근거 문장으로 그린 알림 종 → 선순환 고리(story-data.ts place)
  */
 import { buildParticles, place, signalCurves, chartX, CHART, SPIKE, HOT_WEEK, VERBS, VERB_COLOR, LEDGER, type Particle, type PlaceEnv, type BoxMap } from '../../lib/story-data';
 import type { Art, ArtBox, ArtAnchors } from './art-types';
@@ -35,6 +35,7 @@ export class CanvasArt implements Art {
   private H = 1;
   private ledger: Rect | null = null;
   private chart: Rect | null = null;
+  private notification: Rect | null = null;
   private env: PlaceEnv = {};
   private landed: Landed[] = [];
   private s = 0;
@@ -49,6 +50,10 @@ export class CanvasArt implements Art {
   private rate: Float32Array;
   private primed = false;
   private lastT = 0;
+  private drawCost = 0;
+  private samples = 0;
+  private frameInterval = 0;
+  private lastPaint = 0;
 
   constructor(private canvas: HTMLCanvasElement) {
     const ctx = canvas.getContext('2d');
@@ -58,7 +63,7 @@ export class CanvasArt implements Art {
     this.curves = signalCurves(this.ps);
     this.cur = new Float32Array(this.ps.length * 2);
     // 가까운(밝은) 별일수록 조금 더 빨리 따라온다: 뒤쪽 별이 늦게 흘러와 깊이가 생긴다.
-    // 장면 값 자체가 이미 스크롤을 부드럽게 따라가므로(Lenis·scrub), 여기서는 짧게(시간 상수 0.06~0.11초):
+    // 장면 값은 기본 스크롤을 따르고, 입자만 짧게 보간한다(시간 상수 0.06~0.11초):
     // 더 길면 장면 글·그림보다 입자가 0.3~0.8초 늦게 도착해 굼떠 보인다.
     this.rate = Float32Array.from(this.ps, (p) => 9 + p.z * 5 + p.phase * 0.5);
     // 색: 활동 종류(시청·응답·제출·질문). 기록 칸 색(누가 파랑 · ~하다 보라 · 무엇을 마젠타 · 부가 정보 강조색)도 같은 넷
@@ -67,13 +72,18 @@ export class CanvasArt implements Art {
   }
 
   resize(w: number, h: number, box: ArtBox, a: ArtAnchors = {}) {
+    this.primed = false;
     this.W = w;
     this.H = h;
-    this.canvas.width = Math.round(w * this.dpr);
-    this.canvas.height = Math.round(h * this.dpr);
+    // Moving a tall scene changes anchors, not the canvas backing store.
+    const width = Math.round(w * this.dpr);
+    const height = Math.round(h * this.dpr);
+    if (this.canvas.width !== width) this.canvas.width = width;
+    if (this.canvas.height !== height) this.canvas.height = height;
     this.box = box;
     this.ledger = a.ledger ?? null;
     this.chart = a.chart ?? null;
+    this.notification = a.notification ?? null;
     const toBox = (R: Rect): BoxMap => ({ x0: (R.x - box.x) / box.w, y0: (R.y - box.y) / box.h, sx: R.w / box.w, sy: R.h / box.h });
     const stage: BoxMap = { x0: -box.x / box.w, y0: -box.y / box.h, sx: w / box.w, sy: h / box.h };
     this.env = {
@@ -81,14 +91,16 @@ export class CanvasArt implements Art {
       stage,
       ledger: this.ledger ? toBox(this.ledger) : undefined,
       chart: this.chart ? toBox(this.chart) : undefined,
-      shift: a.shift,
+      notification: this.notification ? toBox(this.notification) : undefined,
+      ring: a.ring ? toBox(a.ring) : undefined,
     };
     this.draw();
   }
 
   setScene(s: number) {
+    const changed = s !== this.s;
     this.s = s;
-    if (!this.raf) this.draw();
+    if (!this.raf || (this.frameInterval > 0 && changed)) this.draw();
   }
 
   setAmbient(on: boolean) {
@@ -97,8 +109,9 @@ export class CanvasArt implements Art {
       this.t0 = performance.now() - this.clock * 1000;
       const loop = () => {
         if (!this.ambient) { this.raf = 0; return; }
-        this.clock = (performance.now() - this.t0) / 1000;
-        this.draw();
+        const now = performance.now();
+        this.clock = (now - this.t0) / 1000;
+        if (now - this.lastPaint >= this.frameInterval) { this.draw(); this.lastPaint = now; }
         this.raf = requestAnimationFrame(loop);
       };
       this.raf = requestAnimationFrame(loop);
@@ -116,11 +129,12 @@ export class CanvasArt implements Art {
   }
 
   private draw() {
+    const started = performance.now();
     const { ctx, box, dpr, s } = this;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, this.W, this.H);
     this.env.time = this.clock;
-    const base = Math.max(4.5, box.w * 0.0095);
+    const base = Math.max(2.5, box.w * 0.0095);
 
     // 1) 기록 행(칸·채움·눈금·기록 헤드·줄 머리 점·확인 점)과 저장 완료의 빛
     this.drawLedger();
@@ -128,6 +142,7 @@ export class CanvasArt implements Art {
     this.drawChart();
     // 3) 별: 목표 자리를 부드럽게 따라가고, 움직이는 동안은 빠르기만큼 늘어난 빛으로
     const t = this.clock;
+    const bellTwinkle = this.ambient ? windowed(s, 3.84, 3.96, 4.1, 4.3) : 0;
     // 프레임이 느린 브라우저(Safari 30fps 안팎, 가끔 80ms)에서도 입자가 실제 시간만큼 따라오게 넉넉히 둔다(지수 감쇠라 커도 튀지 않는다)
     const dt = Math.min(0.12, Math.max(0, t - this.lastT));
     this.lastT = t;
@@ -158,7 +173,20 @@ export class CanvasArt implements Art {
       if (a < 0.02) continue;
       const X = box.x + x * box.w;
       const Y = box.y + y * box.h;
-      const d = base * o[3];
+      let d = base * o[3];
+      if (p.evidence && this.notification && s >= 3 && s < 5) {
+        // A 32px icon gets 3.36px glow sprites: distinct cores keep the bell
+        // readable without enlarging the outline into a solid glowing blob.
+        const bell = s < 4 ? o[4] : 1 - o[4];
+        d += (Math.min(this.notification.w, this.notification.h) * 0.105 - d) * bell;
+        if (bellTwinkle > 0) {
+          // Each evidence star brightens at its own pace. A 72% floor keeps
+          // the bell readable, and the glow grows by at most 6%.
+          const shimmer = (0.5 + 0.5 * Math.sin(t * (1.5 + p.z * 0.55) + p.phase * 2)) ** 3;
+          a *= 1 - bellTwinkle * 0.28 * (1 - shimmer);
+          d *= 1 + bellTwinkle * 0.06 * shimmer;
+        }
+      }
       const c = this.colorIndex(p, s, o[4]);
       const img = this.spr[c][d > 11 ? 'm' : 's'];
       const sp = Math.hypot(vx, vy);
@@ -201,6 +229,24 @@ export class CanvasArt implements Art {
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
+    // Preserve every data point and scroll transition. If drawing itself is
+    // expensive, lower only backing resolution and idle animation frequency.
+    if (!this.frameInterval) {
+      this.drawCost += performance.now() - started;
+      if (++this.samples === 120) {
+        if (this.drawCost / this.samples > 8) {
+          this.dpr = 1;
+          this.frameInterval = 1000 / 30;
+          this.canvas.width = Math.round(this.W);
+          this.canvas.height = Math.round(this.H);
+          this.canvas.dataset.quality = 'economy';
+          this.canvas.dispatchEvent(new Event('story:quality'));
+          this.draw(); // Resizing clears pixels, including when motion is paused.
+        }
+        this.drawCost = 0;
+        this.samples = 0;
+      }
+    }
   }
 
   /** 입자 색: 성운·체계 이후는 활동 종류 색, 기록 칸에 앉는 동안은 그 칸(누가·~하다·무엇을·부가 정보) 색 */

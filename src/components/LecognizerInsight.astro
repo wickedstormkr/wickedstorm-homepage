@@ -1,0 +1,175 @@
+---
+/** A static, localized product illustration: activity → signal → evidence.
+ * The curve uses the same learning-event model as the opening story. */
+import type { HomeContent } from '../lib/content';
+import type { Lang } from '../lib/i18n';
+import { buildParticles, signalCurves, HOT_WEEK, SPIKE, VERBS, VERB_COLOR, WEEKS } from '../lib/story-data';
+import { phrase } from '../lib/phrase';
+
+interface Props {
+  lang: Lang;
+  t: HomeContent['product']['insight'];
+  signal: HomeContent['story']['signal'];
+  live: HomeContent['story']['live'];
+}
+const { lang, t, signal, live } = Astro.props;
+const rows = [live.rows[0], live.rows[1], live.rows[4]];
+const { now, prev, G } = signalCurves(buildParticles());
+const plot = { width: 520, height: 168, left: 10, right: 510, top: 12, base: 153 };
+const X = (week: number) => plot.left + week / WEEKS * (plot.right - plot.left);
+const Y = (value: number) => plot.base - value * (plot.base - plot.top);
+const f = (value: number) => value.toFixed(2);
+const path = (series: Float32Array) => Array.from(series, (value, index) => `${index ? 'L' : 'M'}${f(X((index + 0.5) / G * WEEKS))} ${f(Y(value))}`).join(' ');
+const current = path(now);
+const previous = path(prev);
+const area = `${current} L${f(X((G - 0.5) / G * WEEKS))} ${plot.base} L${f(X(0.5 / G * WEEKS))} ${plot.base} Z`;
+const spikeX = X(HOT_WEEK + SPIKE.at);
+const spikeY = Y(now[Math.min(G - 1, Math.floor((HOT_WEEK + SPIKE.at) / WEEKS * G))]);
+const gradient = `insight-curve-${lang}`;
+const fill = `insight-fill-${lang}`;
+const week = (n: number) => signal.week.replace('{n}', String(n));
+---
+
+<figure class="lec-insight" lang={lang} aria-label={t.label}>
+  <div class="insight-surface">
+    <header class="insight-header">
+      <span class="insight-product" lang="en">Lecognizer AI</span>
+      <span class="insight-course" set:html={phrase(t.course, lang)} />
+    </header>
+
+    <section class="insight-collection" aria-label={t.collection}>
+      <p class="insight-heading">{t.collection}</p>
+      <ul class="insight-events">
+        {rows.map((row) => (
+          <li>
+            <span class="insight-event-dot" style={`--event-color:${VERB_COLOR[VERBS[row.verb]]}`} aria-hidden="true"></span>
+            <span class="insight-event-copy">
+              <strong set:html={phrase(row.o, lang)} />
+              <span class="insight-actor">{row.a} · {row.v}</span>
+            </span>
+            <span class="insight-result" set:html={phrase(row.r, lang)} />
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <div class="insight-connector" aria-hidden="true">
+      <svg viewBox="0 0 160 22" width="160" height="22" fill="none">
+        <path d="M12 1V5Q12 10 18 10H142Q148 10 148 5V1M80 10V21" />
+        <circle cx="80" cy="20" r="2" />
+      </svg>
+    </div>
+
+    <section class="insight-analysis" aria-label={t.analysis}>
+      <div class="insight-chart-heading">
+        <p class="insight-heading">{t.analysis}</p>
+        <ul class="insight-legend">
+          <li class="is-current">{signal.now}</li>
+          <li class="is-previous">{signal.prev}</li>
+        </ul>
+      </div>
+      <p class="insight-axis-title" set:html={phrase(signal.chart, lang)} />
+      <svg class="insight-chart" viewBox={`0 0 ${plot.width} ${plot.height}`} width={plot.width} height={plot.height} aria-hidden="true">
+        <defs>
+          <linearGradient id={gradient} x1="0" x2="1">
+            <stop offset="0" stop-color="#789eff" />
+            <stop offset=".4" stop-color="#ff7ccf" />
+            <stop offset=".63" stop-color="#ab8cff" />
+            <stop offset="1" stop-color="#789eff" />
+          </linearGradient>
+          <linearGradient id={fill} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e930b0" stop-opacity=".25" />
+            <stop offset="1" stop-color="#7c4dff" stop-opacity=".015" />
+          </linearGradient>
+        </defs>
+        <rect x={X(HOT_WEEK)} y="0" width={X(1) - X(0)} height={plot.base} rx="10" fill="#e930b0" fill-opacity=".045" />
+        {[0, 0.33, 0.66].map((value) => <line x1={plot.left} x2={plot.right} y1={Y(value)} y2={Y(value)} class="insight-grid" />)}
+        <line x1={spikeX} x2={spikeX} y1="5" y2={plot.base} class="insight-spike-guide" />
+        <path d={area} fill={`url(#${fill})`} />
+        <path d={previous} class="insight-previous-line" />
+        <path d={current} class="insight-current-line" stroke={`url(#${gradient})`} />
+        <circle cx={spikeX} cy={spikeY} r="4" fill="#ff7ccf" stroke="#1a1025" stroke-width="2" vector-effect="non-scaling-stroke" />
+      </svg>
+      <ol class="insight-weeks" aria-hidden="true">
+        {Array.from({ length: WEEKS }, (_, index) => <li class:list={{ 'is-focus': index === HOT_WEEK }}>{week(index + 1)}</li>)}
+      </ol>
+    </section>
+
+    <section class="insight-finding" aria-label={signal.tag}>
+      <p class="insight-signal"><span>{signal.tag}</span><strong>{signal.flag}</strong></p>
+      <div class="insight-evidence">
+        <div>
+          <p class="insight-label" set:html={phrase(t.evidence, lang)} />
+          <strong class="insight-evidence-count">{signal.evidence}</strong>
+        </div>
+        <div>
+          <p class="insight-label">{t.hypothesis}</p>
+          <p class="insight-concept"><span set:html={phrase(t.conceptLabel, lang)} /><strong set:html={phrase(t.concept, lang)} /></p>
+        </div>
+      </div>
+    </section>
+    <p class="insight-review" set:html={phrase(t.review, lang)} />
+  </div>
+</figure>
+
+<style>
+  .lec-insight{container:insight / inline-size;width:100%;min-width:0;margin:0;color:var(--ink);text-align:left}
+  .insight-surface{padding:24px;border:1px solid rgba(181,168,226,.18);border-radius:24px;background:radial-gradient(ellipse at 100% 0,rgba(137,73,170,.12),transparent 54%),linear-gradient(150deg,#111321,#090b15 80%);box-shadow:0 22px 60px rgba(0,0,0,.22)}
+  .insight-header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin-bottom:22px}
+  .insight-product{font-family:var(--en);font-size:22px;font-weight:750;letter-spacing:-.04em;background:var(--grad-lec);background-clip:text;-webkit-background-clip:text;color:transparent}
+  .insight-course{font-size:13px;line-height:1.5;color:#aeb5d0}
+  .insight-heading{margin:0;font-size:15px;font-weight:650;line-height:1.5;color:var(--ink)}
+  .insight-events{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:0}
+  .insight-events li{display:grid;grid-template-columns:7px minmax(0,1fr) auto;align-items:center;gap:12px;min-width:0;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+  .insight-event-dot{display:block;width:5px;height:5px;border-radius:50%;background:var(--event-color);box-shadow:0 0 8px color-mix(in srgb,var(--event-color) 45%,transparent)}
+  .insight-event-copy{display:flex;flex-wrap:wrap;align-items:baseline;gap:1px 10px;min-width:0}
+  .insight-event-copy strong{font-size:15px;font-weight:550;line-height:1.45;color:#dfe3f7}
+  .insight-actor{font-size:12px;line-height:1.55;color:#a0a8c6}
+  .insight-result{font-size:13px;font-weight:550;line-height:1.45;color:#b6bded;white-space:nowrap}
+  .insight-connector{display:flex;justify-content:center;margin:8px 0 10px}
+  .insight-connector svg{display:block;max-width:100%;stroke:#776995;stroke-opacity:.5;stroke-width:1}
+  .insight-connector circle{fill:#c59af1;stroke:none}
+  .insight-chart-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px}
+  .insight-legend{display:flex;flex-wrap:wrap;gap:6px 12px;list-style:none;margin:0;padding:0;font-size:12px;line-height:1.5;color:#aab1cd}
+  .insight-legend li{display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .insight-legend li::before{content:"";width:12px;height:2px;background:#df95f1}
+  .insight-legend .is-previous::before{height:0;border-top:2px dashed #a3b1ff;background:none}
+  .insight-axis-title{margin:7px 0 10px;font-size:15px;line-height:1.5;color:#aeb5d0}
+  .insight-chart{display:block;width:100%;height:auto;overflow:visible}
+  .insight-grid{stroke:#d0d5f0;stroke-opacity:.09;stroke-width:1;vector-effect:non-scaling-stroke}
+  .insight-spike-guide{stroke:#ff7ccf;stroke-opacity:.3;stroke-width:1;stroke-dasharray:2 4;vector-effect:non-scaling-stroke}
+  .insight-previous-line{fill:none;stroke:#a3b1ff;stroke-opacity:.6;stroke-width:1.5;stroke-dasharray:4 5;vector-effect:non-scaling-stroke}
+  .insight-current-line{fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .insight-weeks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;list-style:none;margin:0 0 17px;padding:0;font-size:12px;line-height:1.5;color:#a3abc8;text-align:center}
+  .insight-weeks li{white-space:nowrap}
+  .insight-weeks .is-focus{color:#ff9ad9;font-weight:650}
+  .insight-finding{padding:15px 16px;border:1px solid rgba(216,141,208,.18);border-radius:14px;background:linear-gradient(110deg,rgba(137,53,117,.12),rgba(70,53,128,.12))}
+  .insight-signal{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;margin:0 0 13px}
+  .insight-signal>span{font-size:13px;font-weight:650;line-height:1.5;color:#ff9ad9}
+  .insight-signal strong{font-family:var(--font);font-size:15px;font-weight:650;line-height:1.5;color:#f3e8f4}
+  .insight-evidence{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:14px 18px}
+  .insight-evidence>div{min-width:0}
+  .insight-label{margin:0 0 5px;font-size:12px;line-height:1.5;color:#b4acc5}
+  .insight-evidence-count{font-size:17px;line-height:1.45;font-weight:650;color:#e9dcf3}
+  .insight-concept{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;margin:0}
+  .insight-concept span{font-size:12px;line-height:1.5;color:#b4acc5}
+  .insight-concept strong{font-size:15px;line-height:1.5;font-weight:650;color:#e9dcf3}
+  .insight-review{margin:12px 0 0;font-size:15px;line-height:1.65;color:#aeb5d0;text-wrap:pretty}
+  @container insight (width < 440px){
+    .insight-surface{padding:19px 16px;border-radius:20px}
+    .insight-header{margin-bottom:18px}
+    .insight-product{font-size:21px}
+    .insight-events li{column-gap:9px;padding-block:9px}
+    .insight-event-copy{display:grid;gap:1px}
+    .insight-result{font-size:12px}
+    .insight-chart-heading{display:grid;gap:5px}
+    .insight-axis-title{margin-bottom:12px}
+    .insight-finding{padding:13px 12px}
+    .insight-signal{display:grid;gap:2px;margin-bottom:12px}
+    .insight-evidence{grid-template-columns:minmax(0,1fr);gap:12px}
+    .insight-evidence>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:baseline;gap:10px}
+    .insight-label{margin:0}
+    .insight-concept{display:grid;gap:1px}
+    .insight-evidence-count{font-size:15px}
+  }
+</style>

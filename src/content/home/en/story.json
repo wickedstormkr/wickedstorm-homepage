@@ -81,7 +81,7 @@
     "save": "Save report"
   },
   "judge": {
-    "alert": "Lecognizer AI anomaly signal · 42 evidence items",
+    "alert": "New alert",
     "product": "LearnHubble AI · Instructor",
     "crumb": "Personal Finance · Lesson design",
     "segLabel": "Sections that need attention",
