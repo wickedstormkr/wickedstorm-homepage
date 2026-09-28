@@ -1,9 +1,8 @@
 /**
  * 사이트 주소 설정: 한 곳에서만 바꾼다.
  *
- * 호스팅이 정해지지 않았다(결정 대기 1: Cloudflare Pages 권장, 또는 GitHub Pages).
- * - Cloudflare Pages 또는 도메인 루트(wickedstorm.kr): SITE_URL=https://wickedstorm.kr, BASE_PATH=/
- * - GitHub Pages 프로젝트 페이지: SITE_URL=https://<org>.github.io, BASE_PATH=/<저장소 이름>/
+ * 운영: https://wickedstorm.kr (AWS S3 + CloudFront, 도메인 루트). 기본값이 운영 주소다.
+ * - GitHub Pages 미리보기: SITE_URL=https://wickedstormkr.github.io, BASE_PATH=/wickedstorm-homepage/ (.github/workflows/preview.yml)
  *
  * 빌드할 때 환경 변수로 덮어쓸 수 있다. 예: BASE_PATH=/wickedstorm-homepage/ npm run build
  */

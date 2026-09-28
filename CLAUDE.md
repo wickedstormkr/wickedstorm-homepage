@@ -1,12 +1,13 @@
 # 위키드스톰 홈페이지 재구축
 
-위키드스톰(Wicked Storm Inc.)은 교육 분야 학습데이터·AI 회사입니다. 이 저장소에서 공식 홈페이지를 새로 만듭니다. 비공개 저장소입니다.
+위키드스톰(Wicked Storm Inc.)은 교육 분야 학습데이터·AI 회사입니다. 이 저장소에서 공식 홈페이지를 만들고, https://wickedstorm.kr 에서 운영합니다(2026-09-28 공개).
+공개 저장소입니다(GitHub Pages 미리보기). 비밀값과 운영 인프라 식별자(버킷 · 배포 ID · 계정 번호)를 커밋하지 않습니다.
 
 ## 먼저 읽을 것
 - **재구축안(설계 문서)**: `docs/redesign/analysis/index.html`. 브라우저로 열어 봅니다. 이 문서가 방향의 기준입니다.
 - **레퍼런스 조사**: `docs/redesign/research.md`. 캡처는 `docs/redesign/research-shots/`.
 - **제품 화면 원본**: `docs/source/`. 화면 속 인물·교과·수치는 모두 시연용입니다.
-- **지금 운영 중인 사이트**: `wickedstormkr/homepage_renewal`. 공개 저장소이고 https://wickedstormkr.github.io/homepage_renewal/ 에 올라가 있습니다.
+- **옛 사이트**: `wickedstormkr/homepage_renewal`(2026-09-28까지 wickedstorm.kr에서 운영). 공개 저장소이고 https://wickedstormkr.github.io/homepage_renewal/ 에 올라가 있습니다.
   - 문구, 네 언어 번역, 이미지, 소식, 카탈로그 PDF, 기업영상의 원본이 거기 있습니다.
   - 그 저장소는 읽기만 하고 고치지 않습니다.
 
@@ -81,7 +82,9 @@
 - **자동 점검(CI)**:
   - 폭 360·390·430·768·820·1024·1280·1440·1920 × 네 언어에서 확인합니다: 가로 넘침, 칸 밖 글자, 11px 미만 글자, 누르는 곳 크기, 마지막 줄 한 단어.
   - 그 밖에 axe, Lighthouse 예산, 깨진 링크를 검사합니다.
-- **문의 폼**: 지금 운영 중인 서버를 그대로 씁니다. 엔드포인트는 homepage_renewal의 `js/site-config.js`에 있습니다.
+- **문의 폼**: `https://wickedstorm.kr/api/contact`(`src/config/client.ts` `CONTACT_API`)로 보냅니다. CloudFront가 접속 국가를 붙여 문의 Lambda로 넘깁니다.
+  - Lambda는 문의를 대기열에 넣는 즉시 답합니다(약 1초). 관리표(구글 시트) 기록과 메일은 뒤에서 처리하고, 실패하면 다시 시도합니다. 서버 코드와 인프라는 CodeCommit `wickedstorm-infra`(SAM `homepage-call-smtp`)에 있습니다.
+  - 시험 문의는 이메일 `homepage-test@example.com`과 본문의 `CONTACT-QA-`로 표시합니다(관리표에서 시험 행으로 구분).
   - 보내는 값의 이름은 바꾸지 않습니다. 문의 목적 · 유입 기록은 제목(subject)과 본문(inquiry) 끝의 '접수 정보'로 싣고, GA4에는 개인정보 없이 `contact_start` · `generate_lead`만 보냅니다. UTM 규칙과 보는 법: `docs/marketing/analytics.md`.
 
 ## 사실 (지금 사이트 기준, 바꾸지 말 것)
@@ -140,10 +143,10 @@
   - 자동으로 다른 언어 페이지로 보내지 않고, 안내 띠만 띄웁니다.
 
 ## 결정 대기 (답을 받기 전까지 권장안으로 진행)
-1. 호스팅: Cloudflare Pages(권장) 또는 GitHub Pages
+1. 호스팅: **결정됨(9.28)**. AWS S3 + CloudFront(아래 '운영 배포'). GitHub Pages는 미리보기
 2. '학습의 순간' 그림체: 기업영상의 3D 톤(권장)
 3. HTML로 다시 그릴 제품 화면: 핵심 네 장면(권장). Statement 목록, 이상 신호 차트, 교수자 개입, 학습자 AI 힌트.
-4. 공개 시점: **결정됨(9.25)**. 하노이 VIETEDU(10.15) 전에 완성·공개. 목표 10.13(화), 예비일 10.14
+4. 공개 시점: **공개됨(9.28)**. 하노이 VIETEDU(10.15) 전
 5. 웹 접근성 품질인증: 공개 뒤 신청(권장)
 6. 베트남 방문자용 Zalo 문의 채널: 미정
 
