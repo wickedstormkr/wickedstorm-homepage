@@ -1,0 +1,177 @@
+---
+/**
+ * 에듀테크 · LLM Wiki 한 장면: 지식 지도(데이터 아트) | LLM Wiki 화면 예시.
+ * 지식 지도(빌드 때 그리는 인라인 SVG, 같은 씨앗값으로 늘 같은 모양):
+ *   왼쪽의 흩어진 별 = 문서 · 논의 · 반복되는 질문(색 = 종류). 가는 선을 따라 개념(제품 · 기술 · 표준 · 사업 · 인증)으로 모이고(모으기),
+ *   개념끼리는 관계 선으로 이어진다(엮기, 온톨로지). 질문이 닿은 관계(표준 → 사업)는 밝게, 그 자리에서 찾은 자료가 오른쪽 화면으로 간다.
+ * 화면 예시(맥 창 틀): 질문 → AI 초안과 찾은 자료 → 초안 · 담당자 확인 · 확정(지금은 담당자 확인). 창 안은 누를 수 없는 그림.
+ * 글자는 모두 HTML(그림에 굽지 않는다). 저절로 움직이지 않는다(CLAUDE.md '움직임은 설명할 때만').
+ */
+import Window from './fragments/Window.astro';
+import type { HomeContent } from '../lib/content';
+import { rng } from '../lib/story-ledger';
+
+interface Props { t: HomeContent['edutech']['wiki'] }
+const { t } = Astro.props;
+const m = t.map;
+const s = t.screen;
+
+const W = 1600;
+const H = 1000;
+/** 종류 색(브랜드 팔레트 안): 문서 파랑 · 논의 보라 · 반복되는 질문 마젠타 */
+const TYPE_COLOR = ['#2f7cff', '#7c4dff', '#e930b0'];
+type NodeId = keyof typeof m.nodes;
+/** 개념 자리(그림 칸 0~1). 이름표는 점 위 가운데 */
+const NODES: { id: NodeId; x: number; y: number; hot?: boolean }[] = [
+  { id: 'product', x: 0.55, y: 0.28 },
+  { id: 'tech', x: 0.86, y: 0.17 },
+  { id: 'standard', x: 0.63, y: 0.68, hot: true },
+  { id: 'project', x: 0.9, y: 0.52, hot: true },
+  { id: 'cert', x: 0.8, y: 0.9 },
+];
+const at = (id: NodeId) => NODES.find((n) => n.id === id)!;
+/** 관계(가는 선). rel: 이름표 번호(m.relations) */
+const EDGES: { a: NodeId; b: NodeId; rel?: number; hot?: boolean }[] = [
+  { a: 'product', b: 'tech', rel: 1 },
+  { a: 'product', b: 'standard' },
+  { a: 'standard', b: 'project', rel: 0, hot: true },
+  { a: 'tech', b: 'project' },
+  { a: 'standard', b: 'cert' },
+  { a: 'project', b: 'cert' },
+];
+const f = (v: number) => v.toFixed(1);
+const r = rng(23);
+const gauss = () => (r() + r() + r() - 1.5) / 1.5;
+
+// 흩어진 지식(별): 느슨한 덩어리 셋 둘레에. 종류 비중 문서 18 · 논의 13 · 질문 11
+const CLUSTERS = [[0.1, 0.26], [0.2, 0.55], [0.09, 0.8]];
+const TARGET = [0.26, 0.2, 0.26, 0.18, 0.1];
+const pick = (weights: number[]) => {
+  let x = r() * weights.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < weights.length; i++) { x -= weights[i]; if (x <= 0) return i; }
+  return weights.length - 1;
+};
+const sources = Array.from({ length: 42 }, () => {
+  const type = pick([18, 13, 11]);
+  const c = CLUSTERS[Math.floor(r() * CLUSTERS.length)];
+  const x = Math.min(0.3, Math.max(0.02, c[0] + gauss() * 0.09));
+  const y = Math.min(0.94, Math.max(0.06, c[1] + gauss() * 0.16));
+  const n = NODES[pick(TARGET)];
+  return { type, x: x * W, y: y * H, nx: n.x * W, ny: n.y * H, z: 0.4 + r() * 0.6 };
+});
+// 개념마다 쌓인 쪽(작은 점): 개념 둘레에 흩어진다
+const pages = NODES.flatMap((n) =>
+  Array.from({ length: 11 }, () => {
+    const a = r() * Math.PI * 2;
+    const d = 30 + Math.pow(r(), 0.7) * 44;
+    return { x: n.x * W + Math.cos(a) * d * 1.15, y: n.y * H + Math.sin(a) * d * 0.85, c: TYPE_COLOR[Math.floor(r() * 3)], o: 0.35 + r() * 0.55, s: 2.2 + r() * 2.4 };
+  }),
+);
+/** 관계 선: 가운데에서 조금 휜 곡선. 이름표는 곡선의 가운데(t = .5) */
+const edges = EDGES.map((e) => {
+  const A = at(e.a);
+  const B = at(e.b);
+  const ax = A.x * W, ay = A.y * H, bx = B.x * W, by = B.y * H;
+  const cx = (ax + bx) / 2 - (by - ay) * 0.12;
+  const cy = (ay + by) / 2 + (bx - ax) * 0.12;
+  return { ...e, d: `M${f(ax)} ${f(ay)}Q${f(cx)} ${f(cy)} ${f(bx)} ${f(by)}`, mx: (0.25 * ax + 0.5 * cx + 0.25 * bx) / W, my: (0.25 * ay + 0.5 * cy + 0.25 * by) / H };
+});
+/** 찾은 자료가 화면(오른쪽)으로 가는 길: 밝은 두 개념에서 그림 칸 오른쪽 끝으로. 길 위의 점 = 자료 */
+const exits = NODES.filter((n) => n.hot).map((n, i) => {
+  const ax = n.x * W, ay = n.y * H, bx = W + 40, by = H * (0.5 + (i - 0.5) * 0.08);
+  const c1x = ax + (bx - ax) * 0.45, c2x = ax + (bx - ax) * 0.7;
+  const bez = (t: number) => {
+    const u = 1 - t;
+    return [u * u * u * ax + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * bx, u * u * u * ay + 3 * u * u * t * ay + 3 * u * t * t * by + t * t * t * by];
+  };
+  return { d: `M${f(ax)} ${f(ay)}C${f(c1x)} ${f(ay)} ${f(c2x)} ${f(by)} ${f(bx)} ${f(by)}`, beads: [0.35, 0.62, 0.86].map((t, k) => ({ p: bez(t), c: TYPE_COLOR[(i + k) % 3] })) };
+});
+const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
+---
+<div class="wiki-stage">
+  <div class="wiki-map">
+    <div class="wiki-art" role="img" aria-label={m.label}>
+      <svg viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+        <defs>
+          {TYPE_COLOR.map((c, i) => (
+            <radialGradient id={`wk-s${i}`}>
+              <stop offset="0" stop-color="#fff" stop-opacity=".95" />
+              <stop offset=".24" stop-color={c} stop-opacity=".85" />
+              <stop offset=".6" stop-color={c} stop-opacity=".22" />
+              <stop offset="1" stop-color={c} stop-opacity="0" />
+            </radialGradient>
+          ))}
+          <radialGradient id="wk-glow">
+            <stop offset="0" stop-color="#a3b1ff" stop-opacity=".22" />
+            <stop offset="1" stop-color="#a3b1ff" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="wk-hot">
+            <stop offset="0" stop-color="#e930b0" stop-opacity=".3" />
+            <stop offset=".5" stop-color="#7c4dff" stop-opacity=".12" />
+            <stop offset="1" stop-color="#7c4dff" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="wk-grad" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#e930b0" />
+            <stop offset=".52" stop-color="#7c4dff" />
+            <stop offset="1" stop-color="#2f7cff" />
+          </linearGradient>
+        </defs>
+        <!-- 모으기: 흩어진 별에서 개념으로 가는 가는 선 -->
+        <g fill="none" stroke-width="1.5" stroke-linecap="round">
+          {sources.map((p) => <path d={`M${f(p.x)} ${f(p.y)}C${f(p.x + 330)} ${f(p.y)} ${f(p.nx - 260)} ${f(p.ny)} ${f(p.nx)} ${f(p.ny)}`} stroke={TYPE_COLOR[p.type]} stroke-opacity={(0.08 + p.z * 0.1).toFixed(2)} />)}
+        </g>
+        <!-- 엮기: 개념 사이의 관계 -->
+        <g fill="none" stroke-linecap="round">
+          {edges.map((e) => e.hot
+            ? <path d={e.d} stroke="url(#wk-grad)" stroke-width="4" />
+            : <path d={e.d} stroke="#a3b1ff" stroke-opacity=".32" stroke-width="2" />)}
+        </g>
+        <!-- 찾은 자료가 화면으로 -->
+        <g class="wk-exit" fill="none">
+          {exits.map((x) => <path d={x.d} stroke="url(#wk-grad)" stroke-opacity=".55" stroke-width="2.4" stroke-dasharray="2 10" stroke-linecap="round" />)}
+          {exits.flatMap((x) => x.beads.map((b) => <circle cx={f(b.p[0])} cy={f(b.p[1])} r="11" fill={`url(#wk-s${TYPE_COLOR.indexOf(b.c)})`} />))}
+        </g>
+        <!-- 개념 둘레에 쌓인 쪽 -->
+        <g>
+          {pages.map((p) => <circle cx={f(p.x)} cy={f(p.y)} r={p.s.toFixed(1)} fill={p.c} fill-opacity={p.o.toFixed(2)} />)}
+        </g>
+        <!-- 흩어진 지식(별) -->
+        <g>
+          {sources.map((p) => <circle cx={f(p.x)} cy={f(p.y)} r={(9 + p.z * 9).toFixed(1)} fill={`url(#wk-s${p.type})`} />)}
+        </g>
+        <!-- 개념 -->
+        <g>
+          {NODES.map((n) => (
+            <g>
+              <circle cx={f(n.x * W)} cy={f(n.y * H)} r={n.hot ? 150 : 110} fill={n.hot ? 'url(#wk-hot)' : 'url(#wk-glow)'} />
+              <circle cx={f(n.x * W)} cy={f(n.y * H)} r="21" fill="#0c0e1f" stroke={n.hot ? 'url(#wk-grad)' : '#a3b1ff'} stroke-opacity={n.hot ? 1 : 0.55} stroke-width={n.hot ? 3.5 : 2} />
+              <circle cx={f(n.x * W)} cy={f(n.y * H)} r={n.hot ? 8 : 6.5} fill="#fff" />
+            </g>
+          ))}
+        </g>
+      </svg>
+      <ul class="wiki-labels" aria-hidden="true">
+        {NODES.map((n) => <li class:list={['wiki-node', { hot: n.hot }]} style={`left:${pct(n.x)};top:${pct(n.y)}`}>{m.nodes[n.id]}</li>)}
+        {edges.filter((e) => e.rel !== undefined).map((e) => <li class:list={['wiki-rel', { hot: e.hot }]} style={`left:${pct(e.mx)};top:${pct(e.my)}`}>{m.relations[e.rel!]}</li>)}
+      </ul>
+    </div>
+    <ul class="wiki-legend">
+      {m.legend.map((l, i) => <li><i style={`--c:${TYPE_COLOR[i]}`} aria-hidden="true"></i>{l}</li>)}
+    </ul>
+  </div>
+  <Window class="wiki-win" label={s.label} title={s.title} crumb={s.crumb}>
+    <div class="wiki-body">
+      <p class="wiki-k">{s.qLabel}</p>
+      <p class="wiki-q">{s.q}</p>
+      <div class="wiki-draft">
+        <p class="wiki-k"><span class="fx-tag">{s.draftLabel}</span></p>
+        <p class="wiki-a">{s.a}</p>
+        <p class="wiki-k">{s.srcLabel}</p>
+        <ul class="wiki-src">{s.sources.map((x, i) => <li><i style={`--c:${TYPE_COLOR[i % 3]}`} aria-hidden="true"></i>{x}</li>)}</ul>
+      </div>
+      <ol class="wiki-flow">
+        {s.flow.map((x, i) => <li class:list={{ done: i < 1, now: i === 1 }} aria-current={i === 1 ? 'step' : undefined}><i aria-hidden="true"></i>{x}</li>)}
+      </ol>
+    </div>
+  </Window>
+</div>

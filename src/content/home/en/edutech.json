@@ -21,9 +21,45 @@
     "eyebrow": "LLM Wiki",
     "title": "LLM Wiki: scattered knowledge in one place",
     "lead": "We gather documents, discussions, and answers to recurring questions into our LLM Wiki, and build AI into our workflows to refine the way we work.",
-    "img": "news/2026-07-llm-wiki-ontology.webp",
-    "alt": "Scattered documents and discussions woven into concepts and relationships (an ontology) and gathered in the wiki, where AI finds materials and creates drafts",
-    "caption": "Concept image made with AI",
+    "map": {
+      "label": "Knowledge map: scattered documents, discussions, and recurring questions are woven into concepts (products, technology, standards, projects, certifications) and their relationships; AI finds materials along the link between standards and projects",
+      "legend": [
+        "Documents",
+        "Discussions",
+        "Recurring questions"
+      ],
+      "nodes": {
+        "product": "Products",
+        "tech": "Technology",
+        "standard": "Standards",
+        "project": "Projects",
+        "cert": "Certifications"
+      },
+      "relations": [
+        "applies",
+        "implements"
+      ]
+    },
+    "screen": {
+      "label": "LLM Wiki example screen",
+      "title": "LLM Wiki",
+      "crumb": "Ask and find",
+      "qLabel": "Question",
+      "q": "What is 1EdTech CASE used for?",
+      "draftLabel": "AI draft",
+      "a": "It is used to exchange curricula, achievement standards, and competencies as one standard framework. Collected learning data points to items in that framework.",
+      "srcLabel": "Materials found",
+      "sources": [
+        "CASE tech note",
+        "Standards map",
+        "Project proposal"
+      ],
+      "flow": [
+        "Draft",
+        "Review",
+        "Final"
+      ]
+    },
     "steps": [
       {
         "title": "Gather",

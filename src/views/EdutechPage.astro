@@ -2,6 +2,7 @@
 /**
  * 에듀테크 페이지(헤더 메뉴 '에듀테크'): LLM Wiki → 교육 AX → 1EdTech 표준(표준 지도 · 1EdTech 활동).
  * - LLM Wiki: 사내에서 AI를 먼저 쓰는 방식. 소식 기사(사내 LLM Wiki와 AI 워크플로우)에 적힌 사실만 쓰고 그 기사로 잇는다.
+ *   그림은 사이트의 데이터 아트로 새로 그린다(지식 지도 + 화면 예시, components/WikiStage.astro). 기사 그림을 가져다 쓰지 않는다.
  * - 교육 AX: 학습을 관리하는 도구에서 경험하는 공간으로. 제품 사실(CLAUDE.md '사실')로만 네 단계(수집 · 분석 · 제안 · 다음 학기)를 쓰고, 특허는 원본(신뢰 페이지)으로 잇는다.
  * - 1EdTech 표준: 1EdTech 설명과 회원 자격 → 표준 지도(CASE 기준) → 활동(소식 원문 링크).
  */
@@ -9,7 +10,7 @@ import Page from '../layouts/Page.astro';
 import PageHead from '../components/PageHead.astro';
 import StdMap from '../components/StdMap.astro';
 import CtaBand from '../components/CtaBand.astro';
-import Img from '../components/Img.astro';
+import WikiStage from '../components/WikiStage.astro';
 import { getHome } from '../lib/content';
 import { articlePath, localHref, pagePath, type Lang } from '../lib/i18n';
 import { phrase, phraseText } from '../lib/phrase';
@@ -35,17 +36,14 @@ const body = (html: string) => html.replaceAll('{trust}', trust);
     </div>
   </section>
 
-  <!-- LLM Wiki: 모으기 · 엮기 · 초안과 확정(그림의 왼쪽 · 가운데 · 오른쪽과 같은 순서) -->
+  <!-- LLM Wiki: 모으기 · 엮기 · 초안과 확정(지식 지도의 왼쪽 별 · 가운데 개념 · 오른쪽 화면과 같은 순서) -->
   <section class="band edu-sec" id="llm-wiki" aria-labelledby="llm-wiki-title">
     <div class="wrap">
       <p class="eyebrow"><span>{t.wiki.eyebrow}</span></p>
       <h2 class="sub-title" id="llm-wiki-title" set:html={phrase(t.wiki.title, lang)} />
       <p class="sub-lead" set:html={phraseText(t.wiki.lead, lang)} />
-      <figure class="edu-figure">
-        <Img name={t.wiki.img} alt={t.wiki.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" />
-        <figcaption>{t.wiki.caption}</figcaption>
-      </figure>
-      <ol class="edu-steps">
+      <WikiStage t={t.wiki} />
+      <ol class="edu-steps flow">
         {t.wiki.steps.map((st, i) => (
           <li class="edu-step">
             <span class="edu-n" aria-hidden="true">{num(i)}</span>

@@ -21,9 +21,45 @@
     "eyebrow": "LLM Wiki",
     "title": "LLM Wiki: tập hợp tri thức rời rạc vào một nơi",
     "lead": "Chúng tôi tập hợp tài liệu, các cuộc thảo luận và câu trả lời cho những câu hỏi lặp lại vào LLM Wiki, đồng thời kết hợp AI vào quy trình làm việc để hoàn thiện cách làm việc của mình.",
-    "img": "news/2026-07-llm-wiki-ontology.webp",
-    "alt": "Tài liệu và thảo luận rời rạc được liên kết thành khái niệm và quan hệ (ontology) rồi tập hợp vào wiki; trên nền đó, AI tìm tài liệu và tạo bản nháp",
-    "caption": "Hình minh họa khái niệm do AI tạo",
+    "map": {
+      "label": "Bản đồ tri thức: tài liệu, thảo luận và câu hỏi lặp lại rời rạc được liên kết thành khái niệm (sản phẩm, công nghệ, chuẩn, dự án, chứng nhận) và quan hệ; AI tìm tài liệu theo quan hệ giữa chuẩn và dự án",
+      "legend": [
+        "Tài liệu",
+        "Thảo luận",
+        "Câu hỏi lặp lại"
+      ],
+      "nodes": {
+        "product": "Sản phẩm",
+        "tech": "Công nghệ",
+        "standard": "Chuẩn",
+        "project": "Dự án",
+        "cert": "Chứng nhận"
+      },
+      "relations": [
+        "áp dụng",
+        "triển khai"
+      ]
+    },
+    "screen": {
+      "label": "Ví dụ màn hình LLM Wiki",
+      "title": "LLM Wiki",
+      "crumb": "Hỏi và tìm",
+      "qLabel": "Câu hỏi",
+      "q": "1EdTech CASE dùng để làm gì?",
+      "draftLabel": "Bản nháp AI",
+      "a": "Dùng để trao đổi chương trình giáo dục, yêu cầu cần đạt và năng lực như một khung chuẩn thống nhất. Dữ liệu học tập thu thập được sẽ trỏ đến các mục trong khung này.",
+      "srcLabel": "Tài liệu tìm được",
+      "sources": [
+        "Ghi chú kỹ thuật CASE",
+        "Bản đồ chuẩn",
+        "Đề xuất dự án"
+      ],
+      "flow": [
+        "Bản nháp",
+        "Xem xét",
+        "Chốt"
+      ]
+    },
     "steps": [
       {
         "title": "Tập hợp",
