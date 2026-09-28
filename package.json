@@ -19,7 +19,8 @@
     "test": "npm run test:content && npm run test:links && npm run test:e2e",
     "report": "node scripts/checks/report.mjs",
     "migrate:home": "node scripts/migrate/extract-home.mjs",
-    "capture": "node scripts/capture.mjs"
+    "capture": "node scripts/capture.mjs",
+    "deploy": "bash scripts/deploy.sh"
   },
   "dependencies": {
     "astro": "^7.3.5",

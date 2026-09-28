@@ -87,6 +87,16 @@
   - 시험 문의는 이메일 `homepage-test@example.com`과 본문의 `CONTACT-QA-`로 표시합니다(관리표에서 시험 행으로 구분).
   - 보내는 값의 이름은 바꾸지 않습니다. 문의 목적 · 유입 기록은 제목(subject)과 본문(inquiry) 끝의 '접수 정보'로 싣고, GA4에는 개인정보 없이 `contact_start` · `generate_lead`만 보냅니다. UTM 규칙과 보는 법: `docs/marketing/analytics.md`.
 
+## 운영 배포
+- 운영 주소는 https://wickedstorm.kr 입니다. AWS S3 정적 웹사이트 + CloudFront이고, 인프라 정의는 CodeCommit `wickedstorm-infra`(Terraform)에 있습니다.
+  - www.wickedstorm.kr · wickedstorm.co.kr · www.wickedstorm.co.kr은 CloudFront 함수가 https://wickedstorm.kr 로 영구 이동(301)시킵니다. 경로와 쿼리는 유지됩니다.
+  - 없는 주소는 `404.html`을 보여 줍니다(버킷 오류 문서).
+- 배포는 `npm run deploy`(`scripts/deploy.sh`)로 합니다. origin/main과 같은 깨끗한 커밋을 GA4를 켜고 빌드해 올린 뒤 CloudFront 캐시를 비웁니다. `DRY_RUN=1`이면 올릴 목록만 봅니다.
+  - 지우지 않고 덮어씁니다. 버킷의 `fair2026/`(박람회 자료 PDF, 자료 받기 링크)를 지우면 안 됩니다.
+  - 캐시: 해시가 붙은 파일(`_astro/`, 글꼴)은 1년, 그 밖의 자산은 하루, HTML은 매번 확인합니다(no-cache).
+- 옛 사이트를 버킷에 풀던 CodePipeline(`hompage`, CodeCommit `wickedstorm-homepage`)은 배포 단계를 막아 두었습니다. 다시 켜지 않습니다.
+- GitHub Pages(https://wickedstormkr.github.io/wickedstorm-homepage/)는 미리보기입니다(검색 제외). main에 병합하면 자동으로 갱신됩니다.
+
 ## 사실 (지금 사이트 기준, 바꾸지 말 것)
 - **Lecognizer**: AI 기반 이상 탐지를 갖춘 국제 표준 학습데이터 저장소(LRS). GS 인증 1등급.
 - **Lecognizer AI**: 학습데이터의 이상 신호 탐지.

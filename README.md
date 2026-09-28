@@ -53,6 +53,13 @@ SITE_URL=https://wickedstormkr.github.io BASE_PATH=/wickedstorm-homepage/ npm ru
 PUBLIC_GA_ID=G-0Y5QD1HBGN npm run build                                           # 운영 배포에서만 GA4를 켠다
 ```
 
+### 운영 배포
+```bash
+AWS_PROFILE=<배포 권한 프로필> DRY_RUN=1 npm run deploy   # 올릴 목록만 확인
+AWS_PROFILE=<배포 권한 프로필> npm run deploy             # 빌드(GA4 켬) → S3 업로드 → CloudFront 캐시 비우기
+```
+origin/main과 같은 깨끗한 커밋에서만 올립니다. 규칙: [`CLAUDE.md`](CLAUDE.md) '운영 배포'.
+
 사이트 안 주소는 모두 `src/lib/url.ts`의 `url()`을 거쳐 base가 붙습니다. 콘텐츠 파일 안 주소는 사이트 루트 기준(`/privacy.html`)으로 적습니다.
 
 ## 점검
