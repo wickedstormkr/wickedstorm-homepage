@@ -13,25 +13,25 @@
       "links": [
         {
           "label": "한국어",
-          "file": "/files/WICKEDSTORM_Catalog_2026_KO.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Catalog_2026_KO.pdf",
           "lang": "ko",
           "id": "catalog_ko"
         },
         {
           "label": "English",
-          "file": "/files/WICKEDSTORM_Catalog_2026_EN.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Catalog_2026_EN.pdf",
           "lang": "en",
           "id": "catalog_en"
         },
         {
           "label": "日本語",
-          "file": "/files/WICKEDSTORM_Catalog_2026_JA.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Catalog_2026_JA.pdf",
           "lang": "ja",
           "id": "catalog_ja"
         },
         {
           "label": "PDF tiếng Việt",
-          "file": "/files/WICKEDSTORM_Catalog_2026_VI.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Catalog_2026_VI.pdf",
           "lang": "vi",
           "id": "catalog_vi"
         }
@@ -46,25 +46,25 @@
       "links": [
         {
           "label": "한국어",
-          "file": "/files/WICKEDSTORM_Company_Profile_2026_KO.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Company_Profile_2026_KO.pdf",
           "lang": "ko",
           "id": "profile_ko"
         },
         {
           "label": "English",
-          "file": "/files/WICKEDSTORM_Company_Profile_2026_EN.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Company_Profile_2026_EN.pdf",
           "lang": "en",
           "id": "profile_en"
         },
         {
           "label": "日本語",
-          "file": "/files/WICKEDSTORM_Company_Profile_2026_JA.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Company_Profile_2026_JA.pdf",
           "lang": "ja",
           "id": "profile_ja"
         },
         {
           "label": "PDF tiếng Việt",
-          "file": "/files/WICKEDSTORM_Company_Profile_2026_VI.pdf",
+          "file": "https://wickedstorm.kr/fair2026/docs/WICKEDSTORM_Company_Profile_2026_VI.pdf",
           "lang": "vi",
           "id": "profile_vi"
         }
