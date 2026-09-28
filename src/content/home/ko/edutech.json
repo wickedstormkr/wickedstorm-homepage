@@ -1,26 +1,140 @@
 {
   "eyebrow": "EdTech · AX",
-  "title": "국제 표준 위에서, <span class=\"gc\">AI로 교육을 전환합니다</span>",
-  "lead": "위키드스톰은 1EdTech 국제 표준으로 학습데이터를 쌓고, 그 위에 AI를 더해 교육 현장의 AX(AI 전환)를 돕습니다. 사내 업무에도 LLM Wiki로 AI를 먼저 적용하고 있습니다.",
+  "title": "교육 현장에 AI를 더하는 <span class=\"gc\">새로운 시도</span>를 이어갑니다",
+  "lead": "위키드스톰은 교육의 AX(AI 전환)를 위해 AI를 직접 만들어 씁니다. 학습분석 AI 모델과 AI 에이전트는 교육 현장에서, LLM Wiki는 사내 업무에서 먼저 시도하며, 판단과 적용은 사람이 합니다.",
   "tocLabel": "에듀테크 목차",
   "toc": [
     {
-      "id": "llm-wiki",
-      "label": "LLM Wiki"
-    },
-    {
       "id": "ax",
       "label": "교육 AX"
+    },
+    {
+      "id": "ai-models",
+      "label": "AI 학습분석"
+    },
+    {
+      "id": "ai-agent",
+      "label": "AI 에이전트"
+    },
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
     },
     {
       "id": "standards",
       "label": "1EdTech 표준"
     }
   ],
+  "ax": {
+    "eyebrow": "AX",
+    "title": "교육 AX: 관리에서 경험으로",
+    "lead": "학습 플랫폼을 관리 중심에서 경험 중심으로 바꿉니다. 모든 학습 활동을 국제 표준 학습데이터로 모으고, AI가 분석해 운영자·교수자·학습자의 다음 행동을 제안합니다.",
+    "roles": "운영자 · 교수자 · 학습자",
+    "steps": [
+      {
+        "title": "수집",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "학습 활동을 국제 표준(xAPI · 1EdTech Caliper) 학습데이터로 수집·저장하고, 1EdTech CASE 체계와 연결합니다.",
+        "claims": []
+      },
+      {
+        "title": "분석",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "",
+        "claims": [
+          {
+            "text": "AI가 학습데이터에서 이상 신호를 찾고,",
+            "patent": "특허 제10-2883249호",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "LLM으로 학습자를 프로파일링합니다.",
+            "patent": "특허 제10-2767110호",
+            "id": "patent-2767110"
+          }
+        ]
+      },
+      {
+        "title": "제안",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "AI와 상호작용하는 교수·학습 플랫폼에서, 근거와 함께 다음 행동을 제안합니다.",
+        "claims": []
+      },
+      {
+        "title": "다음 학기",
+        "product": "",
+        "cls": "",
+        "text": "판단과 적용은 사람이 합니다. 그 결과가 다시 학습데이터로 쌓여 다음 학기 교육을 설계하는 근거가 됩니다.",
+        "claims": []
+      }
+    ]
+  },
+  "models": {
+    "eyebrow": "AI Model",
+    "title": "AI 학습분석: 직접 만든 모델을 현장에 씁니다",
+    "lead": "학습데이터로 학습 수준을 진단하고, 평소와 다른 신호를 찾고, 학습자의 성향을 읽는 AI 모델을 직접 만들어 제품과 공교육 사업에 적용해 왔습니다. 모델마다 인증과 특허의 원본을 확인할 수 있습니다.",
+    "items": [
+      {
+        "viz": "diagnose",
+        "name": "학습 진단·추천 모델",
+        "text": "학습 행동과 학습경험 데이터로 학습 수준을 진단하고, 취약한 영역에 맞춰 문항과 학습 콘텐츠를 추천합니다. KERIS ‘똑똑! 수학탐험대’에 적용했습니다.",
+        "proof": "KOLAS AI 모델 인증",
+        "id": "kolas"
+      },
+      {
+        "viz": "signal",
+        "name": "이상 학습 탐지",
+        "text": "xAPI 학습 행동 데이터에서 평소와 다른 학습 신호를 찾아, 확인이 필요한 지점을 먼저 짚습니다. Lecognizer AI의 이상 탐지에 씁니다.",
+        "proof": "특허 제10-2883249호",
+        "id": "patent-2883249"
+      },
+      {
+        "viz": "profile",
+        "name": "LLM 학습자 프로파일링",
+        "text": "학습 과정의 데이터와 LLM으로 학습자의 성향과 상태를 정리해, 맞춤형 진단과 문항 추천의 근거로 씁니다.",
+        "proof": "특허 제10-2767110호",
+        "id": "patent-2767110"
+      }
+    ],
+    "ruleLabel": "교수·학습의 근거",
+    "rule": "AI가 진단하고 다음 학습을 제안하면, 교수자가 확인해 수업에 적용하고 학습자는 제안된 학습을 스스로 이어 갑니다."
+  },
+  "agent": {
+    "eyebrow": "AI Agent",
+    "title": "AI 에이전트: 학습자와 교수자 곁에서 돕습니다",
+    "lead": "LearnHubble AI의 AI 에이전트는 학습자에게는 필요한 순간 설명과 힌트를 건네고, 교수자에게는 보충이 필요한 부분을 제안합니다. 답은 학습자가 직접 쓰고, 개입과 적용은 교수자가 확인합니다.",
+    "learner": "학습자 곁에서",
+    "instructor": "교수자 곁에서",
+    "items": [
+      {
+        "who": "learner",
+        "title": "과제 힌트",
+        "text": "작성이 멈추면 정답 대신 구조와 조건 중심의 힌트를 건넵니다."
+      },
+      {
+        "who": "learner",
+        "title": "강의실 AI 패널",
+        "text": "교수자가 설계한 구간에서 설명·퀴즈·자료를 건넵니다."
+      },
+      {
+        "who": "learner",
+        "title": "어려움의 원인 찾기",
+        "text": "1EdTech CASE로 연결된 강의와 역량에서 어려움의 원인을 찾습니다."
+      },
+      {
+        "who": "instructor",
+        "title": "보충 설명 제안",
+        "text": "근거를 바탕으로 보충이 필요한 부분을 제안하고, 적용 여부와 방법은 교수자가 정합니다."
+      }
+    ]
+  },
   "wiki": {
     "eyebrow": "LLM Wiki",
     "title": "LLM Wiki: 흩어진 지식을 한곳에 모읍니다",
-    "lead": "문서와 논의, 반복되는 질문에 대한 답을 LLM Wiki에 모으고, AI를 업무 흐름에 결합해 일하는 방식을 다듬고 있습니다.",
+    "lead": "사내 문서와 논의, 반복되는 질문에 대한 답을 LLM Wiki에 모으고, AI를 업무 흐름에 결합해 일하는 방식을 다듬고 있습니다.",
     "map": {
       "label": "지식 지도: 흩어진 문서 · 논의 · 반복되는 질문이 개념(제품 · 기술 · 표준 · 사업 · 인증)과 관계로 엮이고, 표준과 사업을 잇는 관계에서 AI가 자료를 찾는다",
       "legend": [
@@ -79,56 +193,9 @@
     "article": "2026-07-llm-wiki-workflow",
     "more": "LLM Wiki 기사 보기"
   },
-  "ax": {
-    "eyebrow": "AX",
-    "title": "교육 AX: 관리에서 경험으로",
-    "lead": "학습 플랫폼을 학습을 관리하는 도구에서 학습을 경험하는 공간으로 바꿉니다. 모든 학습 활동을 국제 표준 학습데이터로 모으고, AI가 분석해 운영자·교수자·학습자의 다음 행동을 제안합니다.",
-    "roles": "운영자 · 교수자 · 학습자",
-    "steps": [
-      {
-        "title": "수집",
-        "product": "Lecognizer",
-        "cls": "lec",
-        "text": "학습 활동을 국제 표준(xAPI · 1EdTech Caliper) 학습데이터로 수집·저장하고, 1EdTech CASE 체계와 연결합니다.",
-        "claims": []
-      },
-      {
-        "title": "분석",
-        "product": "Lecognizer AI",
-        "cls": "lec",
-        "text": "",
-        "claims": [
-          {
-            "text": "AI가 학습데이터에서 이상 신호를 찾고,",
-            "patent": "특허 제10-2883249호",
-            "id": "patent-2883249"
-          },
-          {
-            "text": "LLM으로 학습자를 프로파일링합니다.",
-            "patent": "특허 제10-2767110호",
-            "id": "patent-2767110"
-          }
-        ]
-      },
-      {
-        "title": "제안",
-        "product": "LearnHubble AI",
-        "cls": "lhb",
-        "text": "AI와 상호작용하는 교수·학습 플랫폼에서 운영자·교수자·학습자에게 다음 행동을 제안합니다.",
-        "claims": []
-      },
-      {
-        "title": "다음 학기",
-        "product": "",
-        "cls": "",
-        "text": "판단과 적용은 사람이 합니다. 그 결과가 다시 학습데이터로 쌓여 다음 학기 교육을 설계하는 근거가 됩니다.",
-        "claims": []
-      }
-    ]
-  },
   "std": {
     "eyebrow": "1EdTech",
     "title": "1EdTech 표준",
-    "lead": "1EdTech는 교육기술 국제 표준을 만드는 컨소시엄입니다(옛 IMS Global). 위키드스톰은 (사)1EdTech Korea 설립 이사회로 참여하고, 1EdTech Contributing Member로 활동합니다."
+    "lead": "1EdTech(옛 IMS Global)는 교육기술 국제 표준을 만드는 컨소시엄입니다. 위키드스톰은 (사)1EdTech Korea 설립 이사회로 참여하고, 1EdTech Contributing Member로 활동합니다."
   }
 }
