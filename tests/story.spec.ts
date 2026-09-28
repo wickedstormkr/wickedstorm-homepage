@@ -63,6 +63,59 @@ test('the first scene fits a short phone: copy and both buttons sit above the st
   await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
 });
 
+for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }, { width: 390, height: 844 }]) {
+  test(`scene 2 @${viewport.width}: the live panel and the ledger share one screen, and a new statement writes a ledger row`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('');
+    await waitForFonts(page);
+    await expect(page.locator('html')).toHaveClass(/art-live/, { timeout: 15000 });
+    await page.evaluate(() => {
+      const w = window as Window & { __writes?: number[] };
+      w.__writes = [];
+      document.querySelector('#story')!.addEventListener('story:write', (e) => w.__writes!.push((e as CustomEvent<{ row: number }>).detail.row));
+    });
+    await page.locator('.story-nav a[data-go="1"]').click();
+    await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
+    const scene = page.locator('#scene-statement');
+    const live = scene.locator('.live');
+    await expect(live).toBeVisible();
+    await expect(scene.locator('.ledger-box')).toBeVisible();
+    // 창의 네 칸 = 기록 행의 네 칸(같은 순서)
+    await expect(live.locator('.xrow').first().locator('.chip')).toHaveClass([/actor/, /verb/, /object/, /result/]);
+    await expect(scene.locator('.ledger-cols > div')).toHaveCount(4);
+    const panel = (await live.boundingBox())!;
+    const ledger = (await scene.locator('.ledger-box').boundingBox())!;
+    const controls = (await page.locator('.story-ui').boundingBox())!;
+    if (viewport.width >= 1024) {
+      // 넓은 화면: 창 | 기록 행, 한 화면 안(이야기 조작 위)
+      expect(panel.x + panel.width).toBeLessThanOrEqual(ledger.x);
+      expect(Math.max(panel.y + panel.height, ledger.y + ledger.height)).toBeLessThanOrEqual(controls.y);
+    } else {
+      // 폰: 창 위 · 기록 행 아래. 기록 행의 첫 줄이 이야기 조작 위에 보인다(끝까지는 읽을 스크롤로)
+      expect(panel.y + panel.height).toBeLessThanOrEqual(ledger.y);
+      expect(ledger.y + ledger.height / 12).toBeLessThanOrEqual(controls.y);
+    }
+    // 새 문장의 네 칸이 기록 행으로 날아가 한 줄을 다시 쓴다
+    await expect(page.locator('.live-fly .ghost').first()).toBeAttached({ timeout: 8000 });
+    await expect.poll(() => page.evaluate(() => (window as Window & { __writes?: number[] }).__writes!.length), { timeout: 8000 }).toBeGreaterThan(0);
+    const counted = Number((await live.locator('[data-live-count]').innerText()).replace(/[^0-9]/g, ''));
+    expect(counted).toBeGreaterThan(1374);
+  });
+}
+
+test('pausing motion stops new statements in scene 2', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('');
+  await expect(page.locator('html')).toHaveClass(/art-live/, { timeout: 15000 });
+  await page.locator('.story-ctrl [data-motion-btn]').click();
+  await page.locator('.story-nav a[data-go="1"]').click();
+  await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
+  const before = await page.locator('[data-live-count]').innerText();
+  await page.waitForTimeout(5000);
+  await expect(page.locator('[data-live-count]')).toHaveText(before);
+  await expect(page.locator('.live-fly .ghost')).toHaveCount(0);
+});
+
 test('without JavaScript all six scenes and the mobile loop remain available', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
   const page = await context.newPage();

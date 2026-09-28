@@ -40,28 +40,36 @@
 /* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
 .scene .hero-cta{margin-top:36px}
 
-/* ---- 장면 1: 실시간 수집(Lecognizer 창). 너비를 고정해 줄이 바뀌어도 흔들리지 않는다 ---- */
-.live{--live-rows:5;position:relative;z-index:2;width:min(100%,520px);margin-left:auto}
+/* ---- 장면 2: 실시간 수집 창(Lecognizer) + 기록 행 한 화면. 넓으면 창 | 기록 행, 좁으면 창 위 · 기록 행 아래 ----
+   창에 들어온 문장의 네 칸(누가 · ~하다 · 무엇을 · 부가 정보)이 옆 기록 행의 같은 칸으로 쌓인다(story/live.ts). 칸 색이 같다 */
+.collect{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center;width:100%;text-align:left}
+@container visual (width >= 900px){
+  .collect{grid-template-columns:minmax(0,.64fr) minmax(0,1fr);gap:clamp(32px,3.4vw,56px)}
+}
+@container visual (width < 600px){
+  .collect{gap:20px}
+}
+.live{position:relative;z-index:2;width:100%;container:live / inline-size}
 .live .fx{box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 90px rgba(124,77,255,.12),0 0 0 1px rgba(163,177,255,.16)}
+.live .fx-bar{min-height:38px;padding:7px 13px}
 .live-state{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--accent)}
 .live-state::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px var(--accent);animation:blink 1.4s infinite}
 @keyframes blink{50%{opacity:.35}}
-.live-view{position:relative;margin:14px 14px 0;overflow:hidden;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 12px,#000 calc(100% - 4px),transparent 100%)}
-.live-rows{list-style:none;display:flex;flex-direction:column;gap:9px}
-.xrow{--xrow-gap:7px;display:flex;align-items:center;flex-wrap:nowrap;gap:var(--xrow-gap);padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
-/* 점과 '~하다' 칸의 색 = 활동 종류(시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색): 이 점이 목록을 지나가면 같은 색의 별이 된다 */
-.xrow{--c:#7c4dff;--ct:#c3b0ff}
-.xrow[data-verb="0"]{--c:#2f7cff;--ct:#a8c3ff}
-.xrow[data-verb="1"]{--c:#7c4dff;--ct:#c3b0ff}
-.xrow[data-verb="2"]{--c:#e930b0;--ct:#ffa6e2}
-.xrow[data-verb="3"]{--c:#a3b1ff;--ct:#cdd5ff}
-.xrow .dot{position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,#fff 0 20%,var(--c) 45%);box-shadow:0 0 12px var(--c)}
-.xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,var(--c),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
+.live-view{position:relative;margin:12px 12px 0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 10px,#000 calc(100% - 4px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 10px,#000 calc(100% - 4px),transparent 100%)}
+/* 보이는 줄 수(story/live.ts가 읽는다): 넓은 창 넷, 좁은 창 · 두 줄 짜임은 셋 */
+.live-rows{--live-rows:4;list-style:none;display:flex;flex-direction:column;gap:8px}
+.live.two .live-rows{--live-rows:3}
+.xrow{--xrow-gap:6px;display:flex;align-items:center;flex-wrap:nowrap;gap:var(--xrow-gap);padding:8px 10px;border-radius:9px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.09)}
+/* 줄 머리 점 = 기록 행의 줄 머리 점(브랜드 그라디언트): 창의 한 줄이 기록 행의 한 줄이 된다 */
+.xrow .dot{position:relative;flex:none;width:9px;height:9px;border-radius:50%;background:linear-gradient(90deg,#e930b0,#7c4dff 52%,#2f7cff);box-shadow:0 0 10px rgba(233,48,176,.55)}
+.xrow .dot::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:radial-gradient(circle,rgba(233,48,176,.55),transparent 70%);animation:dotpulse 2.4s ease-in-out infinite}
 @keyframes dotpulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}
-.chip{flex:none;padding:4px 9px;border-radius:6px;font-size:13px;font-weight:600;white-space:nowrap;background:rgba(255,255,255,.055);color:var(--ink-2)}
-.chip.verb{background:color-mix(in srgb,var(--c) 24%,transparent);color:var(--ct)}
-.chip.object{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+/* 칸 색 = 기록 행의 칸 색(누가 파랑 · ~하다 보라 · 무엇을 마젠타 · 부가 정보 강조색). 누를 수 없는 이름표라 테두리 없이 옅은 바탕 */
+.chip{flex:none;padding:3px 8px;border-radius:6px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.chip.actor{background:rgba(47,124,255,.16);color:#a8c3ff}
+.chip.verb{background:rgba(124,77,255,.22);color:#c3b0ff}
+.chip.object{flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;background:rgba(233,48,176,.15);color:#ffa6e2}
 .chip.result{margin-left:auto;background:rgba(163,177,255,.12);color:var(--accent)}
 .xrow .arw{flex:none;font-size:12px;color:var(--faint)}
 .xrow.in{animation:xin .45s cubic-bezier(.2,.7,.2,1) both}
@@ -75,30 +83,35 @@
 .live-rows.abs>.xrow{position:absolute;left:0;right:0;top:0}
 /* 두 줄 짜임(story/live.ts가 시연 문장 하나라도 한 줄에 다 들어가지 않을 때 모든 줄에 건다): 누가 → 하다 / 무엇을 · 결과.
    둘째 화살표가 줄바꿈 자리가 되고, 둘째 줄은 점 오른쪽(누가 칸 시작)에 맞춘다.
-   폰의 영어 · 베트남어는 한 줄에 들어가지 않으므로 처음부터(스크립트 전에) 두 줄: 불러오는 중에 짜임이 바뀌어 화면이 밀리지 않게(--two) */
+   좁은 창의 영어 · 베트남어는 한 줄에 들어가지 않으므로 처음부터(스크립트 전에) 두 줄: 불러오는 중에 짜임이 바뀌어 화면이 밀리지 않게(--two) */
 .live.two .xrow{flex-wrap:wrap;row-gap:0}
 .live.two .xrow .brk{display:block;flex-basis:100%;height:6px;overflow:hidden;visibility:hidden}
-.live.two .chip.object{margin-left:calc(9px + var(--xrow-gap,7px))}
-@container visual (width < 560px){
-  html:is(:lang(en),:lang(vi)) .live{--two:1}
+.live.two .chip.object{margin-left:calc(9px + var(--xrow-gap,6px))}
+@container live (width < 560px){
+  html:is(:lang(en),:lang(vi)) .live-rows{--two:1;--live-rows:3}
   html:is(:lang(en),:lang(vi)) .live .xrow{flex-wrap:wrap;row-gap:0}
   html:is(:lang(en),:lang(vi)) .live .xrow .brk{display:block;flex-basis:100%;height:6px;overflow:hidden;visibility:hidden}
-  html:is(:lang(en),:lang(vi)) .live .chip.object{margin-left:calc(9px + var(--xrow-gap,7px))}
+  html:is(:lang(en),:lang(vi)) .live .chip.object{margin-left:calc(9px + var(--xrow-gap,6px))}
+}
+/* 폰: 두 줄만(기록 행이 이야기 조작 위에 보이게). 두 줄 짜임도 같다 */
+@container live (width < 420px){
+  html .live .live-rows,html .live.two .live-rows,html:is(:lang(en),:lang(vi)) .live .live-rows{--live-rows:2}
+  /* 긴 창 제목(영어 · 베트남어)이 두 줄이 되지 않게 상태는 깜빡이는 점만(글은 화면 낭독기로) */
+  html:is(:lang(en),:lang(vi)) .live-state-t{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .live .fx-bar{gap:8px}
+  .live-view{margin:12px 10px 0}
+  .xrow{--xrow-gap:5px;padding:8px 9px}
+  .xrow .arw{display:none}
+  html:not(.js) .xrow{flex-wrap:wrap;row-gap:6px}
+  .chip{padding:3px 7px}
 }
 html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{animation:none}
-.live-foot{margin-top:12px;padding:11px 16px 13px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.live-foot{margin-top:10px;padding:10px 14px 12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .live-foot b{color:var(--ink)}
-/* 목록을 지나간 한 건: 별이 되어 날아가(.live-fly, 창 위) 장면의 하늘(.live-sky, 글 뒤)에 자리 잡는다(story/live.ts) */
-.live-sky,.live-fly{position:absolute;inset:0;pointer-events:none}
-.live-sky{z-index:-1;overflow:hidden}
-.live-fly{z-index:5}
-/* 별 모양은 그림 층(canvas-art sprite)과 같게: 흰 코어 → 활동 색 → 옅게 사라짐. 큰 빛 번짐은 두지 않는다 */
-.spark{position:absolute;left:0;top:0;width:var(--d,8px);height:var(--d,8px);margin:calc(var(--d,8px) / -2) 0 0 calc(var(--d,8px) / -2);border-radius:50%;
-  background:radial-gradient(circle closest-side,rgba(255,255,255,.9) 0,color-mix(in srgb,var(--c) 78%,transparent) 22%,color-mix(in srgb,var(--c) 25%,transparent) 58%,transparent 100%)}
-.live-sky .spark{opacity:.8;animation:twinkle 3.6s ease-in-out infinite;animation-delay:var(--tw,0s)}
-.live-sky .spark::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--c);opacity:0;animation:land .7s ease-out}
-@keyframes twinkle{0%,100%{opacity:.8}50%{opacity:.5}}
-@keyframes land{from{opacity:.7;transform:scale(.4)}to{opacity:0;transform:scale(1.6)}}
+/* 창의 칸 → 기록 행의 같은 칸으로 날아가는 이름표(.live-fly, 장면 위): 창의 칸과 같은 모양, 제 색으로 옅게 빛난다 */
+.live-fly{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:visible}
+.live-fly .ghost{position:absolute;display:inline-flex;align-items:center;justify-content:center;margin:0;overflow:hidden;transform-origin:50% 50%;
+  background:color-mix(in srgb,currentColor 20%,#0e1020);box-shadow:0 0 0 1px color-mix(in srgb,currentColor 45%,transparent),0 0 18px -4px currentColor}
 
 /* ---- 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보). 칸 이름은 두 표준의 이름을 함께(xAPI ⇄ 1EdTech Caliper) ---- */
 .ledger{position:relative;width:100%}
@@ -113,7 +126,9 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 .ledger-cols div{display:grid;gap:1px;min-width:0;padding-left:2px}
 .ledger-cols dt{font-size:14px;font-weight:700}
 .ledger-cols dd{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.45;color:var(--muted)}
-.ledger-cols dd .swap{color:var(--faint)}
+.ledger-cols dd .swap{margin:0 .15em;color:var(--faint)}
+/* 두 표준의 이름 묶음은 각각 한 줄로: 좁으면 ↔ 자리에서 나뉘어 줄 끝에 ·가 남지 않는다 */
+.ledger-cols dd .std-k{white-space:nowrap}
 .ledger-cols .c0 dt{color:#a8c3ff}.ledger-cols .c1 dt{color:#c3b0ff}.ledger-cols .c2 dt{color:#ffa6e2}
 .ledger-cols .c3 dt{color:var(--accent);font-size:15px}
 .ledger-cols .c3 dt::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border-radius:50%;background:rgba(163,177,255,.14);font:700 14px var(--en);vertical-align:1px}
@@ -191,7 +206,7 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
   .scene{grid-template-columns:minmax(0,1fr);gap:32px;max-width:720px}
   .scene-moment{min-height:auto}
   .scene-copy{display:block}
-  .live,.scene-signal .fx-anom,.judge-stack{width:100%;max-width:none;margin-left:0}
+  .scene-signal .fx-anom,.judge-stack{width:100%;max-width:none;margin-left:0}
 }
 @container story (width < 600px){
   .scene{padding:56px 0}
@@ -201,19 +216,18 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
   .signal-alert{gap:2px 7px;padding:9px 10px;font-size:12.5px}
 }
 .case-pins{display:none;list-style:none}
-@container visual (width < 560px){
-  .live{--live-rows:3}
-  .live .fx-bar{gap:8px}
-  .live-view{margin:12px 10px 0}
-  .xrow{--xrow-gap:5px;padding:9px}
-  .xrow .arw{display:none}
-  html:not(.js) .xrow{flex-wrap:wrap;row-gap:6px}
-  .chip{padding:4px 7px}
+/* 좁은 기록 행: 칸 이름을 두 줄 두 칸으로(기록 행 자체의 폭 기준: 창 옆에 놓여도 같게).
+   칸 이름 아래는 xAPI 이름만 한 줄로(Caliper 이름은 화면 낭독기로 읽는다. 두 표준은 제목 아래 줄에 함께 있다) */
+@container ledger (width < 560px){
+  .ledger-cols dd .swap{display:none}
+  .ledger-cols dd .cal{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .ledger-cols{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px 18px!important;padding-inline:0!important;margin-bottom:18px}
   .ledger-cols dt,.ledger-cols .c3 dt{font-size:15px}
   .ledger-cols dd{font-size:12.5px}
   .ledger-foot{max-width:calc(100% - 24px);margin-right:0}
   .ledger-foot::before{right:calc(var(--ledger-extra-half) + 4.5cqw)}
+}
+@container visual (width < 560px){
   .art-labels,.art-tag{display:none}
   .case-cap,.case-list{display:block}
   .case-pins{display:block}
@@ -249,7 +263,7 @@ html.story-pin .hero-lead{margin-top:22px}
 .scene-statement{grid-template-columns:minmax(0,1fr);align-content:center;justify-items:center;gap:28px;text-align:center}
 .scene-statement .scene-visual{width:100%}
 .scene-statement .scene-copy{max-width:1040px}
-.scene-statement .ledger{width:min(100%,1040px);margin-inline:auto;text-align:left}
+.scene-statement .ledger{width:100%;text-align:left}
 html.story-pin .scene-statement .ledger-std{justify-content:center}
 @container story (width < 960px){
   .scene-statement{text-align:left}
@@ -263,6 +277,9 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
 }
 @container stage (height < 650px){
   html.story-pin .scene{align-content:start}
+}
+@container stage (width < 600px){
+  html.story-pin .scene-statement{gap:20px}
 }
 html.story-pin.art-live .art-base{opacity:0}
 html.story-pin.art-live .art-lines{display:block;position:absolute;inset:0;width:100%;height:100%}
@@ -320,6 +337,6 @@ html.story-pin .story-progress{display:block;position:absolute;inset:0 12px auto
 .motion-btn[aria-pressed="true"] .motion-play{display:inline}
 
 html.story-pin:not(.story-enhanced) .scene.is-active{opacity:1}
-html.story-enhanced .scene[data-far]>:is(.scene-copy,.scene-visual,.live-sky,.live-fly){clip-path:inset(50%)}
+html.story-enhanced .scene[data-far]>:is(.scene-copy,.scene-visual,.live-fly){clip-path:inset(50%)}
 html.motion-paused .scene *{animation:none!important}
 

@@ -12,6 +12,9 @@
  * 그릴 때 place()가 모두 그림 칸 기준으로 바꾼다.
  */
 
+import { rng, LEDGER } from './story-ledger';
+export { rng, SLOTS, SLOT_COLOR, LEDGER, LEDGER_ASPECT, type LedgerPill, type LedgerRow } from './story-ledger';
+
 export const VERBS = ['watched', 'answered', 'submitted', 'asked'] as const;
 export type Verb = (typeof VERBS)[number];
 /** 활동 종류 색(브랜드 팔레트 안): 시청 파랑 · 응답 보라 · 제출 마젠타 · 질문 강조색 */
@@ -66,52 +69,6 @@ export const SPIKE = { at: 0.42, sd: 0.045, share: 0.45 };
  */
 export const CHART = { x0: 0.035, x1: 0.975, base: 0.84, top: 0.12 };
 export const chartX = (weeks: number) => CHART.x0 + (weeks / WEEKS) * (CHART.x1 - CHART.x0);
-
-/** 결정적 난수(mulberry32) */
-export function rng(seed: number) {
-  let s = seed | 0;
-  return () => {
-    s = (s + 0x6d2b79f5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-/**
- * 장면 2 기록 행(지금 사이트의 기록 레저를 따른다): 한 줄이 학습데이터 한 건.
- * 줄마다 네 칸 알약이 줄 전체를 빈틈없이 채운다: 누가(actor) 파랑 · ~하다(xAPI verb ⇄ Caliper action) 보라 ·
- * 무엇을(object) 마젠타 · 부가 정보(xAPI context·result ⇄ Caliper edApp·group·session 등) 강조색.
- * 칸 너비는 줄마다 조금씩 다르고(값의 길이가 다르다), 부가 정보 칸이 가장 넓다. 다 쓰면 알약이 끝까지 차고 확인 점이 찍힌다.
- * 좌표는 기록 칸(ledger box) 기준 0~1.
- */
-export const SLOTS = ['actor', 'verb', 'object', 'extra'] as const;
-/** 칸 색 = 활동 종류 색과 같은 넷(파랑 · 보라 · 마젠타 · 강조색) */
-export const SLOT_COLOR = ['#2f7cff', '#7c4dff', '#e930b0', '#a3b1ff'];
-export interface LedgerPill { x: number; w: number; slot: number; cap: number }
-export interface LedgerRow { y: number; pills: LedgerPill[] }
-export const LEDGER_ASPECT = 3.1;
-export const LEDGER = (() => {
-  const r = rng(11);
-  const px0 = 0.03;
-  const px1 = 0.955;
-  const gap = 0.008;
-  const N = 6;
-  const avail = px1 - px0 - (SLOTS.length - 1) * gap;
-  const rows: LedgerRow[] = Array.from({ length: N }, (_, i) => {
-    const f = [0.14 + r() * 0.06, 0.18 + r() * 0.08, 0.2 + r() * 0.1];
-    f.push(1 - f[0] - f[1] - f[2]);
-    let x = px0;
-    const pills = f.map((fr, slot) => {
-      const w = fr * avail;
-      const pl = { x, w, slot, cap: Math.max(4, Math.min(16, Math.round(w * 60))) };
-      x += w + gap;
-      return pl;
-    });
-    return { y: (i + 0.5) / N, pills };
-  });
-  return { rows, px0, px1, gap, headX: 0.012, checkX: 0.978, pillH: 0.07 };
-})();
 
 export interface Particle {
   verb: number; // VERBS 번호
@@ -348,14 +305,17 @@ const smooth01 = (v: number) => { const t = clamp01(v); return t * t * (3 - 2 * 
  * f .26–.86 입자가 옮겨 감(입자마다 조금씩 늦게, 그림 층이 부드럽게 따라간다. 앞 장면 글이 빠지는 f .30–.45와 함께 출발)
  * → f .52 다음 장면 그림 → f .72–.90 다음 장면 글이 들어옴(입자는 거의 다 착지).
  * 스크롤을 시작하면 곧 입자가 움직이게 일찍 출발한다: f .42에 출발하면 가감속이 느린 앞부분까지 겹쳐 장면 사이 스크롤의 절반이 지나서야 움직여 보여 늦다.
- * 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 길게 옮겨 간다.
+ * 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 길게 옮겨 간다: 성운의 별이 바로 기록 칸으로(창을 거치지 않는다),
+ * 줄 순서대로(기록 행 문장의 delay = 줄 번호) f .30 출발, 모두 f .93까지 착지해 장면 2에 머무르면 기록 행이 다 차 있다.
  */
 export const progress = (p: Particle, s: number) => {
   const i = Math.floor(s);
   const f = s - i;
-  if (i === 0) return ease(clamp01((f - 0.3 - p.delay * 0.35) / 0.35));
+  if (i === 0) return ease(clamp01((f - 0.3 - p.delay * 0.3) / 0.33));
   return ease(clamp01((f - 0.26 - p.delay * 0.2) / 0.4));
 };
+/** 기록 행 한 줄이 차오른 정도(장면 값 s): 그 줄 문장들이 착지하는 동안(0번 줄 f .28–.66 … 5번 줄 f .53–.91) */
+export const rowFill = (row: number, s: number) => (s >= 1 ? 1 : clamp01((s - 0.28 - row * 0.05) / 0.38));
 
 /**
  * 장면 값 s(0~5, 장면 사이는 소수)에서 입자의 자리·밝기·크기·진행. 캔버스와 미리 그린 그림이 같은 규칙을 쓴다.
