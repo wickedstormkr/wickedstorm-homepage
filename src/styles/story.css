@@ -34,6 +34,9 @@
 .scene-moment .eyebrow{margin-bottom:26px}
 .scene-moment h1 .line{display:block}
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
+/* 줄을 정해 둔 글(첫 화면 리드 · 장면 글: br-t · br-d로 끊는다)은 보통 줄바꿈. 사이트 공통 text-wrap:pretty를 Safari는 문단 전체에 적용해
+   정해 둔 한 줄을 다시 나눈다(첫 화면 리드가 세 줄이 되었다). 마지막 줄 한 단어는 조판(typeset)이 이미 막는다 */
+.hero-lead,.scene-text{text-wrap:wrap}
 /* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
 .scene .hero-cta{margin-top:36px}
 
