@@ -14,8 +14,12 @@
 /* ---- 장면(기본: 세로) ---- */
 .scene{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,72px);align-items:center;
   width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto;padding:clamp(72px,9vw,120px) 0}
-/* 장면 1: 첫 문구와 두 버튼만, 화면 가운데에(뒤는 옅은 성운) */
-.scene-moment{grid-template-columns:minmax(0,1fr);justify-items:center;min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px);align-content:center;text-align:center}
+/* 장면 1: 첫 문구와 두 버튼만, 화면 가운데에(뒤는 옅은 성운).
+   세로 자리는 글 높이로 가운데를 맞추지 않고 화면 높이로 정한다: 글꼴이 늦게 도착해(font-display:swap) 줄 수가 바뀌어도
+   글 묶음의 시작 자리는 그대로라 화면이 밀리지 않는다(CLS). --hero-half = 첫 화면 글 묶음 높이의 절반(국문 측정값) */
+.scene-moment{--hero-half:155px;grid-template-columns:minmax(0,1fr);justify-items:center;min-height:min(100svh,960px);
+  padding-top:max(calc(var(--header-h) + 40px),calc(50svh - var(--hero-half) + 20px));align-content:start;text-align:center}
+@media (max-width:699px){.scene-moment{--hero-half:170px}}
 .scene-moment .scene-copy{display:flex;flex-direction:column;align-items:center;max-width:60em}
 .scene-moment .hero-cta{justify-content:center}
 /* 아이브로우가 두 줄이 되어도 기호가 첫 줄 글과 함께 가운데에 */
@@ -257,6 +261,12 @@ html.story-pin .scene{position:absolute;inset:0 0 auto;z-index:2;width:100%;max-
   padding:calc(var(--header-h) + 24px) max(var(--gutter),calc((100% - var(--wrap)) / 2)) calc(var(--story-controls-h,44px) + 48px + env(safe-area-inset-bottom,0px));
   opacity:0;pointer-events:none;translate:0 var(--scene-pan,0px)}
 html.story-pin .scene.is-active{pointer-events:auto}
+/* 고정 장면의 첫 화면: 머리 아래 ~ 이야기 조작 위 칸의 가운데에 글 묶음이 오도록 시작 자리를 화면 높이로(좁은 화면의 장면 가운데 맞춤보다 앞선다) */
+html.story-pin .scene.scene-moment{align-content:start;padding-top:max(calc(var(--header-h) + 24px),calc((100svh - var(--story-controls-h) + 52px) / 2 - var(--hero-half)))}
+/* 이야기 조작 높이의 첫 값(스크립트가 잰 값으로 바뀐다, layout.ts): 폰은 두 줄, 그 밖은 한 줄. 재기 전과 뒤가 같아 화면이 밀리지 않는다 */
+html.story-pin .story-stage{--story-controls-h:60px}
+@media (max-width:599px){html.story-pin .story-stage{--story-controls-h:104px}}
+@media (min-width:600px) and (max-width:699px){html.story-pin .story-stage{--story-controls-h:56px}}
 html.story-pin .scene-visual{display:block;min-width:0}
 html.story-pin .scene-moment .eyebrow{margin-bottom:20px}
 html.story-pin .hero-lead{margin-top:22px}
