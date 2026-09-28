@@ -89,25 +89,40 @@
         "title": "수집",
         "product": "Lecognizer",
         "cls": "lec",
-        "text": "학습 활동을 국제 표준(xAPI · 1EdTech Caliper) 학습데이터로 수집·저장하고, 1EdTech CASE 체계와 연결합니다."
+        "text": "학습 활동을 국제 표준(xAPI · 1EdTech Caliper) 학습데이터로 수집·저장하고, 1EdTech CASE 체계와 연결합니다.",
+        "claims": []
       },
       {
         "title": "분석",
         "product": "Lecognizer AI",
         "cls": "lec",
-        "text": "AI가 학습데이터에서 이상 신호를 찾고(<a href=\"{trust}#patent-2883249\">특허 제10-2883249호</a>), LLM으로 학습자를 프로파일링합니다(<a href=\"{trust}#patent-2767110\">특허 제10-2767110호</a>)."
+        "text": "",
+        "claims": [
+          {
+            "text": "AI가 학습데이터에서 이상 신호를 찾고,",
+            "patent": "특허 제10-2883249호",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "LLM으로 학습자를 프로파일링합니다.",
+            "patent": "특허 제10-2767110호",
+            "id": "patent-2767110"
+          }
+        ]
       },
       {
         "title": "제안",
         "product": "LearnHubble AI",
         "cls": "lhb",
-        "text": "AI와 상호작용하는 교수·학습 플랫폼에서 운영자·교수자·학습자에게 다음 행동을 제안합니다."
+        "text": "AI와 상호작용하는 교수·학습 플랫폼에서 운영자·교수자·학습자에게 다음 행동을 제안합니다.",
+        "claims": []
       },
       {
         "title": "다음 학기",
         "product": "",
         "cls": "",
-        "text": "판단과 적용은 사람이 합니다. 그 결과가 다시 학습데이터로 쌓여 다음 학기 교육을 설계하는 근거가 됩니다."
+        "text": "판단과 적용은 사람이 합니다. 그 결과가 다시 학습데이터로 쌓여 다음 학기 교육을 설계하는 근거가 됩니다.",
+        "claims": []
       }
     ]
   },

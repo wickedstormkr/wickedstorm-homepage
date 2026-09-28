@@ -89,25 +89,40 @@
         "title": "収集",
         "product": "Lecognizer",
         "cls": "lec",
-        "text": "学習活動を国際標準（xAPI・1EdTech Caliper）の学習データとして収集・保存し、1EdTech CASEに基づく体系と連携します。"
+        "text": "学習活動を国際標準（xAPI・1EdTech Caliper）の学習データとして収集・保存し、1EdTech CASEに基づく体系と連携します。",
+        "claims": []
       },
       {
         "title": "分析",
         "product": "Lecognizer AI",
         "cls": "lec",
-        "text": "AIが学習データから異常の兆候を見つけ（<a href=\"{trust}#patent-2883249\">特許 第10-2883249号</a>）、LLMで学習者をプロファイリングします（<a href=\"{trust}#patent-2767110\">特許 第10-2767110号</a>）。"
+        "text": "",
+        "claims": [
+          {
+            "text": "AIが学習データから異常の兆候を見つけ、",
+            "patent": "特許 第10-2883249号",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "LLMで学習者をプロファイリングします。",
+            "patent": "特許 第10-2767110号",
+            "id": "patent-2767110"
+          }
+        ]
       },
       {
         "title": "提案",
         "product": "LearnHubble AI",
         "cls": "lhb",
-        "text": "AIと対話できる教授・学習プラットフォームで、管理者・教員・学習者に次の行動を提案します。"
+        "text": "AIと対話できる教授・学習プラットフォームで、管理者・教員・学習者に次の行動を提案します。",
+        "claims": []
       },
       {
         "title": "次学期",
         "product": "",
         "cls": "",
-        "text": "判断と適用は人が行います。その結果が再び学習データとして蓄積され、次学期の学習設計に活かされます。"
+        "text": "判断と適用は人が行います。その結果が再び学習データとして蓄積され、次学期の学習設計に活かされます。",
+        "claims": []
       }
     ]
   },

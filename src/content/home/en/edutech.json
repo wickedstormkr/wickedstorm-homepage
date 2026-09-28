@@ -89,25 +89,40 @@
         "title": "Collect",
         "product": "Lecognizer",
         "cls": "lec",
-        "text": "Collects and stores learning activity as learning data using global standards (xAPI · 1EdTech Caliper) and links it to 1EdTech CASE frameworks."
+        "text": "Collects and stores learning activity as learning data using global standards (xAPI · 1EdTech Caliper) and links it to 1EdTech CASE frameworks.",
+        "claims": []
       },
       {
         "title": "Analyze",
         "product": "Lecognizer AI",
         "cls": "lec",
-        "text": "AI finds anomaly signals in learning data (<a href=\"{trust}#patent-2883249\">Patent No. 10-2883249</a>) and profiles learners with an LLM (<a href=\"{trust}#patent-2767110\">Patent No. 10-2767110</a>)."
+        "text": "",
+        "claims": [
+          {
+            "text": "AI finds anomaly signals in learning data,",
+            "patent": "Patent No. 10-2883249",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "and profiles learners with an LLM.",
+            "patent": "Patent No. 10-2767110",
+            "id": "patent-2767110"
+          }
+        ]
       },
       {
         "title": "Suggest",
         "product": "LearnHubble AI",
         "cls": "lhb",
-        "text": "On a teaching and learning platform where people interact with AI, it suggests next steps to administrators, instructors, and learners."
+        "text": "On a teaching and learning platform where people interact with AI, it suggests next steps to administrators, instructors, and learners.",
+        "claims": []
       },
       {
         "title": "Next semester",
         "product": "",
         "cls": "",
-        "text": "People judge and apply. The results build up again as learning data and inform next semester’s learning design."
+        "text": "People judge and apply. The results build up again as learning data and inform next semester’s learning design.",
+        "claims": []
       }
     ]
   },

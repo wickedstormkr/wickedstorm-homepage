@@ -3,7 +3,7 @@
  * 에듀테크 페이지(헤더 메뉴 '에듀테크'): LLM Wiki → 교육 AX → 1EdTech 표준(표준 지도 · 1EdTech 활동).
  * - LLM Wiki: 사내에서 AI를 먼저 쓰는 방식. 소식 기사(사내 LLM Wiki와 AI 워크플로우)에 적힌 사실만 쓰고 그 기사로 잇는다.
  *   그림은 사이트의 데이터 아트로 새로 그린다(지식 지도 + 화면 예시, components/WikiStage.astro). 기사 그림을 가져다 쓰지 않는다.
- * - 교육 AX: 학습을 관리하는 도구에서 경험하는 공간으로. 제품 사실(CLAUDE.md '사실')로만 네 단계(수집 · 분석 · 제안 · 다음 학기)를 쓰고, 특허는 원본(신뢰 페이지)으로 잇는다.
+ * - 교육 AX: 학습을 관리하는 도구에서 경험하는 공간으로. 특허가 있는 주장(분석)은 문장 아래 줄에 특허 원본 링크를 둔다(claims). 제품 사실(CLAUDE.md '사실')로만 네 단계(수집 · 분석 · 제안 · 다음 학기)를 쓰고, 특허는 원본(신뢰 페이지)으로 잇는다.
  * - 1EdTech 표준: 1EdTech 설명과 회원 자격 → 표준 지도(CASE 기준) → 활동(소식 원문 링크).
  */
 import Page from '../layouts/Page.astro';
@@ -69,7 +69,13 @@ const body = (html: string) => html.replaceAll('{trust}', trust);
             <span class="edu-n" aria-hidden="true">{num(i)}</span>
             <h3>{st.title}</h3>
             {st.product ? <span class:list={['pname', st.cls]} lang="en">{st.product}</span> : <span class="edu-who">{t.ax.roles}</span>}
-            <p set:html={phrase(body(st.text), lang)} />
+            {st.claims.length > 0
+              ? (
+                <ul class="edu-claims">
+                  {st.claims.map((c) => <li><span set:html={phraseText(c.text, lang)} /><span class="edu-pat">(<a href={`${trust}#${c.id}`}>{c.patent}</a>)</span></li>)}
+                </ul>
+              )
+              : <p set:html={phrase(body(st.text), lang)} />}
           </li>
         ))}
       </ol>

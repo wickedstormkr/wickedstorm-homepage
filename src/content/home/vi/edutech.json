@@ -89,25 +89,40 @@
         "title": "Thu thập",
         "product": "Lecognizer",
         "cls": "lec",
-        "text": "Thu thập và lưu trữ hoạt động học tập thành dữ liệu học tập theo chuẩn quốc tế (xAPI · 1EdTech Caliper), liên kết với các khung dựa trên 1EdTech CASE."
+        "text": "Thu thập và lưu trữ hoạt động học tập thành dữ liệu học tập theo chuẩn quốc tế (xAPI · 1EdTech Caliper), liên kết với các khung dựa trên 1EdTech CASE.",
+        "claims": []
       },
       {
         "title": "Phân tích",
         "product": "Lecognizer AI",
         "cls": "lec",
-        "text": "AI tìm ra dấu hiệu bất thường trong dữ liệu học tập (<a href=\"{trust}#patent-2883249\">Bằng sáng chế số 10-2883249</a>) và lập hồ sơ người học bằng LLM (<a href=\"{trust}#patent-2767110\">Bằng sáng chế số 10-2767110</a>)."
+        "text": "",
+        "claims": [
+          {
+            "text": "AI tìm ra dấu hiệu bất thường trong dữ liệu học tập,",
+            "patent": "Bằng sáng chế số 10-2883249",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "và lập hồ sơ người học bằng LLM.",
+            "patent": "Bằng sáng chế số 10-2767110",
+            "id": "patent-2767110"
+          }
+        ]
       },
       {
         "title": "Đề xuất",
         "product": "LearnHubble AI",
         "cls": "lhb",
-        "text": "Trên nền tảng dạy và học tương tác với AI, đề xuất bước tiếp theo cho quản trị viên, giảng viên và người học."
+        "text": "Trên nền tảng dạy và học tương tác với AI, đề xuất bước tiếp theo cho quản trị viên, giảng viên và người học.",
+        "claims": []
       },
       {
         "title": "Học kỳ tới",
         "product": "",
         "cls": "",
-        "text": "Con người ra quyết định và áp dụng. Kết quả lại được tích lũy thành dữ liệu học tập, làm cơ sở thiết kế dạy học cho học kỳ tới."
+        "text": "Con người ra quyết định và áp dụng. Kết quả lại được tích lũy thành dữ liệu học tập, làm cơ sở thiết kế dạy học cho học kỳ tới.",
+        "claims": []
       }
     ]
   },
