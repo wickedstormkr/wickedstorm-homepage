@@ -1,9 +1,9 @@
 ---
-/** 제품(홈): 역할별 제품 화면 탭 + 두 솔루션(Lecognizer 계열 · LearnHubble AI). 카드의 자세히 보기는 각 솔루션 사이트(새 창)로, 아래 버튼은 제품 페이지로 */
+/** 제품(홈): 역할별 제품 화면 탭 + 두 솔루션(Lecognizer 계열 · LearnHubble AI). 카드의 자세히 보기는 각 솔루션 사이트(새 창)로, 아래 버튼은 제품 페이지로(숨긴 동안은 없다) */
 import SecHead from '../components/SecHead.astro';
 import RoleTabs from '../components/RoleTabs.astro';
 import type { HomeContent } from '../lib/content';
-import { pagePath, type Lang } from '../lib/i18n';
+import { isListed, pagePath, type Lang } from '../lib/i18n';
 import { url } from '../lib/url';
 import { getUi } from '../lib/content';
 
@@ -30,7 +30,7 @@ const ui = getUi(lang);
         </li>
       ))}
     </ul>
-    <p class="more-row"><a class="btn s" href={page}>{t.more}</a></p>
+    {isListed('product') && <p class="more-row"><a class="btn s" href={page}>{t.more}</a></p>}
   </div>
 </section>
 

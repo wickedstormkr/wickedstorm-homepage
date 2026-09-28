@@ -241,6 +241,23 @@ test.describe('모바일 메뉴', () => {
   });
 });
 
+test.describe('숨긴 페이지(제품 · 사례)', () => {
+  test('메뉴 · 푸터 · 홈 버튼 · 사이트맵에 없고, 주소로 열면 검색 제외 표시가 있다', async ({ page, request }) => {
+    await page.goto('');
+    const hidden = /\/(product|cases)\.html/;
+    for (const sel of ['.site-header nav.main a', '#drawer a', '.site-footer a', '#product a', '#references a']) {
+      const hrefs = await page.locator(sel).evaluateAll((as) => as.map((a) => a.getAttribute('href') ?? ''));
+      expect(hrefs.filter((h) => hidden.test(h)), sel).toEqual([]);
+    }
+    const sitemap = await (await request.get('sitemap.xml')).text();
+    expect(sitemap).not.toMatch(/<loc>[^<]*\/(product|cases)\.html<\/loc>/);
+    for (const path of ['product.html', 'en/cases.html']) {
+      await page.goto(path);
+      await expect(page.locator('meta[name=robots]')).toHaveAttribute('content', /noindex/);
+    }
+  });
+});
+
 test.describe('문의 폼', () => {
   test('비어 있으면 필드마다 오류를 붙이고 첫 필드로 이동', async ({ page }) => {
     await page.goto('#contact');

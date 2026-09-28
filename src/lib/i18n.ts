@@ -21,6 +21,12 @@ export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'cont
 export type Page = (typeof PAGES)[number];
 /** 페이지를 만든 언어(네 언어 모두). 개인정보처리방침 · 링크 모음은 국문만 있다 */
 export const PAGE_LANGS: readonly Lang[] = LANGS;
+/**
+ * 메뉴 · 링크 · 사이트맵에서 뺀 페이지(숨김). 주소는 그대로 두고 검색에는 싣지 않는다(noindex).
+ * 다시 보이려면 여기서 빼면 된다. 홈의 해당 섹션(제품 · 사례)은 그대로 둔다
+ */
+export const HIDDEN_PAGES: readonly Page[] = ['product', 'cases'];
+export const isListed = (page: Page) => !HIDDEN_PAGES.includes(page);
 export const pagePath = (lang: Lang, page: Page) =>
   lang === 'ko' || !PAGE_LANGS.includes(lang) ? `/${page}.html` : `/${lang}/${page}.html`;
 
