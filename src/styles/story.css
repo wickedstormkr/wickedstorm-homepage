@@ -263,6 +263,8 @@ html.story-pin .scene{position:absolute;inset:0 0 auto;z-index:2;width:100%;max-
 html.story-pin .scene.is-active{pointer-events:auto}
 /* 고정 장면의 첫 화면: 머리 아래 ~ 이야기 조작 위 칸의 가운데에 글 묶음이 오도록 시작 자리를 화면 높이로(좁은 화면의 장면 가운데 맞춤보다 앞선다) */
 html.story-pin .scene.scene-moment{align-content:start;padding-top:max(calc(var(--header-h) + 24px),calc((100svh - var(--story-controls-h) + 52px) / 2 - var(--hero-half)))}
+/* 낮은 화면(650px 미만)은 다른 장면처럼 머리 바로 아래에서 시작한다(언어 안내 띠가 이야기 조작을 올려도 버튼이 가려지지 않게) */
+@container stage (height < 650px){html.story-pin .scene.scene-moment{padding-top:calc(var(--header-h) + 24px)}}
 /* 이야기 조작 높이의 첫 값(스크립트가 잰 값으로 바뀐다, layout.ts): 폰은 두 줄, 그 밖은 한 줄. 재기 전과 뒤가 같아 화면이 밀리지 않는다 */
 html.story-pin .story-stage{--story-controls-h:60px}
 @media (max-width:599px){html.story-pin .story-stage{--story-controls-h:104px}}
