@@ -1,6 +1,6 @@
 ---
 import { getHome } from '../lib/content';
-import { newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
+import { isListed, newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url, withBase } from '../lib/url';
 
 interface Props { lang: Lang; homeHref?: string }
@@ -18,9 +18,9 @@ const pg = (p: Page) => url(pagePath(lang, p));
         <p set:html={c.footer.contact} />
       </div>
       <nav class="foot-nav" aria-label={c.footer.navLabel}>
-        <a href={pg('product')}>{c.nav.product}</a>
-        <a href={pg('standards')}>{c.nav.standards}</a>
-        <a href={pg('cases')}>{c.nav.cases}</a>
+        {isListed('product') && <a href={pg('product')}>{c.nav.product}</a>}
+        <a href={pg('edutech')}>{c.nav.edutech}</a>
+        {isListed('cases') && <a href={pg('cases')}>{c.nav.cases}</a>}
         <a href={url(newsPath(lang))}>{c.nav.news}</a>
         <a href={pg('company')}>{c.nav.company}</a>
         <a href={pg('trust')}>{c.nav.trust}</a>

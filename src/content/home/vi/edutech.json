@@ -1,0 +1,201 @@
+{
+  "eyebrow": "EdTech · AX",
+  "title": "Không ngừng thử nghiệm <span class=\"gc\">những cách mới</span> để đưa AI vào giáo dục",
+  "lead": "Wicked Storm tự phát triển AI để hỗ trợ AX (chuyển đổi AI) trong giáo dục. Mô hình AI phân tích học tập và AI agent được thử nghiệm trước trong thực tế giáo dục, còn LLM Wiki trong công việc nội bộ; con người ra quyết định và áp dụng.",
+  "tocLabel": "Nội dung trang",
+  "toc": [
+    {
+      "id": "ax",
+      "label": "AX giáo dục"
+    },
+    {
+      "id": "ai-models",
+      "label": "Phân tích học tập bằng AI"
+    },
+    {
+      "id": "ai-agent",
+      "label": "AI agent"
+    },
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
+    },
+    {
+      "id": "standards",
+      "label": "Chuẩn 1EdTech"
+    }
+  ],
+  "ax": {
+    "eyebrow": "AX",
+    "title": "AX giáo dục: từ quản lý đến trải nghiệm",
+    "lead": "Chúng tôi giúp nền tảng học tập chuyển từ lấy quản lý làm trung tâm sang lấy trải nghiệm làm trung tâm. Mọi hoạt động học tập được thu thập thành dữ liệu học tập theo chuẩn quốc tế, AI phân tích và đề xuất bước tiếp theo cho quản trị viên, giảng viên và người học.",
+    "roles": "Quản trị viên · giảng viên · người học",
+    "steps": [
+      {
+        "title": "Thu thập",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "Thu thập và lưu trữ hoạt động học tập thành dữ liệu học tập theo chuẩn quốc tế (xAPI · 1EdTech Caliper), liên kết với các khung dựa trên 1EdTech CASE.",
+        "claims": []
+      },
+      {
+        "title": "Phân tích",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "",
+        "claims": [
+          {
+            "text": "AI tìm ra dấu hiệu bất thường trong dữ liệu học tập,",
+            "patent": "Bằng sáng chế số 10-2883249",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "và lập hồ sơ người học bằng LLM.",
+            "patent": "Bằng sáng chế số 10-2767110",
+            "id": "patent-2767110"
+          }
+        ]
+      },
+      {
+        "title": "Đề xuất",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "Trên nền tảng dạy và học tương tác với AI, đề xuất bước tiếp theo kèm theo căn cứ.",
+        "claims": []
+      },
+      {
+        "title": "Học kỳ tới",
+        "product": "",
+        "cls": "",
+        "text": "Con người ra quyết định và áp dụng. Kết quả lại được tích lũy thành dữ liệu học tập, làm cơ sở thiết kế dạy học cho học kỳ tới.",
+        "claims": []
+      }
+    ]
+  },
+  "models": {
+    "eyebrow": "AI Model",
+    "title": "Phân tích học tập bằng AI: mô hình tự phát triển, dùng trong thực tế",
+    "lead": "Chúng tôi tự phát triển các mô hình AI chẩn đoán trình độ học tập, tìm dấu hiệu bất thường và đọc xu hướng của người học từ dữ liệu học tập, rồi áp dụng vào sản phẩm và các dự án giáo dục công. Có thể xem bản gốc chứng nhận hoặc bằng sáng chế của từng mô hình.",
+    "items": [
+      {
+        "viz": "diagnose",
+        "name": "Mô hình chẩn đoán và đề xuất",
+        "text": "Chẩn đoán trình độ học tập từ dữ liệu hành vi và trải nghiệm học tập, rồi đề xuất câu hỏi và nội dung học tập theo phần còn yếu. Đã áp dụng cho ‘Toc Toc! Math Expedition’ của KERIS.",
+        "proof": "Chứng nhận mô hình AI KOLAS",
+        "id": "kolas"
+      },
+      {
+        "viz": "signal",
+        "name": "Phát hiện học tập bất thường",
+        "text": "Tìm dấu hiệu học tập khác thường trong dữ liệu hành vi học tập xAPI và chỉ ra trước những điểm cần xem xét. Dùng trong tính năng phát hiện bất thường của Lecognizer AI.",
+        "proof": "Bằng sáng chế số 10-2883249",
+        "id": "patent-2883249"
+      },
+      {
+        "viz": "profile",
+        "name": "Lập hồ sơ người học bằng LLM",
+        "text": "Dùng dữ liệu quá trình học tập và LLM để tóm tắt xu hướng và trạng thái của người học, làm cơ sở cho chẩn đoán và đề xuất câu hỏi phù hợp.",
+        "proof": "Bằng sáng chế số 10-2767110",
+        "id": "patent-2767110"
+      }
+    ],
+    "ruleLabel": "Cơ sở cho dạy và học",
+    "rule": "AI chẩn đoán và đề xuất bước học tiếp theo; giảng viên xem xét và áp dụng vào lớp học, còn người học tự tiếp tục phần học được đề xuất."
+  },
+  "agent": {
+    "eyebrow": "AI Agent",
+    "title": "AI agent: đồng hành cùng người học và giảng viên",
+    "lead": "AI agent trong LearnHubble AI đưa ra giải thích và gợi ý cho người học vào lúc cần, và đề xuất cho giảng viên phần cần bổ sung. Người học tự viết câu trả lời, còn giảng viên xem xét việc can thiệp và áp dụng.",
+    "learner": "Bên người học",
+    "instructor": "Bên giảng viên",
+    "items": [
+      {
+        "who": "learner",
+        "title": "Gợi ý bài tập",
+        "text": "Khi người học ngừng viết, đưa ra gợi ý về cấu trúc và điều kiện thay vì đáp án."
+      },
+      {
+        "who": "learner",
+        "title": "Bảng AI trong lớp học",
+        "text": "Đưa ra giải thích, quiz và tài liệu ở phần do giảng viên thiết kế."
+      },
+      {
+        "who": "learner",
+        "title": "Tìm nguyên nhân khó khăn",
+        "text": "Tìm nguyên nhân gây khó khăn từ các khóa học và năng lực được liên kết qua 1EdTech CASE."
+      },
+      {
+        "who": "instructor",
+        "title": "Đề xuất phần bổ sung",
+        "text": "Đề xuất phần cần bổ sung dựa trên căn cứ, còn giảng viên tự quyết định việc áp dụng và cách áp dụng."
+      }
+    ]
+  },
+  "wiki": {
+    "eyebrow": "LLM Wiki",
+    "title": "LLM Wiki: tập hợp tri thức rời rạc vào một nơi",
+    "lead": "Chúng tôi tập hợp tài liệu nội bộ, các cuộc thảo luận và câu trả lời cho những câu hỏi lặp lại vào LLM Wiki, đồng thời kết hợp AI vào quy trình làm việc để hoàn thiện cách làm việc của mình.",
+    "map": {
+      "label": "Bản đồ tri thức: tài liệu, thảo luận và câu hỏi lặp lại rời rạc được liên kết thành khái niệm (sản phẩm, công nghệ, chuẩn, dự án, chứng nhận) và quan hệ; AI tìm tài liệu theo quan hệ giữa chuẩn và dự án",
+      "legend": [
+        "Tài liệu",
+        "Thảo luận",
+        "Câu hỏi lặp lại"
+      ],
+      "nodes": {
+        "product": "Sản phẩm",
+        "tech": "Công nghệ",
+        "standard": "Chuẩn",
+        "project": "Dự án",
+        "cert": "Chứng nhận"
+      },
+      "relations": [
+        "áp dụng",
+        "triển khai"
+      ]
+    },
+    "screen": {
+      "label": "Ví dụ màn hình LLM Wiki",
+      "title": "LLM Wiki",
+      "crumb": "Hỏi và tìm",
+      "qLabel": "Câu hỏi",
+      "q": "1EdTech CASE dùng để làm gì?",
+      "draftLabel": "Bản nháp AI",
+      "a": "Dùng để trao đổi chương trình giáo dục, yêu cầu cần đạt và năng lực như một khung chuẩn thống nhất. Dữ liệu học tập thu thập được sẽ trỏ đến các mục trong khung này.",
+      "srcLabel": "Tài liệu tìm được",
+      "sources": [
+        "Ghi chú kỹ thuật CASE",
+        "Bản đồ chuẩn",
+        "Đề xuất dự án"
+      ],
+      "flow": [
+        "Bản nháp",
+        "Xem xét",
+        "Chốt"
+      ]
+    },
+    "steps": [
+      {
+        "title": "Tập hợp",
+        "text": "Tích lũy tài liệu, các cuộc thảo luận và câu trả lời cho những câu hỏi lặp lại vốn rời rạc vào một nơi."
+      },
+      {
+        "title": "Liên kết",
+        "text": "Liên kết tài liệu và thảo luận thành khái niệm và quan hệ (ontology), để có thể hỏi và tìm ra tri thức cần thiết."
+      },
+      {
+        "title": "Bản nháp và chốt",
+        "text": "AI tìm và tập hợp tài liệu liên quan rồi tạo bản nháp; người phụ trách xem xét, chỉnh sửa và chốt nội dung."
+      }
+    ],
+    "ruleLabel": "Cùng nguyên tắc với sản phẩm",
+    "rule": "AI tìm, sắp xếp và tạo bản nháp. Viết gì và quyết định thế nào là do con người.",
+    "article": "2026-07-llm-wiki-workflow",
+    "more": "Xem bài viết về LLM Wiki"
+  },
+  "std": {
+    "eyebrow": "1EdTech",
+    "title": "Chuẩn 1EdTech",
+    "lead": "1EdTech (trước đây là IMS Global) là liên minh xây dựng chuẩn quốc tế về công nghệ giáo dục. Wicked Storm là thành viên hội đồng sáng lập 1EdTech Korea và hoạt động với tư cách 1EdTech Contributing Member."
+  }
+}

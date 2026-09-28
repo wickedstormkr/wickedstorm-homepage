@@ -7,14 +7,12 @@
   "scenes": [
     {
       "id": "moment",
-      "beat": "Thu thập thời gian thực",
-      "title": "Thu thập hoạt động học tập theo thời gian thực",
-      "text": "Ngay khi người học xem bài giảng, trả lời quiz, nộp bài tập hay đặt câu hỏi, Lecognizer thu thập thành dữ liệu học tập."
+      "beat": "Mỗi khoảnh khắc học tập"
     },
     {
       "id": "statement",
-      "beat": "Chuẩn quốc tế",
-      "title": "Thu thập <span class=\"g\">theo chuẩn quốc tế</span>",
+      "beat": "Thu thập theo chuẩn",
+      "title": "Thu thập <span class=\"g\">theo chuẩn quốc tế</span> ngay khi hoạt động học tập diễn ra",
       "text": ""
     },
     {

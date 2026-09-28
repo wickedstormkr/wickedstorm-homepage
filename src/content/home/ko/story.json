@@ -7,14 +7,12 @@
   "scenes": [
     {
       "id": "moment",
-      "beat": "실시간 수집",
-      "title": "학습 활동을 실시간으로 수집합니다",
-      "text": "학습자가 강의를 보고, 퀴즈에 답하고, 과제를 내고, 질문하는 순간 Lecognizer가 학습데이터로 수집합니다."
+      "beat": "학습의 모든 순간"
     },
     {
       "id": "statement",
-      "beat": "국제 표준",
-      "title": "<span class=\"g\">국제 표준 기반</span>으로 수집합니다",
+      "beat": "국제 표준 수집",
+      "title": "학습 활동이 일어나는 순간 <span class=\"g\">국제 표준</span>으로 수집합니다",
       "text": ""
     },
     {

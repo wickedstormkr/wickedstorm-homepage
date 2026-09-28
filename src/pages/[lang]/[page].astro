@@ -1,7 +1,7 @@
 ---
-/** 언어별 페이지: /en/product.html, /ja/standards.html, /vi/contact.html … (국문은 src/pages/[page].astro) */
+/** 언어별 페이지: /en/product.html, /ja/edutech.html, /vi/contact.html … (국문은 src/pages/[page].astro) */
 import ProductPage from '../../views/ProductPage.astro';
-import StandardsPage from '../../views/StandardsPage.astro';
+import EdutechPage from '../../views/EdutechPage.astro';
 import CasesPage from '../../views/CasesPage.astro';
 import TrustPage from '../../views/TrustPage.astro';
 import CompanyPage from '../../views/CompanyPage.astro';
@@ -13,6 +13,6 @@ export function getStaticPaths() {
 }
 const lang = Astro.params.lang as Lang;
 const page = Astro.params.page as Page;
-const V = { product: ProductPage, standards: StandardsPage, cases: CasesPage, trust: TrustPage, company: CompanyPage, contact: ContactPage }[page];
+const V = { product: ProductPage, edutech: EdutechPage, cases: CasesPage, trust: TrustPage, company: CompanyPage, contact: ContactPage }[page];
 ---
 <V lang={lang} />

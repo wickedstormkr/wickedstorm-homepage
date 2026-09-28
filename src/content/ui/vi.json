@@ -40,8 +40,8 @@
   "open": "Truy cập",
   "lhubScreens": "Ví dụ màn hình LearnHubble AI",
   "news": {
-    "title": "Tin tức",
-    "metaTitle": "WICKED STORM | Tin tức",
+    "title": "Bản tin",
+    "metaTitle": "WICKED STORM | Bản tin",
     "lead": "Tin tức về bằng sáng chế và sản phẩm, insight về chuẩn và công nghệ, cùng câu chuyện từ thực tế tại Wicked Storm.",
     "categories": {
       "all": "Tất cả",
@@ -49,10 +49,10 @@
       "story": "Câu chuyện",
       "insight": "Insight"
     },
-    "tabsLabel": "Phân loại tin tức",
-    "listHeading": "Danh sách tin tức",
+    "tabsLabel": "Phân loại bản tin",
+    "listHeading": "Danh sách bài viết",
     "count": "{n} bài viết",
-    "back": "Quay lại tin tức",
+    "back": "Quay lại Bản tin",
     "original": "Mở ảnh gốc trong cửa sổ mới",
     "koOnly": "Bài viết này chỉ có bằng tiếng Hàn.",
     "publisher": "Wicked Storm Inc.",

@@ -18,7 +18,7 @@ export interface Art {
   setScene(s: number): void;
   /** 떠다님(자동 움직임) 켜기·끄기: 움직임 멈춤이면 끈다 */
   setAmbient(on: boolean): void;
-  /** 실시간 수집에서 날아온 한 건이 성운에 자리 잡는다(무대 px, 활동 종류) */
-  land?(x: number, y: number, verb: number): void;
+  /** 실시간 수집 창에 새 문장이 들어와 기록 행 한 줄(0~5)을 다시 쓴다 */
+  write?(row: number): void;
   destroy(): void;
 }

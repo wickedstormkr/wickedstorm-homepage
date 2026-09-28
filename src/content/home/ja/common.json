@@ -15,10 +15,10 @@
   "langLabel": "言語選択",
   "nav": {
     "product": "製品",
-    "standards": "国際標準",
+    "edutech": "エドテック",
     "cases": "導入事例",
-    "news": "ニュース",
-    "company": "会社情報",
+    "news": "ニュースルーム",
+    "company": "会社紹介",
     "trust": "認証・特許",
     "resources": "資料ダウンロード",
     "recruit": "採用情報",
@@ -40,9 +40,9 @@
       "title": "WICKED STORM | 製品：Lecognizer · Lecognizer AI · LearnHubble AI",
       "description": "国際標準の学習データリポジトリLecognizer、学習データから異常の兆候を見つけるLecognizer AI、AIと対話するパーソナライズ型の教育・学習プラットフォームLearnHubble AIを、管理者・教員・学習者の画面でご紹介します。"
     },
-    "standards": {
-      "title": "WICKED STORM | 国際標準：xAPI · Caliper · 1EdTech CASE",
-      "description": "Wicked Stormが適用している国際的な教育技術標準と、適用予定・設計参照の標準を、収集・体系・証明・連携に整理した標準マップと、1EdTechでの活動をご紹介します。"
+    "edutech": {
+      "title": "WICKED STORM | エドテック：AI学習分析 · AIエージェント · LLM Wiki · 1EdTech標準",
+      "description": "学習分析のAIモデル、学習者と教員に寄り添うAIエージェント、社内LLM Wikiまで、教育現場にAIを取り入れるWicked Stormの試みと、1EdTech国際標準の適用・活動を紹介します。"
     },
     "cases": {
       "title": "WICKED STORM | 導入事例",
@@ -53,7 +53,7 @@
       "description": "GS 1等級認証、xAPI LRS認証、KOLAS AIモデル認証、AI特許2件、1EdTech Korea設立理事会としての活動を、原本とあわせてご確認いただけます。"
     },
     "company": {
-      "title": "WICKED STORM | 会社情報",
+      "title": "WICKED STORM | 会社紹介",
       "description": "学習データとAIで学びの新時代を切り拓くグローバルエドテック企業、Wicked Stormのビジョン、沿革、採用情報、アクセスをご紹介します。"
     },
     "contact": {

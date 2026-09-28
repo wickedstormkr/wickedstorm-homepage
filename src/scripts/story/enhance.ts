@@ -54,7 +54,7 @@ async function pickArt(canvas: HTMLCanvasElement): Promise<Art | null> {
       },
       setScene: (s) => { deep.setScene(s); main.setScene(s); },
       setAmbient: (on) => { deep.setAmbient(on && canvas.dataset.quality !== 'economy'); main.setAmbient(on); },
-      land: (x, y, v) => main.land(x, y, v),
+      write: (row) => main.write(row),
       destroy: () => { canvas.removeEventListener('story:quality', economize); deep.destroy(); back.remove(); main.destroy(); },
     };
   } catch {
@@ -66,7 +66,8 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
   const root = document.documentElement;
   const { stage, scenes } = layout;
   const copies = scenes.map((s) => s.querySelector<HTMLElement>('.scene-copy')!);
-  const visuals = scenes.map((s) => s.querySelector<HTMLElement>('.scene-visual')!);
+  // 장면 1(첫 문구)에는 그림 칸이 없다
+  const visuals = scenes.map((s) => s.querySelector<HTMLElement>('.scene-visual'));
   const fx = sceneFx(story, scenes, copies, visuals);
   root.classList.add('story-enhanced');
   let art: Art | null = null;
@@ -128,11 +129,12 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
       ambient();
     });
   }
-  const onLand = (e: Event) => {
-    const d = (e as CustomEvent<{ x: number; y: number; verb: number }>).detail;
-    if (d) art?.land?.(d.x + scenes[0].offsetLeft, d.y + scenes[0].offsetTop - (layout.frame.pans[0] ?? 0), d.verb);
+  // 실시간 수집 창의 맨 위에서 밀려난 문장이 기록 행 한 줄을 다시 쓴다(story/live.ts)
+  const onWrite = (e: Event) => {
+    const row = (e as CustomEvent<{ row: number }>).detail?.row;
+    if (typeof row === 'number') art?.write?.(row);
   };
-  story.addEventListener('story:land', onLand);
+  story.addEventListener('story:write', onWrite);
   return () => {
     alive = false;
     unsubscribe();
@@ -140,7 +142,7 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
     io.disconnect();
     offMotion();
     document.removeEventListener('visibilitychange', ambient);
-    story.removeEventListener('story:land', onLand);
+    story.removeEventListener('story:write', onWrite);
     story.removeEventListener('story:layout', measure);
     art?.destroy();
     root.classList.remove('story-enhanced', 'art-live');
@@ -152,31 +154,33 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
 /*
  * 장면 글·그림 표시(장면 값 s의 함수). 한 전환(소수부 f) 안의 순서:
  * 앞 장면 글·그림이 빠짐(f .30–.45) → 입자가 옮겨 감 → 다음 장면 그림(.52) → 다음 장면 글(.72).
- * 장면 1→2만 기록 행이 줄마다 차오르는 시간에 맞춰 더 일찍(첫 화면 .12 빠짐, 그림 .42, 글 .55).
+ * 장면 1→2만 더 일찍: 첫 화면이 .12에 빠지고, 실시간 수집 창과 빈 기록 행이 .30에 들어온다(별이 기록 칸에 닿기 전에). 글은 .40.
  * 옮김은 CSS translate 속성으로(이름표 자리를 정한 transform과 겹치지 않게).
  */
 interface Part { el: HTMLElement; inAt?: number; inDur?: number; outAt?: number; outDur?: number; dyIn: number; dyOut: number }
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
-function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[], visuals: HTMLElement[]) {
+function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[], visuals: (HTMLElement | null)[]) {
   const last = scenes.length - 1;
   const parts: Part[] = [];
   const all = (sel: string) => [...story.querySelectorAll<HTMLElement>(sel)];
   scenes.forEach((_, i) => {
     const outAt = i === last ? undefined : i === 0 ? 0.12 : i + 0.3;
     const outDur = i === 0 ? 0.18 : 0.15;
-    const vIn = i === 0 ? undefined : i === 1 ? 0.42 : i - 1 + 0.52;
-    const cIn = i === 0 ? undefined : i === 1 ? 0.55 : i - 1 + 0.72;
-    parts.push({ el: visuals[i], inAt: vIn, inDur: 0.2, outAt, outDur, dyIn: i === 1 ? 0 : 16, dyOut: -20 });
+    const vIn = i === 0 ? undefined : i === 1 ? 0.3 : i - 1 + 0.52;
+    const cIn = i === 0 ? undefined : i === 1 ? 0.4 : i - 1 + 0.72;
+    const visual = visuals[i];
+    if (visual) parts.push({ el: visual, inAt: vIn, inDur: i === 1 ? 0.15 : 0.2, outAt, outDur, dyIn: i === 1 ? 0 : 16, dyOut: -20 });
     parts.push({ el: copies[i], inAt: cIn, inDur: i === 1 ? 0.2 : 0.18, outAt, outDur, dyIn: 20, dyOut: -20 });
   });
-  // 첫 장면의 하늘(자리 잡은 별)과 날아가는 별은 첫 화면 글과 함께 물러난다
-  all('.scene-moment :is(.live-sky,.live-fly,.hero-trust)').forEach((el) => parts.push({ el, outAt: 0.12, outDur: 0.2, dyIn: 0, dyOut: 0 }));
+  // 창의 칸에서 기록 행으로 날아가는 빛은 장면 2 그림과 함께 들고 난다
+  all('.scene-statement .live-fly').forEach((el) => parts.push({ el, inAt: 0.3, inDur: 0.15, outAt: 1.3, outDur: 0.15, dyIn: 0, dyOut: 0 }));
   // 장면 안의 등장 움직임(차례대로 한 번): 시작, 간격, 길이, 아래에서 올라오는 거리
   const reveal = (sel: string, at: number, stagger: number, dur: number, dy: number) =>
     all(sel).forEach((el, k) => parts.push({ el, inAt: at + k * stagger, inDur: dur, dyIn: dy, dyOut: 0 }));
-  reveal('.scene-statement .ledger-cols > div', 0.46, 0.04, 0.15, 8);
+  // 칸 이름은 빈 칸 틀과 함께(문장이 착지하기 전에 구조가 먼저 보인다)
+  reveal('.scene-statement .ledger-cols > div', 0.34, 0.03, 0.12, 8);
   reveal('.scene-statement .ledger-foot', 0.82, 0, 0.15, 8);
   reveal('.scene-store :is(.art-labels li,.art-tag)', 1.74, 0.015, 0.14, 0);
   reveal('.scene-signal .fx-flag', 2.8, 0, 0.12, -6);
@@ -194,8 +198,9 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
     apply(s: number) {
       // 먼 장면(지금 s에서 보일 일이 없는 장면)은 data-far: CSS가 그 장면의 글·그림을 잘라 아예 그리지 않는다(story.css).
       // 투명도 값이 어떤 이유로 남아도 겹쳐 보일 수 없게 하는 안전장치. 글은 화면 낭독기와 키보드로 그대로 닿는다.
+      // 장면 2는 창과 빈 기록 행이 f .30에 들어오므로 그보다 먼저 그린다
       scenes.forEach((sc, i) => {
-        const near = s > i - 0.62 && s < i + 0.55;
+        const near = s > i - (i === 1 ? 0.75 : 0.62) && s < i + 0.55;
         if (sc.hasAttribute('data-far') === near) sc.toggleAttribute('data-far', !near);
       });
       for (const p of parts) {
