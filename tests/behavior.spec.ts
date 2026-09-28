@@ -4,8 +4,10 @@
  * 문의 폼 전송은 실제 서버로 보내지 않고 가로채서 보내는 값만 확인한다.
  */
 import { test, expect, type Locator, type Page } from '@playwright/test';
+import { CONTACT_API } from '../src/config/client';
 
-const ENDPOINT = 'https://v6pa5eyigfdkbuzm2rskahdf6y0xfsre.lambda-url.ap-northeast-2.on.aws';
+/** 문의 폼이 실제로 보내는 주소(설정과 같게: 주소를 옮겨도 가짜 응답이 따라간다) */
+const ENDPOINT = CONTACT_API;
 
 /** 문의 전송을 가로채 보낸 값을 돌려준다(실제 서버로 보내지 않는다) */
 function catchSubmit(page: Page): Promise<Record<string, string>> {
