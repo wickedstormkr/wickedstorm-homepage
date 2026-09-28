@@ -1,6 +1,6 @@
 # wickedstorm-homepage
 
-위키드스톰 공식 홈페이지 재구축 저장소(비공개). 지금 운영 중인 사이트는 [`wickedstormkr/homepage_renewal`](https://github.com/wickedstormkr/homepage_renewal)입니다.
+위키드스톰 공식 홈페이지 저장소입니다. https://wickedstorm.kr 에서 운영합니다(2026-09-28 공개). 옛 사이트의 원본은 [`wickedstormkr/homepage_renewal`](https://github.com/wickedstormkr/homepage_renewal)입니다.
 
 - 규칙과 방향: [`CLAUDE.md`](CLAUDE.md)
 - 재구축안: `docs/redesign/analysis/index.html` (브라우저로 열기)
@@ -45,13 +45,20 @@ npm run preview    # dist/ 미리 보기
 주소는 지금 사이트와 같습니다: `/`, `/en/index.html`, `/ja/index.html`, `/vi/index.html`, `/news.html`, `/news/<id>.html`, `/privacy.html`, `/links.html`.
 
 ### 호스팅 주소(site·base)
-호스팅이 정해지지 않았으므로 [`site.config.mjs`](site.config.mjs) 한 곳에서 바꿉니다. 환경 변수로도 덮어쓸 수 있습니다.
+운영은 https://wickedstorm.kr (AWS S3 + CloudFront, 도메인 루트)이고 미리보기는 GitHub Pages입니다. 주소는 [`site.config.mjs`](site.config.mjs) 한 곳에서 정하고, 환경 변수로 덮어쓸 수 있습니다.
 
 ```bash
-SITE_URL=https://wickedstorm.kr BASE_PATH=/ npm run build                        # Cloudflare Pages·도메인 루트
-SITE_URL=https://wickedstormkr.github.io BASE_PATH=/wickedstorm-homepage/ npm run build   # GitHub Pages 프로젝트 페이지
+npm run build                                                                     # 운영 주소(https://wickedstorm.kr, base /)
+SITE_URL=https://wickedstormkr.github.io BASE_PATH=/wickedstorm-homepage/ npm run build   # GitHub Pages 미리보기
 PUBLIC_GA_ID=G-0Y5QD1HBGN npm run build                                           # 운영 배포에서만 GA4를 켠다
 ```
+
+### 운영 배포
+```bash
+AWS_PROFILE=<배포 권한 프로필> DRY_RUN=1 npm run deploy   # 올릴 목록만 확인
+AWS_PROFILE=<배포 권한 프로필> npm run deploy             # 빌드(GA4 켬) → S3 업로드 → CloudFront 캐시 비우기
+```
+origin/main과 같은 깨끗한 커밋에서만 올립니다. 규칙: [`CLAUDE.md`](CLAUDE.md) '운영 배포'.
 
 사이트 안 주소는 모두 `src/lib/url.ts`의 `url()`을 거쳐 base가 붙습니다. 콘텐츠 파일 안 주소는 사이트 루트 기준(`/privacy.html`)으로 적습니다.
 
