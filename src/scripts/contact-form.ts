@@ -235,7 +235,7 @@ function init(f: HTMLFormElement) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(35000),
     })
       .then((r) => {
         if (!r.ok) throw new Error('bad');
