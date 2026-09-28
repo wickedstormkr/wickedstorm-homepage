@@ -99,6 +99,10 @@
 .fx-segs.mini{grid-template-columns:repeat(3,minmax(min-content,1fr));margin:0;gap:5px}
 .fx-segs.mini li{flex-direction:column;align-items:flex-start;padding:6px 7px}
 .fx-segs.mini b{font-size:13px}
+/* 세 칸이 제 내용(시각 · 구간 이름)보다 좁아지면 모든 칸을 한 줄씩: 시각 | 구간 이름(site.ts가 .stack을 붙인다. 언어마다 이름 길이가 달라 폭으로 정할 수 없다) */
+.fx-segs.mini.stack{grid-template-columns:minmax(0,1fr)}
+.fx-segs.mini.stack li{flex-direction:row;flex-wrap:nowrap;align-items:baseline}
+.fx-segs.mini.stack b{min-width:0}
 .fx-segs li.hot small{color:#ffc3e8}
 /* AI 영역 안: 추천(왼쪽)과 AI가 쓴 확인 퀴즈 초안(오른쪽)을 나란히(역할 탭의 세 화면 높이를 맞춘다) */
 .fx-design:not(.compact) .fx-ai{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 18px;align-items:start}

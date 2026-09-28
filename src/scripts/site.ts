@@ -193,6 +193,23 @@ doc.querySelectorAll<HTMLElement>('.std-map').forEach((map) => {
   onFonts(fit);
 });
 
+/* ---------- 학습자 강의실의 구간 세 칸: 세 칸이 제 내용(시각 · 구간 이름)보다 좁아지면 모든 칸을 한 줄씩(.stack, fragments.css) ----------
+   언어마다 구간 이름 길이가 달라 CSS 폭 기준으로는 정할 수 없어, 세 칸 짜임이 목록 폭을 넘는지 잰다. 폭이 바뀔 때만 다시 잰다(숨은 탭은 보일 때) */
+doc.querySelectorAll<HTMLElement>('.fx-segs.mini').forEach((list) => {
+  const fit = () => {
+    list.classList.remove('stack');
+    list.classList.toggle('stack', list.scrollWidth > list.clientWidth + 1);
+  };
+  let lastW = -1;
+  new ResizeObserver(([en]) => {
+    const w = Math.round(en.contentRect.width);
+    if (w === lastW) return;
+    lastW = w;
+    fit();
+  }).observe(list);
+  onFonts(fit);
+});
+
 /* ---------- CASE 그림 이름표(데스크톱): 가지 이름표가 이웃과 겹치면(10px 미만) 넓은 쪽부터 좁혀 여러 줄로(.art-tight, story.css) ----------
    한국어는 한 줄씩 들어가 그대로이고 긴 번역만 좁힌다. 낱말·구보다 좁힐 수 없으면 이웃을 좁힌다. 폭·글꼴이 바뀔 때 다시 잰다 */
 doc.querySelectorAll<HTMLElement>('.art-box').forEach((box) => {
