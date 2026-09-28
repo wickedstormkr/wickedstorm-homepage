@@ -15,13 +15,13 @@ for (const lang of ['', 'en/', 'ja/', 'vi/']) {
         await expect(page.locator('.scene.is-active')).toHaveCount(1);
         const scene = page.locator(`.scene[data-scene="${i}"]`);
         await expect(scene).toHaveClass(/is-active/);
+        // 장면 1(첫 문구)에는 그림 칸이 없다
         const geometry = await scene.evaluate((el) => {
-          const title = el.querySelector('h1,h2')!.getBoundingClientRect();
-          const visual = el.querySelector('.scene-visual')!.getBoundingClientRect();
-          return { title: [title.left, title.right], visual: [visual.left, visual.right], width: innerWidth, doc: document.documentElement.scrollWidth };
+          const box = (sel: string) => { const r = el.querySelector(sel)?.getBoundingClientRect(); return r ? [r.left, r.right] : null; };
+          return { boxes: [box('h1,h2'), box('.scene-visual')].filter((b): b is number[] => !!b), width: innerWidth, doc: document.documentElement.scrollWidth };
         });
         expect(geometry.doc).toBeLessThanOrEqual(geometry.width);
-        for (const [left, right] of [geometry.title, geometry.visual]) {
+        for (const [left, right] of geometry.boxes) {
           expect(left).toBeGreaterThanOrEqual(0);
           expect(right).toBeLessThanOrEqual(geometry.width + 1);
         }
@@ -46,25 +46,74 @@ test('resizing across desktop/tablet/phone boundaries preserves the current scen
   }
 });
 
-test('a tall first scene gets reading space; keyboard focus reveals its last evidence link', async ({ page }) => {
+test('the first scene fits a short phone: copy and both buttons sit above the story controls', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 640 });
   await page.goto('');
   await waitForFonts(page);
   await expect(page.locator('html')).toHaveClass(/art-live/);
   await page.locator('.story-ctrl [data-motion-btn]').click();
-  const overflow = await page.evaluate(() => document.querySelector<HTMLElement>('.scene-moment')!.offsetHeight - document.querySelector<HTMLElement>('.story-stage')!.clientHeight);
-  expect(overflow).toBeGreaterThan(100);
-  await page.evaluate((y) => window.scrollTo({ top: y / 2, behavior: 'instant' }), overflow);
-  await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('0.00');
-  const link = page.locator('.hero-trust a').last();
-  await link.focus();
-  await expect.poll(async () => {
-    const bounds = await link.boundingBox();
-    const controls = await page.locator('.story-ui').boundingBox();
-    return !!bounds && !!controls && bounds.y >= 76 && bounds.y + bounds.height <= controls.y;
-  }).toBe(true);
+  await expect(page.locator('.scene-moment .hero-cta .btn')).toHaveCount(2);
+  const controls = (await page.locator('.story-ui').boundingBox())!;
+  for (const button of await page.locator('.scene-moment .hero-cta .btn').all()) {
+    const box = (await button.boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(76);
+    expect(box.y + box.height).toBeLessThanOrEqual(controls.y);
+  }
   await page.locator('[data-story-next]').click();
   await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
+});
+
+for (const viewport of [{ width: 1440, height: 900 }, { width: 1280, height: 720 }, { width: 390, height: 844 }]) {
+  test(`scene 2 @${viewport.width}: the live panel and the ledger share one screen, and a new statement writes a ledger row`, async ({ page }) => {
+    await page.setViewportSize(viewport);
+    await page.goto('');
+    await waitForFonts(page);
+    await expect(page.locator('html')).toHaveClass(/art-live/, { timeout: 15000 });
+    await page.evaluate(() => {
+      const w = window as Window & { __writes?: number[] };
+      w.__writes = [];
+      document.querySelector('#story')!.addEventListener('story:write', (e) => w.__writes!.push((e as CustomEvent<{ row: number }>).detail.row));
+    });
+    await page.locator('.story-nav a[data-go="1"]').click();
+    await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
+    const scene = page.locator('#scene-statement');
+    const live = scene.locator('.live');
+    await expect(live).toBeVisible();
+    await expect(scene.locator('.ledger-box')).toBeVisible();
+    // 창의 네 칸 = 기록 행의 네 칸(같은 순서)
+    await expect(live.locator('.xrow').first().locator('.chip')).toHaveClass([/actor/, /verb/, /object/, /result/]);
+    await expect(scene.locator('.ledger-cols > div')).toHaveCount(4);
+    const panel = (await live.boundingBox())!;
+    const ledger = (await scene.locator('.ledger-box').boundingBox())!;
+    const controls = (await page.locator('.story-ui').boundingBox())!;
+    if (viewport.width >= 1024) {
+      // 넓은 화면: 창 | 기록 행, 한 화면 안(이야기 조작 위)
+      expect(panel.x + panel.width).toBeLessThanOrEqual(ledger.x);
+      expect(Math.max(panel.y + panel.height, ledger.y + ledger.height)).toBeLessThanOrEqual(controls.y);
+    } else {
+      // 폰: 창 위 · 기록 행 아래. 기록 행의 첫 줄이 이야기 조작 위에 보인다(끝까지는 읽을 스크롤로)
+      expect(panel.y + panel.height).toBeLessThanOrEqual(ledger.y);
+      expect(ledger.y + ledger.height / 12).toBeLessThanOrEqual(controls.y);
+    }
+    // 새 문장의 네 칸이 기록 행으로 날아가 한 줄을 다시 쓴다
+    await expect(page.locator('.live-fly .ghost').first()).toBeAttached({ timeout: 8000 });
+    await expect.poll(() => page.evaluate(() => (window as Window & { __writes?: number[] }).__writes!.length), { timeout: 8000 }).toBeGreaterThan(0);
+    const counted = Number((await live.locator('[data-live-count]').innerText()).replace(/[^0-9]/g, ''));
+    expect(counted).toBeGreaterThan(1374);
+  });
+}
+
+test('pausing motion stops new statements in scene 2', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('');
+  await expect(page.locator('html')).toHaveClass(/art-live/, { timeout: 15000 });
+  await page.locator('.story-ctrl [data-motion-btn]').click();
+  await page.locator('.story-nav a[data-go="1"]').click();
+  await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
+  const before = await page.locator('[data-live-count]').innerText();
+  await page.waitForTimeout(5000);
+  await expect(page.locator('[data-live-count]')).toHaveText(before);
+  await expect(page.locator('.live-fly .ghost')).toHaveCount(0);
 });
 
 test('without JavaScript all six scenes and the mobile loop remain available', async ({ browser }) => {

@@ -16,11 +16,17 @@ export const homePath = (lang: Lang) => (lang === 'ko' ? '/' : `/${lang}/index.h
 
 export const isLang = (s: unknown): s is Lang => typeof s === 'string' && (LANGS as readonly string[]).includes(s);
 
-/** 언어마다 따로 있는 페이지(제품·표준·사례·신뢰·회사·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
-export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'contact'] as const;
+/** 언어마다 따로 있는 페이지(제품·에듀테크·사례·신뢰·회사소개·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
+export const PAGES = ['product', 'edutech', 'cases', 'trust', 'company', 'contact'] as const;
 export type Page = (typeof PAGES)[number];
 /** 페이지를 만든 언어(네 언어 모두). 개인정보처리방침 · 링크 모음은 국문만 있다 */
 export const PAGE_LANGS: readonly Lang[] = LANGS;
+/**
+ * 메뉴 · 링크 · 사이트맵에서 뺀 페이지(숨김). 주소는 그대로 두고 검색에는 싣지 않는다(noindex).
+ * 다시 보이려면 여기서 빼면 된다. 홈의 해당 섹션(제품 · 사례)은 그대로 둔다
+ */
+export const HIDDEN_PAGES: readonly Page[] = ['product', 'cases'];
+export const isListed = (page: Page) => !HIDDEN_PAGES.includes(page);
 export const pagePath = (lang: Lang, page: Page) =>
   lang === 'ko' || !PAGE_LANGS.includes(lang) ? `/${page}.html` : `/${lang}/${page}.html`;
 

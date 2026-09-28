@@ -1,7 +1,7 @@
 ---
-/** 국문 페이지: /product.html, /standards.html, /cases.html, /trust.html, /company.html, /contact.html */
+/** 국문 페이지: /product.html, /edutech.html, /cases.html, /trust.html, /company.html, /contact.html */
 import ProductPage from '../views/ProductPage.astro';
-import StandardsPage from '../views/StandardsPage.astro';
+import EdutechPage from '../views/EdutechPage.astro';
 import CasesPage from '../views/CasesPage.astro';
 import TrustPage from '../views/TrustPage.astro';
 import CompanyPage from '../views/CompanyPage.astro';
@@ -12,6 +12,6 @@ export function getStaticPaths() {
   return PAGES.map((page) => ({ params: { page } }));
 }
 const page = Astro.params.page as Page;
-const V = { product: ProductPage, standards: StandardsPage, cases: CasesPage, trust: TrustPage, company: CompanyPage, contact: ContactPage }[page];
+const V = { product: ProductPage, edutech: EdutechPage, cases: CasesPage, trust: TrustPage, company: CompanyPage, contact: ContactPage }[page];
 ---
 <V lang="ko" />

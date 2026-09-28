@@ -7,14 +7,12 @@
   "scenes": [
     {
       "id": "moment",
-      "beat": "Real-time collection",
-      "title": "We collect learning activity in real time",
-      "text": "The moment a learner watches a lecture, answers a quiz, submits an assignment, or asks a question, Lecognizer collects it as learning data."
+      "beat": "Every learning moment"
     },
     {
       "id": "statement",
-      "beat": "Global standards",
-      "title": "Collected <span class=\"g\">using global standards</span>",
+      "beat": "Standards-based collection",
+      "title": "Collected <span class=\"g\">using global standards</span> the moment learning happens",
       "text": ""
     },
     {

@@ -1,0 +1,201 @@
+{
+  "eyebrow": "EdTech · AX",
+  "title": "We keep finding <span class=\"gc\">new ways to bring AI</span> into education",
+  "lead": "Wicked Storm builds its own AI to support AX (AI transformation) in education. We try AI models for learning analytics and AI agents in education settings, and the LLM Wiki in our own work first, while people judge and apply.",
+  "tocLabel": "On this page",
+  "toc": [
+    {
+      "id": "ax",
+      "label": "Education AX"
+    },
+    {
+      "id": "ai-models",
+      "label": "AI learning analytics"
+    },
+    {
+      "id": "ai-agent",
+      "label": "AI agents"
+    },
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
+    },
+    {
+      "id": "standards",
+      "label": "1EdTech standards"
+    }
+  ],
+  "ax": {
+    "eyebrow": "AX",
+    "title": "Education AX: from management to experience",
+    "lead": "We help learning platforms shift from management to experience. All learning activity is collected as learning data built on global standards, and AI analyzes it to suggest what administrators, instructors, and learners do next.",
+    "roles": "Administrators · instructors · learners",
+    "steps": [
+      {
+        "title": "Collect",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "Collects and stores learning activity as learning data using global standards (xAPI · 1EdTech Caliper) and links it to 1EdTech CASE frameworks.",
+        "claims": []
+      },
+      {
+        "title": "Analyze",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "",
+        "claims": [
+          {
+            "text": "AI finds anomaly signals in learning data,",
+            "patent": "Patent No. 10-2883249",
+            "id": "patent-2883249"
+          },
+          {
+            "text": "and profiles learners with an LLM.",
+            "patent": "Patent No. 10-2767110",
+            "id": "patent-2767110"
+          }
+        ]
+      },
+      {
+        "title": "Suggest",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "On a teaching and learning platform where people interact with AI, it suggests next steps along with the evidence.",
+        "claims": []
+      },
+      {
+        "title": "Next semester",
+        "product": "",
+        "cls": "",
+        "text": "People judge and apply. The results build up again as learning data and inform next semester’s learning design.",
+        "claims": []
+      }
+    ]
+  },
+  "models": {
+    "eyebrow": "AI Model",
+    "title": "AI learning analytics: models we built, used in the field",
+    "lead": "We build our own AI models that diagnose learning levels, find unusual signals, and read learner tendencies from learning data, and have applied them to our products and public education projects. You can check the certificate or patent behind each model.",
+    "items": [
+      {
+        "viz": "diagnose",
+        "name": "Learning diagnosis and recommendation model",
+        "text": "Diagnoses learning levels from learning behavior and experience data, and recommends items and learning content for weak areas. Applied to KERIS’s ‘Toc Toc! Math Expedition’.",
+        "proof": "KOLAS AI model certification",
+        "id": "kolas"
+      },
+      {
+        "viz": "signal",
+        "name": "Anomaly learning detection",
+        "text": "Finds unusual learning signals in xAPI learning behavior data and flags where a closer look is needed first. Used in Lecognizer AI’s anomaly detection.",
+        "proof": "Patent No. 10-2883249",
+        "id": "patent-2883249"
+      },
+      {
+        "viz": "profile",
+        "name": "LLM-based learner profiling",
+        "text": "Uses learning process data and an LLM to summarize learners’ tendencies and states, as a basis for customized diagnosis and item recommendations.",
+        "proof": "Patent No. 10-2767110",
+        "id": "patent-2767110"
+      }
+    ],
+    "ruleLabel": "A basis for teaching and learning",
+    "rule": "AI diagnoses and suggests the next learning; instructors review it and apply it in class, and learners continue with the suggested learning on their own."
+  },
+  "agent": {
+    "eyebrow": "AI Agent",
+    "title": "AI agents: working alongside learners and instructors",
+    "lead": "In LearnHubble AI, AI agents give learners explanations and hints when they need them, and suggest to instructors what needs to be supplemented. Learners write their own answers, and instructors confirm interventions and what is applied.",
+    "learner": "For learners",
+    "instructor": "For instructors",
+    "items": [
+      {
+        "who": "learner",
+        "title": "Assignment hints",
+        "text": "When writing stalls, gives structure-and-condition hints, not answers."
+      },
+      {
+        "who": "learner",
+        "title": "Classroom AI panel",
+        "text": "Offers explanations, quizzes, and materials in sections the instructor designed."
+      },
+      {
+        "who": "learner",
+        "title": "Tracing difficulties",
+        "text": "Helps trace the causes of difficulty through lectures and competencies linked by 1EdTech CASE."
+      },
+      {
+        "who": "instructor",
+        "title": "Suggested supplements",
+        "text": "Suggests what to supplement from the evidence, and the instructor decides whether and how to apply it."
+      }
+    ]
+  },
+  "wiki": {
+    "eyebrow": "LLM Wiki",
+    "title": "LLM Wiki: scattered knowledge in one place",
+    "lead": "We gather in-house documents, discussions, and answers to recurring questions into our LLM Wiki, and build AI into our workflows to refine the way we work.",
+    "map": {
+      "label": "Knowledge map: scattered documents, discussions, and recurring questions are woven into concepts (products, technology, standards, projects, certifications) and their relationships; AI finds materials along the link between standards and projects",
+      "legend": [
+        "Documents",
+        "Discussions",
+        "Recurring questions"
+      ],
+      "nodes": {
+        "product": "Products",
+        "tech": "Technology",
+        "standard": "Standards",
+        "project": "Projects",
+        "cert": "Certifications"
+      },
+      "relations": [
+        "applies",
+        "implements"
+      ]
+    },
+    "screen": {
+      "label": "LLM Wiki example screen",
+      "title": "LLM Wiki",
+      "crumb": "Ask and find",
+      "qLabel": "Question",
+      "q": "What is 1EdTech CASE used for?",
+      "draftLabel": "AI draft",
+      "a": "It is used to exchange curricula, achievement standards, and competencies as one standard framework. Collected learning data points to items in that framework.",
+      "srcLabel": "Materials found",
+      "sources": [
+        "CASE tech note",
+        "Standards map",
+        "Project proposal"
+      ],
+      "flow": [
+        "Draft",
+        "Review",
+        "Final"
+      ]
+    },
+    "steps": [
+      {
+        "title": "Gather",
+        "text": "Documents, discussions, and answers to recurring questions that used to be scattered are kept in one place."
+      },
+      {
+        "title": "Connect",
+        "text": "Documents and discussions are woven into concepts and relationships (an ontology), so anyone can ask for and find the knowledge they need."
+      },
+      {
+        "title": "Draft, then decide",
+        "text": "AI finds and gathers relevant materials and creates a draft; the person in charge then reviews, edits, and finalizes it."
+      }
+    ],
+    "ruleLabel": "The same principle as our products",
+    "rule": "AI finds, organizes, and drafts. People decide what to use and how.",
+    "article": "2026-07-llm-wiki-workflow",
+    "more": "Read the LLM Wiki article"
+  },
+  "std": {
+    "eyebrow": "1EdTech",
+    "title": "1EdTech standards",
+    "lead": "1EdTech (formerly IMS Global) is the global consortium that develops EdTech standards. Wicked Storm is a founding board member of 1EdTech Korea and is active as a 1EdTech Contributing Member."
+  }
+}

@@ -13,7 +13,7 @@ export const HOMES: PageDef[] = [
 ];
 /** 언어별 페이지(네 언어). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
 export const PAGES: PageDef[] = (['ko', 'en', 'ja', 'vi'] as const).flatMap((lang) =>
-  ['product', 'standards', 'cases', 'trust', 'company', 'contact'].map((p) => ({
+  ['product', 'edutech', 'cases', 'trust', 'company', 'contact'].map((p) => ({
     id: lang === 'ko' ? p : `${p}-${lang}`,
     path: lang === 'ko' ? `${p}.html` : `${lang}/${p}.html`,
     lang,

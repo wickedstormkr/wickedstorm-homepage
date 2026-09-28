@@ -1,5 +1,5 @@
 ---
-/** 표준·1EdTech(홈): 표준 지도 한 장. 표준별 설명과 활동은 표준 페이지로 */
+/** 표준·1EdTech(홈): 표준 지도 한 장. 1EdTech 설명과 활동은 에듀테크 페이지의 표준 칸으로 */
 import SecHead from '../components/SecHead.astro';
 import StdMap from '../components/StdMap.astro';
 import type { HomeContent } from '../lib/content';
@@ -15,6 +15,6 @@ const { lang, t } = Astro.props;
       <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={t.badge} /></span></p>
     </SecHead>
     <StdMap t={t} lang={lang} />
-    <p class="more-row"><a class="btn s" href={url(pagePath(lang, 'standards'))}>{t.more}</a></p>
+    <p class="more-row"><a class="btn s" href={`${url(pagePath(lang, 'edutech'))}#standards`}>{t.more}</a></p>
   </div>
 </section>

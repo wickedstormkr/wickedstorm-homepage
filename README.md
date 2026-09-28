@@ -24,7 +24,7 @@
 1. **채용 공고 연결**: 지금 '채용' 링크(헤더 · 푸터 · 모바일 메뉴 · 홈 채용 줄 · 회사 페이지)는 모두 사람인의 회사 채용 페이지로 갑니다(`src/content/home/<lang>/common.json`의 `nav.recruitHref`, 네 언어 같은 주소). 공고가 정해지면 실제 공고로 잇고, 채용 안내 글(`company.json`의 `careers`)도 맞춥니다.
 2. **해외 워크숍 소식 글**: 해외 워크숍 관련 소식을 씁니다(`src/content/posts/posts.json`, 사진은 `src/assets/img/news/`. 아래 '소식' 참고). 홈 '최근 소식'에 고정하면 다른 언어 홈 카드 제목을 `src/content/home/<lang>/news.json`에 번역해 넣습니다.
 3. **번역 원어민 검토**:
-   - 영어 메뉴 이름(Trust · Cases)과, 좁은 칸에 맞춰 줄인 문구(첫 화면 증빙 줄, 신뢰 목차)
+   - 영어 메뉴 이름(Trust · Newsroom · About us)과, 좁은 칸에 맞춰 줄인 문구(신뢰 목차)
    - 베트남어 'Đồng sáng lập 1EdTech Korea'
    - 일본어 'Learning Loop' 표기(`docs/i18n/ja_notes.md` 1-3)
    - `docs/i18n/*_notes.md`는 예전 사이트 기준이라 함께 갱신합니다.

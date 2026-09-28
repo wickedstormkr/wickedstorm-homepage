@@ -40,8 +40,8 @@
   "open": "바로가기",
   "lhubScreens": "LearnHubble AI 화면 예시",
   "news": {
-    "title": "소식",
-    "metaTitle": "WICKED STORM | 소식",
+    "title": "뉴스룸",
+    "metaTitle": "WICKED STORM | 뉴스룸",
     "lead": "위키드스톰의 특허·제품 소식과 표준·기술 인사이트, 현장 이야기를 전합니다.",
     "categories": {
       "all": "전체",
@@ -49,10 +49,10 @@
       "story": "스토리",
       "insight": "인사이트"
     },
-    "tabsLabel": "소식 분류",
-    "listHeading": "소식 목록",
+    "tabsLabel": "뉴스룸 분류",
+    "listHeading": "뉴스룸 글 목록",
     "count": "{n}건",
-    "back": "소식 목록으로",
+    "back": "뉴스룸으로",
     "original": "원본 이미지 새 창에서 보기",
     "koOnly": "이 기사는 한국어로만 제공됩니다.",
     "publisher": "주식회사 위키드스톰",

@@ -91,36 +91,8 @@
 .powered{display:inline-flex;align-items:center;gap:12px;padding:9px 14px;border-radius:8px;
   background:rgba(124,77,255,.1);font-family:var(--en);font-weight:600;font-size:14px;color:#d7dbf3}
 .powered b{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.std-grid{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:44px}
-.std-card{display:flex;flex-direction:column;height:100%;position:relative;padding:22px 20px 18px;border-radius:var(--radius-m);background:var(--panel);border:1px solid var(--line);
-  transition:border-color .25s,transform .25s}
-.std-card:hover{border-color:var(--line2);transform:translateY(-3px)}
-.std-card::after{content:"↗";position:absolute;top:12px;right:14px;font-size:12px;color:var(--faint)}
-.std-card .k{align-self:flex-start;width:fit-content;max-width:100%;font-family:var(--en);font-size:17px;font-weight:800;letter-spacing:-.01em}
-.std-card .k.apply{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.std-card .k.ref{color:#b9a6ff}
-.std-card .k.soon{color:var(--ink)}
-.std-card p{margin-top:8px;color:var(--muted);font-size:13.5px;line-height:1.5}
-.std-meta{margin-top:auto;padding-top:16px;display:grid;gap:5px}
-.std-meta .st{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--ink-2)}
-.std-meta .st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--faint)}
-.std-meta .st.apply::before{background:#8f6bff}
-.std-meta .st.soon::before{background:#c9cde6}
-.std-meta .st.ref::before{background:#b9a6ff}
-.std-meta .pd{font-family:var(--en);font-size:12px;font-weight:600;color:var(--muted);line-height:1.4}
-@media (min-width:1024px) and (max-width:1279px){.std-card{padding:20px 16px 16px}}
-@media (max-width:1023px){.std-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-/* 폰: 표준 카드는 한 줄에 하나(두 줄로 나누면 영어·베트남어 설명이 칸보다 길어진다). 이름과 상태를 위에, 설명을 아래에 */
-@media (max-width:699px){
-  .std-badge{display:none}
-  .std-grid{grid-template-columns:minmax(0,1fr);gap:10px}
-  .std-card{display:grid;grid-template-columns:1fr auto;column-gap:14px;padding:16px 18px}
-  .std-card::after{display:none}
-  .std-card .k{grid-column:1;font-size:16px}
-  .std-card p{grid-column:1/-1;grid-row:2;margin-top:4px}
-  .std-meta{grid-column:2;grid-row:1;margin:0;padding:0;justify-items:end;text-align:right}
-  .std-meta .pd{display:none}
-}
+/* 폰: 표준 활동 표시는 숨긴다(같은 내용이 리드 글에 있다) */
+@media (max-width:699px){.std-badge{display:none}}
 
 /* ================= ⑧ 자료 받기 ================= */
 .res-grid{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
@@ -252,5 +224,5 @@
 
 /* 터치 폭(≤1023): 본문은 15px 이상(CLAUDE.md). 데스크톱의 작은 설명 글자를 폰·태블릿에서 키운다 */
 @media (max-width:1023px){
-  .note,.ci-info .ci-note,.std-card p,.hist-dim,.media-frame figcaption,.lhub .frame figcaption{font-size:15px}
+  .note,.ci-info .ci-note,.hist-dim,.media-frame figcaption,.lhub .frame figcaption{font-size:15px}
 }

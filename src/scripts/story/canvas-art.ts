@@ -4,13 +4,15 @@
  * 'lighter' 합성으로 겹쳐 그린다(지금 사이트 히어로와 같은 방식).
  * 움직임: 입자마다 장면 값의 자리(목표)를 부드럽게 따라간다(지수 감쇠, 입자마다 빠르기가 조금씩 달라 흐름이 생긴다).
  * 선 꼬리 대신 빠르기만큼 늘어나는 빛(모션 블러)으로 그려, 빠르게 스크롤해도 끊기지 않고 매끄럽다. 움직임 멈춤이면 제자리로 바로.
- * 장면 1: 옅은 성운. 실시간 수집 창에서 밀려난 한 건은 HTML 층(story/live.ts)이 날려 보내고, 도착하면 여기서 같은 별 모양으로 자리 잡는다(land)
- * 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)에 입자가 착지하며 줄마다 알약이 왼쪽부터 끝까지 차오른다(지금 사이트의 기록 레저)
+ * 장면 1: 옅은 성운
+ * 장면 2: 기록 행(누가 · ~하다 · 무엇을 · 부가 정보)의 빈 칸이 먼저 보이고, 성운의 별이 바로 기록 칸으로 날아가
+ *   줄 순서대로 착지하며 줄마다 알약이 왼쪽부터 끝까지 차오른다(지금 사이트의 기록 레저).
+ *   장면 2에 머무르면 실시간 수집 창의 맨 위에서 밀려난 문장이 날아와 한 줄씩 다시 쓴다(write, story/live.ts)
  * 장면 3: CASE 성취 항목(지표)마다 모인다
  * 장면 4: 이상 탐지 화면의 그래프 칸에 시간축 분포로 착지(직전 학기 점선과 비교, 3주차 구간이 솟는다)
  * 장면 5·6: 근거 문장으로 그린 알림 종 → 선순환 고리(story-data.ts place)
  */
-import { buildParticles, place, signalCurves, chartX, CHART, SPIKE, HOT_WEEK, VERBS, VERB_COLOR, LEDGER, type Particle, type PlaceEnv, type BoxMap } from '../../lib/story-data';
+import { buildParticles, place, rowFill, signalCurves, chartX, CHART, SPIKE, HOT_WEEK, VERBS, VERB_COLOR, LEDGER, type Particle, type PlaceEnv, type BoxMap } from '../../lib/story-data';
 import type { Art, ArtBox, ArtAnchors } from './art-types';
 
 type Rect = { x: number; y: number; w: number; h: number };
@@ -21,8 +23,8 @@ const hexRgb = (h: string) => [1, 3, 5].map((k) => parseInt(h.slice(k, k + 2), 1
 const windowed = (s: number, a: number, b: number, c: number, d: number) => smooth((s - a) / (b - a)) * (1 - smooth((s - c) / (d - c)));
 
 interface Sprites { s: HTMLCanvasElement; m: HTMLCanvasElement }
-/** 실시간 수집에서 날아와 자리 잡은 새 별(무대 기준 0~1) */
-interface Landed { x: number; y: number; c: number; t0: number; d: number }
+/** 다시 쓰는 줄 하나에 걸리는 시간(초): 쓰는 머리가 왼쪽에서 오른쪽으로 지나가고 확인 점이 다시 찍힌다 */
+const WRITE_S = 0.9;
 
 export class CanvasArt implements Art {
   private ctx: CanvasRenderingContext2D;
@@ -37,7 +39,8 @@ export class CanvasArt implements Art {
   private chart: Rect | null = null;
   private notification: Rect | null = null;
   private env: PlaceEnv = {};
-  private landed: Landed[] = [];
+  /** 줄마다 마지막으로 다시 쓴 시각(초, clock 기준) */
+  private writes = new Map<number, number>();
   private s = 0;
   private dpr = Math.min(1.5, devicePixelRatio || 1);
   private ambient = false;
@@ -120,13 +123,9 @@ export class CanvasArt implements Art {
     } else if (!on) this.draw();
   }
 
-  /**
-   * 실시간 수집 창에서 날아온 한 건(무대 px, 활동 종류)이 성운에 자리 잡는다: 성운의 가까운 별과 같은 스프라이트·크기.
-   * 장면 1 동안만 보이고(글과 함께 물러난다), 많아지면 오래된 것부터 지운다.
-   */
-  land(x: number, y: number, verb: number) {
-    this.landed.push({ x: x / this.W, y: y / this.H, c: verb, t0: this.clock, d: 0.9 + Math.random() * 0.5 });
-    if (this.landed.length > 90) this.landed.shift();
+  /** 실시간 수집 창에서 밀려난 문장이 기록 행 한 줄을 다시 쓴다(움직임이 허용될 때만 불린다: 떠다님 루프가 그린다) */
+  write(row: number) {
+    this.writes.set(row, this.clock);
     if (!this.raf) this.draw();
   }
 
@@ -217,18 +216,6 @@ export class CanvasArt implements Art {
         }
       }
     }
-    // 6) 실시간 수집에서 날아와 자리 잡은 별(성운의 가까운 별과 같은 모양, 장면 1 동안)
-    const ka = 1 - smooth(s / 0.3);
-    if (ka > 0.01) {
-      for (const m of this.landed) {
-        const age = t - m.t0;
-        const d = base * m.d * (age < 0.35 ? 1 + (0.35 - age) * 1.6 : 1);
-        const x = m.x * this.W;
-        const y = m.y * this.H;
-        ctx.globalAlpha = Math.min(1, 0.35 + age * 2) * ka * 0.8 * (0.82 + 0.18 * Math.sin(t * 1.3 + m.d * 9));
-        ctx.drawImage(this.spr[m.c].s, x - d / 2, y - d / 2, d, d);
-      }
-    }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
     // Preserve every data point and scroll transition. If drawing itself is
@@ -262,23 +249,42 @@ export class CanvasArt implements Art {
   }
 
   /**
-   * 기록 행(지금 사이트의 기록 레저): 줄마다 칸 틀이 옅게 자리 잡고, 기록 헤드가 왼쪽에서 오른쪽으로 지나가며
-   * 칸을 끝까지 채운다(채움 위 데이터 눈금). 줄 머리 점(브랜드 그라디언트), 다 쓰면 줄 끝 확인 점과 옅은 줄 빛.
-   * 마지막 줄까지 차면 옅은 빛 띠가 레저를 위에서 아래로 한 번 훑는다(저장 완료).
+   * 기록 행(지금 사이트의 기록 레저): 장면 2가 들어올 때 여섯 줄의 빈 칸 틀이 먼저 보이고, 성운에서 온 문장들이 착지하는 동안
+   * 기록 헤드가 왼쪽에서 오른쪽으로 지나가며 그 줄의 칸을 끝까지 채운다(채움 위 데이터 눈금, rowFill). 줄 머리 점(브랜드 그라디언트),
+   * 다 쓰면 줄 끝 확인 점과 옅은 줄 빛. 마지막 줄까지 차면 옅은 빛 띠가 레저를 위에서 아래로 한 번 훑는다(저장 완료).
+   * 장면 2에 머무르는 동안 창에서 밀려난 문장이 닿으면(write) 그 줄을 쓰는 머리가 한 번 더 지나가고 확인 점이 다시 찍힌다.
    */
   private drawLedger() {
     const L = this.ledger;
     const { ctx, s } = this;
     if (!L || s < 0.2 || s > 2.4) return;
     const fade = 1 - smooth((s - 1.3) / 0.25);
-    if (fade <= 0.01) return;
+    // 빈 칸 틀: 장면 2 그림과 함께 들어온다(enhance.ts 장면 2 그림 f .30–.45)
+    const frame = smooth((s - 0.3) / 0.15) * fade;
+    if (frame <= 0.01) return;
     const ph = Math.max(8, Math.min(L.h * LEDGER.pillH, 14));
-    const n = LEDGER.rows.length;
     const hr = 4.5;
+    const head = (x: number, y: number, py: number, k: number) => {
+      const sy0 = py - 5;
+      const sy1 = py + ph + 5;
+      const g = ctx.createLinearGradient(0, sy0, 0, sy1);
+      g.addColorStop(0, 'rgba(170,185,255,0)');
+      g.addColorStop(0.5, `rgba(170,185,255,${0.5 * k})`);
+      g.addColorStop(1, 'rgba(170,185,255,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(x - 1, sy0, 2, sy1 - sy0);
+      const wg = ctx.createLinearGradient(0, sy0, 0, sy1);
+      wg.addColorStop(0, 'rgba(170,185,255,0)');
+      wg.addColorStop(0.5, `rgba(170,185,255,${0.12 * k})`);
+      wg.addColorStop(1, 'rgba(170,185,255,0)');
+      ctx.fillStyle = wg;
+      ctx.fillRect(x - 4, sy0, 8, sy1 - sy0);
+      ctx.fillStyle = `rgba(220,228,255,${0.65 * k})`;
+      ctx.beginPath(); ctx.arc(x, y, 2, 0, 6.283); ctx.fill();
+    };
     ctx.save();
     LEDGER.rows.forEach((row, ri) => {
-      const rp = clamp01((s - 0.28 - (ri / n) * 0.34) / 0.4);
-      if (rp <= 0.001) return;
+      const rp = rowFill(ri, s);
       const y = L.y + row.y * L.h;
       const py = y - ph / 2;
       const first = row.pills[0];
@@ -286,12 +292,17 @@ export class CanvasArt implements Art {
       const x0 = L.x + first.x * L.w;
       const x1 = L.x + (last.x + last.w) * L.w;
       const sweep = x0 + (x1 - x0) * rp;
-      ctx.globalAlpha = fade;
-      // 줄 빛(완성 무렵)
-      const gl = clamp01((rp - 0.72) / 0.28);
+      // 다시 쓰기(장면 2에 머무를 때 새 문장마다): 0~1
+      const wt = this.writes.get(ri);
+      const wr = wt === undefined ? 1 : (this.clock - wt) / WRITE_S;
+      const rw = wr >= 0 && wr < 1 ? wr : -1;
+      const wx = rw >= 0 ? x0 + (x1 - x0) * (1 - (1 - Math.min(1, rw / 0.6)) ** 2) : 0;
+      ctx.globalAlpha = frame;
+      // 줄 빛(완성 무렵, 다시 쓸 때 한 번 더)
+      const gl = Math.max(clamp01((rp - 0.72) / 0.28), rw >= 0 ? Math.sin(rw * Math.PI) * 1.6 : 0);
       if (gl > 0.01) {
         rr(ctx, x0 - 6, py - 4, x1 - x0 + 12, ph + 8, (ph + 8) / 2);
-        ctx.fillStyle = `rgba(124,120,255,${0.16 * gl})`;
+        ctx.fillStyle = `rgba(124,120,255,${0.16 * Math.min(1.6, gl)})`;
         ctx.fill();
       }
       for (const pl of row.pills) {
@@ -311,32 +322,21 @@ export class CanvasArt implements Art {
           ctx.fillRect(x, py, fw, ph);
           ctx.fillStyle = 'rgba(255,255,255,0.09)';
           for (let tx = x + 7; tx < x + fw - 3; tx += 14) ctx.fillRect(tx, py + 2.5, 1, ph - 5);
+          // 다시 쓰는 머리 뒤는 잠깐 밝게
+          if (rw >= 0 && wx > x) {
+            ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${0.35 * (1 - rw)})`;
+            ctx.fillRect(x, py, Math.min(w, wx - x), ph);
+          }
           ctx.restore();
         }
       }
       // 기록 헤드(지금 쓰는 중)
       const sw = Math.min(1, (rp - 0.1) / 0.15, (0.9 - rp) / 0.15);
-      if (sw > 0.01) {
-        const sy0 = py - 5;
-        const sy1 = py + ph + 5;
-        const g = ctx.createLinearGradient(0, sy0, 0, sy1);
-        g.addColorStop(0, 'rgba(170,185,255,0)');
-        g.addColorStop(0.5, `rgba(170,185,255,${0.5 * sw})`);
-        g.addColorStop(1, 'rgba(170,185,255,0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(sweep - 1, sy0, 2, sy1 - sy0);
-        const wg = ctx.createLinearGradient(0, sy0, 0, sy1);
-        wg.addColorStop(0, 'rgba(170,185,255,0)');
-        wg.addColorStop(0.5, `rgba(170,185,255,${0.12 * sw})`);
-        wg.addColorStop(1, 'rgba(170,185,255,0)');
-        ctx.fillStyle = wg;
-        ctx.fillRect(sweep - 4, sy0, 8, sy1 - sy0);
-        ctx.fillStyle = `rgba(220,228,255,${0.65 * sw})`;
-        ctx.beginPath(); ctx.arc(sweep, y, 2, 0, 6.283); ctx.fill();
-      }
+      if (sw > 0.01) head(sweep, y, py, sw * frame);
+      if (rw >= 0 && rw < 0.6) head(wx, y, py, Math.sin((rw / 0.6) * Math.PI) * frame);
       // 줄 머리 점(실시간 수집 창의 점과 같은 모양): 옅은 빛 + 브랜드 그라디언트
       const hx = L.x + LEDGER.headX * L.w;
-      ctx.globalAlpha = rp * fade;
+      ctx.globalAlpha = (0.35 + 0.65 * rp) * frame;
       const hg = ctx.createRadialGradient(hx, y, hr * 0.6, hx, y, hr + 12);
       hg.addColorStop(0, 'rgba(233,48,176,.8)');
       hg.addColorStop(0.34, 'rgba(233,48,176,.4)');
@@ -347,13 +347,13 @@ export class CanvasArt implements Art {
       lg.addColorStop(0, '#e930b0'); lg.addColorStop(0.52, '#7c4dff'); lg.addColorStop(1, '#2f7cff');
       ctx.fillStyle = lg;
       ctx.beginPath(); ctx.arc(hx, y, hr, 0, 6.283); ctx.fill();
-      // 확인 점(줄 완성): 커졌다가 제 크기로 찍힌다
-      const cA = clamp01((rp - 0.7) / 0.3);
-      if (cA > 0.01) {
+      // 확인 점(줄 완성): 커졌다가 제 크기로 찍힌다. 다시 쓰면 한 번 더
+      const cA = rw >= 0.5 ? clamp01((rw - 0.5) / 0.3) : clamp01((rp - 0.7) / 0.3);
+      if (cA > 0.01 && (rp > 0.7 || rw >= 0.5)) {
         const cx = L.x + LEDGER.checkX * L.w;
         const pop = 1 - (1 - cA) * (1 - cA);
         const sc = 1.3 - 0.3 * pop;
-        const aa = Math.min(1, cA * 2.4) * fade;
+        const aa = Math.min(1, cA * 2.4) * frame;
         ctx.globalAlpha = 1;
         ctx.fillStyle = `rgba(163,177,255,${aa})`;
         ctx.beginPath(); ctx.arc(cx, y, 3.4 * sc, 0, 6.283); ctx.fill();
@@ -362,8 +362,8 @@ export class CanvasArt implements Art {
         ctx.beginPath(); ctx.arc(cx, y, 5.8 * sc, 0, 6.283); ctx.stroke();
       }
     });
-    // 저장 완료: 마지막 줄이 찬 뒤(s .88~1.0) 옅은 빛 띠가 레저를 위에서 아래로 한 번
-    const cf = clamp01((s - 0.88) / 0.14);
+    // 저장 완료: 마지막 줄이 찬 뒤(s .90~1.0) 옅은 빛 띠가 레저를 위에서 아래로 한 번(장면 2에 머무를 때는 남지 않는다)
+    const cf = clamp01((s - 0.9) / 0.1);
     if (cf > 0.001 && cf < 0.999) {
       const e = cf * cf * (3 - 2 * cf);
       const yy = L.y - 60 + (L.h + 120) * e;

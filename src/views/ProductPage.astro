@@ -12,6 +12,7 @@ import { pagePath, type Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { sents } from '../lib/sents';
 import { url } from '../lib/url';
+import { SHOW_SOLUTION_SITES } from '../config/client';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -53,7 +54,7 @@ const ids = ['lecognizer', 'lecognizer-ai'];
             <p set:html={f.text} />
             <ul>{f.bullets.map((b) => <li set:html={b} />)}</ul>
             <a class="feat-badge" href={url(pagePath(lang, 'trust')) + (i === 0 ? '#gs' : '#patents')}><span set:html={phrase(f.badge, lang)} /></a>
-            {i === 1 && <p><a class="prod-site" href={p.solutions[0].site} target="_blank" rel="noopener" aria-label={p.solutions[0].siteAria}>{p.solutions[0].siteLabel}<span aria-hidden="true"> ↗</span></a></p>}
+            {i === 1 && SHOW_SOLUTION_SITES && <p><a class="prod-site" href={p.solutions[0].site} target="_blank" rel="noopener" aria-label={p.solutions[0].siteAria}>{p.solutions[0].siteLabel}<span aria-hidden="true"> ↗</span></a></p>}
           </div>
           {i === 1
             ? <LecognizerInsight lang={lang} t={p.insight} signal={t.story.signal} live={t.story.live} />

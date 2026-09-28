@@ -15,10 +15,10 @@
   "langLabel": "Select language",
   "nav": {
     "product": "Products",
-    "standards": "Standards",
+    "edutech": "EdTech",
     "cases": "Cases",
-    "news": "News",
-    "company": "Company",
+    "news": "Newsroom",
+    "company": "About us",
     "trust": "Trust",
     "resources": "Downloads",
     "recruit": "Careers",
@@ -40,9 +40,9 @@
       "title": "WICKED STORM | Products: Lecognizer · Lecognizer AI · LearnHubble AI",
       "description": "Meet Lecognizer, a learning data repository built on global standards; Lecognizer AI, which finds anomaly signals in learning data; and LearnHubble AI, a personalized teaching and learning platform with AI interaction, through administrator, instructor, and learner screens."
     },
-    "standards": {
-      "title": "WICKED STORM | Standards: xAPI · Caliper · 1EdTech CASE",
-      "description": "A standards map of the global EdTech standards Wicked Storm has applied, plans to apply, or uses as design references, grouped into collection, framework, credentials, and integration, plus our 1EdTech activities."
+    "edutech": {
+      "title": "WICKED STORM | EdTech: AI learning analytics · AI agents · LLM Wiki · 1EdTech standards",
+      "description": "How Wicked Storm brings AI into education, from AI models for learning analytics and AI agents alongside learners and instructors to our in-house LLM Wiki, plus how we apply and contribute to 1EdTech global standards."
     },
     "cases": {
       "title": "WICKED STORM | Cases",
@@ -53,7 +53,7 @@
       "description": "Verify GS Grade 1 Certification, xAPI LRS certification, KOLAS AI model certification, 2 granted AI patents, and our role as a founding board member of 1EdTech Korea, with the originals."
     },
     "company": {
-      "title": "WICKED STORM | Company",
+      "title": "WICKED STORM | About us",
       "description": "The vision, history, careers, and location of Wicked Storm, a global EdTech company shaping a new era of learning through data and AI."
     },
     "contact": {
