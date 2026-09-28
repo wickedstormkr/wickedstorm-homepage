@@ -23,4 +23,6 @@ export function initLedger(story: HTMLElement) {
     if (ledger.clientWidth !== width) { width = ledger.clientWidth; fit(); }
   }).observe(ledger);
   document.fonts?.ready.then(fit);
+  // Scene 2 text can pull in a font subset after fonts.ready: refit whenever fonts finish loading.
+  document.fonts?.addEventListener?.('loadingdone', fit);
 }
