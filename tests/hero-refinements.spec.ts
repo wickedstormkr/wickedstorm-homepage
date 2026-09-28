@@ -108,25 +108,17 @@ for (const width of [360, 390, 820, 1440, 1920]) {
     }
     expect((await page.locator('#hero-title').evaluate(textLayout)).lines).toHaveLength(2);
 
-    const links = await page.locator('.hero-trust a').all();
-    expect(links).toHaveLength(4);
-    const evidence = await Promise.all(links.map(link => link.evaluate(textLayout)));
-    for (const item of evidence) {
-      expect(item.lines, 'An evidence item should stay on one line').toHaveLength(1);
-      expect(item.left).toBeGreaterThanOrEqual(0);
-      expect(item.right).toBeLessThanOrEqual(width + 1);
-    }
-    if (width >= 1440) {
-      const rows: number[] = [];
-      for (const item of evidence) {
-        if (rows.every(top => Math.abs(top - item.top) > 2)) rows.push(item.top);
-      }
-      expect(rows, 'Evidence should form two rows beneath the hero copy').toHaveLength(2);
-      const copy = (await page.locator('.scene-moment .scene-copy').boundingBox())!;
-      for (const item of evidence) {
-        expect(item.left).toBeGreaterThanOrEqual(copy.x - 1);
-        expect(item.right).toBeLessThanOrEqual(copy.x + copy.width + 1);
-      }
+    // 첫 화면은 문구와 두 버튼만: 제품 창 · 증빙 목록을 두지 않고, 버튼은 이야기 조작 위에 다 보인다
+    const first = page.locator('.scene-moment');
+    await expect(first.locator('.scene-visual, .live, .hero-trust')).toHaveCount(0);
+    await expect(first.locator('.eyebrow')).toBeVisible();
+    await expect(first.locator('.hero-lead')).toBeVisible();
+    await expect(first.locator('.hero-cta .btn')).toHaveCount(2);
+    const controls = (await page.locator('.story-ui').boundingBox())!;
+    for (const button of await first.locator('.hero-cta .btn').all()) {
+      const box = (await button.boundingBox())!;
+      expect(box.y + box.height).toBeLessThanOrEqual(controls.y);
+      expect(box.x + box.width).toBeLessThanOrEqual(width + 1);
     }
 
     await scene(page, 1);

@@ -1,6 +1,6 @@
 ---
 /**
- * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 01 실시간 수집 · 02 국제 표준 · 03 프로파일링 · 04 이상 신호 · 05 사람의 판단 · 06 다음 학기.
+ * 오프닝: 여섯 장면 스크롤 이야기(CLAUDE.md '오프닝'). 01 학습의 순간 · 02 국제 표준 · 03 프로파일링 · 04 이상 신호 · 05 사람의 판단 · 06 다음 학기.
  *
  * 기본 층(이 마크업만으로 완결): 장면을 세로로 이어 붙이고, 장면마다 글 설명·HTML 제품 화면·미리 그린 그림(SVG)을 둔다.
  *   움직임 줄이기·JS 없음은 이 층으로 본다. 같은 그림·설명을 일반 문서로 읽는다.
@@ -9,7 +9,6 @@
  * 글자는 모두 HTML. 그림 칸의 너비에 따라 이름표 또는 번호로 연결된 설명을 배치한다.
  * 제품 화면 창(.fx) 안은 누를 수 없는 그림이다. 누를 링크(특허 원본)는 장면 글에 둔다.
  */
-import Window from '../components/fragments/Window.astro';
 import MotionToggle from '../components/MotionToggle.astro';
 import AnomalyPanel from '../components/fragments/AnomalyPanel.astro';
 import InstructorDesign from '../components/fragments/InstructorDesign.astro';
@@ -18,7 +17,7 @@ import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { url } from '../lib/url';
 import { pagePath, type Page } from '../lib/i18n';
-import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, RING_NODES, RING_R, ringXY, LEDGER, TODAY_TOTAL } from '../lib/story-data';
+import { CASE_NODES, LEAVES, VERBS, VERB_COLOR, RING_NODES, RING_R, ringXY, LEDGER } from '../lib/story-data';
 /** 고리 둘레 순서(위에서 시계 방향): Lecognizer → Lecognizer AI → 운영자 → 교수자 → 학습자 (product.loop.notes 번호) */
 const RING_ORDER = [0, 1, 2, 3, 4];
 
@@ -29,7 +28,6 @@ const num = (i: number) => String(i + 1).padStart(2, '0');
 const nodeName = (id: string) => (t.store.nodes as Record<string, string>)[id];
 const label = (product: string) => `${product} ${t.screen}`;
 const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
-const locale = lang === 'vi' ? 'vi-VN' : 'en-US';
 /** 장면 글 안의 링크(특허 원본 등): {trust}를 신뢰 페이지 주소로 */
 const trust = url(pagePath(lang, 'trust' as Page));
 const body = (html: string) => html.replaceAll('{trust}', trust);
@@ -42,7 +40,7 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
   <div class="story-stage">
     <canvas class="story-art" aria-hidden="true"></canvas>
 
-    <!-- 장면 1 · 실시간 수집 -->
+    <!-- 장면 1 · 학습의 순간: 첫 문구와 두 버튼만(뒤는 옅은 성운) -->
     <article class="scene scene-moment is-active" id={`scene-${sc[0].id}`} data-scene="0" aria-labelledby="hero-title">
       <div class="scene-copy">
         <p class="eyebrow"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" /> <span set:html={hero.eyebrow} /></p>
@@ -53,26 +51,6 @@ const ledgerGrid = `grid-template-columns:${LEDGER.rows[0].pills.map((c) => pct(
           <a class="btn s" href="#product">{hero.ctaSecondary}</a>
         </div>
       </div>
-      <div class="scene-visual">
-        <p class="beat live-beat"><span aria-hidden="true">{num(0)} · </span>{sc[0].beat}</p>
-        <!-- 실시간 수집: 학습 활동이 xAPI 문장으로 한 줄씩 들어온다(움직임 멈춤이면 멈춘다, story/live.ts) -->
-        <div class="live" data-live={JSON.stringify(t.live.rows)}>
-          <Window class="live-win" label={t.live.label} title={t.live.title}>
-            <span slot="bar" class="live-state">{t.live.state}</span>
-            <div class="live-view">
-              <ol class="live-rows" data-live-rows>
-                {t.live.rows.slice(0, 5).map((r) => (
-                  <li class="xrow" data-verb={r.verb}><span class="dot" aria-hidden="true"></span><span class="chip actor">{r.a}</span><span class="arw" aria-hidden="true">→</span><span class="chip verb">{r.v}</span><span class="arw brk" aria-hidden="true">→</span><span class="chip object">{r.o}</span><span class="chip result">{r.r}</span></li>
-                ))}
-              </ol>
-            </div>
-            <p class="live-foot" set:html={t.live.today.replace('{n}', `<b class="tnum" data-live-count>${TODAY_TOTAL.toLocaleString(locale)}</b>`)} />
-          </Window>
-        </div>
-      </div>
-      <ul class="hero-trust" aria-label={hero.trustLabel}>
-        {hero.trust.map((i) => <li><a href={url(pagePath(lang, i.page as Page)) + i.hash} set:html={i.html} /></li>)}
-      </ul>
     </article>
 
     <!-- 공통 조작: 고정 장면에서는 화면 아래, 일반 문서에서는 첫 장면 뒤에 둔다. -->

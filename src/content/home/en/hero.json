@@ -6,28 +6,5 @@
   ],
   "lead": "We collect and store learning data using global standards, <br class=\"br-d\">then analyze it with AI to inform what administrators, instructors, and learners do next.",
   "ctaPrimary": "Contact us",
-  "ctaSecondary": "View products",
-  "trust": [
-    {
-      "html": "<b>1EdTech&nbsp;Korea</b> founding board",
-      "page": "trust",
-      "hash": "#1edtech"
-    },
-    {
-      "html": "GS Grade 1 · Lecognizer",
-      "page": "trust",
-      "hash": "#gs"
-    },
-    {
-      "html": "Patent No. 10-2883249",
-      "page": "trust",
-      "hash": "#patent-2883249"
-    },
-    {
-      "html": "Patent No. 10-2767110",
-      "page": "trust",
-      "hash": "#patent-2767110"
-    }
-  ],
-  "trustLabel": "Original certifications and patents"
+  "ctaSecondary": "View products"
 }

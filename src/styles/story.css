@@ -14,10 +14,8 @@
 /* ---- 장면(기본: 세로) ---- */
 .scene{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,72px);align-items:center;
   width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto;padding:clamp(72px,9vw,120px) 0}
-.scene-moment{min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px);grid-template-rows:auto auto;align-content:center;row-gap:20px}
-.scene-moment .scene-copy{grid-area:1 / 1}
-.scene-moment .scene-visual{grid-area:1 / 2 / 3}
-.scene-moment .hero-trust{grid-area:2 / 1}
+/* 장면 1: 첫 문구와 두 버튼만. 글은 왼쪽, 오른쪽은 성운이 보이게 비워 둔다 */
+.scene-moment{grid-template-columns:minmax(0,1fr);min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px);align-content:center}
 .scene-copy{position:relative;z-index:2}
 .scene-visual{container:visual / inline-size;position:relative;z-index:1;min-width:0;width:100%}
 .beat{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
@@ -33,15 +31,6 @@
 .hero-lead{margin-top:26px;color:#b9bed6;font-size:clamp(15.5px,1.3vw,18px);font-weight:500}
 /* 버튼 묶음 모양은 공통(base.css .hero-cta). 이야기 안에서는 글 아래 여백만 */
 .scene .hero-cta{margin-top:36px}
-/* Evidence stays with the opening copy, in two rows beside the live panel. */
-.hero-trust{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:0 28px;margin-top:28px;color:var(--muted);font-size:13.5px;font-family:var(--en);font-weight:600}
-.hero-trust li{display:flex;align-items:center;gap:9px}
-@media (min-width:960px) and (max-width:1279px){.hero-trust{column-gap:18px;font-size:13px}}
-.hero-trust li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.8}
-.hero-trust a{display:inline-block;padding:11px 0;line-height:22px;color:var(--muted);text-decoration:underline;text-decoration-color:var(--line3);text-underline-offset:4px;transition:color .2s}
-.hero-trust a:hover{color:#fff;text-decoration-color:var(--accent)}
-.hero-trust b{color:var(--ink-2)}
-.live-beat{display:none}
 
 /* ---- 장면 1: 실시간 수집(Lecognizer 창). 너비를 고정해 줄이 바뀌어도 흔들리지 않는다 ---- */
 .live{--live-rows:5;position:relative;z-index:2;width:min(100%,520px);margin-left:auto}
@@ -193,14 +182,12 @@ html.motion-paused .live-state::before,html.motion-paused .xrow .dot::after{anim
 @container story (width < 960px){
   .scene{grid-template-columns:minmax(0,1fr);gap:32px;max-width:720px}
   .scene-moment{min-height:auto}
-  .scene-moment .scene-copy,.scene-moment .scene-visual,.scene-moment .hero-trust{grid-area:auto;order:0}
   .scene-copy{display:block}
   .live,.scene-signal .fx-anom,.judge-stack{width:100%;max-width:none;margin-left:0}
 }
 @container story (width < 600px){
   .scene{padding:56px 0}
   .scene-moment{padding-top:calc(var(--header-h) + 28px)}
-  .hero-trust{display:grid;grid-template-columns:minmax(0,1fr);justify-content:start}
   .scene .hero-cta{margin-top:24px}
   .signal-notice{gap:8px}
   .signal-alert{gap:2px 7px;padding:9px 10px;font-size:12.5px}
@@ -251,7 +238,6 @@ html.story-pin .scene.is-active{pointer-events:auto}
 html.story-pin .scene-visual{display:block;min-width:0}
 html.story-pin .scene-moment .eyebrow{margin-bottom:20px}
 html.story-pin .hero-lead{margin-top:22px}
-html.story-pin .hero-trust{margin-top:20px}
 .scene-statement{grid-template-columns:minmax(0,1fr);align-content:center;justify-items:center;gap:28px;text-align:center}
 .scene-statement .scene-visual{width:100%}
 .scene-statement .scene-copy{max-width:1040px}
@@ -266,7 +252,6 @@ html.story-pin .scene-statement .ledger-std{justify-content:center}
   html.story-pin .scene-statement{text-align:left}
   html.story-pin .scene-statement .scene-visual{order:0}
   html.story-pin .scene-statement .ledger-std{justify-content:flex-start}
-  html.story-pin .scene-moment .scene-visual{order:0}
 }
 @container stage (height < 650px){
   html.story-pin .scene{align-content:start}
@@ -330,4 +315,3 @@ html.story-pin:not(.story-enhanced) .scene.is-active{opacity:1}
 html.story-enhanced .scene[data-far]>:is(.scene-copy,.scene-visual,.live-sky,.live-fly){clip-path:inset(50%)}
 html.motion-paused .scene *{animation:none!important}
 
-html.story-enhanced .scene[data-far]>.hero-trust{clip-path:inset(50%)}

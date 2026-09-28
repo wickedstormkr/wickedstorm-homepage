@@ -66,7 +66,8 @@ export function enhanceStory(story: HTMLElement, layout: StoryLayout) {
   const root = document.documentElement;
   const { stage, scenes } = layout;
   const copies = scenes.map((s) => s.querySelector<HTMLElement>('.scene-copy')!);
-  const visuals = scenes.map((s) => s.querySelector<HTMLElement>('.scene-visual')!);
+  // 장면 1(첫 문구)에는 그림 칸이 없다
+  const visuals = scenes.map((s) => s.querySelector<HTMLElement>('.scene-visual'));
   const fx = sceneFx(story, scenes, copies, visuals);
   root.classList.add('story-enhanced');
   let art: Art | null = null;
@@ -159,7 +160,7 @@ interface Part { el: HTMLElement; inAt?: number; inDur?: number; outAt?: number;
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const easeOut = (t: number) => 1 - (1 - t) * (1 - t);
 
-function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[], visuals: HTMLElement[]) {
+function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[], visuals: (HTMLElement | null)[]) {
   const last = scenes.length - 1;
   const parts: Part[] = [];
   const all = (sel: string) => [...story.querySelectorAll<HTMLElement>(sel)];
@@ -168,11 +169,12 @@ function sceneFx(story: HTMLElement, scenes: HTMLElement[], copies: HTMLElement[
     const outDur = i === 0 ? 0.18 : 0.15;
     const vIn = i === 0 ? undefined : i === 1 ? 0.42 : i - 1 + 0.52;
     const cIn = i === 0 ? undefined : i === 1 ? 0.55 : i - 1 + 0.72;
-    parts.push({ el: visuals[i], inAt: vIn, inDur: 0.2, outAt, outDur, dyIn: i === 1 ? 0 : 16, dyOut: -20 });
+    const visual = visuals[i];
+    if (visual) parts.push({ el: visual, inAt: vIn, inDur: 0.2, outAt, outDur, dyIn: i === 1 ? 0 : 16, dyOut: -20 });
     parts.push({ el: copies[i], inAt: cIn, inDur: i === 1 ? 0.2 : 0.18, outAt, outDur, dyIn: 20, dyOut: -20 });
   });
   // 첫 장면의 하늘(자리 잡은 별)과 날아가는 별은 첫 화면 글과 함께 물러난다
-  all('.scene-moment :is(.live-sky,.live-fly,.hero-trust)').forEach((el) => parts.push({ el, outAt: 0.12, outDur: 0.2, dyIn: 0, dyOut: 0 }));
+  all('.scene-moment :is(.live-sky,.live-fly)').forEach((el) => parts.push({ el, outAt: 0.12, outDur: 0.2, dyIn: 0, dyOut: 0 }));
   // 장면 안의 등장 움직임(차례대로 한 번): 시작, 간격, 길이, 아래에서 올라오는 거리
   const reveal = (sel: string, at: number, stagger: number, dur: number, dy: number) =>
     all(sel).forEach((el, k) => parts.push({ el, inAt: at + k * stagger, inDur: dur, dyIn: dy, dyOut: 0 }));

@@ -15,13 +15,13 @@ for (const lang of ['', 'en/', 'ja/', 'vi/']) {
         await expect(page.locator('.scene.is-active')).toHaveCount(1);
         const scene = page.locator(`.scene[data-scene="${i}"]`);
         await expect(scene).toHaveClass(/is-active/);
+        // 장면 1(첫 문구)에는 그림 칸이 없다
         const geometry = await scene.evaluate((el) => {
-          const title = el.querySelector('h1,h2')!.getBoundingClientRect();
-          const visual = el.querySelector('.scene-visual')!.getBoundingClientRect();
-          return { title: [title.left, title.right], visual: [visual.left, visual.right], width: innerWidth, doc: document.documentElement.scrollWidth };
+          const box = (sel: string) => { const r = el.querySelector(sel)?.getBoundingClientRect(); return r ? [r.left, r.right] : null; };
+          return { boxes: [box('h1,h2'), box('.scene-visual')].filter((b): b is number[] => !!b), width: innerWidth, doc: document.documentElement.scrollWidth };
         });
         expect(geometry.doc).toBeLessThanOrEqual(geometry.width);
-        for (const [left, right] of [geometry.title, geometry.visual]) {
+        for (const [left, right] of geometry.boxes) {
           expect(left).toBeGreaterThanOrEqual(0);
           expect(right).toBeLessThanOrEqual(geometry.width + 1);
         }
@@ -46,23 +46,19 @@ test('resizing across desktop/tablet/phone boundaries preserves the current scen
   }
 });
 
-test('a tall first scene gets reading space; keyboard focus reveals its last evidence link', async ({ page }) => {
+test('the first scene fits a short phone: copy and both buttons sit above the story controls', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 640 });
   await page.goto('');
   await waitForFonts(page);
   await expect(page.locator('html')).toHaveClass(/art-live/);
   await page.locator('.story-ctrl [data-motion-btn]').click();
-  const overflow = await page.evaluate(() => document.querySelector<HTMLElement>('.scene-moment')!.offsetHeight - document.querySelector<HTMLElement>('.story-stage')!.clientHeight);
-  expect(overflow).toBeGreaterThan(100);
-  await page.evaluate((y) => window.scrollTo({ top: y / 2, behavior: 'instant' }), overflow);
-  await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('0.00');
-  const link = page.locator('.hero-trust a').last();
-  await link.focus();
-  await expect.poll(async () => {
-    const bounds = await link.boundingBox();
-    const controls = await page.locator('.story-ui').boundingBox();
-    return !!bounds && !!controls && bounds.y >= 76 && bounds.y + bounds.height <= controls.y;
-  }).toBe(true);
+  await expect(page.locator('.scene-moment .hero-cta .btn')).toHaveCount(2);
+  const controls = (await page.locator('.story-ui').boundingBox())!;
+  for (const button of await page.locator('.scene-moment .hero-cta .btn').all()) {
+    const box = (await button.boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(76);
+    expect(box.y + box.height).toBeLessThanOrEqual(controls.y);
+  }
   await page.locator('[data-story-next]').click();
   await expect.poll(() => page.locator('#story').getAttribute('data-s')).toBe('1.00');
 });
