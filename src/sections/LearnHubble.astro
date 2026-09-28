@@ -6,6 +6,7 @@ import type { Lang } from '../lib/i18n';
 import { phrase } from '../lib/phrase';
 import { sents } from '../lib/sents';
 import { url } from '../lib/url';
+import { SHOW_SOLUTION_SITES } from '../config/client';
 
 interface Props { lang: Lang; t: HomeContent['learnhubble']; ui: UiText; contactHref?: string; site?: HomeContent['product']['solutions'][number] }
 const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
@@ -26,7 +27,7 @@ const { lang, t, ui, contactHref = '#contact', site } = Astro.props;
           ))}
         </ol>
         <p class="lhub-principle" set:html={phrase(sents(t.principle), lang)} />
-        <div class="lhub-cta"><a class="btn p" href={contactHref} data-purpose="demo" data-product="learnhubble">{t.cta.label}</a>{site && <a class="prod-site" href={site.site} target="_blank" rel="noopener" aria-label={site.siteAria}>{site.siteLabel}<span aria-hidden="true"> ↗</span></a>}</div>
+        <div class="lhub-cta"><a class="btn p" href={contactHref} data-purpose="demo" data-product="learnhubble">{t.cta.label}</a>{site && SHOW_SOLUTION_SITES && <a class="prod-site" href={site.site} target="_blank" rel="noopener" aria-label={site.siteAria}>{site.siteLabel}<span aria-hidden="true"> ↗</span></a>}</div>
       </div>
       <figure class="frame lhub-main">
         <Img name={t.main.img} alt={t.main.alt} sizes="(min-width: 1024px) 720px, calc(100vw - 48px)" />
