@@ -1,0 +1,83 @@
+{
+  "eyebrow": "EdTech · AX",
+  "title": "국제 표준 위에서, <span class=\"gc\">AI로 교육을 전환합니다</span>",
+  "lead": "위키드스톰은 1EdTech 국제 표준으로 학습데이터를 쌓고, 그 위에 AI를 더해 교육 현장의 AX(AI 전환)를 돕습니다. 사내 업무에도 LLM Wiki로 AI를 먼저 적용하고 있습니다.",
+  "tocLabel": "에듀테크 목차",
+  "toc": [
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
+    },
+    {
+      "id": "ax",
+      "label": "교육 AX"
+    },
+    {
+      "id": "standards",
+      "label": "1EdTech 표준"
+    }
+  ],
+  "wiki": {
+    "eyebrow": "LLM Wiki",
+    "title": "LLM Wiki: 흩어진 지식을 한곳에 모읍니다",
+    "lead": "문서와 논의, 반복되는 질문에 대한 답을 LLM Wiki에 모으고, AI를 업무 흐름에 결합해 일하는 방식을 다듬고 있습니다.",
+    "img": "news/2026-07-llm-wiki-ontology.webp",
+    "alt": "흩어진 문서와 논의가 개념과 관계(온톨로지)로 엮여 위키에 모이고, AI가 그 위에서 자료를 찾아 초안을 만드는 모습",
+    "caption": "AI로 만든 개념 이미지",
+    "steps": [
+      {
+        "title": "모으기",
+        "text": "흩어져 있던 문서와 논의, 반복되는 질문에 대한 답을 한곳에 쌓습니다."
+      },
+      {
+        "title": "엮기",
+        "text": "문서와 논의를 개념과 관계(온톨로지)로 엮어, 필요한 지식을 묻고 찾을 수 있게 합니다."
+      },
+      {
+        "title": "초안과 확정",
+        "text": "AI가 관련 자료를 찾아 모으고 초안을 만들면, 담당자가 내용을 확인하고 고쳐서 확정합니다."
+      }
+    ],
+    "ruleLabel": "제품과 같은 원칙",
+    "rule": "AI는 찾고 정리하고 초안을 만듭니다. 무엇을 쓰고 어떻게 결정할지는 사람이 정합니다.",
+    "article": "2026-07-llm-wiki-workflow",
+    "more": "LLM Wiki 기사 보기"
+  },
+  "ax": {
+    "eyebrow": "AX",
+    "title": "교육 AX: 관리에서 경험으로",
+    "lead": "학습 플랫폼을 학습을 관리하는 도구에서 학습을 경험하는 공간으로 바꿉니다. 모든 학습 활동을 국제 표준 학습데이터로 모으고, AI가 분석해 운영자·교수자·학습자의 다음 행동을 제안합니다.",
+    "roles": "운영자 · 교수자 · 학습자",
+    "steps": [
+      {
+        "title": "수집",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "학습 활동을 국제 표준(xAPI · 1EdTech Caliper) 학습데이터로 수집·저장하고, 1EdTech CASE 체계와 연결합니다."
+      },
+      {
+        "title": "분석",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "AI가 학습데이터에서 이상 신호를 찾고(<a href=\"{trust}#patent-2883249\">특허 제10-2883249호</a>), LLM으로 학습자를 프로파일링합니다(<a href=\"{trust}#patent-2767110\">특허 제10-2767110호</a>)."
+      },
+      {
+        "title": "제안",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "AI와 상호작용하는 교수·학습 플랫폼에서 운영자·교수자·학습자에게 다음 행동을 제안합니다."
+      },
+      {
+        "title": "다음 학기",
+        "product": "",
+        "cls": "",
+        "text": "판단과 적용은 사람이 합니다. 그 결과가 다시 학습데이터로 쌓여 다음 학기 교육을 설계하는 근거가 됩니다."
+      }
+    ]
+  },
+  "std": {
+    "eyebrow": "1EdTech",
+    "title": "1EdTech 표준",
+    "lead": "1EdTech는 교육기술 국제 표준을 만드는 컨소시엄입니다(옛 IMS Global). 위키드스톰은 (사)1EdTech Korea 설립 이사회로 참여하고, 1EdTech Contributing Member로 활동합니다."
+  }
+}

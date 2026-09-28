@@ -15,7 +15,7 @@
   "langLabel": "언어 선택",
   "nav": {
     "product": "제품",
-    "standards": "표준",
+    "edutech": "에듀테크",
     "cases": "사례",
     "news": "뉴스룸",
     "company": "회사소개",
@@ -40,9 +40,9 @@
       "title": "WICKED STORM | 제품: Lecognizer · Lecognizer AI · LearnHubble AI",
       "description": "국제 표준 학습데이터 저장소 Lecognizer, 학습데이터의 이상 신호를 찾는 Lecognizer AI, AI와 상호작용하는 맞춤형 교수·학습 플랫폼 LearnHubble AI를 운영자·교수자·학습자 화면으로 소개합니다."
     },
-    "standards": {
-      "title": "WICKED STORM | 표준: xAPI · Caliper · 1EdTech CASE",
-      "description": "위키드스톰이 적용한 국제 교육기술 표준과 적용 예정·설계 참조 표준을 수집·체계·증명·연동으로 묶은 표준 지도와 1EdTech 활동."
+    "edutech": {
+      "title": "WICKED STORM | 에듀테크: LLM Wiki · 교육 AX · 1EdTech 표준",
+      "description": "사내 업무에 AI를 먼저 적용하는 LLM Wiki, 학습데이터와 AI로 교육 플랫폼을 관리에서 경험으로 바꾸는 교육 AX, 1EdTech 국제 표준의 적용과 활동을 소개합니다."
     },
     "cases": {
       "title": "WICKED STORM | 사례",

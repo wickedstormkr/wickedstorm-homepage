@@ -14,9 +14,13 @@ interface Props { lang: Lang; t: HomeContent['company']; ui: UiText; full?: bool
 const { lang, t, ui, full = false } = Astro.props;
 const nav = getHome(lang).common.nav;
 const posterImg = await getImage({ src: poster, format: 'webp', width: Math.min(1280, poster.width) });
-/** 연혁 링크: 옛 홈 앵커(#product·#references·#standards)는 새 페이지로(숨긴 페이지면 홈의 그 섹션으로), 사이트 주소는 base를 붙인다 */
-const ANCHOR: Record<string, Page> = { '#product': 'product', '#references': 'cases', '#standards': 'standards' };
-const anchor = (h: string) => (isListed(ANCHOR[h]) ? url(pagePath(lang, ANCHOR[h])) : url(homePath(lang)) + h);
+/** 연혁 링크: 옛 홈 앵커(#product·#references·#standards)는 새 페이지로(숨긴 페이지면 홈의 그 섹션으로), 사이트 주소는 base를 붙인다.
+    표준은 에듀테크 페이지의 표준 칸으로 */
+const ANCHOR: Record<string, [Page, string]> = { '#product': ['product', ''], '#references': ['cases', ''], '#standards': ['edutech', '#standards'] };
+const anchor = (h: string) => {
+  const [page, hash] = ANCHOR[h];
+  return isListed(page) ? url(pagePath(lang, page)) + hash : url(homePath(lang)) + h;
+};
 const href = (h: string) => (ANCHOR[h] ? anchor(h) : h.startsWith('#') ? h : url(localHref(lang, h)));
 ---
 <section class:list={['band company', { 'page-top-less': full }]} id={full ? 'vision' : 'company'} aria-labelledby={full ? undefined : 'co-title'} aria-label={full ? t.history.eyebrow : undefined}>

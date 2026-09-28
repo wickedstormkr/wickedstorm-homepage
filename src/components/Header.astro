@@ -1,6 +1,6 @@
 ---
 /**
- * 헤더 메뉴: 표준 · 뉴스룸 · 회사소개 · 도입 문의(CLAUDE.md, 설계 '페이지 구성'). 숨긴 페이지(i18n.ts HIDDEN_PAGES: 제품 · 사례)는 싣지 않는다.
+ * 헤더 메뉴: 에듀테크 · 뉴스룸 · 회사소개 · 도입 문의(CLAUDE.md, 설계 '페이지 구성'). 숨긴 페이지(i18n.ts HIDDEN_PAGES: 제품 · 사례)는 싣지 않는다.
  * 메뉴는 언어별 페이지로 간다. 도입 문의는 홈에서는 홈 안 문의로, 다른 페이지에서는 문의 페이지로.
  * data-entry: 문의로 간 버튼이 어디 있었는지(src/scripts/attribution.ts).
  */
@@ -25,7 +25,7 @@ const cur = (k: string) => (current === k ? 'page' : undefined);
 const contactHref = isHome ? '#contact' : pg('contact');
 const main = [
   { k: 'product', href: pg('product'), label: c.nav.product },
-  { k: 'standards', href: pg('standards'), label: c.nav.standards },
+  { k: 'edutech', href: pg('edutech'), label: c.nav.edutech },
   { k: 'cases', href: pg('cases'), label: c.nav.cases },
   { k: 'news', href: url(newsPath(lang)), label: c.nav.news },
   { k: 'company', href: pg('company'), label: c.nav.company },

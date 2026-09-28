@@ -1,0 +1,83 @@
+{
+  "eyebrow": "EdTech · AX",
+  "title": "Transforming education with AI, <span class=\"gc\">built on global standards</span>",
+  "lead": "Wicked Storm builds up learning data using 1EdTech global standards and adds AI on top to support AX (AI transformation) in education. We also apply AI to our own work first, with our in-house LLM Wiki.",
+  "tocLabel": "On this page",
+  "toc": [
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
+    },
+    {
+      "id": "ax",
+      "label": "Education AX"
+    },
+    {
+      "id": "standards",
+      "label": "1EdTech standards"
+    }
+  ],
+  "wiki": {
+    "eyebrow": "LLM Wiki",
+    "title": "LLM Wiki: scattered knowledge in one place",
+    "lead": "We gather documents, discussions, and answers to recurring questions into our LLM Wiki, and build AI into our workflows to refine the way we work.",
+    "img": "news/2026-07-llm-wiki-ontology.webp",
+    "alt": "Scattered documents and discussions woven into concepts and relationships (an ontology) and gathered in the wiki, where AI finds materials and creates drafts",
+    "caption": "Concept image made with AI",
+    "steps": [
+      {
+        "title": "Gather",
+        "text": "Documents, discussions, and answers to recurring questions that used to be scattered are kept in one place."
+      },
+      {
+        "title": "Connect",
+        "text": "Documents and discussions are woven into concepts and relationships (an ontology), so anyone can ask for and find the knowledge they need."
+      },
+      {
+        "title": "Draft, then decide",
+        "text": "AI finds and gathers relevant materials and creates a draft; the person in charge then reviews, edits, and finalizes it."
+      }
+    ],
+    "ruleLabel": "The same principle as our products",
+    "rule": "AI finds, organizes, and drafts. People decide what to use and how.",
+    "article": "2026-07-llm-wiki-workflow",
+    "more": "Read the LLM Wiki article"
+  },
+  "ax": {
+    "eyebrow": "AX",
+    "title": "Education AX: from management to experience",
+    "lead": "We help learning platforms move from tools for managing learning to spaces for experiencing it. All learning activity is collected as learning data built on global standards, and AI analyzes it to suggest what administrators, instructors, and learners do next.",
+    "roles": "Administrators · instructors · learners",
+    "steps": [
+      {
+        "title": "Collect",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "Collects and stores learning activity as learning data using global standards (xAPI · 1EdTech Caliper) and links it to 1EdTech CASE frameworks."
+      },
+      {
+        "title": "Analyze",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "AI finds anomaly signals in learning data (<a href=\"{trust}#patent-2883249\">Patent No. 10-2883249</a>) and profiles learners with an LLM (<a href=\"{trust}#patent-2767110\">Patent No. 10-2767110</a>)."
+      },
+      {
+        "title": "Suggest",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "On a teaching and learning platform where people interact with AI, it suggests next steps to administrators, instructors, and learners."
+      },
+      {
+        "title": "Next semester",
+        "product": "",
+        "cls": "",
+        "text": "People judge and apply. The results build up again as learning data and inform next semester’s learning design."
+      }
+    ]
+  },
+  "std": {
+    "eyebrow": "1EdTech",
+    "title": "1EdTech standards",
+    "lead": "1EdTech is the global consortium that develops EdTech standards (formerly IMS Global). Wicked Storm is a founding board member of 1EdTech Korea and is active as a 1EdTech Contributing Member."
+  }
+}

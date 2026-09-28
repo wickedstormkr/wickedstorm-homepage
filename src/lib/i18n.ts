@@ -16,8 +16,8 @@ export const homePath = (lang: Lang) => (lang === 'ko' ? '/' : `/${lang}/index.h
 
 export const isLang = (s: unknown): s is Lang => typeof s === 'string' && (LANGS as readonly string[]).includes(s);
 
-/** 언어마다 따로 있는 페이지(제품·표준·사례·신뢰·회사·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
-export const PAGES = ['product', 'standards', 'cases', 'trust', 'company', 'contact'] as const;
+/** 언어마다 따로 있는 페이지(제품·에듀테크·사례·신뢰·회사소개·문의). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
+export const PAGES = ['product', 'edutech', 'cases', 'trust', 'company', 'contact'] as const;
 export type Page = (typeof PAGES)[number];
 /** 페이지를 만든 언어(네 언어 모두). 개인정보처리방침 · 링크 모음은 국문만 있다 */
 export const PAGE_LANGS: readonly Lang[] = LANGS;

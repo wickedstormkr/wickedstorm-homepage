@@ -15,7 +15,7 @@
   "langLabel": "Chọn ngôn ngữ",
   "nav": {
     "product": "Sản phẩm",
-    "standards": "Chuẩn",
+    "edutech": "EdTech",
     "cases": "Dự án tiêu biểu",
     "news": "Bản tin",
     "company": "Giới thiệu",
@@ -40,9 +40,9 @@
       "title": "WICKED STORM | Sản phẩm: Lecognizer · Lecognizer AI · LearnHubble AI",
       "description": "Lecognizer, kho dữ liệu học tập theo chuẩn quốc tế; Lecognizer AI, tìm ra dấu hiệu bất thường trong dữ liệu học tập; LearnHubble AI, nền tảng giảng dạy và học tập cá nhân hóa, tương tác với AI. Giới thiệu qua màn hình của quản trị viên, giảng viên và người học."
     },
-    "standards": {
-      "title": "WICKED STORM | Chuẩn: xAPI · Caliper · 1EdTech CASE",
-      "description": "Bản đồ chuẩn nhóm các chuẩn công nghệ giáo dục quốc tế mà Wicked Storm đã áp dụng, dự kiến áp dụng và tham chiếu thiết kế theo thu thập, khung chuẩn, minh chứng và kết nối, cùng các hoạt động tại 1EdTech."
+    "edutech": {
+      "title": "WICKED STORM | EdTech: LLM Wiki · AX giáo dục · Chuẩn 1EdTech",
+      "description": "LLM Wiki nội bộ đưa AI vào công việc trước tiên, AX giáo dục chuyển nền tảng học tập từ quản lý sang trải nghiệm bằng dữ liệu học tập và AI, cùng việc áp dụng và hoạt động với chuẩn quốc tế 1EdTech."
     },
     "cases": {
       "title": "WICKED STORM | Dự án tiêu biểu",

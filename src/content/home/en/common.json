@@ -15,7 +15,7 @@
   "langLabel": "Select language",
   "nav": {
     "product": "Products",
-    "standards": "Standards",
+    "edutech": "EdTech",
     "cases": "Cases",
     "news": "Newsroom",
     "company": "About us",
@@ -40,9 +40,9 @@
       "title": "WICKED STORM | Products: Lecognizer · Lecognizer AI · LearnHubble AI",
       "description": "Meet Lecognizer, a learning data repository built on global standards; Lecognizer AI, which finds anomaly signals in learning data; and LearnHubble AI, a personalized teaching and learning platform with AI interaction, through administrator, instructor, and learner screens."
     },
-    "standards": {
-      "title": "WICKED STORM | Standards: xAPI · Caliper · 1EdTech CASE",
-      "description": "A standards map of the global EdTech standards Wicked Storm has applied, plans to apply, or uses as design references, grouped into collection, framework, credentials, and integration, plus our 1EdTech activities."
+    "edutech": {
+      "title": "WICKED STORM | EdTech: LLM Wiki · Education AX · 1EdTech standards",
+      "description": "How we apply AI to our own work with an in-house LLM Wiki, how learning data and AI move education platforms from management to experience, and how we apply and contribute to 1EdTech global standards."
     },
     "cases": {
       "title": "WICKED STORM | Cases",

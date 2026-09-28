@@ -1,0 +1,100 @@
+---
+/**
+ * 에듀테크 페이지(헤더 메뉴 '에듀테크'): LLM Wiki → 교육 AX → 1EdTech 표준(표준 지도 · 1EdTech 활동).
+ * - LLM Wiki: 사내에서 AI를 먼저 쓰는 방식. 소식 기사(사내 LLM Wiki와 AI 워크플로우)에 적힌 사실만 쓰고 그 기사로 잇는다.
+ * - 교육 AX: 학습을 관리하는 도구에서 경험하는 공간으로. 제품 사실(CLAUDE.md '사실')로만 네 단계(수집 · 분석 · 제안 · 다음 학기)를 쓰고, 특허는 원본(신뢰 페이지)으로 잇는다.
+ * - 1EdTech 표준: 1EdTech 설명과 회원 자격 → 표준 지도(CASE 기준) → 활동(소식 원문 링크).
+ */
+import Page from '../layouts/Page.astro';
+import PageHead from '../components/PageHead.astro';
+import StdMap from '../components/StdMap.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Img from '../components/Img.astro';
+import { getHome } from '../lib/content';
+import { articlePath, localHref, pagePath, type Lang } from '../lib/i18n';
+import { phrase, phraseText } from '../lib/phrase';
+import { url } from '../lib/url';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = getHome(lang);
+const t = h.edutech;
+const s = h.standards;
+const num = (i: number) => String(i + 1).padStart(2, '0');
+/** 단계 글 안의 링크(특허 원본): {trust}를 그 언어의 신뢰 페이지 주소로 */
+const trust = url(pagePath(lang, 'trust'));
+const body = (html: string) => html.replaceAll('{trust}', trust);
+---
+<Page lang={lang} page="edutech">
+  <section class="band page-top" aria-labelledby="page-title">
+    <div class="wrap">
+      <PageHead lang={lang} eyebrow={t.eyebrow} title={t.title} lead={t.lead} />
+      <nav class="page-toc" aria-label={t.tocLabel}>
+        {t.toc.map((i) => <a href={`#${i.id}`}>{i.label}</a>)}
+      </nav>
+    </div>
+  </section>
+
+  <!-- LLM Wiki: 모으기 · 엮기 · 초안과 확정(그림의 왼쪽 · 가운데 · 오른쪽과 같은 순서) -->
+  <section class="band edu-sec" id="llm-wiki" aria-labelledby="llm-wiki-title">
+    <div class="wrap">
+      <p class="eyebrow"><span>{t.wiki.eyebrow}</span></p>
+      <h2 class="sub-title" id="llm-wiki-title" set:html={phrase(t.wiki.title, lang)} />
+      <p class="sub-lead" set:html={phraseText(t.wiki.lead, lang)} />
+      <figure class="edu-figure">
+        <Img name={t.wiki.img} alt={t.wiki.alt} sizes="(min-width: 1288px) 1240px, calc(100vw - 48px)" />
+        <figcaption>{t.wiki.caption}</figcaption>
+      </figure>
+      <ol class="edu-steps">
+        {t.wiki.steps.map((st, i) => (
+          <li class="edu-step">
+            <span class="edu-n" aria-hidden="true">{num(i)}</span>
+            <h3>{st.title}</h3>
+            <p set:html={phraseText(st.text, lang)} />
+          </li>
+        ))}
+      </ol>
+      <p class="edu-rule"><b>{t.wiki.ruleLabel}</b><span set:html={phraseText(t.wiki.rule, lang)} /></p>
+      <p class="more-row"><a class="btn s" href={url(articlePath(lang, t.wiki.article))}>{t.wiki.more}</a></p>
+    </div>
+  </section>
+
+  <!-- 교육 AX: 수집(Lecognizer) → 분석(Lecognizer AI) → 제안(LearnHubble AI) → 다음 학기(사람이 판단 · 적용) -->
+  <section class="band edu-sec" id="ax" aria-labelledby="ax-title">
+    <div class="wrap">
+      <p class="eyebrow"><span>{t.ax.eyebrow}</span></p>
+      <h2 class="sub-title" id="ax-title" set:html={phrase(t.ax.title, lang)} />
+      <p class="sub-lead" set:html={phraseText(t.ax.lead, lang)} />
+      <ol class="edu-steps four">
+        {t.ax.steps.map((st, i) => (
+          <li class="edu-step">
+            <span class="edu-n" aria-hidden="true">{num(i)}</span>
+            <h3>{st.title}</h3>
+            {st.product ? <span class:list={['pname', st.cls]} lang="en">{st.product}</span> : <span class="edu-who">{t.ax.roles}</span>}
+            <p set:html={phrase(body(st.text), lang)} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 1EdTech 표준: 1EdTech와 회원 자격 → 표준 지도 → 활동 -->
+  <section class="band edu-sec std" id="standards" aria-labelledby="std-title">
+    <div class="wrap">
+      <p class="eyebrow"><span>{t.std.eyebrow}</span></p>
+      <h2 class="sub-title" id="std-title" set:html={phrase(t.std.title, lang)} />
+      <p class="sub-lead" set:html={phraseText(t.std.lead, lang)} />
+      <p class="std-badge"><span class="powered"><img class="sym" src={url('/img/symbol.png')} alt="" width="16" height="16" loading="lazy" /> <span set:html={s.badge} /></span></p>
+      <h3 class="sub-title edu-h3" id="std-map-title">{s.map.title}</h3>
+      <p class="sub-lead" set:html={phraseText(s.map.lead, lang)} />
+      <StdMap t={s} lang={lang} />
+      <h3 class="sub-title edu-h3" id="std-act-title">{s.activity.title}</h3>
+      <ol class="act-list" aria-labelledby="std-act-title">
+        {s.activity.items.map((a) => (
+          <li><span class="act-date tnum">{a.date}</span><a href={url(localHref(lang, a.href))}>{a.text}</a></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Page>

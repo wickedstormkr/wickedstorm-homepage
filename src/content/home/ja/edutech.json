@@ -1,0 +1,83 @@
+{
+  "eyebrow": "EdTech · AX",
+  "title": "国際標準の上で、<span class=\"gc\">AIで教育を変革します</span>",
+  "lead": "Wicked Stormは1EdTechの国際標準で学習データを蓄積し、その上にAIを加えて教育現場のAX（AIトランスフォーメーション）を支援します。社内業務でも、LLM WikiでいちはやくAIを取り入れています。",
+  "tocLabel": "このページの内容",
+  "toc": [
+    {
+      "id": "llm-wiki",
+      "label": "LLM Wiki"
+    },
+    {
+      "id": "ax",
+      "label": "教育AX"
+    },
+    {
+      "id": "standards",
+      "label": "1EdTech標準"
+    }
+  ],
+  "wiki": {
+    "eyebrow": "LLM Wiki",
+    "title": "LLM Wiki：散らばった知識を一か所に集めます",
+    "lead": "文書や議論、繰り返される質問への答えをLLM Wikiに集め、AIを業務の流れに組み込みながら、働き方を磨いています。",
+    "img": "news/2026-07-llm-wiki-ontology.webp",
+    "alt": "散らばった文書や議論が概念と関係（オントロジー）で結ばれてWikiに集まり、その上でAIが資料を探し、草案をつくる様子",
+    "caption": "AIで生成した概念イメージ",
+    "steps": [
+      {
+        "title": "集める",
+        "text": "散在していた文書や議論、繰り返される質問への答えを一か所に蓄積します。"
+      },
+      {
+        "title": "結ぶ",
+        "text": "文書や議論を概念と関係（オントロジー）で結び、必要な知識を尋ねて探せるようにします。"
+      },
+      {
+        "title": "草案と確定",
+        "text": "AIが関連資料を探して集め、草案をつくると、担当者が内容を確認し、修正して確定します。"
+      }
+    ],
+    "ruleLabel": "製品と同じ原則",
+    "rule": "AIは探し、整理し、草案をつくります。何を使い、どう決めるかは人が決めます。",
+    "article": "2026-07-llm-wiki-workflow",
+    "more": "LLM Wikiの記事を見る"
+  },
+  "ax": {
+    "eyebrow": "AX",
+    "title": "教育AX：管理から体験へ",
+    "lead": "学習プラットフォームを、学びを管理するツールから学びを体験する場へ変えていきます。すべての学習活動を国際標準の学習データとして集め、AIが分析して管理者・教員・学習者の次の行動を提案します。",
+    "roles": "管理者 · 教員 · 学習者",
+    "steps": [
+      {
+        "title": "収集",
+        "product": "Lecognizer",
+        "cls": "lec",
+        "text": "学習活動を国際標準（xAPI・1EdTech Caliper）の学習データとして収集・保存し、1EdTech CASEに基づく体系と連携します。"
+      },
+      {
+        "title": "分析",
+        "product": "Lecognizer AI",
+        "cls": "lec",
+        "text": "AIが学習データから異常の兆候を見つけ（<a href=\"{trust}#patent-2883249\">特許 第10-2883249号</a>）、LLMで学習者をプロファイリングします（<a href=\"{trust}#patent-2767110\">特許 第10-2767110号</a>）。"
+      },
+      {
+        "title": "提案",
+        "product": "LearnHubble AI",
+        "cls": "lhb",
+        "text": "AIと対話できる教授・学習プラットフォームで、管理者・教員・学習者に次の行動を提案します。"
+      },
+      {
+        "title": "次学期",
+        "product": "",
+        "cls": "",
+        "text": "判断と適用は人が行います。その結果が再び学習データとして蓄積され、次学期の学習設計に活かされます。"
+      }
+    ]
+  },
+  "std": {
+    "eyebrow": "1EdTech",
+    "title": "1EdTech標準",
+    "lead": "1EdTechは教育技術の国際標準を策定するコンソーシアムです（旧IMS Global）。Wicked Stormは1EdTech Koreaの設立理事会に参画し、1EdTech Contributing Memberとして活動しています。"
+  }
+}

@@ -11,6 +11,7 @@ import type learnhubble from '../content/home/ko/learnhubble.json';
 import type cases from '../content/home/ko/cases.json';
 import type trust from '../content/home/ko/trust.json';
 import type standards from '../content/home/ko/standards.json';
+import type edutech from '../content/home/ko/edutech.json';
 import type news from '../content/home/ko/news.json';
 import type resources from '../content/home/ko/resources.json';
 import type company from '../content/home/ko/company.json';
@@ -26,6 +27,7 @@ export interface HomeContent {
   cases: typeof cases;
   trust: typeof trust;
   standards: typeof standards;
+  edutech: typeof edutech;
   news: typeof news;
   resources: typeof resources;
   company: typeof company;
