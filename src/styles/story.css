@@ -14,8 +14,13 @@
 /* ---- 장면(기본: 세로) ---- */
 .scene{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,4vw,72px);align-items:center;
   width:min(var(--wrap),100% - 2*var(--gutter));margin-inline:auto;padding:clamp(72px,9vw,120px) 0}
-/* 장면 1: 첫 문구와 두 버튼만. 글은 왼쪽, 오른쪽은 성운이 보이게 비워 둔다 */
-.scene-moment{grid-template-columns:minmax(0,1fr);min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px);align-content:center}
+/* 장면 1: 첫 문구와 두 버튼만, 화면 가운데에(뒤는 옅은 성운) */
+.scene-moment{grid-template-columns:minmax(0,1fr);justify-items:center;min-height:min(100svh,960px);padding-top:calc(var(--header-h) + 40px);align-content:center;text-align:center}
+.scene-moment .scene-copy{display:flex;flex-direction:column;align-items:center;max-width:60em}
+.scene-moment .hero-cta{justify-content:center}
+/* 아이브로우가 두 줄이 되어도 기호가 첫 줄 글과 함께 가운데에 */
+.scene-moment .eyebrow{display:block}
+.scene-moment .eyebrow .sym{display:inline-block;margin-right:12px;vertical-align:-2px}
 .scene-copy{position:relative;z-index:2}
 .scene-visual{container:visual / inline-size;position:relative;z-index:1;min-width:0;width:100%}
 .beat{font-family:var(--en);font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--muted)}
