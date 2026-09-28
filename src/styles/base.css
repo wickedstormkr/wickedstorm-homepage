@@ -49,6 +49,8 @@ h1,h2,h3{text-wrap:balance}
 @media (max-width:699px){html:lang(ja) .nw{white-space:normal;display:inline-block}}
 /* 넓은 화면(1280px 이상)에서만 의미 단위로 끊는 줄바꿈 */
 @media (max-width:1279px){.br-d{display:none}}
+/* 태블릿(700px) 이상에서만 끊는 자리: 두 조각이 태블릿 칸에 각각 한 줄로 들어갈 때(첫 화면 리드). 폰은 자연 줄바꿈 */
+@media (max-width:699px){.br-t{display:none}}
 
 /* ---- 접근성 부품 ---- */
 .skip-link{position:absolute;left:0;top:0;z-index:100;padding:12px 18px;border-radius:0 0 10px 0;
