@@ -17,8 +17,8 @@
     "product": "Products",
     "standards": "Standards",
     "cases": "Cases",
-    "news": "News",
-    "company": "Company",
+    "news": "Newsroom",
+    "company": "About us",
     "trust": "Trust",
     "resources": "Downloads",
     "recruit": "Careers",
@@ -53,7 +53,7 @@
       "description": "Verify GS Grade 1 Certification, xAPI LRS certification, KOLAS AI model certification, 2 granted AI patents, and our role as a founding board member of 1EdTech Korea, with the originals."
     },
     "company": {
-      "title": "WICKED STORM | Company",
+      "title": "WICKED STORM | About us",
       "description": "The vision, history, careers, and location of Wicked Storm, a global EdTech company shaping a new era of learning through data and AI."
     },
     "contact": {

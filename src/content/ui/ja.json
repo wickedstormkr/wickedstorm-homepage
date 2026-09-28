@@ -40,8 +40,8 @@
   "open": "開く",
   "lhubScreens": "LearnHubble AI 画面例",
   "news": {
-    "title": "ニュース",
-    "metaTitle": "WICKED STORM | ニュース",
+    "title": "ニュースルーム",
+    "metaTitle": "WICKED STORM | ニュースルーム",
     "lead": "Wicked Stormの特許・製品ニュース、標準・技術のインサイト、現場のストーリーをお届けします。",
     "categories": {
       "all": "すべて",
@@ -49,10 +49,10 @@
       "story": "ストーリー",
       "insight": "インサイト"
     },
-    "tabsLabel": "ニュースの分類",
-    "listHeading": "ニュース一覧",
+    "tabsLabel": "ニュースルームの分類",
+    "listHeading": "ニュースルームの記事一覧",
     "count": "{n}件",
-    "back": "ニュース一覧へ",
+    "back": "ニュースルームへ",
     "original": "元の画像を新しいウィンドウで開く",
     "koOnly": "この記事は韓国語のみでご覧いただけます。",
     "publisher": "Wicked Storm Inc.",

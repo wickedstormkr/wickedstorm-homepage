@@ -17,8 +17,8 @@
     "product": "製品",
     "standards": "国際標準",
     "cases": "導入事例",
-    "news": "ニュース",
-    "company": "会社情報",
+    "news": "ニュースルーム",
+    "company": "会社紹介",
     "trust": "認証・特許",
     "resources": "資料ダウンロード",
     "recruit": "採用情報",
@@ -53,7 +53,7 @@
       "description": "GS 1等級認証、xAPI LRS認証、KOLAS AIモデル認証、AI特許2件、1EdTech Korea設立理事会としての活動を、原本とあわせてご確認いただけます。"
     },
     "company": {
-      "title": "WICKED STORM | 会社情報",
+      "title": "WICKED STORM | 会社紹介",
       "description": "学習データとAIで学びの新時代を切り拓くグローバルエドテック企業、Wicked Stormのビジョン、沿革、採用情報、アクセスをご紹介します。"
     },
     "contact": {

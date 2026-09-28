@@ -17,8 +17,8 @@
     "product": "Sản phẩm",
     "standards": "Chuẩn",
     "cases": "Dự án tiêu biểu",
-    "news": "Tin tức",
-    "company": "Công ty",
+    "news": "Bản tin",
+    "company": "Giới thiệu",
     "trust": "Chứng nhận",
     "resources": "Tải tài liệu",
     "recruit": "Tuyển dụng",
@@ -53,7 +53,7 @@
       "description": "Xem kèm bản gốc: Chứng nhận GS hạng 1, chứng nhận xAPI LRS, chứng nhận mô hình AI KOLAS, 2 bằng sáng chế AI và hoạt động trong hội đồng sáng lập 1EdTech Korea."
     },
     "company": {
-      "title": "WICKED STORM | Công ty",
+      "title": "WICKED STORM | Giới thiệu",
       "description": "Tầm nhìn, lịch sử phát triển, tuyển dụng và địa chỉ của Wicked Storm, công ty EdTech toàn cầu mở ra kỷ nguyên học tập mới với dữ liệu học tập và AI."
     },
     "contact": {
