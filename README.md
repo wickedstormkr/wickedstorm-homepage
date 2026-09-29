@@ -10,7 +10,7 @@
 |---|---|
 | 운영 사이트 | https://wickedstorm.kr (한국어) · `/en/` · `/ja/` · `/vi/` |
 | 미리보기 | https://wickedstormkr.github.io/wickedstorm-homepage/ (운영에 내보내기 전에 확인하는 곳, 검색에 나오지 않음) |
-| 예전 주소 | wickedstorm.co.kr · www.wickedstorm.kr · www.wickedstorm.co.kr은 운영 사이트로 자동 이동 |
+| 예전 주소 | `wickedstorm.co.kr` · `www.wickedstorm.kr` · `www.wickedstorm.co.kr`은 운영 사이트로 자동 이동 |
 
 ## 사이트 구성
 

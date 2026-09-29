@@ -215,7 +215,7 @@ AWS_PROFILE=<배포 권한 프로필> npm run deploy             # 빌드(GA4 �
 - 새로 빌드하면 파일 시각이 모두 바뀌어 `s3 sync`가 거의 모든 파일을 다시 올립니다. 정상입니다.
 
 그 밖에:
-- www.wickedstorm.kr · wickedstorm.co.kr · www.wickedstorm.co.kr은 CloudFront 함수가 https://wickedstorm.kr 로 301 이동시킵니다(경로 · 쿼리 유지). 없는 주소는 `404.html`.
+- `www.wickedstorm.kr` · `wickedstorm.co.kr` · `www.wickedstorm.co.kr`은 CloudFront 함수가 https://wickedstorm.kr 로 301 이동시킵니다(경로 · 쿼리 유지). 없는 주소는 `404.html`.
 - 9.28 전 한 장짜리 사이트를 버킷에 풀던 CodePipeline은 배포 단계를 막아 두었습니다. 다시 켜지 않습니다.
 - 배포 뒤 확인: 바뀐 페이지를 운영 주소에서 열어 보고, 문의 쪽을 바꿨다면 시험 문의를 한 건 보냅니다.
 - **AWS 쪽(문의 Lambda, CloudFront, S3, DNS)은 콘솔에서 바꾸지 않습니다.** `wickedstorm-infra`에서 코드로 고치고 검증한 뒤 PR을 올리면, 인프라 담당이 적용합니다(그 저장소의 AGENTS.md와 팀 인프라 가이드).

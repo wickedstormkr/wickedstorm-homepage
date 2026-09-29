@@ -91,7 +91,7 @@
 
 ## 운영 배포
 - 운영 주소는 https://wickedstorm.kr 입니다. AWS S3 정적 웹사이트 + CloudFront이고, 인프라 정의는 CodeCommit `wickedstorm-infra`(Terraform)에 있습니다.
-  - www.wickedstorm.kr · wickedstorm.co.kr · www.wickedstorm.co.kr은 CloudFront 함수가 https://wickedstorm.kr 로 영구 이동(301)시킵니다. 경로와 쿼리는 유지됩니다.
+  - `www.wickedstorm.kr` · `wickedstorm.co.kr` · `www.wickedstorm.co.kr`은 CloudFront 함수가 https://wickedstorm.kr 로 영구 이동(301)시킵니다. 경로와 쿼리는 유지됩니다.
   - 없는 주소는 `404.html`을 보여 줍니다(버킷 오류 문서).
 - 배포는 `npm run deploy`(`scripts/deploy.sh`)로 합니다. origin/main과 같은 깨끗한 커밋을 GA4를 켜고 빌드해 올린 뒤 CloudFront 캐시를 비웁니다. `DRY_RUN=1`이면 올릴 목록만 봅니다.
   - 지우지 않고 덮어씁니다. 버킷의 `fair2026/`(박람회 자료 PDF, 자료 받기 링크)를 지우면 안 됩니다.
