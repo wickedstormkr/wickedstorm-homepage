@@ -8,7 +8,7 @@
  *   · 다른 페이지의 버튼(data-purpose · data-product)에서 오거나 주소에 ?purpose=demo&product=learnhubble가 있으면 미리 고른다
  * - 유입 경로(자기 응답): 인스타그램 · 블로그 · 박람회는 서버 값 목록을 늘리지 않도록 'etc'로 보내고 userTrafficEtc를 자동으로 채운다
  *   · 이번 방문의 유입(utm_source 또는 거쳐 온 사이트)이 instagram|ig|blog|naver_blog|fair|event면 미리 골라 두고, 메일에 '방문 경로로 미리 선택됨'을 적는다
- * - GA4: 처음 손대면 contact_start, 접수되면 generate_lead(접수 번호 · 목적 · 제품 · 문의한 곳 · 언어 · 유입 경로 응답). 이름 · 이메일 · 소속 · 문의 내용은 보내지 않는다(접수 번호로 관리표와 이어지는 것은 개인정보처리방침 1 · 2 · 6항에 적음)
+ * - GA4: 처음 손대면 contact_start, 접수되면 generate_lead(접수 번호 · 목적 · 제품 · 문의한 곳 · 언어 · 유입 경로 응답). 이름 · 이메일 · 소속 · 문의사항 글은 보내지 않는다(접수 번호로 관리표와 이어지는 것은 개인정보처리방침 1 · 2 · 6항에 적음)
  * - honeypot(name="website"), 인라인 오류(필드 아래, 첫 오류로 포커스), 전송 중 버튼 잠금, 15초 제한
  */
 import { CONTACT_API } from '../config/client';

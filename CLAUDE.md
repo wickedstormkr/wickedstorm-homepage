@@ -85,7 +85,7 @@
 - **문의 폼**: `https://wickedstorm.kr/api/contact`(`src/config/client.ts` `CONTACT_API`)로 보냅니다. CloudFront가 접속 국가를 붙여 문의 Lambda로 넘깁니다.
   - Lambda는 문의를 대기열에 넣는 즉시 답합니다(약 1초). 관리표(구글 시트) 기록과 메일은 뒤에서 처리하고, 실패하면 다시 시도합니다. 서버 코드와 인프라는 CodeCommit `wickedstorm-infra`(SAM `homepage-call-smtp`)에 있습니다.
   - 시험 문의는 이메일 `homepage-test@example.com`과 본문의 `CONTACT-QA-`로 표시합니다(관리표에서 시험 행으로 구분).
-  - 보내는 값의 이름은 바꾸지 않습니다. 문의 목적 · 유입 기록은 제목(subject)과 본문(inquiry) 끝의 '접수 정보'로 싣고, GA4에는 이름 · 이메일 · 소속 · 문의 내용 없이 `contact_start` · `generate_lead`만 보냅니다. 다만 `generate_lead`의 접수 번호(`lead_id`)는 관리표와 맞추면 문의자와 이어지므로 개인정보처리방침 1 · 2 · 6항에 적었고, GA4로 보내는 값을 바꾸면 방침도 함께 고칩니다(13항대로 시행 7일 전 공지). UTM 규칙과 보는 법: `docs/marketing/analytics.md`.
+  - 보내는 값의 이름은 바꾸지 않습니다. 문의 목적 · 유입 기록은 제목(subject)과 본문(inquiry) 끝의 '접수 정보'로 싣고, GA4에는 이름 · 이메일 · 소속 · 문의사항 글 없이 `contact_start` · `generate_lead`만 보냅니다. 다만 `generate_lead`의 접수 번호(`lead_id`)는 관리표와 맞추면 문의자와 이어지므로 개인정보처리방침 1 · 2 · 6항에 적었고, GA4로 보내는 값을 바꾸면 방침도 함께 고칩니다(13항대로 시행 7일 전 공지). UTM 규칙과 보는 법: `docs/marketing/analytics.md`.
 
 ## 운영 배포
 - 운영 주소는 https://wickedstorm.kr 입니다. AWS S3 정적 웹사이트 + CloudFront이고, 인프라 정의는 CodeCommit `wickedstorm-infra`(Terraform)에 있습니다.
