@@ -4,6 +4,7 @@
  * 문의 폼 전송은 실제 서버로 보내지 않고 가로채서 보내는 값만 확인한다.
  */
 import { test, expect, type Locator, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { CONTACT_API } from '../src/config/client';
 
 /** 문의 폼이 실제로 보내는 주소(설정과 같게: 주소를 옮겨도 가짜 응답이 따라간다) */
@@ -372,5 +373,27 @@ test.describe('문의 폼', () => {
     expect(visit).toMatchObject({ src: 'instagram', med: 'social', ref: 'l.instagram.com', land: '/' });
     const sel = page.locator('#cform select[name=userTraffic]');
     expect(await sel.evaluate((s: HTMLSelectElement) => s.options[s.selectedIndex].dataset.auto)).toBe('인스타그램');
+  });
+});
+
+test.describe('GA4 스니펫', () => {
+  test('운영처럼 define:vars 함수로 감싸도 window.gtag가 생겨, 문의 이벤트가 dataLayer에 실린다', async ({ page }) => {
+    // 점검 빌드에는 GA가 실리지 않는다. Base.astro의 스니펫을 Astro가 운영 HTML에 내보내는 모양 그대로 함수로 감싸 넣는다
+    const src = readFileSync('src/layouts/Base.astro', 'utf8');
+    const snippet = /<script is:inline define:vars=\{\{ GA_ID \}\}>([\s\S]*?)<\/script>/.exec(src)?.[1];
+    expect(snippet, 'Base.astro의 GA 스니펫').toBeTruthy();
+    await page.addInitScript({ content: `(function(){const GA_ID = "G-TEST";${snippet}})();` });
+    const sent = catchSubmit(page);
+    await page.goto('contact.html');
+    expect(await page.evaluate(() => typeof (window as unknown as { gtag?: unknown }).gtag)).toBe('function');
+    const f = page.locator('#cform');
+    await fillForm(f, { name: '홍길동', company: '서울시교육청', email: 'hong@example.com', memo: 'GA 점검' });
+    await f.locator('[name=userTraffic]').selectOption('portal');
+    await f.locator('[data-submit]').click();
+    await sent;
+    await expect(f.locator('[data-status]')).toHaveText('문의가 접수되었습니다. 빠른 시일 내 답변드리겠습니다.');
+    const events = await page.evaluate(() =>
+      (window as unknown as { dataLayer: IArguments[] }).dataLayer.filter((a) => a[0] === 'event').map((a) => a[1]));
+    expect(events).toEqual(['contact_start', 'generate_lead']);
   });
 });
