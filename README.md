@@ -1,6 +1,6 @@
 # wickedstorm-homepage
 
-위키드스톰 공식 홈페이지 저장소입니다. https://wickedstorm.kr 에서 운영합니다(2026-09-28 공개). 옛 사이트의 원본은 [`wickedstormkr/homepage_renewal`](https://github.com/wickedstormkr/homepage_renewal)입니다.
+위키드스톰 공식 홈페이지 저장소입니다. https://wickedstorm.kr 에서 운영합니다(2026-09-28 공개). 문구 · 번역 · 자산은 7월 리뉴얼 초안 [`wickedstormkr/homepage_renewal`](https://github.com/wickedstormkr/homepage_renewal)에서 옮겼습니다(공식 도메인에는 올라간 적 없는 미리보기).
 
 - 규칙과 방향: [`CLAUDE.md`](CLAUDE.md)
 - 재구축안: `docs/redesign/analysis/index.html` (브라우저로 열기)
