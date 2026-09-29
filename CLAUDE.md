@@ -7,7 +7,7 @@
 - **재구축안(설계 문서)**: `docs/redesign/analysis/index.html`. 브라우저로 열어 봅니다. 이 문서가 방향의 기준입니다.
 - **레퍼런스 조사**: `docs/redesign/research.md`. 캡처는 `docs/redesign/research-shots/`.
 - **제품 화면 원본**: `docs/source/`. 화면 속 인물·교과·수치는 모두 시연용입니다.
-- **옛 사이트**: `wickedstormkr/homepage_renewal`(2026-09-28까지 wickedstorm.kr에서 운영). 공개 저장소입니다. GitHub Pages 사본은 옛 문의 양식이 살아 있어 2026-09-29에 껐습니다(Source: None). 다시 켜지 않습니다.
+- **옛 사이트**: `wickedstormkr/homepage_renewal`(2026-09-28까지 wickedstorm.kr에서 운영). 공개 저장소입니다. GitHub Pages 사본은 옛 문의 양식이 살아 있어 2026-09-29에 껐습니다. 저장소 Settings → Pages의 게시 원본(Source)을 None으로 두었고, 다시 켜지 않습니다.
   - 문구, 네 언어 번역, 이미지, 소식, 카탈로그 PDF, 기업영상의 원본이 거기 있습니다.
   - 그 저장소는 읽기만 하고 고치지 않습니다.
 
