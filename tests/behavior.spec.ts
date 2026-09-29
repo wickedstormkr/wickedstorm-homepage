@@ -295,7 +295,7 @@ test.describe('문의 폼', () => {
     expect(body.inquiry).toContain('유입 경로(응답): 직접 입력: VIETEDU booth');
   });
 
-  test('목적 카드는 라디오: 고르면 안내 글이 바뀌고, 제목 · 접수 정보 · GA4 이벤트에 목적이 실린다(개인정보는 GA4로 가지 않는다)', async ({ page }) => {
+  test('목적 카드는 라디오: 고르면 안내 글이 바뀌고, 제목 · 접수 정보 · GA4 이벤트에 목적이 실린다(이름 · 이메일 등은 GA4로 가지 않는다)', async ({ page }) => {
     await stubGa(page);
     const sent = catchSubmit(page);
     await page.goto('contact.html');
