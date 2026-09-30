@@ -8,7 +8,7 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: './dist',
-      url: ['/index.html', '/en/index.html', '/vi/index.html', '/news.html', '/news/2026-09-edtech-korea-fair.html'],
+      url: ['/index.html', '/en/', '/vi/', '/news.html', '/news/2026-09-edtech-korea-fair.html'],
       numberOfRuns: 5,
       settings: {
         chromeFlags: '--no-sandbox --headless=new',
