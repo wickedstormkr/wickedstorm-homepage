@@ -201,7 +201,7 @@ test.describe('언어', () => {
     await expect(page).toHaveURL(/\/$/);
     const banner = page.locator('#langBanner');
     await expect(banner).toBeVisible();
-    await expect(banner.locator('a')).toHaveAttribute('href', /vi\/index\.html$/);
+    await expect(banner.locator('a')).toHaveAttribute('href', /\/vi\/$/);
     await expect(banner.locator('p')).toHaveAttribute('lang', 'vi');
     await banner.locator('[data-close]').click();
     await expect(banner).toBeHidden();
@@ -219,12 +219,18 @@ test.describe('언어', () => {
   });
 
   test('hreflang·canonical과 원어 이름 언어 선택', async ({ page }) => {
-    await page.goto('en/index.html');
+    await page.goto('en/');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href', /\/en\/index\.html$/);
+    await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href', /\/en\/$/);
+    await expect(page.locator('link[rel=alternate][hreflang="ja"]')).toHaveAttribute('href', /\/ja\/$/);
     for (const l of ['ko', 'en', 'ja', 'vi', 'x-default']) await expect(page.locator(`link[rel=alternate][hreflang="${l}"]`)).toHaveCount(1);
     const names = await page.locator('.lang-menu a').allTextContents();
     expect(names).toEqual(['한국어', 'English', '日本語', 'Tiếng Việt']);
+    const hrefs = await page.locator('.lang-menu a').evaluateAll((as) => as.map((a) => new URL((a as HTMLAnchorElement).href).pathname));
+    expect(hrefs.slice(1).every((p) => /\/(en|ja|vi)\/$/.test(p))).toBe(true);
+    // 옛 주소(/en/index.html)도 같은 페이지가 열리고, canonical은 /en/
+    await page.goto('en/index.html');
+    await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href', /\/en\/$/);
   });
 });
 
@@ -280,7 +286,7 @@ test.describe('문의 폼', () => {
 
   test('지금 서버와 같은 값 이름으로 보내고, 제목은 [웹 문의 · 언어] 소속 · 이름(영문 페이지, 직접 입력)', async ({ page }) => {
     const sent = catchSubmit(page);
-    await page.goto('en/index.html#contact');
+    await page.goto('en/#contact');
     const f = page.locator('#cform');
     await fillForm(f, { name: 'Kim', company: 'Hanoi Univ', email: 'kim@example.com', memo: 'Demo please' });
     await f.locator('[name=userTraffic]').selectOption('direct');
@@ -292,7 +298,7 @@ test.describe('문의 폼', () => {
     expect(Object.keys(body).sort()).toEqual(['affiliation', 'email', 'inquiry', 'name', 'subject', 'userTraffic', 'userTrafficEtc']);
     expect(body).toMatchObject({ name: 'Kim', affiliation: 'Hanoi Univ', email: 'kim@example.com', userTraffic: 'direct', userTrafficEtc: 'VIETEDU booth', subject: '[웹 문의 · EN] Hanoi Univ · Kim' });
     expect(body.inquiry).toMatch(/^Demo please\n\n-{40}\n\[접수 정보\] 홈페이지가 자동으로 붙인 정보입니다\.\n접수 번호: WS-\d{6}-[A-HJ-NP-Z2-9]{4}\n문의 목적: 고르지 않음\n/);
-    expect(body.inquiry).toContain('문의 언어: 영어 (/en/index.html)');
+    expect(body.inquiry).toContain('문의 언어: 영어 (/en/)');
     expect(body.inquiry).toContain('유입 경로(응답): 직접 입력: VIETEDU booth');
   });
 

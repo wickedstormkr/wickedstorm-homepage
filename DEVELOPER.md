@@ -59,7 +59,7 @@ PUBLIC_GA_ID=G-0Y5QD1HBGN npm run build                                         
 
 | 페이지 | 국문 주소 | 다른 언어 | 파일 |
 |---|---|---|---|
-| 홈 | `/` | `/en/index.html` 등 | `src/pages/index.astro`, `[lang]/index.astro` → `components/HomePage.astro` |
+| 홈 | `/` | `/en/` 등(파일은 `/en/index.html`. 운영에서 그 옛 주소는 `/en/`로 301) | `src/pages/index.astro`, `[lang]/index.astro` → `components/HomePage.astro` |
 | 에듀테크 | `/edutech.html` | `/en/edutech.html` 등 | `views/EdutechPage.astro` |
 | 신뢰(인증 · 특허 원본) | `/trust.html` | 〃 | `views/TrustPage.astro` |
 | 회사소개 | `/company.html` | 〃 | `views/CompanyPage.astro` |
@@ -73,7 +73,7 @@ PUBLIC_GA_ID=G-0Y5QD1HBGN npm run build                                         
 
 - 하위 페이지 목록은 `src/lib/i18n.ts`의 `PAGES`, 숨긴 페이지는 `HIDDEN_PAGES`(메뉴 · 푸터 · 홈의 '자세히 보기' · 사이트맵에서 빠지고 noindex. 주소와 홈 섹션은 남음).
 - 솔루션 사이트(lecognizer.ai · learnhubble.ai) 링크는 `src/config/client.ts`의 `SHOW_SOLUTION_SITES`로 숨겨 두었습니다.
-- 밖에서 홈(`/`)으로 들어오면 운영 CloudFront 함수가 그 언어 홈(`/<lang>/index.html`)으로 보냅니다(302, 쿼리 유지. 코드와 검사는 인프라 저장소). 브라우저 첫 언어가 한국어 · 일본어 · 베트남어면 그 언어, 아니면 접속 국가로 한국은 그대로, 일본 ja, 베트남 vi, 그 밖은 en.
+- 밖에서 홈(`/`)으로 들어오면 운영 CloudFront 함수가 그 언어 홈(`/<lang>/`)으로 보냅니다(302, 쿼리 유지. 코드와 검사는 인프라 저장소). 브라우저 첫 언어가 한국어 · 일본어 · 베트남어면 그 언어, 아니면 접속 국가로 한국은 그대로, 일본 ja, 베트남 vi, 그 밖은 en.
   - 보내지 않는 경우: `/` 말고 모든 주소(`/index.html`은 언제나 한국어 홈), 사이트 안에서 온 이동, 검색 · 미리보기 로봇, `Accept-Language`가 없는 요청, 국가를 모를 때. `curl`로 확인할 때는 `-H 'Accept-Language: vi'`처럼 언어를 붙입니다.
   - 로컬 · 미리보기(GitHub Pages)에는 이 함수가 없습니다.
 - 그 밖에는 브라우저 첫 언어가 페이지와 다르면 그 언어로 안내 띠만 띄웁니다.

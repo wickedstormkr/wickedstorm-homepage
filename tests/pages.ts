@@ -7,9 +7,9 @@ export interface PageDef { id: string; path: string; lang: 'ko' | 'en' | 'ja' | 
 /** 홈 네 언어 */
 export const HOMES: PageDef[] = [
   { id: 'home-ko', path: '', lang: 'ko' },
-  { id: 'home-en', path: 'en/index.html', lang: 'en' },
-  { id: 'home-ja', path: 'ja/index.html', lang: 'ja' },
-  { id: 'home-vi', path: 'vi/index.html', lang: 'vi' },
+  { id: 'home-en', path: 'en/', lang: 'en' },
+  { id: 'home-ja', path: 'ja/', lang: 'ja' },
+  { id: 'home-vi', path: 'vi/', lang: 'vi' },
 ];
 /** 언어별 페이지(네 언어). 국문은 루트, 다른 언어는 /<lang>/ 아래 */
 export const PAGES: PageDef[] = (['ko', 'en', 'ja', 'vi'] as const).flatMap((lang) =>

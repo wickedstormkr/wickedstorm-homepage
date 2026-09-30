@@ -5,7 +5,8 @@ import { SITE_URL, BASE_PATH } from './site.config.mjs';
 export default defineConfig({
   site: SITE_URL,
   base: BASE_PATH,
-  // 지금 사이트의 주소를 그대로 지킨다: /news.html, /news/<id>.html, /privacy.html, /links.html, /en/index.html
+  // 지금 사이트의 주소를 그대로 지킨다: /news.html, /news/<id>.html, /privacy.html, /links.html
+  // 언어 홈은 파일이 /en/index.html이고 링크 · canonical은 /en/(src/lib/i18n.ts homePath)
   // (인쇄된 QR, 공유된 기사 주소, 검색 색인이 도메인 전환 뒤에도 이어지도록)
   build: { format: 'preserve' },
   trailingSlash: 'ignore',
