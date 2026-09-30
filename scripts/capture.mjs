@@ -11,7 +11,7 @@ import { spawn } from 'node:child_process';
 import sharp from 'sharp';
 
 const [out = 'docs/shots', widths = '390,820,1440', langs = 'ko,en,vi'] = process.argv.slice(2);
-const PATH = { ko: '', en: 'en/index.html', ja: 'ja/index.html', vi: 'vi/index.html' };
+const PATH = { ko: '', en: 'en/', ja: 'ja/', vi: 'vi/' };
 const LOCALE = { ko: 'ko-KR', en: 'en-US', ja: 'ja-JP', vi: 'vi-VN' };
 const PORT = 4399;
 const BASE = (process.env.BASE_PATH || '/').replace(/^\/?/, '/').replace(/\/?$/, '/');
