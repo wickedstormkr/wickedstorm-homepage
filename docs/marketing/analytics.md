@@ -55,8 +55,8 @@
 
 | 놓는 곳 | 주소 |
 |---|---|
-| 부스 배너(베트남어 홈) | `https://wickedstorm.kr/vi/index.html?utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=banner` |
-| 리플릿(영어 홈) | `https://wickedstorm.kr/en/index.html?utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=brochure` |
+| 부스 배너(베트남어 홈) | `https://wickedstorm.kr/vi/?utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=banner` |
+| 리플릿(영어 홈) | `https://wickedstorm.kr/en/?utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=brochure` |
 | 상담 데스크(베트남어 문의, 파트너십) | `https://wickedstorm.kr/vi/contact.html?purpose=partner&utm_source=fair&utm_medium=print&utm_campaign=vietedu-2026&utm_content=booth` |
 
 ## 3. 문의 메일 읽는 법
@@ -82,8 +82,8 @@
 관심 제품: LearnHubble AI
 문의 언어: 영어 (/en/contact.html)
 문의한 곳: 제품 · LearnHubble AI 시연 요청 (product#learnhubble)
-이번 유입: fair / print / vietedu-2026 · brochure (2026-10-15, 첫 페이지 /en/index.html)
-첫 방문: 2026-09-20 · google / organic (첫 페이지 /en/index.html)
+이번 유입: fair / print / vietedu-2026 · brochure (2026-10-15, 첫 페이지 /en/)
+첫 방문: 2026-09-20 · google / organic (첫 페이지 /en/)
 유입 경로(응답): 박람회·행사 (방문 경로로 미리 선택됨)
 ```
 
