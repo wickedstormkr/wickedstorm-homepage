@@ -28,12 +28,19 @@
   "cta": "導入のご相談",
   "ctaDrawer": "導入のご相談 →",
   "footer": {
-    "company": "株式会社Wicked Storm&nbsp;· 代表取締役 イ・ジョンジュン&nbsp;· 事業者登録番号 <span style=\"white-space:nowrap\">135-88-02020</span>",
-    "address": "韓国ソウル特別市江西区麻谷中央路161-8 A棟901〜905号",
-    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "slogan": "Every Learning Moment, Designed for Growth.",
+    "info": [
+      "株式会社Wicked Storm",
+      "代表取締役 イ・ジョンジュン",
+      "事業者登録番号 <span class=\"nw\">135-88-02020</span>",
+      "韓国ソウル特別市江西区麻谷中央路161-8 A棟901〜905号",
+      "Tel 02-2205-1470",
+      "Fax 02-6956-1473",
+      "manager@wickedstorm.kr"
+    ],
     "navLabel": "フッターメニュー",
     "privacy": "プライバシーポリシー",
-    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+    "legal": "© 2026 Wicked Storm Inc."
   },
   "pages": {
     "product": {

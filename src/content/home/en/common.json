@@ -28,12 +28,19 @@
   "cta": "Contact us",
   "ctaDrawer": "Contact us →",
   "footer": {
-    "company": "Wicked Storm Inc.&nbsp;· CEO Jeongjun Lee&nbsp;· Business Registration No. <span style=\"white-space:nowrap\">135-88-02020</span>",
-    "address": "Rooms 901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
-    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "slogan": "Every Learning Moment, Designed for Growth.",
+    "info": [
+      "Wicked Storm Inc.",
+      "CEO Jeongjun Lee",
+      "Business Registration No. <span class=\"nw\">135-88-02020</span>",
+      "Rooms 901 to 905, Building A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Korea",
+      "Tel 02-2205-1470",
+      "Fax 02-6956-1473",
+      "manager@wickedstorm.kr"
+    ],
     "navLabel": "Footer menu",
     "privacy": "Privacy Policy",
-    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+    "legal": "© 2026 Wicked Storm Inc."
   },
   "pages": {
     "product": {
