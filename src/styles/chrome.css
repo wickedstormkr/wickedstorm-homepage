@@ -70,15 +70,29 @@ html.nav-open{overflow:hidden}
 .lang-banner button{width:var(--tap);height:var(--tap);border-radius:999px;color:var(--muted);font-size:22px;line-height:1}
 .lang-banner button:hover{color:#fff}
 
-/* ---- 푸터 ---- */
-.site-footer{background:var(--footer);border-top:1px solid var(--line);padding:56px 0 40px;font-size:15px;color:var(--muted)}
-.foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
-.foot-grid img{height:19px;width:auto;margin-bottom:16px}
-.foot-grid p{margin-top:2px}
-.foot-nav{display:flex;column-gap:22px;row-gap:0;font-family:var(--en);font-weight:600;flex-wrap:wrap;align-content:flex-start}
-.foot-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);min-width:var(--tap);color:var(--muted);transition:color .18s}
+/* ---- 푸터: 위 띠(로고 · 슬로건)와 아래 한 열(메뉴 → 회사 정보 → 저작권). 아래 단은 13px 한 크기에 굵기 · 색 두 단계 ---- */
+.site-footer{background:var(--footer);font-size:13px;line-height:1.7;color:var(--faint)}
+.foot-brand{background:var(--bg2);border-block:1px solid var(--line)}
+.foot-brand .wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px 56px;align-items:center;padding:clamp(36px,5vw,56px) 0}
+.foot-brand img{width:176px;height:auto}
+.foot-slogan{font-family:var(--en);font-weight:700;font-size:15px;color:#fff;letter-spacing:-.01em}
+.foot-sites{display:flex;flex-wrap:wrap;column-gap:24px;margin-top:4px}
+/* 도메인은 Sora의 l이 1처럼 보여 본문 글꼴로 */
+.foot-sites a{display:inline-flex;align-items:center;min-height:var(--tap);font-size:15px;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+@media (max-width:699px){.foot-brand .wrap{grid-template-columns:1fr}}
+.foot-main{display:grid;gap:8px;padding:20px 0 40px}
+/* 메뉴 간격은 링크 양옆 여백(10px씩)으로 만든다. 두 글자 이름도 누르는 폭이 44px을 넘고, 줄 머리 글자는 칸 왼쪽 끝에 맞는다 */
+.foot-nav{display:flex;flex-wrap:wrap;margin-inline:-10px;font-family:var(--en);font-weight:600}
+.foot-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:var(--tap);min-width:var(--tap);padding-inline:10px;color:var(--muted);transition:color .18s}
 .foot-nav a:hover{color:#fff}
-.site-footer .legal{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-size:13px;color:var(--faint);font-family:var(--en)}
+/* 터치가 아닌 폭: 누르는 높이는 WCAG 2.5.8(24px)만 넘긴다 */
+@media (min-width:1024px){.foot-nav a{min-height:32px}}
+/* 회사 정보: 항목 사이 가운뎃점. 항목마다 왼쪽 14px에 점을 두고 같은 폭만큼 앞 항목 오른쪽 여백에 겹친다.
+   줄 머리 항목은 점이 칸 왼쪽 밖으로 나가 잘리므로 줄 끝 · 줄 머리에 점이 남지 않는다 */
+.foot-info{display:flex;flex-wrap:wrap;overflow:hidden}
+.foot-info>span{position:relative;min-width:0;margin-left:-14px;padding-inline:14px}
+.foot-info>span::before{content:"·";content:"·"/"";position:absolute;left:0;width:14px;text-align:center}
+.site-footer .legal{font-family:var(--en)}
 
 /* 맨 위로: 한 화면 넘게 내려가면 오른쪽 아래에 나타난다(site.ts가 .show). 데스크톱 고정 이야기 안에서는 숨긴다(장면 목차·조작이 있다).
    언어 안내 띠가 떠 있으면 그 위로 비켜 선다(html.lb-open, --lb-h). 숨었을 때는 visibility로 초점·낭독에서도 빠진다 */

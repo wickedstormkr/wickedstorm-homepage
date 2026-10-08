@@ -28,12 +28,19 @@
   "cta": "Liên hệ",
   "ctaDrawer": "Liên hệ →",
   "footer": {
-    "company": "Wicked Storm Inc.&nbsp;· Người đại diện: Jeongjun Lee&nbsp;· Số đăng ký kinh doanh: <span style=\"white-space:nowrap\">135-88-02020</span>",
-    "address": "Phòng 901 đến 905, Tòa A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Hàn Quốc",
-    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "slogan": "Every Learning Moment, Designed for Growth.",
+    "info": [
+      "Wicked Storm Inc.",
+      "Người đại diện: Jeongjun Lee",
+      "Số đăng ký kinh doanh: <span class=\"nw\">135-88-02020</span>",
+      "Phòng 901 đến 905, Tòa A, 161-8 Magokjungang-ro, Gangseo-gu, Seoul, Hàn Quốc",
+      "Tel 02-2205-1470",
+      "Fax 02-6956-1473",
+      "manager@wickedstorm.kr"
+    ],
     "navLabel": "Menu chân trang",
     "privacy": "Chính sách bảo mật thông tin cá nhân",
-    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+    "legal": "© 2026 Wicked Storm Inc."
   },
   "pages": {
     "product": {

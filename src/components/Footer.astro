@@ -1,36 +1,46 @@
 ---
+/** 푸터 두 단: 위는 로고 · 슬로건 띠(SHOW_SOLUTION_SITES가 켜지면 솔루션 사이트 링크도), 아래는 메뉴 → 회사 정보 → 저작권 한 열 */
 import { getHome } from '../lib/content';
 import { isListed, newsPath, pagePath, type Lang, type Page } from '../lib/i18n';
 import { url, withBase } from '../lib/url';
+import { SHOW_SOLUTION_SITES } from '../config/client';
 
 interface Props { lang: Lang; homeHref?: string }
 const { lang } = Astro.props;
-const c = getHome(lang).common;
+const home = getHome(lang);
+const c = home.common;
 const pg = (p: Page) => url(pagePath(lang, p));
 ---
 <footer class="site-footer">
-  <div class="wrap">
-    <div class="foot-grid">
+  <div class="foot-brand">
+    <div class="wrap">
+      <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" loading="lazy" />
       <div>
-        <img src={url('/img/logo-white.svg')} alt="WICKED STORM" width="208" height="26" loading="lazy" />
-        <p set:html={c.footer.company} />
-        <p set:html={c.footer.address} />
-        <p set:html={c.footer.contact} />
+        <p class="foot-slogan">{c.footer.slogan}</p>
+        {SHOW_SOLUTION_SITES && (
+          <p class="foot-sites">
+            {home.product.solutions.map((s) => <a href={s.site} target="_blank" rel="noopener" aria-label={s.siteAria}>{s.siteLabel}<span aria-hidden="true"> ↗</span></a>)}
+          </p>
+        )}
       </div>
-      <nav class="foot-nav" aria-label={c.footer.navLabel}>
-        {isListed('product') && <a href={pg('product')}>{c.nav.product}</a>}
-        <a href={pg('edutech')}>{c.nav.edutech}</a>
-        {isListed('cases') && <a href={pg('cases')}>{c.nav.cases}</a>}
-        <a href={url(newsPath(lang))}>{c.nav.news}</a>
-        <a href={pg('company')}>{c.nav.company}</a>
-        <a href={pg('trust')}>{c.nav.trust}</a>
-        <a href={`${pg('contact')}#resources`}>{c.nav.resources}</a>
-        <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
-        <a href={url('/privacy.html')}>{c.footer.privacy}</a>
-        <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" hidden>Instagram</a>
-        <a data-social="blog" href="#" target="_blank" rel="noopener noreferrer" hidden>Blog</a>
-      </nav>
     </div>
+  </div>
+  <div class="wrap foot-main">
+    <nav class="foot-nav" aria-label={c.footer.navLabel}>
+      {isListed('product') && <a href={pg('product')}>{c.nav.product}</a>}
+      <a href={pg('edutech')}>{c.nav.edutech}</a>
+      {isListed('cases') && <a href={pg('cases')}>{c.nav.cases}</a>}
+      <a href={url(newsPath(lang))}>{c.nav.news}</a>
+      <a href={pg('company')}>{c.nav.company}</a>
+      <a href={pg('trust')}>{c.nav.trust}</a>
+      <a href={`${pg('contact')}#resources`}>{c.nav.resources}</a>
+      <a href={c.nav.recruitHref} target="_blank" rel="noopener noreferrer" aria-label={c.nav.recruitLabel}>{c.nav.recruit}</a>
+      <a href={url('/privacy.html')}>{c.footer.privacy}</a>
+      <a data-social="instagram" href="#" target="_blank" rel="noopener noreferrer" hidden>Instagram</a>
+      <a data-social="blog" href="#" target="_blank" rel="noopener noreferrer" hidden>Blog</a>
+    </nav>
+    <!-- 항목 사이 가운뎃점은 CSS가 그린다. 줄 머리에 오는 점은 칸 밖으로 밀려 잘린다 -->
+    <p class="foot-info">{c.footer.info.map((i) => <span set:html={i} />)}</p>
     <p class="legal" set:html={withBase(c.footer.legal)} />
   </div>
 </footer>

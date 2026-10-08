@@ -28,12 +28,19 @@
   "cta": "도입 문의",
   "ctaDrawer": "도입 문의 →",
   "footer": {
-    "company": "주식회사 위키드스톰&nbsp;· 대표 이정준&nbsp;· 사업자등록번호 <span style=\"white-space:nowrap\">135-88-02020</span>",
-    "address": "서울시 강서구 마곡중앙로 161-8, A동 901~905호",
-    "contact": "Tel 02-2205-1470&nbsp;· Fax 02-6956-1473&nbsp;· manager@wickedstorm.kr",
+    "slogan": "Every Learning Moment, Designed for Growth.",
+    "info": [
+      "주식회사 위키드스톰",
+      "대표 이정준",
+      "사업자등록번호 <span class=\"nw\">135-88-02020</span>",
+      "서울시 강서구 마곡중앙로 161-8, A동 901~905호",
+      "Tel 02-2205-1470",
+      "Fax 02-6956-1473",
+      "manager@wickedstorm.kr"
+    ],
     "navLabel": "푸터 메뉴",
     "privacy": "개인정보처리방침",
-    "legal": "Every Learning Moment, Designed for Growth. · © 2026 Wicked Storm Inc."
+    "legal": "© 2026 Wicked Storm Inc."
   },
   "pages": {
     "product": {
